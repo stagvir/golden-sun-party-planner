@@ -923,8 +923,7 @@ __SAVEPARSE__
     const psy = r.tier.psy.slice().sort((a, b) => a[1] - b[1]).map(([id, lv]) => {
       const a = D.abil[id]; if (!a) return '';
       const lock = lv > cs.lv;
-      return `<tr class="${lock ? 'locked' : ''}"><td class="r">${lv}</td><td class="pn">${psyIcon(a, 'pi') || '<span class="pi"></span>'}${esc(a.n)}</td>
-        <td><span class="etag e${a.e}"><span class="dot"></span>${a.e < 4 ? EL[a.e] : '—'}</span></td>
+      return `<tr class="${lock ? 'locked' : ''}"><td class="r">${lv}</td><td class="pn">${(psyIcon(a, 'pi') || '<span class="pi"></span>').replace(`title="${esc(a.n)}"`, `title="${esc(a.n)}${a.e < 4 ? ' · ' + EL[a.e] : ''}"`)}${esc(a.n)}</td>
         <td><span class="kind">${abilKind(a)}</span></td><td class="r">${rangeTxt(a.r)}</td><td class="r">${a.c}</td></tr>`;
     }).join('');
     const known = r.tier.psy.filter(p => p[1] <= cs.lv).length;
@@ -965,7 +964,7 @@ __SAVEPARSE__
       ${sec('stats', `Stats at level ${cs.lv}`, statPeek, `<div class="tscroll"><table class="stats"><thead><tr><th>Stat</th><th>Base</th><th>Djinn</th><th>Items</th><th>Gear</th><th>Modifier</th><th>Class</th><th>Final</th></tr></thead><tbody>${rows}</tbody></table></div>
         <span class="sheet-links">Items and Modifier are set in the <button type="button" class="linkbtn" data-goto="mods">Modifiers tab</button>.</span>`)}
       ${sec('elements', r.el.unknown ? 'Elemental levels' : 'Elements · Power/Resistance', elPeek, `<div class="tscroll"><table class="stats elt"><thead><tr><th>Element</th><th>Level</th>${r.el.unknown ? '' : '<th>Power</th><th>Resistance</th>'}</tr></thead><tbody>${elRows}</tbody></table></div>${r.el.unknown ? '<span class="sheet-links">Dark Dawn\'s Power/Resistance formula isn\'t published, so only elemental levels are shown.</span>' : ''}`)}
-      ${sec('psy', `Psynergy as ${esc(r.tier.name)}`, `${known} of ${r.tier.psy.length} learned by level ${cs.lv}`, `<div class="tscroll"><table class="psy${D.dd ? ' dd' : ''}"><thead><tr><th>Lv</th><th>Psynergy</th><th>Element</th><th>Effect</th><th>Targets</th><th>PP</th></tr></thead><tbody>${psy}</tbody></table></div>`)}`);
+      ${sec('psy', `Psynergy as ${esc(r.tier.name)}`, `${known} of ${r.tier.psy.length} learned by level ${cs.lv}`, `<div class="tscroll"><table class="psy${D.dd ? ' dd' : ''}"><thead><tr><th>Lv</th><th>Psynergy</th><th>Effect</th><th>Targets</th><th>PP</th></tr></thead><tbody>${psy}</tbody></table></div>`)}`);
   }
   // Remember which sections are open; 'toggle' doesn't bubble, so listen in the capture phase
   $('sheet').addEventListener('toggle', e => {
