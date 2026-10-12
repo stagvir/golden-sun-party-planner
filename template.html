@@ -543,6 +543,37 @@ body.djdragging, body.djdragging * { cursor: grabbing !important; }
 .mon .mon-mv i { font-style: normal; color: var(--gs-dim); }
 .mon .mon-rw { display: flex; flex-wrap: wrap; gap: .2em 1em; }
 .mon .mon-rw b { font-weight: 400; color: var(--gs-gold); }
+/* ---------- compact spacing: tighter lines, gaps and padding; text size is unchanged (it can only be 20px or 30px crisp) ---------- */
+body { line-height: 1.2; }
+.wrap { gap: 12px; padding-block: 12px 28px; }
+.main, .view, .vnotes { gap: 10px; }
+.panel { padding: 7px 10px; gap: 10px; }
+.sheet-head { gap: 6px 14px; }
+th, td { padding: 3px 6px; }
+.gtab th, .gtab td { padding: 2px 4px; }
+.gtab thead th { padding-bottom: 3px; }
+.djrow th, .djrow td { padding-top: 0; padding-bottom: 0; }
+.djcell { min-height: 0; }
+details, details.sec { padding-top: 6px; }
+details.sec .sec-body { gap: 6px; margin-top: 4px; }
+#sheet { gap: 6px; }
+.classbox { padding: 6px 10px; gap: 4px; }
+.tierbar { gap: 3px; }
+.next { gap: 4px; }
+.next div { padding: 2px 6px; }
+.pc { padding: 4px 7px; gap: 0; }
+.pc .mv { margin-top: 2px; }
+.strip { gap: 6px; }
+.tabs { gap: 6px; }
+.tabs button { padding: 1px 10px; }
+.btn, .toggle { padding: 1px 8px; }
+.gs-card { padding: 3px 7px; gap: 3px; }   /* sides clear the 6px frame bevel */
+.sc-grid, .mon-grid { gap: 6px; }
+.pk-opt { padding: 2px 6px; gap: 2px 10px; }
+.pk-head { padding: 5px 10px; }
+.tip { padding: 6px 10px; gap: 4px; }
+.facts, .imp-body { gap: 3px; }
+.gcell { padding: 1px 4px; }
 /* the showcase section is just the cards on the black screen */
 .showcase.panel { background: transparent; border: 0; box-shadow: none; padding: 0; }
 .grip:hover, .grip:focus-visible { background: rgba(255, 255, 255, .12); }
