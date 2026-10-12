@@ -280,7 +280,7 @@ details.sec .sec-body { display: grid; gap: 10px; margin-top: 8px; }
 .djadd:hover, .djadd[aria-expanded="true"] { border-color: var(--accent); color: var(--accent); }
 .gtab .cnt { font-family: var(--mono); font-size: var(--fs); color: var(--muted); }
 .gtab .cnt b { color: var(--fg); }
-.modtab td input { width: 100%; max-width: 6.5em; box-sizing: border-box; text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.modtab td input { width: calc(4ch + 34px); max-width: 100%; box-sizing: border-box;  /* at most 4 digits */ text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; }
 .modtab td small { display: block; color: var(--muted); font-size: var(--fs); font-family: var(--mono); }
 .pk-acts { display: flex; gap: 6px; flex-wrap: wrap; padding: 8px 10px; border-bottom: 1px solid var(--line); }
 .pk-grp { font-size: var(--fs); text-transform: uppercase; letter-spacing: 0; color: var(--muted); font-weight: 400; padding: 6px 6px 2px; }
