@@ -17,7 +17,7 @@ python3 build.py .              # template.html + data + js  ->  planner.html (s
 node tests/e2e.js               # pass `$(npm root -g)` as the argument if playwright is installed globally
 ```
 
-Open `planner.html` in a browser. Everything is inlined: data, icons as data URIs, and scripts. The page's only external request is Google Fonts.
+Open `planner.html` in a browser. Everything is inlined: data, icons and the window frame as data URIs, the Golden Sun menu font (`ui/font/gsfont.woff2`) and scripts. The page makes no external requests.
 
 ## Files
 
@@ -34,7 +34,7 @@ Open `planner.html` in a browser. Everything is inlined: data, icons as data URI
 | `dd/` | Raw Dark Dawn tables (`<name>.txt`, `djinn.txt`), `parse.py` (→ `ddclasses.json`), `build_dd.py` (→ `dddata.json`), the two DD icon sheets the user supplied (named by `name_icon_sheets.py`) and the DD mugshot sheet (`cut_portraits.py`). |
 | `icons/gba/` | Item icons named like wiki files (`Warriors_Helm.gif`). `icon_aliases.json` maps the odd names. |
 | `icons/dd/`, `ui/psynergy_dd/` | Dark Dawn item (192) and Psynergy (179) sprites at native 24×24 with transparent backgrounds, cut from the two `dd/icon_sheets/` sheets and named by `dd/name_icon_sheets.py`, which matches each sprite against the named, framed icons in the Golden Sun Realm guide PDFs (report: `dd/name_icon_sheets.json`). 80 item and 10 Psynergy sprites on the sheets aren't in the guides and stay unnamed. DD has two Rusty Swords: `Rusty_Sword_DD` (→ Rune Blade) and `Rusty_Sword_2_DD` (→ Kikuichimonji). Shown at native 24 px. In Dark Dawn the showcase and each Adept's Psynergy list use these sprites (`psyIcon()` in template.html) (`GSUI.psyDD`; `build.py` maps the planner's Healing Gust / Toxic Grit to the guide's Healthy Gust / Toxic Gift) and falls back to the GBA icon for Avoid, Death Leap and Heat Wave, which have no DD sprite. |
-| `ui/` | Portraits, element stars, frame and Psynergy icons for the game-styled showcase. Dark Dawn portraits are `ui/portraits/<Name>_DD.gif`, cut from `dd/icon_sheets/dd_mugshots.png` by `dd/cut_portraits.py`. |
+| `ui/` | Portraits, element stars, frame and Psynergy icons for the game-styled showcase. `ui/font/`: the game's menu font built from the user's glyph sprites by `build_font.py` (needs fontTools; the built `gsfont.woff2` is committed). `ui/misc/make_window.py`: the window frame images. Dark Dawn portraits are `ui/portraits/<Name>_DD.gif`, cut from `dd/icon_sheets/dd_mugshots.png` by `dd/cut_portraits.py`. |
 | `tests/` | Playwright UI tests and node data checks (below). |
 | `testdata/gtc/` | Test saves from game-tools-collection (MIT, licence included). |
 | `testdata/user/` | The owner's real GS1 and TLA saves (3 + 2 slots). |
