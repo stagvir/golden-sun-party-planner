@@ -41,6 +41,16 @@ Open `planner.html` in a browser. Everything is inlined: data, icons and the win
 
 Rebuild Dark Dawn data with `cd dd && python3 parse.py && python3 build_dd.py . ../gsdata.json && mv dddata.json ..`. Re-parse items first if the guides change: `python3 dd/parse_items.py <weapon.pdf> <armor.pdf>`.
 
+## Monsters (`monsters.json`, Monsters tab)
+
+- Extracted from the owner's US ROMs (never committed) by `monsters/extract_monsters.py <TLA.gba> <GS1.gba>`; the script's docstring has every offset.
+- Enemy records: TLA 76 bytes, id *n* at `0xB9E3F + 76n` (ids 1-379); GS1 84 bytes, id *n* at `0x80ED7 + 84n` (ids 0-163). Elemental tables: TLA `0xC6684`, GS1 `0x88E38` (24 bytes: element, levels, Power/Resistance pairs).
+- Names come from the game text, decoded by `monsters/gstext.py` (Camelot's per-previous-character Huffman scheme): enemies at line 1067/655 + id, abilities 1447/819 + id, items 607/386 + id.
+- Checks: all 377 Archipelago TLA entries match field for field (names except two hyphens Archipelago drops); wiki spot checks (Phoenix, Anger Ball, Living Armor, ...); GS1 record 0 is the same "???" placeholder as TLA's, and its names line up with stats ("Mystery Man" = the lv 10, 3000 HP opening fight).
+- Drop code *n* = 1/2^(n-1) (code 9 = 1/256, the wiki's figure for the Tisiphone Edge).
+- 100 TLA records are identical to GS1 ones (likely carried over and unused); the tab marks them and can hide them. The encounter/formation tables aren't found yet; they would settle this and give real enemy parties for the damage simulator.
+- Sprites: not added yet (the owner has them).
+
 ## Model and formulas (GBA, verified)
 
 - **Class.**
@@ -135,6 +145,7 @@ The Playwright tests take an optional playwright root as their argument:
 - `tests/drag.js` — column drag and keyboard reorder in the Djinn, Gear and Modifiers tabs.
 - `tests/gs1ui.js` — Broken Seal mode, game switching, GS1 and TLA import auto-switch.
 - `tests/ddui.js` — Dark Dawn mode, class picks, base-stat solver. Writes screenshots to `out/`.
+- `tests/monsters.js` — Monsters tab: counts per game, search, sort, the copies filter, hidden in Dark Dawn, 400px width.
 - `tests/ddgear.js` — Dark Dawn gear: slots, who can equip, unconfirmed flags, unleashes, 400px width, GBA slots unchanged.
 - `tests/userimp.js` — imports the owner's saves. Expect 5 "match the game" lines (23/23 Adepts' HP/PP).
 

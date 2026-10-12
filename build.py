@@ -79,7 +79,8 @@ report['psynergy_icons_dd'] = {'matched': len(ui['psyDD']), 'of': len({a['n'] fo
                                'missing': sorted({a['n'] for a in json.load(open(os.path.join(d, 'dddata.json')))['abil'].values()} - set(ui['psyDD']))}
 
 t = open(os.path.join(d, 'template.html')).read()
-t = (t.replace('__DDDATA__', open(os.path.join(d, 'dddata.json')).read())
+t = (t.replace('__MONSTERS__', open(os.path.join(d, 'monsters.json')).read())
+      .replace('__DDDATA__', open(os.path.join(d, 'dddata.json')).read())
       .replace('__DATA__', json.dumps(data, separators=(',', ':')))
       .replace('__ICONS__', json.dumps(icons, separators=(',', ':')))
       .replace('__UI__', json.dumps(ui, separators=(',', ':')))

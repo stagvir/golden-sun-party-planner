@@ -527,6 +527,22 @@ details.sec .peek b { color: #fff; }
 .djc.lift { opacity: .35; }
 .djdrop { outline: 2px solid #fff; outline-offset: 1px; background-color: rgba(31, 152, 200, .35); }
 body.djdragging, body.djdragging * { cursor: grabbing !important; }
+/* monster compendium: status-screen style cards */
+.mon-tools { align-items: end; }
+.mon-tools input[type=search] { width: 14em; }
+.mon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 22em), 1fr)); gap: 8px; align-items: start; }
+.mon .gs-l2 { white-space: normal; }
+.mon .gs-l2 .cl { overflow: visible; }
+.mon .mon-st { display: grid; grid-template-columns: repeat(3, auto); justify-content: space-between; gap: 0 .8em; }
+.mon .mon-st i, .mon .mon-rw i { font-style: normal; color: var(--gs-dim); margin-right: .3em; }
+.mon .gs-el .lv { display: inline-flex; align-items: center; gap: .25em; }
+.mon .gs-el .dot { width: .7em; height: .7em; }
+.mon .gs-el .weak .pr { color: var(--bad); }
+.mon .mon-mv { display: flex; flex-wrap: wrap; gap: .2em .7em; align-items: baseline; }
+.mon .mon-mv .lab { color: var(--gs-gold); margin-right: .2em; }
+.mon .mon-mv i { font-style: normal; color: var(--gs-dim); }
+.mon .mon-rw { display: flex; flex-wrap: wrap; gap: .2em 1em; }
+.mon .mon-rw b { font-weight: 400; color: var(--gs-gold); }
 /* the showcase section is just the cards on the black screen */
 .showcase.panel { background: transparent; border: 0; box-shadow: none; padding: 0; }
 .grip:hover, .grip:focus-visible { background: rgba(255, 255, 255, .12); }
@@ -567,6 +583,7 @@ body.djdragging, body.djdragging * { cursor: grabbing !important; }
     <button type="button" role="tab" id="tabDjinn" data-view="djinn" aria-controls="viewDjinn" aria-selected="false">Djinn</button>
     <button type="button" role="tab" id="tabGear" data-view="gear" aria-controls="viewGear" aria-selected="false">Gear</button>
     <button type="button" role="tab" id="tabMods" data-view="mods" aria-controls="viewMods" aria-selected="false">Modifiers</button>
+    <button type="button" role="tab" id="tabMonsters" data-view="monsters" aria-controls="viewMonsters" aria-selected="false">Monsters</button>
   </nav>
 
   <div id="viewPlanner" role="tabpanel" aria-labelledby="tabPlanner" class="view">
@@ -636,6 +653,21 @@ body.djdragging, body.djdragging * { cursor: grabbing !important; }
     <div class="tscroll"><table class="gtab modtab" id="modTable"></table></div>
   </section>
 
+  <section id="viewMonsters" role="tabpanel" aria-labelledby="tabMonsters" class="view panel" hidden>
+    <div class="sheet-head">
+      <h2>Monsters</h2>
+      <div class="tools mon-tools">
+        <label class="field"><span class="lbl">Search</span><input type="search" id="monQ" placeholder="Name, attack or drop" autocomplete="off"></label>
+        <label class="field"><span class="lbl">Sort</span><select id="monSort">
+          <option value="id">Game order</option><option value="n">Name</option><option value="lv">Level</option><option value="hp">HP</option>
+          <option value="atk">Attack</option><option value="def">Defense</option><option value="agl">Agility</option><option value="exp">EXP</option><option value="coins">Coins</option></select></label>
+        <label class="toggle" id="monCarryBox"><input type="checkbox" id="monCarry"><span>Hide Broken Seal copies</span></label>
+      </div>
+    </div>
+    <p class="muted gv-note" id="monNote"></p>
+    <div class="mon-grid" id="monList"></div>
+  </section>
+
   <section class="panel footer-panel" aria-label="Save and notes">
     <details>
       <summary>Save or load a setup</summary>
@@ -664,6 +696,7 @@ body.djdragging, body.djdragging * { cursor: grabbing !important; }
         <li>"Endgame gear only" uses a hand-picked list per slot, chosen from each item's full stats and effects rather than Defense or Attack alone (so Hyper Boots and Ninja Sandals make it for their unleash bonus, and rings are judged by what they do in battle). An item you already have equipped stays in the list, marked "not endgame".</li>
         <li>Equipping an item another Adept is wearing takes it from them when only one copy exists, and gives them your old item if they can equip it. Items sold in shops are treated as unlimited; with a save imported, your actual number of copies is used.</li>
         <li>Dark Dawn: class lines, djinn requirements, class percentages, Psynergy by level and djinn bonuses come from the Golden Sun Syndicate's Dark Dawn class and djinn guides, read per Adept. How the game picks between lines isn't published; the planner uses the same rule as the GBA games, which agrees with the GBA class choice in 98% of djinn mixes. Base stats are entered by hand (growth curves aren't published). Psynergy figures (PP, power, range) are borrowed from The Lost Age where the names match; 21 Dark Dawn-only Psynergy show no figures. Elemental Power/Resistance isn't modelled yet, so gear Power/Resist bonuses are listed but not added to anything.</li>
+        <li>Monsters (The Broken Seal and The Lost Age): read straight from the game ROMs (stats, elemental tables, moves, EXP, coins, drops; names from the game text). The Lost Age figures match the Archipelago randomizer's export field for field and the Golden Sun wiki on every enemy checked. Drop chance is 1/2 to the power (code − 1), checked against the wiki's 1/256 for the Cruel Dragon's Tisiphone Edge; defeating an enemy with a Djinn attack can raise it. The Lost Age's table also holds copies of Broken Seal enemies; ones identical to a Broken Seal record are marked as likely unused there, since the encounter tables aren't read yet.</li>
         <li>Dark Dawn gear: the 188 weapons and armor (stats, effects, unleash names, prices, locations) come from Golden Sun Realm's Dark Dawn weapon and armor guides; not checked against the game. Unleash rates and power aren't published, and effects given only as words ("More critical hits", "Boosts Earth Power") aren't counted. Who can equip what follows the Golden Sun wiki's character pages by item type; items marked "may not be equippable" are where the wiki says a type is limited without naming items (Karis's staffs, Sveta's robes and headgear, Amiti's crowns) and goggles, which no page lists. Boots and rings are assumed to fit everyone.</li>
         <li>Field-only Psynergy that comes from items (Move, Lift, Teleport and so on) isn't listed.</li>
       </ul>
@@ -679,6 +712,8 @@ body.djdragging, body.djdragging * { cursor: grabbing !important; }
 const GSDATA = __DATA__;
 // Dark Dawn: classes and djinn from the Golden Sun Syndicate tables; no growth curves, no gear yet
 const DDDATA = __DDDATA__;
+// GBA monster tables, extracted from the owner's ROMs by monsters/extract_monsters.py
+const MONSTERS = __MONSTERS__;
 // Item icon sets, embedded at build time. Keys follow the Golden Sun Universe wiki file names:
 // "Warrior's Helm" -> Warriors_Helm (GBA set), Warriors_Helm_DD (Dark Dawn set).
 const GSICONS = __ICONS__;
@@ -719,9 +754,9 @@ __SAVEPARSE__
   // items both games share); only what differs is listed here.
   const GS1_ITEMS = new Set([1, 2, 3, 4, 5, 6, 8, 9, 11, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 31, 32, 33, 34, 35, 36, 37, 38, 43, 44, 45, 46, 47, 48, 49, 50, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 118, 119, 120, 121, 122, 123, 124, 127, 128, 129, 130, 131, 132, 133, 134, 136, 137, 138, 139, 140, 141, 142, 145, 146, 147, 148, 149, 150, 151, 152, 156, 157, 158, 159, 160, 161, 162, 163, 164, 166, 167, 168, 169, 170, 171, 256, 257, 258, 259, 262, 263, 264, 265, 266, 267, 268, 250, 251, 252]);
   const GAMES = {
-    gs1: { name: 'The Broken Seal', short: 'The Broken Seal', iconSet: 'gba', ready: true, chars: [0, 1, 2, 3], djPer: 7, djCap: 7,
+    gs1: { name: 'The Broken Seal', short: 'The Broken Seal', iconSet: 'gba', ready: true, monsters: 'gs1', chars: [0, 1, 2, 3], djPer: 7, djCap: 7,
       items: GS1_ITEMS, classItems: false, endgame: ENDGAME_GS1, tierNames: { 12: { 1: 'Dark Mage', 2: 'Death Mage' } }, example: { order: [0, 1, 2, 3], lv: 30 } },
-    tla: { name: 'The Lost Age', short: 'The Lost Age', iconSet: 'gba', ready: true, chars: [0, 1, 2, 3, 4, 5, 6, 7], djPer: 18, djCap: 9,
+    tla: { name: 'The Lost Age', short: 'The Lost Age', iconSet: 'gba', ready: true, monsters: 'tla', chars: [0, 1, 2, 3, 4, 5, 6, 7], djPer: 18, djCap: 9,
       items: null, classItems: true, endgame: ENDGAME, tierNames: {}, example: { order: [4, 5, 6, 7, 0, 1, 2, 3], lv: 40 } },
     dd: { name: 'Dark Dawn', short: 'Dark Dawn', iconSet: 'dd', ready: true, chars: [0, 1, 2, 3, 4, 5, 6, 7], djPer: 18, djCap: 9,
       items: null, slots: 'wbahgfr', classItems: false, endgame: { only: {}, include: [], exclude: [] }, noEndgame: true, tierNames: {}, manualBase: true,
@@ -831,7 +866,8 @@ __SAVEPARSE__
     if (!g.chars.includes(s.sel)) s.sel = s.order[0];
     s.endgame = s.endgame === true && !g.noEndgame;
     s.closed = (s.closed && typeof s.closed === 'object') ? s.closed : {};
-    s.view = ['planner', 'djinn', 'gear', 'mods'].includes(s.view) ? s.view : 'planner';
+    s.view = ['planner', 'djinn', 'gear', 'mods', 'monsters'].includes(s.view) ? s.view : 'planner';
+    s.mon = s.mon && typeof s.mon === 'object' ? { q: String(s.mon.q || ''), sort: String(s.mon.sort || 'id'), hideCarry: !!s.mon.hideCarry } : { q: '', sort: 'id', hideCarry: false };
     delete s.gearBase;
     if (!(s.base && Array.isArray(s.base.chars) && s.base.chars.length === 8 && s.base.chars.every(g => g && g.eq && Array.isArray(g.mods) && Array.isArray(g.boosts)) && Array.isArray(s.base.dj) && s.base.dj.length === 72)) s.base = null;
     s.owned = (s.owned && typeof s.owned === 'object') ? s.owned : null;
@@ -1728,11 +1764,12 @@ __SAVEPARSE__
   });
 
   // ---------- tabs ----------
-  const VIEWS = { planner: 'viewPlanner', djinn: 'viewDjinn', gear: 'viewGear', mods: 'viewMods' };
-  const TABS = { planner: 'tabPlanner', djinn: 'tabDjinn', gear: 'tabGear', mods: 'tabMods' };
+  const VIEWS = { planner: 'viewPlanner', djinn: 'viewDjinn', gear: 'viewGear', mods: 'viewMods', monsters: 'viewMonsters' };
+  const TABS = { planner: 'tabPlanner', djinn: 'tabDjinn', gear: 'tabGear', mods: 'tabMods', monsters: 'tabMonsters' };
   function applyView() {
-    if (!VIEWS[state.view] || (state.view === 'gear' && GM().noGear)) state.view = 'planner';
+    if (!VIEWS[state.view] || (state.view === 'gear' && GM().noGear) || (state.view === 'monsters' && !GM().monsters)) state.view = 'planner';
     $('tabGear').hidden = !!GM().noGear;
+    $('tabMonsters').hidden = !GM().monsters;
     document.querySelectorAll('.gearonly').forEach(x => { x.hidden = !!GM().noGear; });
     $('endgameOnly').closest('label').hidden = !!GM().noGear || !!GM().noEndgame;
     for (const k in VIEWS) {
@@ -1921,6 +1958,46 @@ __SAVEPARSE__
     document.querySelectorAll('.gbaonly').forEach(x => { x.hidden = !!GM().manualBase; });
     $('srcNote').textContent = GM().manualBase ? 'Dark Dawn data comes from the Golden Sun Syndicate class and djinn guides and the Golden Sun Realm item guides; base stats are entered by hand.' : "Data comes from the game's own class, stat, djinn and item tables.";
   }
+  // ---------- monster compendium ----------
+  // A Lost Age record identical to a Broken Seal one (name and every stat) is a carried-over copy, likely unused there
+  const monKey = m => [m.n, m.lv, m.hp, m.pp, m.atk, m.def, m.agl, m.lck, m.res.join(), m.moveIds.join()].join('|');
+  const GS1_MON = new Set(MONSTERS.gs1.map(monKey));
+  const fmtChance = c => c >= 1 ? 'always' : '1/' + Math.round(1 / c);
+  function monCard(m, carry) {
+    const st = [['HP', m.hp], ['PP', m.pp], ['ATK', m.atk], ['DEF', m.def], ['AGL', m.agl], ['LCK', m.lck]].map(([l, v]) => `<span><i>${l}</i>${v}</span>`).join('');
+    const lo = Math.min(...m.res), hi = Math.max(...m.res);
+    const els = [0, 1, 2, 3].map(e => `<div class="e${e}${m.res[e] === lo && lo !== hi ? ' weak' : ''}" title="${EL[e]}: level ${m.elv[e]}, Power ${m.pow[e]}, Resistance ${m.res[e]}${m.res[e] === lo && lo !== hi ? ' (weakest)' : ''}"><span class="lv"><span class="dot"></span>${m.elv[e]}</span><span class="pr">${m.pow[e]}/${m.res[e]}</span></div>`).join('');
+    const counts = new Map(); m.moves.forEach(n => counts.set(n, (counts.get(n) || 0) + 1));
+    const moves = [...counts].map(([n, c]) => `<span class="mv">${esc(n)}${c > 1 ? ` <i>×${c}</i>` : ''}</span>`).join('');
+    const regen = [m.hpRegen ? `HP +${m.hpRegen}` : '', m.ppRegen ? `PP +${m.ppRegen}` : ''].filter(Boolean).join(' · ');
+    return `<article class="gs gs-card mon" aria-label="${esc(m.n)}">
+      <div class="gs-l1"><span>${esc(m.n)}</span><span class="lv">Lv ${m.lv}</span></div>
+      <div class="gs-l2"><span class="cl">${m.el < 4 ? EL[m.el] : 'No element'}${m.turns > 1 ? ` · ${m.turns} actions a turn` : ''}${regen ? ' · regen ' + regen : ''}</span></div>
+      <div class="gs-sep"></div>
+      <div class="mon-st">${st}</div>
+      <div class="gs-el">${els}</div>
+      <div class="gs-sep"></div>
+      <div class="mon-mv"><span class="lab">MOVES</span>${moves || '<span class="gs-empty">None</span>'}</div>
+      <div class="mon-rw"><span><i>EXP</i>${m.exp}</span><span><i>Coins</i>${m.coins}</span><span><i>Drop</i>${m.drop ? `${esc(m.drop)} <b>${fmtChance(m.dropChance)}</b>` : '—'}</span></div>
+      ${carry ? '<div class="gs-empty">Same as in The Broken Seal, likely unused here</div>' : ''}
+    </article>`;
+  }
+  const monState = () => state.mon || (state.mon = { q: '', sort: 'id', hideCarry: false });
+  function renderMonsters() {
+    if ($('viewMonsters').hidden || !GM().monsters) return;
+    const all = MONSTERS[GM().monsters], ms = monState(), tla = GM().monsters === 'tla';
+    $('monQ').value = ms.q; $('monSort').value = ms.sort; $('monCarry').checked = ms.hideCarry; $('monCarryBox').hidden = !tla;
+    const q = ms.q.trim().toLowerCase();
+    let list = all.map(m => ({ m, carry: tla && GS1_MON.has(monKey(m)) }))
+      .filter(({ m, carry }) => !(ms.hideCarry && carry) && (!q || [m.n, m.drop || '', ...m.moves].some(t => t.toLowerCase().includes(q))));
+    const k = ms.sort;
+    list.sort((a, b) => k === 'n' ? a.m.n.localeCompare(b.m.n) || a.m.lv - b.m.lv : k === 'id' ? a.m.id - b.m.id : (b.m[k] - a.m[k]) || a.m.n.localeCompare(b.m.n));
+    $('monNote').textContent = `${list.length} of ${all.length} monsters. Element dots show each element's level and Power/Resistance; the weakest resistance is marked. Drop chances are before any djinn bonus.`;
+    $('monList').innerHTML = list.map(({ m, carry }) => monCard(m, carry)).join('') || '<p class="muted">No monsters match.</p>';
+  }
+  $('monQ').addEventListener('input', e => { monState().q = e.target.value; renderMonsters(); save(); });
+  $('monSort').addEventListener('change', e => { monState().sort = e.target.value; renderMonsters(); save(); });
+  $('monCarry').addEventListener('change', e => { monState().hideCarry = e.target.checked; renderMonsters(); save(); });
   // Width of every Adept column in the Gear/Djinn/Modifiers tables: the longest item name in this game, plus icon and padding
   const measureCtx = document.createElement('canvas').getContext('2d');
   function fitColumns() {
@@ -1951,7 +2028,7 @@ __SAVEPARSE__
   }
   function renderAll(opts = {}) {
     fitColumns();
-    renderStrip(); renderSheet(); renderOverview(); renderShowcase(); renderGear(); renderDjinnTab(); renderModsTab(!!opts.modsFootOnly);
+    renderStrip(); renderSheet(); renderOverview(); renderShowcase(); renderGear(); renderDjinnTab(); renderModsTab(!!opts.modsFootOnly); renderMonsters();
     if (typeof syncImportUi === 'function') syncImportUi();
     $('ioText').value = JSON.stringify(state);
     save();
