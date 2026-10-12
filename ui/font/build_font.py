@@ -59,6 +59,7 @@ EXTRA = {
     '\u2212': (3, ['#####']),                             # minus
     '\u2192': (1, ['...#.', '....#', '#####', '....#', '...#.']),   # right arrow
     '\u00d7': (2, ['#...#', '.#.#.', '..#..', '.#.#.', '#...#']),   # multiplication sign
+    '\u21c4': (0, ['....#..', '.....#.', '#######', '.....#.', '..#.#..', '.#.....', '#######', '.#.....', '..#....']),  # swap arrows (→ over ←)
 }
 for ch, (top, rows) in EXTRA.items():
     shape = {(x, y) for y, row in enumerate(rows) for x, c in enumerate(row) if c == '#'}

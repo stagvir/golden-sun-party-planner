@@ -320,6 +320,7 @@ details.sec .sec-body { display: grid; gap: 10px; margin-top: 8px; }
 .chg.dn { color: var(--bad); background: var(--bad-bg); }
 .chg.nt { color: var(--muted); background: var(--sunk); font-family: var(--body); }
 .chg.sw { color: var(--warn); background: var(--sunk); font-family: var(--body); }
+.chg.xch { color: #8ae4ff; background: rgba(0, 0, 0, .35); }
 .chg.swp { display: inline-flex; align-items: center; gap: 2px; padding: 1px 4px 1px 3px; }
 .chg.swp img { width: 32px; height: 32px; image-rendering: pixelated; display: block; }
 
@@ -1306,12 +1307,13 @@ __SAVEPARSE__
     buildLoad(snap);
     return { before, after, note, swap };
   }
-  // A swap as portraits: "−" the Adept it's taken from, "+" if they get the old one back. The sentence is the hover/screen-reader text.
+  // Another Adept holds it: "⇄[portrait]" when they get the old one in exchange, "−[portrait]" when it's just taken
+  // (they can't use the old one). The sentence is the hover/screen-reader text.
   function swapChips(p) {
     const s = p.swap, nm = D.chars[s.from].name, por = GSUI.portrait[nm];
     const face = por ? `<img src="${por}" alt="">` : esc(nm);
     const txt = esc(p.note.replace(/^Took /, 'Takes '));
-    return [`<span class="chg dn swp" title="${txt}" aria-label="${txt}">−${face}</span>`].concat(s.back ? [`<span class="chg up swp" title="${txt}" aria-hidden="true">+${face}</span>`] : []);
+    return [`<span class="chg ${s.back ? 'xch' : 'dn'} swp" title="${txt}" aria-label="${txt}">${s.back ? '⇄' : '−'}${face}</span>`];
   }
   function chips(before, after) {
     const out = [];
