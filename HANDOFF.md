@@ -32,7 +32,8 @@ Open `planner.html` in a browser. Everything is inlined: data, icons as data URI
 | `gsdata.json` | GBA data: `chars`, `series` (classes), `abil` (Psynergy), `djinn`, `items`, `boost` (stat items). |
 | `dddata.json` | Dark Dawn data, built by `dd/build_dd.py`. Same shape plus `lines`/`mono` per character. `items` is empty. |
 | `dd/` | Raw Dark Dawn tables (`<name>.txt`, `djinn.txt`), `parse.py` (→ `ddclasses.json`), `build_dd.py` (→ `dddata.json`), and the two unlabelled DD icon sheets the user supplied. |
-| `icons/gba/` | Item icons named like wiki files (`Warriors_Helm.gif`). `icon_aliases.json` maps the odd names. A `dd` set is wired up but empty. |
+| `icons/gba/` | Item icons named like wiki files (`Warriors_Helm.gif`). `icon_aliases.json` maps the odd names. |
+| `icons/dd/`, `ui/psynergy_dd/` | Dark Dawn item (191) and Psynergy (180) icons from the Golden Sun Realm guide PDFs, via `dd/extract_pdf_icons.py`. They keep DD's menu frame; Psynergy icons also have the PP cost baked in. Item icons embed only once `dddata.json` has items; Psynergy icons aren't wired in yet. |
 | `ui/` | Portraits, element stars, frame and Psynergy icons for the game-styled showcase. Dark Dawn portraits are `ui/portraits/<Name>_DD.gif`, cut from `dd/icon_sheets/dd_mugshots.png` by `dd/cut_portraits.py`. |
 | `tests/` | Playwright UI tests and node data checks (below). |
 | `testdata/gtc/` | Test saves from game-tools-collection (MIT, licence included). |
@@ -143,15 +144,15 @@ Node checks:
 - **Save layouts and test saves:** github.com/RyudoSynbios/game-tools-collection (MIT, commit 6f5d8064050e).
   - Files: `src/lib/templates/golden-sun*/saveEditor/template.ts`.
 - **Wiki:** goldensunwiki.net, for icons, mechanics and spot checks. Raw wikitext (`?action=raw`) is robots-blocked for fetchers.
-- **Dark Dawn:** goldensun-syndicate.net/dd/classes/ and /dd/djinn/.
+- **Dark Dawn:** goldensun-syndicate.net/dd/classes/ and /dd/djinn/. Icons: Golden Sun Realm guide PDFs (goldensunrealm.com/gsdd/weapons.php etc.).
 - **Sprites:** GBA item, portrait and Psynergy sprites from the user's zip (fan-wiki sprites). Dark Dawn mugshots from a user-supplied sheet ("Protagonists' Mugshots", DS rip). Keep the page private.
 
 ## Open work, in rough priority
 
 1. **Dark Dawn gear.**
    - Needs an item table (stats, unleashes, who can equip). No clean source was found; Syndicate DD has no item guide.
-   - Icons: `dd/icon_sheets/dd_item_icons.png` is unlabelled (rows = item type, columns = palette variants). For now, use one icon per slot type, or get the wiki's named `*_DD.gif` files.
-   - The `dd` icon set plumbing already exists (`GAMES.dd.iconSet`, `iconKey` appends `_DD`).
+   - Candidate source: the Golden Sun Realm weapon, armor and blacksmith guides (goldensunrealm.com/gsdd/) list price, stats, unleashes, equip type and where found. The user has them as PDFs (not committed).
+   - Icons are done: `icons/dd/<Key>_DD.png`, picked up through `GAMES.dd.iconSet` / `iconKey` once items exist.
 2. **Dark Dawn elemental Power/Resistance and growth curves.**
    - Unpublished. Options: decode DD `.sav` files (would also give an importer and curve fitting) or extract from the user's own ROM.
 3. **Phase 3: damage estimates** (the original goal).

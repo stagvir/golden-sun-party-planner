@@ -19,9 +19,11 @@ def icon_key(name, icon_set):
     return k + '_DD' if icon_set == 'dd' else k
 
 wanted = {s: {} for s in ('gba', 'dd')}  # set -> {key: [item names]}
-names = [it['n'] for it in data['items'].values()] + ['Mysterious Card', "Trainer's Whip", 'Tomegathericon']
-for n in names:
-    for s in wanted:
+dd_items = json.load(open(os.path.join(d, 'dddata.json'))).get('items') or {}
+names = {'gba': [it['n'] for it in data['items'].values()] + ['Mysterious Card', "Trainer's Whip", 'Tomegathericon'],
+         'dd': [it['n'] for it in dd_items.values()]}  # each set only embeds icons its own game's items use
+for s in wanted:
+    for n in names[s]:
         k = ALIASES.get(s, {}).get(n, icon_key(n, s))
         wanted[s].setdefault(k, []).append(n)
 
