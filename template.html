@@ -514,6 +514,10 @@ details.sec .peek b { color: #fff; }
 .picker { width: min(30em, calc(100vw - 32px)); max-height: min(40em, 75vh); }
 .tip { width: min(22em, calc(100vw - 32px)); }
 .gamepick select { min-width: 0; max-width: 100%; }
+/* djinn + button: a dashed, chip-shaped empty slot sized like the djinn chips (not a framed window button) */
+.djadd, .djadd:hover, .djadd[aria-expanded="true"] { border-width: 1px; width: auto; height: auto; min-width: 2.4em; padding: 0 .5em; line-height: 1.5;
+  border: 1px dashed rgba(255, 255, 255, .55); border-image: none; border-radius: 99px; background: rgba(0, 0, 0, .25); color: #fff; }
+.djadd:hover, .djadd[aria-expanded="true"] { border-style: solid; border-color: #fff; background: var(--cursor); }
 /* the showcase section is just the cards on the black screen */
 .showcase.panel { background: transparent; border: 0; box-shadow: none; padding: 0; }
 .grip:hover, .grip:focus-visible { background: rgba(255, 255, 255, .12); }
