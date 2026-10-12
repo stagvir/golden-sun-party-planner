@@ -7,7 +7,9 @@ Enemy records (US ROMs; offsets from each record's level byte, which follows a 1
   +0 level, +1 HP, +3 PP, +5 ATK, +7 DEF, +9 AGL (16-bit), +11 LCK, +12 turns, +13 HP regen, +14 PP regen,
   then (TLA / GS1) elemental table +27/+37, attacks +31/+41 (8 x 16-bit ability ids), coins +51/+61, drop item
   +53/+63, drop code +55/+65, EXP +57/+67.
-Elemental tables (24 bytes: element, 3 pad, 4 levels, then Power/Resistance pairs per element): TLA 0xC6684, GS1 0x88E38.
+Elemental tables (24 bytes: a byte 'el' of unknown meaning, 3 pad, 4 levels, then Power/Resistance pairs per element):
+TLA 0xC6684, GS1 0x88E38. 'el' is 4 for most enemies, even plainly Mars ones like Agatio, so the page takes a
+monster's element from its highest elemental level instead.
 Names come from the game text: enemies at line 1067 / 655 + id, abilities 1447 / 819 + id, items 607 / 386 + id.
 Drop code n is a 1/2^(n-1) chance (code 9 = 1/256: Cruel Dragon's Tisiphone Edge, per the Golden Sun wiki).
 Checked: TLA stats match the Archipelago export and the wiki spot checks (Phoenix, Anger Ball, Living Armor, ...).

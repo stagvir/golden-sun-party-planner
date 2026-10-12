@@ -1963,6 +1963,9 @@ __SAVEPARSE__
   const monKey = m => [m.n, m.lv, m.hp, m.pp, m.atk, m.def, m.agl, m.lck, m.res.join(), m.moveIds.join()].join('|');
   const GS1_MON = new Set(MONSTERS.gs1.map(monKey));
   const fmtChance = c => c >= 1 ? 'always' : '1/' + Math.round(1 / c);
+  // A monster's element is its highest elemental level (the tables' own 'element' byte is 4 for most enemies, Agatio
+  // included, so it isn't that); a tie at the top means no single element
+  const monElement = m => { const top = Math.max(...m.elv), at = [0, 1, 2, 3].filter(e => m.elv[e] === top); return at.length === 1 ? at[0] : 4; };
   function monCard(m, carry) {
     const st = [['HP', m.hp], ['PP', m.pp], ['ATK', m.atk], ['DEF', m.def], ['AGL', m.agl], ['LCK', m.lck]].map(([l, v]) => `<span><i>${l}</i>${v}</span>`).join('');
     const lo = Math.min(...m.res), hi = Math.max(...m.res);
@@ -1972,7 +1975,7 @@ __SAVEPARSE__
     const regen = [m.hpRegen ? `HP +${m.hpRegen}` : '', m.ppRegen ? `PP +${m.ppRegen}` : ''].filter(Boolean).join(' · ');
     return `<article class="gs gs-card mon" aria-label="${esc(m.n)}">
       <div class="gs-l1"><span>${esc(m.n)}</span><span class="lv">Lv ${m.lv}</span></div>
-      <div class="gs-l2"><span class="cl">${m.el < 4 ? EL[m.el] : 'No element'}${m.turns > 1 ? ` · ${m.turns} actions a turn` : ''}${regen ? ' · regen ' + regen : ''}</span></div>
+      <div class="gs-l2"><span class="cl">${monElement(m) < 4 ? EL[monElement(m)] : 'No single element'}${m.turns > 1 ? ` · ${m.turns} actions a turn` : ''}${regen ? ' · regen ' + regen : ''}</span></div>
       <div class="gs-sep"></div>
       <div class="mon-st">${st}</div>
       <div class="gs-el">${els}</div>
