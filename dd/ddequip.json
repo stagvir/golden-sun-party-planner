@@ -1,0 +1,19 @@
+{
+ "_source": "Golden Sun wiki character infoboxes (Weapons / Body / Arm / Head rows), screenshots from the owner, Oct 2026. Types are the Golden Sun Realm guide's item types (Fist = the wiki's Knuckles).",
+ "_assumed": "Boots and Ring aren't in the infoboxes; everyone is assumed to wear them, as in the GBA games.",
+ "everyone": ["Boots", "Ring"],
+ "chars": {
+  "Matthew": {"can": ["Long Sword", "Light Blade", "Axe", "Mace", "Clothing", "Armor", "Gloves", "Shield", "Hat", "Crown", "Helm"]},
+  "Tyrell":  {"can": ["Long Sword", "Light Blade", "Axe", "Mace", "Clothing", "Armor", "Gloves", "Shield", "Hat", "Crown", "Helm"]},
+  "Karis":   {"can": ["Light Blade", "Staff", "Bow", "Clothing", "Robe", "Gloves", "Bracelet", "Hat", "Crown", "Circlet"],
+              "unsure": ["Staff"], "why": "Staff (limited use): the infobox doesn't say which staffs"},
+  "Rief":    {"can": ["Staff", "Mace", "Clothing", "Robe", "Gloves", "Bracelet", "Hat", "Crown", "Circlet"]},
+  "Amiti":   {"can": ["Light Blade", "Staff", "Bow", "Clothing", "Robe", "Gloves", "Bracelet", "Hat", "Crown", "Circlet"],
+              "not": ["Blessed Ankh", "Angelic Ankh"], "unsure": ["Crown"], "why": "Staffs but not Ankhs; head armor listed as \"Basic Headgear\", taken as hats, with crowns unconfirmed"},
+  "Sveta":   {"can": ["Fist", "Claw", "Clothing", "Robe", "Gloves", "Hat", "Crown", "Circlet"],
+              "unsure": ["Robe", "Hat", "Crown", "Circlet"], "why": "Robes (limited) and Hats, Crowns, Circlets (limited): the infobox doesn't say which"},
+  "Eoleo":   {"can": ["Light Blade", "Axe", "Mace", "Clothing", "Armor", "Gloves", "Shield", "Hat", "Crown", "Helm"]},
+  "Himi":    {"can": ["Light Blade", "Staff", "Clothing", "Robe", "Gloves", "Bracelet", "Hat", "Crown", "Circlet"]}
+ },
+ "unknown_types": {"Goggles": "Not in any infobox (the head row lists Hat/Crown/Mask and Helm). Allowed for everyone, unconfirmed."}
+}

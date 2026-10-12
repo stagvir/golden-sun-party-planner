@@ -39,7 +39,7 @@ Open `planner.html` in a browser. Everything is inlined: data, icons as data URI
 | `testdata/gtc/` | Test saves from game-tools-collection (MIT, licence included). |
 | `testdata/user/` | The owner's real GS1 and TLA saves (3 + 2 slots). |
 
-Rebuild Dark Dawn data with `cd dd && python3 parse.py && python3 build_dd.py . ../gsdata.json && cp dddata.json ..`.
+Rebuild Dark Dawn data with `cd dd && python3 parse.py && python3 build_dd.py . ../gsdata.json && mv dddata.json ..`. Re-parse items first if the guides change: `python3 dd/parse_items.py <weapon.pdf> <armor.pdf>`.
 
 ## Model and formulas (GBA, verified)
 
@@ -120,7 +120,13 @@ Rebuild Dark Dawn data with `cd dd && python3 parse.py && python3 build_dd.py . 
 - **Base stats are entered by hand** because DD growth curves aren't published.
   - The Modifiers tab has a "From the status screen (gear removed)" helper. It solves the smallest base that reproduces each shown stat under the current class and djinn.
   - Level only changes which Psynergy is learned.
-- **Hidden in DD:** the Gear tab, gear filters, Power/Resistance, unleash rows and stat items.
+- **Gear** (`dd/dditems.json` → `dddata.json` items, built by `dd/build_dd.py`):
+  - 188 weapons and armor parsed from Golden Sun Realm's DD weapon and armor guides (PDFs, not committed) by `dd/parse_items.py`. Power/Resist elements are read from the coloured ball beside each line and cross-checked against the item description.
+  - DD-only item fields: `ul` (unleash names, no rates), `note` (the type line's description), `fx` (worded effects), `price`, `where`, `mq` (characters whose right to equip is unconfirmed).
+  - Who can equip: per item type from the Golden Sun wiki character infoboxes (`dd/ddequip.json`). Amiti can't use ankhs. Boots and rings are assumed open to everyone.
+  - Slots are per game (`GAMES.<g>.slots`): DD has a Face slot (goggles) and no Shirt slot.
+  - Equipping uses the GBA formula (gear added before class %), which is unverified for DD.
+- **Hidden in DD:** the endgame filter, Power/Resistance, unleash rates and stat items.
 
 ## Tests
 
@@ -129,6 +135,7 @@ The Playwright tests take an optional playwright root as their argument:
 - `tests/drag.js` — column drag and keyboard reorder in the Djinn, Gear and Modifiers tabs.
 - `tests/gs1ui.js` — Broken Seal mode, game switching, GS1 and TLA import auto-switch.
 - `tests/ddui.js` — Dark Dawn mode, class picks, base-stat solver. Writes screenshots to `out/`.
+- `tests/ddgear.js` — Dark Dawn gear: slots, who can equip, unconfirmed flags, unleashes, 400px width, GBA slots unchanged.
 - `tests/userimp.js` — imports the owner's saves. Expect 5 "match the game" lines (23/23 Adepts' HP/PP).
 
 Node checks:
@@ -149,10 +156,10 @@ Node checks:
 
 ## Open work, in rough priority
 
-1. **Dark Dawn gear.**
-   - Needs an item table (stats, unleashes, who can equip). No clean source was found; Syndicate DD has no item guide.
-   - Candidate source: the Golden Sun Realm weapon, armor and blacksmith guides (goldensunrealm.com/gsdd/) list price, stats, unleashes, equip type and where found. The user has them as PDFs (not committed).
-   - Icons are done: `icons/dd/<Key>_DD.png`, picked up through `GAMES.dd.iconSet` / `iconKey` once items exist.
+1. **Dark Dawn gear gaps.**
+   - Confirm the "may not be equippable" cases (`dd/ddequip.json` `unsure`): which staffs Karis can use, which robes and headgear Sveta can use, Amiti's crowns, goggles for anyone. Also whether goggles really have their own Face slot.
+   - Unleash rates/power and the worded effects ("More critical hits", "Boosts Earth Power") have no figures.
+   - Gear Power/Resist bonuses wait on item 2.
 2. **Dark Dawn elemental Power/Resistance and growth curves.**
    - Unpublished. Options: decode DD `.sav` files (would also give an importer and curve fitting) or extract from the user's own ROM.
 3. **Phase 3: damage estimates** (the original goal).

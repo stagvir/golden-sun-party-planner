@@ -49,7 +49,31 @@ for ci, (name, c) in enumerate(cls.items()):
     mono = next(s for s in lines if all(v == 0 for v in series[s]['tiers'][0]['req']))
     chars.append({'name': name, 'el': c['el'], 'lines': lines, 'mono': mono,
                   'curve': [[0] * 6 for _ in range(6)], 'aff': [3, 3, 3, 3]})
-data = {'chars': chars, 'series': series, 'abil': abil, 'djinn': djinn, 'items': {}, 'boost': gs['boost'], 'dd': True}
+# Items: dditems.json (parsed from the Golden Sun Realm guides by parse_items.py) plus who can equip each type
+# (ddequip.json). m = equip bitmask by character; mq = characters whose right to equip it isn't confirmed.
+SHOP_TOWNS = {"Patcher's Place", "Carver's Camp", 'Harapa', 'Ayuthay', 'Border Town', 'Kaocho', 'Belinsk', 'Port Rago', 'Saha',
+              'Yamata City', 'Harun Village', 'Tonfon', 'Champa Camp', 'Te Rya', 'Passaj'}
+items = {}
+try:
+    raw = json.load(open(f'{here}/dditems.json')); eqp = json.load(open(f'{here}/ddequip.json'))
+except FileNotFoundError:
+    raw, eqp = [], None
+for i, it in enumerate(raw, 1):
+    it = dict(it); m = mq = 0
+    for ci, ch in enumerate(chars):
+        rule = eqp['chars'][ch['name']]
+        if it['n'] in rule.get('not', []): continue
+        if it['k'] in rule['can'] or it['k'] in eqp['everyone']: m |= 1 << ci
+        elif it['k'] in eqp['unknown_types']: m |= 1 << ci; mq |= 1 << ci
+        if it['k'] in rule.get('unsure', []): mq |= 1 << ci
+    it['m'] = m
+    if mq: it['mq'] = mq
+    # buyable (or unlockable in Artifact shops): the weapon guide lists shop towns bare ("Patcher's Place, Harapa"),
+    # where chests and drops always add words ("Ayuthay chest, ...")
+    parts = {p.strip(' .') for p in it.get('where', '').split(',')}
+    if 'shop' in it.get('where', '').lower() or parts & SHOP_TOWNS: it['b'] = 1
+    items[str(i)] = it
+data = {'chars': chars, 'series': series, 'abil': abil, 'djinn': djinn, 'items': items, 'boost': gs['boost'], 'dd': True}
 json.dump(data, open(f'{here}/dddata.json', 'w'), separators=(',', ':'))
 unk = [a['n'] for a in abil.values() if a.get('unk')]
-print('chars', len(chars), 'series', len(series), 'psy', len(abil), 'unknown psy', len(unk))
+print('items', len(items), 'chars', len(chars), 'series', len(series), 'psy', len(abil), 'unknown psy', len(unk))

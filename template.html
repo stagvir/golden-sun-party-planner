@@ -1,3 +1,7 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Golden Sun Party Planner</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -491,7 +495,8 @@ details.sec .sec-body { display: grid; gap: 10px; margin-top: 8px; }
         <li>Class items (Mysterious Card, Trainer's Whip, Tomegathericon) get their own slot here. I couldn't confirm whether the game makes them share a slot with rings.</li>
         <li>"Endgame gear only" uses a hand-picked list per slot, chosen from each item's full stats and effects rather than Defense or Attack alone (so Hyper Boots and Ninja Sandals make it for their unleash bonus, and rings are judged by what they do in battle). An item you already have equipped stays in the list, marked "not endgame".</li>
         <li>Equipping an item another Adept is wearing takes it from them when only one copy exists, and gives them your old item if they can equip it. Items sold in shops are treated as unlimited; with a save imported, your actual number of copies is used.</li>
-        <li>Dark Dawn: class lines, djinn requirements, class percentages, Psynergy by level and djinn bonuses come from the Golden Sun Syndicate's Dark Dawn class and djinn guides, read per Adept. How the game picks between lines isn't published; the planner uses the same rule as the GBA games, which agrees with the GBA class choice in 98% of djinn mixes. Base stats are entered by hand (growth curves aren't published). Psynergy figures (PP, power, range) are borrowed from The Lost Age where the names match; 21 Dark Dawn-only Psynergy show no figures. Elemental Power/Resistance and gear aren't modelled yet.</li>
+        <li>Dark Dawn: class lines, djinn requirements, class percentages, Psynergy by level and djinn bonuses come from the Golden Sun Syndicate's Dark Dawn class and djinn guides, read per Adept. How the game picks between lines isn't published; the planner uses the same rule as the GBA games, which agrees with the GBA class choice in 98% of djinn mixes. Base stats are entered by hand (growth curves aren't published). Psynergy figures (PP, power, range) are borrowed from The Lost Age where the names match; 21 Dark Dawn-only Psynergy show no figures. Elemental Power/Resistance isn't modelled yet, so gear Power/Resist bonuses are listed but not added to anything.</li>
+        <li>Dark Dawn gear: the 188 weapons and armor (stats, effects, unleash names, prices, locations) come from Golden Sun Realm's Dark Dawn weapon and armor guides; not checked against the game. Unleash rates and power aren't published, and effects given only as words ("More critical hits", "Boosts Earth Power") aren't counted. Who can equip what follows the Golden Sun wiki's character pages by item type; items marked "may not be equippable" are where the wiki says a type is limited without naming items (Karis's staffs, Sveta's robes and headgear, Amiti's crowns) and goggles, which no page lists. Boots and rings are assumed to fit everyone.</li>
         <li>Field-only Psynergy that comes from items (Move, Lift, Teleport and so on) isn't listed.</li>
       </ul>
     </details>
@@ -534,7 +539,10 @@ __SAVEPARSE__
   const ITEMS = [['', 'None'], ['card', 'Mysterious Card'], ['whip', "Trainer's Whip"], ['tome', 'Tomegathericon']];
   const KEY_FOR = g => g === 'tla' ? 'tla-planner-v1' : `gs-planner-${g}-v1`;
   const CUR_KEY = 'gs-planner-game';
-  const SLOTS = [['w', 'Weapon'], ['b', 'Body'], ['a', 'Arm'], ['h', 'Head'], ['s', 'Shirt'], ['f', 'Boots'], ['r', 'Ring']];
+  // Every slot any game uses; each game lists its own (GBA has an undershirt slot, Dark Dawn a face slot for goggles)
+  const ALL_SLOTS = [['w', 'Weapon'], ['b', 'Body'], ['a', 'Arm'], ['h', 'Head'], ['s', 'Shirt'], ['g', 'Face'], ['f', 'Boots'], ['r', 'Ring']];
+  const SLOTS_OF = g => ALL_SLOTS.filter(([sl]) => (g.slots || 'wbahsfr').includes(sl));
+  const SLOTS = () => SLOTS_OF(GM());
   const ITEM = id => (id == null ? null : D.items[id] || null);
 
   // ---------- games & icons ----------
@@ -548,7 +556,7 @@ __SAVEPARSE__
     tla: { name: 'The Lost Age', short: 'The Lost Age', iconSet: 'gba', ready: true, chars: [0, 1, 2, 3, 4, 5, 6, 7], djPer: 18, djCap: 9,
       items: null, classItems: true, endgame: ENDGAME, tierNames: {}, example: { order: [4, 5, 6, 7, 0, 1, 2, 3], lv: 40 } },
     dd: { name: 'Dark Dawn', short: 'Dark Dawn', iconSet: 'dd', ready: true, chars: [0, 1, 2, 3, 4, 5, 6, 7], djPer: 18, djCap: 9,
-      items: new Set(), classItems: false, endgame: { only: {}, include: [], exclude: [] }, tierNames: {}, manualBase: true, noGear: true,
+      items: null, slots: 'wbahgfr', classItems: false, endgame: { only: {}, include: [], exclude: [] }, noEndgame: true, tierNames: {}, manualBase: true,
       example: { order: [0, 1, 2, 3, 4, 5, 6, 7], lv: 30 } },
   };
   const GM = () => GAMES[state.game];
@@ -587,6 +595,7 @@ __SAVEPARSE__
     a: '<path d="M8 2.5 13 4v4c0 3-2.2 4.8-5 5.5C5.2 12.8 3 11 3 8V4z"/>',
     h: '<path d="M3 11V8a5 5 0 0 1 10 0v3"/><path d="M2.5 11h11M8 3v8"/>',
     s: '<path d="M5.5 2.5 2.5 4.5 4 7l1.5-.8V13.5h5V6.2L12 7l1.5-2.5-3-2c-.5 1.2-1.5 1.8-2.5 1.8S6 3.7 5.5 2.5z"/>',
+    g: '<circle cx="5" cy="8.5" r="2.5"/><circle cx="11" cy="8.5" r="2.5"/><path d="M7.5 8.5h1M2.5 8.5 1.5 7M13.5 8.5l1-1.5"/>',
     f: '<path d="M5 2.5h4v6l4 2.5v2.5H3V8.5z"/>',
     r: '<circle cx="8" cy="9.5" r="4"/><path d="M6.5 4 8 2.5 9.5 4 8 5.5z"/>',
     c: '<rect x="4" y="2.5" width="8" height="11" rx="1"/><path d="M8 5.5v5M5.5 8h5"/>',
@@ -597,7 +606,7 @@ __SAVEPARSE__
     if (src) return `<span class="${cls} ${set}"><img src="${src}" alt="" loading="lazy"></span>`;
     return `<span class="${cls} glyph ${it ? '' : 'empty'}" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round">${GLYPH[sl] || GLYPH.c}</svg></span>`;
   }
-  const emptyEq = () => ({ w: null, b: null, a: null, h: null, s: null, f: null, r: null });
+  const emptyEq = () => ({ w: null, b: null, a: null, h: null, s: null, g: null, f: null, r: null });
   const $ = id => document.getElementById(id);
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
@@ -644,7 +653,7 @@ __SAVEPARSE__
       if (!['', 'card', 'whip', 'tome'].includes(c.item) || !g.classItems) c.item = '';
       c.boosts = (c.boosts || []).slice(0, 6).map(v => clamp(parseInt(v, 10) || 0, 0, 99)); while (c.boosts.length < 6) c.boosts.push(0);
       const eq = emptyEq();
-      for (const [sl] of SLOTS) {
+      for (const [sl] of SLOTS_OF(g)) {
         const id = c.eq ? c.eq[sl] : null, it = ITEM(id);
         if (it && it.sl === sl && (it.m >> ci) & 1 && inGameItem(id, g) && g.chars.includes(ci)) eq[sl] = id;
       }
@@ -652,7 +661,7 @@ __SAVEPARSE__
     });
     s.dj = s.dj.map((d, i) => ({ o: (d && Number.isInteger(d.o) && g.chars.includes(d.o) && inGameDj(i, g)) ? d.o : null, s: !(d && d.s === false) }));
     if (!g.chars.includes(s.sel)) s.sel = s.order[0];
-    s.endgame = s.endgame === true;
+    s.endgame = s.endgame === true && !g.noEndgame;
     s.closed = (s.closed && typeof s.closed === 'object') ? s.closed : {};
     s.view = ['planner', 'djinn', 'gear', 'mods'].includes(s.view) ? s.view : 'planner';
     delete s.gearBase;
@@ -684,7 +693,7 @@ __SAVEPARSE__
     const base = ch.curve.map(cv => G.baseStat(cv, cs.lv));
     const dj = [0, 0, 0, 0, 0, 0];
     owned(ci).forEach(d => { if (d.s) D.djinn[d.i].s.forEach((v, k) => dj[k] += v); });
-    const items = SLOTS.map(([sl]) => ITEM(cs.eq[sl]));
+    const items = SLOTS().map(([sl]) => ITEM(cs.eq[sl]));
     const gear = G.gearEffects(items);
     const boost = [0, 0, 0, 0, 0, 0];
     D.boost.forEach((b, i) => { boost[b.s] += b.v * cs.boosts[i]; });
@@ -759,6 +768,7 @@ __SAVEPARSE__
     const p = [];
     if (it.sl !== 'w' && it.a) p.push(`Attack +${it.a}`);
     if (it.u) p.push(`Unleash ${it.u.n} (${it.u.e < 4 ? EL[it.u.e] : 'none'}, ${it.u.r}%)`);
+    if (it.ul) p.push(`Unleashes: ${it.ul.join(', ')}`);
     if (it.us) p.push(`In battle: ${it.us.t.replace(/^Use to /i, '').replace(/^./, c => c.toUpperCase())}`);
     for (const [t, v] of (it.e || [])) {
       const sg = v >= 0 ? '+' + v : String(v);
@@ -772,6 +782,9 @@ __SAVEPARSE__
       else if (t === 25) p.push('Cancels curses');
       else if (t === 27) p.push('More random battles');
     }
+    // Dark Dawn effects the guide gives no figures for ("More critical hits", "Boosts Earth Power")
+    for (const f of (it.fx || [])) if (f !== 'Bestows Psynergy' && f !== 'Curse is removable') p.push(f);
+    if (it.note && (it.sl === 'w' || !it.e)) p.push(it.note);  // armor notes just restate their numeric effects
     return p;
   }
   const ENDGAME_SETS = {}; for (const [g, def] of Object.entries(GAMES)) if (def.ready) ENDGAME_SETS[g] = endgameSet(dataFor(g).items, def.endgame);
@@ -806,16 +819,16 @@ __SAVEPARSE__
     const names = {}; list.forEach(([, it]) => { names[it.n] = (names[it.n] || 0) + 1; });
     const opts = list.map(([id, it]) => {
       const extra = showExtra && S.v(it) ? ` · ${S.show(S.v(it), it)}` : '';
-      return { id: +id, it, label: `${it.n}${names[it.n] > 1 ? ` (${it.k})` : ''} · ${sl === 'w' ? 'Atk ' + it.a : 'Def ' + it.d}${extra}${it.c ? ' · cursed' : ''}${state.endgame && !ENDGAME_SET.has(+id) ? ' · not endgame' : ''}${state.ownedOnly && state.owned && !state.owned[id] ? ' · not owned' : ''}` };
+      return { id: +id, it, label: `${it.n}${names[it.n] > 1 ? ` (${it.k})` : ''} · ${sl === 'w' ? 'Atk ' + it.a : 'Def ' + it.d}${extra}${it.c ? ' · cursed' : ''}${(it.mq >> ci) & 1 ? ' · may not be equippable' : ''}${state.endgame && !ENDGAME_SET.has(+id) ? ' · not endgame' : ''}${state.ownedOnly && state.owned && !state.owned[id] ? ' · not owned' : ''}` };
     });
     return { opts, shown: list.length, total: all.length };
   }
   function holders(id, except) {
-    return state.chars.map((c, i) => i).filter(i => i !== except && SLOTS.some(([sl]) => state.chars[i].eq[sl] === id));
+    return state.chars.map((c, i) => i).filter(i => i !== except && SLOTS().some(([sl]) => state.chars[i].eq[sl] === id));
   }
   function gearHtml(ci, r) {
     const cs = state.chars[ci];
-    let h = SLOTS.map(([sl, label]) => {
+    let h = SLOTS().map(([sl, label]) => {
       const cur = cs.eq[sl], it = ITEM(cur);
       const of = optionsFor(ci, sl);
       const opts = of.opts.map(o => `<option value="${o.id}" ${o.id === cur ? 'selected' : ''}>${esc(o.label)}</option>`).join('');
@@ -847,6 +860,8 @@ __SAVEPARSE__
     if (r.weapon && r.weapon.u) {
       const u = r.weapon.u, tot = u.r + g.unleashBonus;
       rows.push(`<div><span class="k">Unleash:</span> <b>${esc(u.n)}</b> <span class="etag e${u.e}"><span class="dot"></span>${u.e < 4 ? EL[u.e] : 'No element'}</span> · ${u.r}%${g.unleashBonus ? ` + ${g.unleashBonus}% from gear = <b>${tot}%</b>` : ''} chance per attack</div>`);
+    } else if (r.weapon && r.weapon.ul) {
+      rows.push(`<div><span class="k">Unleashes:</span> ${r.weapon.ul.map(n => `<b>${esc(n)}</b>`).join(', ')} <span class="muted">(rates aren't published for Dark Dawn)</span></div>`);
     } else if (r.weapon) {
       rows.push(`<div><span class="k">Unleash:</span> ${esc(r.weapon.n)} has no unleash.</div>`);
     } else {
@@ -923,7 +938,7 @@ __SAVEPARSE__
     // Collapsible sections: the summary line stays useful when a section is closed
     const sec = (key, title, peek, body) => `<details class="sec" data-sec="${key}" ${state.closed[key] ? '' : 'open'}>
       <summary><span class="lbl">${title}</span><span class="peek">${peek}</span></summary><div class="sec-body">${body}</div></details>`;
-    const gearPeek = SLOTS.map(([sl]) => ITEM(cs.eq[sl])).filter(Boolean).map(it => iconHtml(it, it.sl, true)).join('') || 'Nothing equipped';
+    const gearPeek = SLOTS().map(([sl]) => ITEM(cs.eq[sl])).filter(Boolean).map(it => iconHtml(it, it.sl, true)).join('') || 'Nothing equipped';
     const djPeek = [0, 1, 2, 3].map(e => { const n = owned(ci).filter(d => D.djinn[d.i].e === e).length; return n ? `<span class="etag e${e}"><span class="dot"></span>${n}</span>` : ''; }).join(' ') || 'None';
     const statPeek = STATS_S.map((s, k) => `${s} <b>${r.fin[k]}</b>`).join(' · ');
     const elPeek = [0, 1, 2, 3].map(e => `<span class="etag e${e}"><span class="dot"></span>${r.el.unknown ? 'Lv ' + r.cls.L[e] : r.el.pow[e] + '/' + r.el.res[e]}</span>`).join(' ');
@@ -1034,7 +1049,7 @@ __SAVEPARSE__
       const portrait = `<div class="gs-por">${por ? `<img class="pt" src="${por}" alt="">` : ''}${GSUI.frame ? `<img class="fr" src="${GSUI.frame}" alt="">` : ''}</div>`;
       const stats = [['ATK', 2], ['DEF', 3], ['AGL', 4], ['LCK', 5]].map(([l, k]) => `<span><i>${l}</i>${r.fin[k]}</span>`).join('');
       const els = [0, 1, 2, 3].map(e => `<div title="${EL[e]}: level ${r.cls.L[e]}, Power ${r.el.pow[e]}, Resistance ${r.el.res[e]}"><span class="lv">${star(e)}${r.cls.L[e]}</span>${r.el.unknown ? '' : `<span class="pr">${r.el.pow[e]}/${r.el.res[e]}</span>`}</div>`).join('');
-      const eqRows = SLOTS.map(([sl]) => ITEM(cs.eq[sl])).filter(Boolean);
+      const eqRows = SLOTS().map(([sl]) => ITEM(cs.eq[sl])).filter(Boolean);
       if (cs.item) eqRows.push({ n: CLASS_ITEM_NAMES[cs.item] });
       const eq = eqRows.length ? eqRows.map(it => { const src = iconSrc(it); return src ? `<img src="${src}" alt="${esc(it.n)}" title="${esc(it.n)}">` : `<span class="ph" title="${esc(it.n)}"></span>`; }).join('')
         : '<span class="gs-empty">No gear</span>';
@@ -1067,7 +1082,7 @@ __SAVEPARSE__
 
   // ---------- equipping with smart swaps (shared by both views) ----------
   const CLASS_ITEM_LABEL = { card: 'Mysterious Card', whip: "Trainer's Whip", tome: 'Tomegathericon' };
-  const SLOT_NAME = Object.fromEntries(SLOTS.map(([s, n]) => [s, n]));
+  const SLOT_NAME = Object.fromEntries(ALL_SLOTS.map(([s, n]) => [s, n]));
   // How many copies of an item exist for this party: shop items are unlimited, an imported save gives exact counts, anything else is one-of-a-kind.
   function copiesAvailable(id) {
     const it = D.items[id]; if (!it) return 1;
@@ -1180,7 +1195,7 @@ __SAVEPARSE__
   }
 
   // ---------- gear view ----------
-  const GEAR_ROWS = () => GM().classItems ? [...SLOTS, ['c', 'Class item']] : SLOTS;
+  const GEAR_ROWS = () => GM().classItems ? [...SLOTS(), ['c', 'Class item']] : SLOTS();
   function renderGear() {
     if ($('viewGear').hidden) return;
     const tp = tableParts(), { cols } = tp;
@@ -1405,7 +1420,7 @@ __SAVEPARSE__
         else if (!row.cur && row.holder >= 0) ch.push(`<span class="chg nt">Also on ${esc(D.chars[row.holder].name)}</span>`);
         if (!ch.length) ch.push('<span class="chg nt">No change</span>');
         return `<button type="button" role="option" class="pk-opt ${row.cur ? 'cur' : ''}" aria-selected="${row.cur}" data-v="${row.v}">
-          ${iconHtml(row.it, sl === 'c' ? 'c' : sl, true)}<span class="t"><b>${esc(row.label)}</b>${row.sub ? `<small>${row.sub}</small>` : ''}${row.it && row.it.c ? '<small style="color:var(--warn)">cursed</small>' : ''}</span>
+          ${iconHtml(row.it, sl === 'c' ? 'c' : sl, true)}<span class="t"><b>${esc(row.label)}</b>${row.sub ? `<small>${row.sub}</small>` : ''}${row.it && row.it.c ? '<small style="color:var(--warn)">cursed</small>' : ''}${row.it && (row.it.mq >> ci) & 1 ? '<small style="color:var(--warn)">may not be equippable</small>' : ''}</span>
           <span class="ch">${ch.join('')}</span></button>`;
       }).join('') + '</div>';
     const pk = $('picker'); pk.hidden = false;
@@ -1465,6 +1480,7 @@ __SAVEPARSE__
     if (!VIEWS[state.view] || (state.view === 'gear' && GM().noGear)) state.view = 'planner';
     $('tabGear').hidden = !!GM().noGear;
     document.querySelectorAll('.gearonly').forEach(x => { x.hidden = !!GM().noGear; });
+    $('endgameOnly').closest('label').hidden = !!GM().noGear || !!GM().noEndgame;
     for (const k in VIEWS) {
       const on = state.view === k;
       $(VIEWS[k]).hidden = !on;
@@ -1515,18 +1531,22 @@ __SAVEPARSE__
       un = `<div class="un"><div><span class="k">Unleash</span> <b>${esc(u.n)}</b></div>
         <div><span class="etag e${u.e}"><span class="dot"></span>${u.e < 4 ? EL[u.e] : 'No element'}</span> · ${hit} · ${u.r}% base chance</div></div>`;
     }
-    const users = GM().chars.filter(i => (it.m >> i) & 1).map(i => D.chars[i].name);
+    const users = GM().chars.filter(i => (it.m >> i) & 1).map(i => D.chars[i].name + ((it.mq >> i) & 1 ? '?' : ''));
     const holders = state.chars.map((c, i) => i).filter(i => state.chars[i].eq[it.sl] === itemId(it)).map(i => D.chars[i].name);
     const copies = it.b ? 'Sold in shops' : (state.owned && state.owned[itemId(it)] ? `You own ${state.owned[itemId(it)]}` : 'Not sold in shops');
     return `<div class="th">${iconHtml(it, it.sl)}<div><b>${esc(it.n)}</b><small>${esc(it.k)}</small></div></div>
       <div class="big">${it.sl === 'w' ? `Attack ${it.a}` : `Defense ${it.d}`}</div>
       ${lines.length ? `<ul>${lines.map(l => `<li>${l}</li>`).join('')}</ul>` : ''}
       ${un}
+      ${it.ul ? `<div class="un"><div><span class="k">Unleashes</span> ${it.ul.map(n => `<b>${esc(n)}</b>`).join(', ')}</div><div class="muted">Rates and power aren't published for Dark Dawn.</div></div>` : ''}
+      ${it.note ? `<div class="muted">${esc(it.note.replace(/^./, c => c.toUpperCase()))}</div>` : ''}
+      ${(it.fx || []).filter(f => f !== 'Curse is removable').map(f => `<div>${esc(f)}</div>`).join('')}
       ${it.us ? `<div><span class="k">In battle:</span> ${esc(it.us.t)}</div>` : ''}
+      ${it.where ? `<div><span class="k">Where:</span> ${esc(it.where)}${it.price ? ` · ${it.price} coins` : ''}</div>` : ''}
       ${it.c ? `<div class="bad">Cursed: can stop the wearer acting some turns unless they wear a Cleric's Ring.</div>` : ''}
-      <div class="foot">${copies} · ${users.length === NCH() ? 'Anyone can equip' : 'Equips: ' + users.join(', ')}${holders.length ? ' · Worn by ' + holders.join(', ') : ''}</div>`;
+      <div class="foot">${copies} · ${users.length === NCH() && !it.mq ? 'Anyone can equip' : 'Equips: ' + users.join(', ')}${it.mq ? ' (? = not confirmed)' : ''}${holders.length ? ' · Worn by ' + holders.join(', ') : ''}</div>`;
   }
-  const ITEM_ID = new Map(Object.entries(GSDATA.items).map(([id, it]) => [it, +id]));
+  const ITEM_ID = new Map([...Object.entries(GSDATA.items), ...Object.entries(DDDATA.items)].map(([id, it]) => [it, +id]));
   const itemId = it => ITEM_ID.get(it);
   let tipTimer = null, tipEl = null;
   function showTip(el) {
@@ -1641,7 +1661,7 @@ __SAVEPARSE__
     document.body.dataset.game = state.game;
     $('ddModsNote').hidden = !GM().manualBase;
     document.querySelectorAll('.gbaonly').forEach(x => { x.hidden = !!GM().manualBase; });
-    $('srcNote').textContent = GM().manualBase ? 'Dark Dawn data comes from the Golden Sun Syndicate class and djinn guides; base stats are entered by hand.' : "Data comes from the game's own class, stat, djinn and item tables.";
+    $('srcNote').textContent = GM().manualBase ? 'Dark Dawn data comes from the Golden Sun Syndicate class and djinn guides and the Golden Sun Realm item guides; base stats are entered by hand.' : "Data comes from the game's own class, stat, djinn and item tables.";
   }
   function renderAll(opts = {}) {
     renderStrip(); renderSheet(); renderOverview(); renderShowcase(); renderGear(); renderDjinnTab(); renderModsTab(!!opts.modsFootOnly);

@@ -108,6 +108,7 @@ def finish(it):
         if t == 'May break if used.': continue  # folded into `us` below
         if it['sl'] == 'w': ul.append(t); continue
         fx.append(t)
+    if 'suppresses curse' in desc.lower(): e.append([25, 1])  # Cleric's Ring, as in the GBA games
     if e: out['e'] = e
     if ul: out['ul'] = ul
     if fx: out['fx'] = fx
