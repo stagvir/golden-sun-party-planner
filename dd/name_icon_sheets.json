@@ -1,0 +1,3143 @@
+{
+ "items": [
+  {
+   "cell": 0,
+   "name": "Angelic Ankh",
+   "file": "Angelic_Ankh_DD.png",
+   "score": 1.0,
+   "runner_up": 0.394
+  },
+  {
+   "cell": 1,
+   "name": "Clotho's Distaff",
+   "file": "Clothos_Distaff_DD.png",
+   "score": 1.0,
+   "runner_up": 0.506
+  },
+  {
+   "cell": 2,
+   "name": "Blessed Ankh",
+   "file": "Blessed_Ankh_DD.png",
+   "score": 1.0,
+   "runner_up": 0.518
+  },
+  {
+   "cell": 3,
+   "name": "Air Bangle",
+   "file": "Air_Bangle_DD.png",
+   "score": 1.0,
+   "runner_up": 0.176
+  },
+  {
+   "cell": 4,
+   "name": "Bone Armlet",
+   "file": "Bone_Armlet_DD.png",
+   "score": 1.0,
+   "runner_up": 0.311
+  },
+  {
+   "cell": 5,
+   "name": "Jester's Armlet",
+   "file": "Jesters_Armlet_DD.png",
+   "score": 1.0,
+   "runner_up": 0.243
+  },
+  {
+   "cell": 6,
+   "name": "Leather Armlet",
+   "file": "Leather_Armlet_DD.png",
+   "score": 1.0,
+   "runner_up": 0.301
+  },
+  {
+   "cell": 7,
+   "name": "Virtuous Armlet",
+   "file": "Virtuous_Armlet_DD.png",
+   "score": 1.0,
+   "runner_up": 0.332
+  },
+  {
+   "cell": 8,
+   "name": "Mythril Armlet",
+   "file": "Mythril_Armlet_DD.png",
+   "score": 1.0,
+   "runner_up": 0.428
+  },
+  {
+   "cell": 9,
+   "name": "Silver Armlet",
+   "file": "Silver_Armlet_DD.png",
+   "score": 1.0,
+   "runner_up": 0.434
+  },
+  {
+   "cell": 10,
+   "name": "Spirit Armlet",
+   "file": "Spirit_Armlet_DD.png",
+   "score": 1.0,
+   "runner_up": 0.311
+  },
+  {
+   "cell": 11,
+   "name": "Leda's Bracelet",
+   "file": "Ledas_Bracelet_DD.png",
+   "score": 1.0,
+   "runner_up": 0.32
+  },
+  {
+   "cell": 12,
+   "name": "Heavy Armlet",
+   "file": "Heavy_Armlet_DD.png",
+   "score": 1.0,
+   "runner_up": 0.194
+  },
+  {
+   "cell": 13,
+   "name": "Asura's Armor",
+   "file": "Asuras_Armor_DD.png",
+   "score": 1.0,
+   "runner_up": 0.121
+  },
+  {
+   "cell": 14,
+   "name": "Chain Mail",
+   "file": "Chain_Mail_DD.png",
+   "score": 1.0,
+   "runner_up": 0.207
+  },
+  {
+   "cell": 15,
+   "name": "Chronos Mail",
+   "file": "Chronos_Mail_DD.png",
+   "score": 1.0,
+   "runner_up": 0.207
+  },
+  {
+   "cell": 16,
+   "name": "Demon Mail",
+   "file": "Demon_Mail_DD.png",
+   "score": 1.0,
+   "runner_up": 0.179
+  },
+  {
+   "cell": 17,
+   "name": "Dragon Mail",
+   "file": "Dragon_Mail_DD.png",
+   "score": 1.0,
+   "runner_up": 0.176
+  },
+  {
+   "cell": 18,
+   "name": "Psynergy Armor",
+   "file": "Psynergy_Armor_DD.png",
+   "score": 1.0,
+   "runner_up": 0.184
+  },
+  {
+   "cell": 19,
+   "name": "Ixion Mail",
+   "file": "Ixion_Mail_DD.png",
+   "score": 1.0,
+   "runner_up": 0.201
+  },
+  {
+   "cell": 20,
+   "name": "Leather Armor",
+   "file": "Leather_Armor_DD.png",
+   "score": 1.0,
+   "runner_up": 0.195
+  },
+  {
+   "cell": 21,
+   "name": "Planet Armor",
+   "file": "Planet_Armor_DD.png",
+   "score": 1.0,
+   "runner_up": 0.123
+  },
+  {
+   "cell": 22,
+   "name": "Plate Mail",
+   "file": "Plate_Mail_DD.png",
+   "score": 1.0,
+   "runner_up": 0.278
+  },
+  {
+   "cell": 23,
+   "name": "Armored Shell",
+   "file": "Armored_Shell_DD.png",
+   "score": 1.0,
+   "runner_up": 0.258
+  },
+  {
+   "cell": 24,
+   "name": "Spiked Armor",
+   "file": "Spiked_Armor_DD.png",
+   "score": 1.0,
+   "runner_up": 0.131
+  },
+  {
+   "cell": 25,
+   "name": "Steel Armor",
+   "file": "Steel_Armor_DD.png",
+   "score": 1.0,
+   "runner_up": 0.277
+  },
+  {
+   "cell": 26,
+   "name": "Valkyrie Mail",
+   "file": "Valkyrie_Mail_DD.png",
+   "score": 1.0,
+   "runner_up": 0.133
+  },
+  {
+   "cell": 27,
+   "name": "Xylion Armor",
+   "file": "Xylion_Armor_DD.png",
+   "score": 1.0,
+   "runner_up": 0.129
+  },
+  {
+   "cell": 28,
+   "name": "Vulcan Axe",
+   "file": "Vulcan_Axe_DD.png",
+   "score": 1.0,
+   "runner_up": 0.356
+  },
+  {
+   "cell": 29,
+   "name": "Battle Axe",
+   "file": "Battle_Axe_DD.png",
+   "score": 1.0,
+   "runner_up": 0.295
+  },
+  {
+   "cell": 30,
+   "name": "Broad Axe",
+   "file": "Broad_Axe_DD.png",
+   "score": 1.0,
+   "runner_up": 0.728
+  },
+  {
+   "cell": 31,
+   "name": "Dragon Axe",
+   "file": "Dragon_Axe_DD.png",
+   "score": 1.0,
+   "runner_up": 0.552
+  },
+  {
+   "cell": 32,
+   "name": "Giant Axe",
+   "file": "Giant_Axe_DD.png",
+   "score": 1.0,
+   "runner_up": 0.328
+  },
+  {
+   "cell": 33,
+   "name": "Great Axe",
+   "file": "Great_Axe_DD.png",
+   "score": 1.0,
+   "runner_up": 0.735
+  },
+  {
+   "cell": 34,
+   "name": "Herculean Axe",
+   "file": "Herculean_Axe_DD.png",
+   "score": 1.0,
+   "runner_up": 0.335
+  },
+  {
+   "cell": 35,
+   "name": "Themis' Axe",
+   "file": "Themis_Axe_DD.png",
+   "score": 1.0,
+   "runner_up": 0.359
+  },
+  {
+   "cell": 36,
+   "name": null,
+   "best": "Muni Robe",
+   "score": 0.099
+  },
+  {
+   "cell": 37,
+   "name": null,
+   "best": "Big Bang Gloves",
+   "score": 0.142
+  },
+  {
+   "cell": 38,
+   "name": null,
+   "best": "Psynergy Armor",
+   "score": 0.113
+  },
+  {
+   "cell": 39,
+   "name": null,
+   "best": "Lucky Cap",
+   "score": 0.1
+  },
+  {
+   "cell": 40,
+   "name": null,
+   "best": "Muni Robe",
+   "score": 0.106
+  },
+  {
+   "cell": 41,
+   "name": null,
+   "best": "Lucky Cap",
+   "score": 0.108
+  },
+  {
+   "cell": 42,
+   "name": null,
+   "best": "Umbra Goggles",
+   "score": 0.084
+  },
+  {
+   "cell": 43,
+   "name": null,
+   "best": "Storm Brand",
+   "score": 0.086
+  },
+  {
+   "cell": 44,
+   "name": null,
+   "best": "Kimono",
+   "score": 0.1
+  },
+  {
+   "cell": 45,
+   "name": "Hover Greave",
+   "file": "Hover_Greave_DD.png",
+   "score": 1.0,
+   "runner_up": 0.145
+  },
+  {
+   "cell": 46,
+   "name": "Knight's Greave",
+   "file": "Knights_Greave_DD.png",
+   "score": 1.0,
+   "runner_up": 0.293
+  },
+  {
+   "cell": 47,
+   "name": "Leather Boots",
+   "file": "Leather_Boots_DD.png",
+   "score": 1.0,
+   "runner_up": 0.243
+  },
+  {
+   "cell": 48,
+   "name": "Ninja Sandals",
+   "file": "Ninja_Sandals_DD.png",
+   "score": 1.0,
+   "runner_up": 0.143
+  },
+  {
+   "cell": 49,
+   "name": "Safety Boots",
+   "file": "Safety_Boots_DD.png",
+   "score": 1.0,
+   "runner_up": 0.244
+  },
+  {
+   "cell": 50,
+   "name": "Silver Greave",
+   "file": "Silver_Greave_DD.png",
+   "score": 1.0,
+   "runner_up": 0.182
+  },
+  {
+   "cell": 51,
+   "name": "Composite Bow",
+   "file": "Composite_Bow_DD.png",
+   "score": 1.0,
+   "runner_up": 0.455
+  },
+  {
+   "cell": 52,
+   "name": "Dragon Bow",
+   "file": "Dragon_Bow_DD.png",
+   "score": 1.0,
+   "runner_up": 0.347
+  },
+  {
+   "cell": 53,
+   "name": "Yew Bow",
+   "file": "Yew_Bow_DD.png",
+   "score": 1.0,
+   "runner_up": 0.289
+  },
+  {
+   "cell": 54,
+   "name": "Longbow",
+   "file": "Longbow_DD.png",
+   "score": 1.0,
+   "runner_up": 0.331
+  },
+  {
+   "cell": 55,
+   "name": "Sagittarius Bow",
+   "file": "Sagittarius_Bow_DD.png",
+   "score": 1.0,
+   "runner_up": 0.543
+  },
+  {
+   "cell": 56,
+   "name": "Worn Bow",
+   "file": "Worn_Bow_DD.png",
+   "score": 1.0,
+   "runner_up": 0.551
+  },
+  {
+   "cell": 57,
+   "name": "Short Bow",
+   "file": "Short_Bow_DD.png",
+   "score": 1.0,
+   "runner_up": 0.465
+  },
+  {
+   "cell": 58,
+   "name": "Silver Longbow",
+   "file": "Silver_Longbow_DD.png",
+   "score": 1.0,
+   "runner_up": 0.093
+  },
+  {
+   "cell": 59,
+   "name": "Zephyr's Bow",
+   "file": "Zephyrs_Bow_DD.png",
+   "score": 1.0,
+   "runner_up": 0.388
+  },
+  {
+   "cell": 60,
+   "name": null,
+   "best": "Bronze Shield",
+   "score": 0.143
+  },
+  {
+   "cell": 61,
+   "name": "Alastor's Hood",
+   "file": "Alastors_Hood_DD.png",
+   "score": 1.0,
+   "runner_up": 0.111
+  },
+  {
+   "cell": 62,
+   "name": "Mail Cap",
+   "file": "Mail_Cap_DD.png",
+   "score": 1.0,
+   "runner_up": 0.173
+  },
+  {
+   "cell": 63,
+   "name": "Umbra Cowl",
+   "file": "Umbra_Cowl_DD.png",
+   "score": 1.0,
+   "runner_up": 0.193
+  },
+  {
+   "cell": 64,
+   "name": "Jeweled Crown",
+   "file": "Jeweled_Crown_DD.png",
+   "score": 1.0,
+   "runner_up": 0.123
+  },
+  {
+   "cell": 65,
+   "name": "Leather Cap",
+   "file": "Leather_Cap_DD.png",
+   "score": 1.0,
+   "runner_up": 0.233
+  },
+  {
+   "cell": 66,
+   "name": "Lure Cap",
+   "file": "Lure_Cap_DD.png",
+   "score": 1.0,
+   "runner_up": 0.14
+  },
+  {
+   "cell": 67,
+   "name": "Lucky Cap",
+   "file": "Lucky_Cap_DD.png",
+   "score": 1.0,
+   "runner_up": 0.171
+  },
+  {
+   "cell": 68,
+   "name": "Nurse's Cap",
+   "file": "Nurses_Cap_DD.png",
+   "score": 1.0,
+   "runner_up": 0.16
+  },
+  {
+   "cell": 69,
+   "name": "Prophet's Hat",
+   "file": "Prophets_Hat_DD.png",
+   "score": 1.0,
+   "runner_up": 0.148
+  },
+  {
+   "cell": 70,
+   "name": "Thunder Crown",
+   "file": "Thunder_Crown_DD.png",
+   "score": 1.0,
+   "runner_up": 0.192
+  },
+  {
+   "cell": 71,
+   "name": "Wooden Cap",
+   "file": "Wooden_Cap_DD.png",
+   "score": 1.0,
+   "runner_up": 0.228
+  },
+  {
+   "cell": 72,
+   "name": null,
+   "best": "Adept's Clothes",
+   "score": 0.097
+  },
+  {
+   "cell": 73,
+   "name": null,
+   "best": "Steel Helm",
+   "score": 0.113
+  },
+  {
+   "cell": 74,
+   "name": "Zol Tiara",
+   "file": "Zol_Tiara_DD.png",
+   "score": 1.0,
+   "runner_up": 0.371
+  },
+  {
+   "cell": 75,
+   "name": "Glittering Tiara",
+   "file": "Glittering_Tiara_DD.png",
+   "score": 1.0,
+   "runner_up": 0.404
+  },
+  {
+   "cell": 76,
+   "name": "Demon Circlet",
+   "file": "Demon_Circlet_DD.png",
+   "score": 1.0,
+   "runner_up": 0.211
+  },
+  {
+   "cell": 77,
+   "name": "Mythril Circlet",
+   "file": "Mythril_Circlet_DD.png",
+   "score": 1.0,
+   "runner_up": 0.385
+  },
+  {
+   "cell": 78,
+   "name": "Platinum Circlet",
+   "file": "Platinum_Circlet_DD.png",
+   "score": 1.0,
+   "runner_up": 0.527
+  },
+  {
+   "cell": 79,
+   "name": "Guardian Circlet",
+   "file": "Guardian_Circlet_DD.png",
+   "score": 1.0,
+   "runner_up": 0.656
+  },
+  {
+   "cell": 80,
+   "name": "Silver Circlet",
+   "file": "Silver_Circlet_DD.png",
+   "score": 1.0,
+   "runner_up": 0.721
+  },
+  {
+   "cell": 81,
+   "name": "Circlet",
+   "file": "Circlet_DD.png",
+   "score": 1.0,
+   "runner_up": 0.544
+  },
+  {
+   "cell": 82,
+   "name": "Berserker Claw",
+   "file": "Berserker_Claw_DD.png",
+   "score": 1.0,
+   "runner_up": 0.19
+  },
+  {
+   "cell": 83,
+   "name": "Bloody Claw",
+   "file": "Bloody_Claw_DD.png",
+   "score": 1.0,
+   "runner_up": 0.157
+  },
+  {
+   "cell": 84,
+   "name": "Iron Claw",
+   "file": "Iron_Claw_DD.png",
+   "score": 1.0,
+   "runner_up": 0.206
+  },
+  {
+   "cell": 85,
+   "name": "Mythril Claw",
+   "file": "Mythril_Claw_DD.png",
+   "score": 1.0,
+   "runner_up": 0.209
+  },
+  {
+   "cell": 86,
+   "name": "Cotton Shirt",
+   "file": "Cotton_Shirt_DD.png",
+   "score": 1.0,
+   "runner_up": 0.141
+  },
+  {
+   "cell": 87,
+   "name": "Umbra Cloak",
+   "file": "Umbra_Cloak_DD.png",
+   "score": 1.0,
+   "runner_up": 0.222
+  },
+  {
+   "cell": 88,
+   "name": "Elven Shirt",
+   "file": "Elven_Shirt_DD.png",
+   "score": 1.0,
+   "runner_up": 0.237
+  },
+  {
+   "cell": 89,
+   "name": "Faery Vest",
+   "file": "Faery_Vest_DD.png",
+   "score": 1.0,
+   "runner_up": 0.147
+  },
+  {
+   "cell": 90,
+   "name": "Kimono",
+   "file": "Kimono_DD.png",
+   "score": 1.0,
+   "runner_up": 0.123
+  },
+  {
+   "cell": 91,
+   "name": "Ninja Garb",
+   "file": "Ninja_Garb_DD.png",
+   "score": 1.0,
+   "runner_up": 0.155
+  },
+  {
+   "cell": 92,
+   "name": "Mythril Clothes",
+   "file": "Mythril_Clothes_DD.png",
+   "score": 1.0,
+   "runner_up": 0.113
+  },
+  {
+   "cell": 93,
+   "name": "Storm Gear",
+   "file": "Storm_Gear_DD.png",
+   "score": 1.0,
+   "runner_up": 0.131
+  },
+  {
+   "cell": 94,
+   "name": "Adept's Clothes",
+   "file": "Adepts_Clothes_DD.png",
+   "score": 1.0,
+   "runner_up": 0.205
+  },
+  {
+   "cell": 95,
+   "name": "Silver Vest",
+   "file": "Silver_Vest_DD.png",
+   "score": 1.0,
+   "runner_up": 0.157
+  },
+  {
+   "cell": 96,
+   "name": "Travel Vest",
+   "file": "Travel_Vest_DD.png",
+   "score": 1.0,
+   "runner_up": 0.187
+  },
+  {
+   "cell": 97,
+   "name": "Triton's Ward",
+   "file": "Tritons_Ward_DD.png",
+   "score": 1.0,
+   "runner_up": 0.139
+  },
+  {
+   "cell": 98,
+   "name": null,
+   "best": "Lucky Cap",
+   "score": 0.175
+  },
+  {
+   "cell": 99,
+   "name": null,
+   "best": "Prophet's Hat",
+   "score": 0.094
+  },
+  {
+   "cell": 100,
+   "name": null,
+   "best": "Sanan Dress",
+   "score": 0.088
+  },
+  {
+   "cell": 101,
+   "name": null,
+   "best": "Demon Mail",
+   "score": 0.086
+  },
+  {
+   "cell": 102,
+   "name": null,
+   "best": "Jerkin",
+   "score": 0.097
+  },
+  {
+   "cell": 103,
+   "name": null,
+   "best": "Big Bang Gloves",
+   "score": 0.098
+  },
+  {
+   "cell": 104,
+   "name": null,
+   "best": "Silk Robe",
+   "score": 0.167
+  },
+  {
+   "cell": 105,
+   "name": null,
+   "best": "Silver Longbow",
+   "score": 0.039
+  },
+  {
+   "cell": 106,
+   "name": null,
+   "best": "Lucky Cap",
+   "score": 0.113
+  },
+  {
+   "cell": 107,
+   "name": null,
+   "best": "Knight's Greave",
+   "score": 0.12
+  },
+  {
+   "cell": 108,
+   "name": null,
+   "best": "Planet Armor",
+   "score": 0.107
+  },
+  {
+   "cell": 109,
+   "name": null,
+   "best": "Storm Gear",
+   "score": 0.072
+  },
+  {
+   "cell": 110,
+   "name": null,
+   "best": "Jerkin",
+   "score": 0.07
+  },
+  {
+   "cell": 111,
+   "name": null,
+   "best": "Thunder Crown",
+   "score": 0.148
+  },
+  {
+   "cell": 112,
+   "name": null,
+   "best": "Iron Claw",
+   "score": 0.198
+  },
+  {
+   "cell": 113,
+   "name": null,
+   "best": "Umbra Cowl",
+   "score": 0.205
+  },
+  {
+   "cell": 114,
+   "name": null,
+   "best": "Leather Armor",
+   "score": 0.072
+  },
+  {
+   "cell": 115,
+   "name": null,
+   "best": "Leather Armor",
+   "score": 0.065
+  },
+  {
+   "cell": 116,
+   "name": null,
+   "best": "Lucky Cap",
+   "score": 0.096
+  },
+  {
+   "cell": 117,
+   "name": null,
+   "best": "Kimono",
+   "score": 0.094
+  },
+  {
+   "cell": 118,
+   "name": null,
+   "best": "Armored Shell",
+   "score": 0.122
+  },
+  {
+   "cell": 119,
+   "name": null,
+   "best": "Bronze Shield",
+   "score": 0.112
+  },
+  {
+   "cell": 120,
+   "name": "Umbra Goggles",
+   "file": "Umbra_Goggles_DD.png",
+   "score": 1.0,
+   "runner_up": 0.239
+  },
+  {
+   "cell": 121,
+   "name": "Aura Gloves",
+   "file": "Aura_Gloves_DD.png",
+   "score": 1.0,
+   "runner_up": 0.186
+  },
+  {
+   "cell": 122,
+   "name": "Big Bang Gloves",
+   "file": "Big_Bang_Gloves_DD.png",
+   "score": 1.0,
+   "runner_up": 0.252
+  },
+  {
+   "cell": 123,
+   "name": "Umbra Gauntlet",
+   "file": "Umbra_Gauntlet_DD.png",
+   "score": 1.0,
+   "runner_up": 0.23
+  },
+  {
+   "cell": 124,
+   "name": "Gauntlets",
+   "file": "Gauntlets_DD.png",
+   "score": 1.0,
+   "runner_up": 0.308
+  },
+  {
+   "cell": 125,
+   "name": "Leather Gloves",
+   "file": "Leather_Gloves_DD.png",
+   "score": 1.0,
+   "runner_up": 0.149
+  },
+  {
+   "cell": 126,
+   "name": "War Gloves",
+   "file": "War_Gloves_DD.png",
+   "score": 1.0,
+   "runner_up": 0.154
+  },
+  {
+   "cell": 127,
+   "name": "Padded Gloves",
+   "file": "Padded_Gloves_DD.png",
+   "score": 1.0,
+   "runner_up": 0.179
+  },
+  {
+   "cell": 128,
+   "name": "Slap Glove",
+   "file": "Slap_Glove_DD.png",
+   "score": 1.0,
+   "runner_up": 0.208
+  },
+  {
+   "cell": 129,
+   "name": "Spirit Gloves",
+   "file": "Spirit_Gloves_DD.png",
+   "score": 1.0,
+   "runner_up": 0.308
+  },
+  {
+   "cell": 130,
+   "name": "Titan Gloves",
+   "file": "Titan_Gloves_DD.png",
+   "score": 1.0,
+   "runner_up": 0.252
+  },
+  {
+   "cell": 131,
+   "name": "Vambrace",
+   "file": "Vambrace_DD.png",
+   "score": 1.0,
+   "runner_up": 0.228
+  },
+  {
+   "cell": 132,
+   "name": null,
+   "best": "Jerkin",
+   "score": 0.102
+  },
+  {
+   "cell": 133,
+   "name": null,
+   "best": "Worn Bow",
+   "score": 0.267
+  },
+  {
+   "cell": 134,
+   "name": null,
+   "best": "Kimono",
+   "score": 0.086
+  },
+  {
+   "cell": 135,
+   "name": null,
+   "best": "Psynergy Armor",
+   "score": 0.117
+  },
+  {
+   "cell": 136,
+   "name": null,
+   "best": "Silk Robe",
+   "score": 0.201
+  },
+  {
+   "cell": 137,
+   "name": "Bronze Helm",
+   "file": "Bronze_Helm_DD.png",
+   "score": 1.0,
+   "runner_up": 0.207
+  },
+  {
+   "cell": 138,
+   "name": "Gloria Helm",
+   "file": "Gloria_Helm_DD.png",
+   "score": 1.0,
+   "runner_up": 0.14
+  },
+  {
+   "cell": 139,
+   "name": "Iron Helm",
+   "file": "Iron_Helm_DD.png",
+   "score": 1.0,
+   "runner_up": 0.228
+  },
+  {
+   "cell": 140,
+   "name": "Knight's Helm",
+   "file": "Knights_Helm_DD.png",
+   "score": 1.0,
+   "runner_up": 0.149
+  },
+  {
+   "cell": 141,
+   "name": "Minerva Helm",
+   "file": "Minerva_Helm_DD.png",
+   "score": 1.0,
+   "runner_up": 0.135
+  },
+  {
+   "cell": 142,
+   "name": "Warrior's Helm",
+   "file": "Warriors_Helm_DD.png",
+   "score": 1.0,
+   "runner_up": 0.118
+  },
+  {
+   "cell": 143,
+   "name": "Open Helm",
+   "file": "Open_Helm_DD.png",
+   "score": 1.0,
+   "runner_up": 0.181
+  },
+  {
+   "cell": 144,
+   "name": "Silver Helm",
+   "file": "Silver_Helm_DD.png",
+   "score": 1.0,
+   "runner_up": 0.773
+  },
+  {
+   "cell": 145,
+   "name": "Steel Helm",
+   "file": "Steel_Helm_DD.png",
+   "score": 1.0,
+   "runner_up": 0.758
+  },
+  {
+   "cell": 146,
+   "name": "Viking Helm",
+   "file": "Viking_Helm_DD.png",
+   "score": 1.0,
+   "runner_up": 0.118
+  },
+  {
+   "cell": 147,
+   "name": null,
+   "best": "Hover Greave",
+   "score": 0.052
+  },
+  {
+   "cell": 148,
+   "name": null,
+   "best": "Muni Robe",
+   "score": 0.154
+  },
+  {
+   "cell": 149,
+   "name": null,
+   "best": "Grievous Mace",
+   "score": 0.128
+  },
+  {
+   "cell": 150,
+   "name": null,
+   "best": "Sanan Dress",
+   "score": 0.07
+  },
+  {
+   "cell": 151,
+   "name": null,
+   "best": "Umbra Goggles",
+   "score": 0.089
+  },
+  {
+   "cell": 152,
+   "name": null,
+   "best": "Storm Gear",
+   "score": 0.136
+  },
+  {
+   "cell": 153,
+   "name": null,
+   "best": "Muni Robe",
+   "score": 0.115
+  },
+  {
+   "cell": 154,
+   "name": null,
+   "best": "Grievous Mace",
+   "score": 0.065
+  },
+  {
+   "cell": 155,
+   "name": null,
+   "best": "Prophet's Hat",
+   "score": 0.091
+  },
+  {
+   "cell": 156,
+   "name": null,
+   "best": "Darksword",
+   "score": 0.182
+  },
+  {
+   "cell": 157,
+   "name": "Anpsi Knuckles",
+   "file": "Anpsi_Knuckles_DD.png",
+   "score": 1.0,
+   "runner_up": 0.127
+  },
+  {
+   "cell": 158,
+   "name": "Beast Knuckles",
+   "file": "Beast_Knuckles_DD.png",
+   "score": 1.0,
+   "runner_up": 0.121
+  },
+  {
+   "cell": 159,
+   "name": "Brass Knuckles",
+   "file": "Brass_Knuckles_DD.png",
+   "score": 1.0,
+   "runner_up": 0.319
+  },
+  {
+   "cell": 160,
+   "name": "Umbra Knuckles",
+   "file": "Umbra_Knuckles_DD.png",
+   "score": 1.0,
+   "runner_up": 0.229
+  },
+  {
+   "cell": 161,
+   "name": "Spiked Knuckles",
+   "file": "Spiked_Knuckles_DD.png",
+   "score": 1.0,
+   "runner_up": 0.316
+  },
+  {
+   "cell": 162,
+   "name": "Claymore",
+   "file": "Claymore_DD.png",
+   "score": 1.0,
+   "runner_up": 0.503
+  },
+  {
+   "cell": 163,
+   "name": "Broad Sword",
+   "file": "Broad_Sword_DD.png",
+   "score": 1.0,
+   "runner_up": 0.348
+  },
+  {
+   "cell": 164,
+   "name": "Darksword",
+   "file": "Darksword_DD.png",
+   "score": 1.0,
+   "runner_up": 0.215
+  },
+  {
+   "cell": 165,
+   "name": "Excalibur",
+   "file": "Excalibur_DD.png",
+   "score": 1.0,
+   "runner_up": 0.344
+  },
+  {
+   "cell": 166,
+   "name": "Fire Brand",
+   "file": "Fire_Brand_DD.png",
+   "score": 1.0,
+   "runner_up": 0.357
+  },
+  {
+   "cell": 167,
+   "name": "Gaia Blade",
+   "file": "Gaia_Blade_DD.png",
+   "score": 1.0,
+   "runner_up": 0.381
+  },
+  {
+   "cell": 168,
+   "name": "Shamshir",
+   "file": "Shamshir_DD.png",
+   "score": 1.0,
+   "runner_up": 0.326
+  },
+  {
+   "cell": 169,
+   "name": "Great Sword",
+   "file": "Great_Sword_DD.png",
+   "score": 1.0,
+   "runner_up": 0.411
+  },
+  {
+   "cell": 170,
+   "name": "Levatine",
+   "file": "Levatine_DD.png",
+   "score": 1.0,
+   "runner_up": 0.34
+  },
+  {
+   "cell": 171,
+   "name": "Long Sword",
+   "file": "Long_Sword_DD.png",
+   "score": 1.0,
+   "runner_up": 0.412
+  },
+  {
+   "cell": 172,
+   "name": "Muramasa",
+   "file": "Muramasa_DD.png",
+   "score": 1.0,
+   "runner_up": 0.371
+  },
+  {
+   "cell": 173,
+   "name": "Rune Blade",
+   "file": "Rune_Blade_DD.png",
+   "score": 1.0,
+   "runner_up": 0.267
+  },
+  {
+   "cell": 174,
+   "name": "Rusty Sword",
+   "file": "Rusty_Sword_DD.png",
+   "score": 1.0,
+   "runner_up": 0.289
+  },
+  {
+   "cell": 175,
+   "name": "Silver Blade",
+   "file": "Silver_Blade_DD.png",
+   "score": 1.0,
+   "runner_up": 0.296
+  },
+  {
+   "cell": 176,
+   "name": "Sol Blade",
+   "file": "Sol_Blade_DD.png",
+   "score": 1.0,
+   "runner_up": 0.381
+  },
+  {
+   "cell": 177,
+   "name": "Storm Brand",
+   "file": "Storm_Brand_DD.png",
+   "score": 1.0,
+   "runner_up": 0.268
+  },
+  {
+   "cell": 178,
+   "name": "Sword of Dusk",
+   "file": "Sword_of_Dusk_DD.png",
+   "score": 1.0,
+   "runner_up": 0.497
+  },
+  {
+   "cell": 179,
+   "name": null,
+   "best": "Umbra Cowl",
+   "score": 0.112
+  },
+  {
+   "cell": 180,
+   "name": null,
+   "best": "Umbra Cowl",
+   "score": 0.112
+  },
+  {
+   "cell": 181,
+   "name": null,
+   "best": "One-piece Dress",
+   "score": 0.065
+  },
+  {
+   "cell": 182,
+   "name": "Battle Mace",
+   "file": "Battle_Mace_DD.png",
+   "score": 1.0,
+   "runner_up": 0.301
+  },
+  {
+   "cell": 183,
+   "name": "Blow Mace",
+   "file": "Blow_Mace_DD.png",
+   "score": 1.0,
+   "runner_up": 0.281
+  },
+  {
+   "cell": 184,
+   "name": "Grievous Mace",
+   "file": "Grievous_Mace_DD.png",
+   "score": 1.0,
+   "runner_up": 0.293
+  },
+  {
+   "cell": 185,
+   "name": "Hagbone Mace",
+   "file": "Hagbone_Mace_DD.png",
+   "score": 1.0,
+   "runner_up": 0.295
+  },
+  {
+   "cell": 186,
+   "name": "Heavy Mace",
+   "file": "Heavy_Mace_DD.png",
+   "score": 1.0,
+   "runner_up": 0.31
+  },
+  {
+   "cell": 187,
+   "name": "Mace",
+   "file": "Mace_DD.png",
+   "score": 1.0,
+   "runner_up": 0.324
+  },
+  {
+   "cell": 188,
+   "name": "War Mace",
+   "file": "War_Mace_DD.png",
+   "score": 1.0,
+   "runner_up": 0.279
+  },
+  {
+   "cell": 189,
+   "name": "Thanatos Mace",
+   "file": "Thanatos_Mace_DD.png",
+   "score": 1.0,
+   "runner_up": 0.547
+  },
+  {
+   "cell": 190,
+   "name": "Old Mace",
+   "file": "Old_Mace_DD.png",
+   "score": 1.0,
+   "runner_up": 0.516
+  },
+  {
+   "cell": 191,
+   "name": "Vajra Mace",
+   "file": "Vajra_Mace_DD.png",
+   "score": 1.0,
+   "runner_up": 0.259
+  },
+  {
+   "cell": 192,
+   "name": null,
+   "best": "Short Sword",
+   "score": 0.076
+  },
+  {
+   "cell": 193,
+   "name": null,
+   "best": "Leather Armor",
+   "score": 0.104
+  },
+  {
+   "cell": 194,
+   "name": null,
+   "best": "Psynergy Armor",
+   "score": 0.054
+  },
+  {
+   "cell": 195,
+   "name": null,
+   "best": "Gaia Blade",
+   "score": 0.058
+  },
+  {
+   "cell": 196,
+   "name": null,
+   "best": "One-piece Dress",
+   "score": 0.096
+  },
+  {
+   "cell": 197,
+   "name": null,
+   "best": "Silver Armlet",
+   "score": 0.123
+  },
+  {
+   "cell": 198,
+   "name": null,
+   "best": "Lord Sun's Ring",
+   "score": 0.076
+  },
+  {
+   "cell": 199,
+   "name": null,
+   "best": "Cosmos Shield",
+   "score": 0.136
+  },
+  {
+   "cell": 200,
+   "name": null,
+   "best": "Demon Circlet",
+   "score": 0.144
+  },
+  {
+   "cell": 201,
+   "name": null,
+   "best": "Adept's Clothes",
+   "score": 0.117
+  },
+  {
+   "cell": 202,
+   "name": null,
+   "best": "Silver Helm",
+   "score": 0.137
+  },
+  {
+   "cell": 203,
+   "name": null,
+   "best": "Demon Mail",
+   "score": 0.085
+  },
+  {
+   "cell": 204,
+   "name": null,
+   "best": "Gauntlets",
+   "score": 0.142
+  },
+  {
+   "cell": 205,
+   "name": null,
+   "best": "Jerkin",
+   "score": 0.131
+  },
+  {
+   "cell": 206,
+   "name": null,
+   "best": "Vajra Mace",
+   "score": 0.153
+  },
+  {
+   "cell": 207,
+   "name": null,
+   "best": "Umbra Cowl",
+   "score": 0.077
+  },
+  {
+   "cell": 208,
+   "name": null,
+   "best": "Demon Mail",
+   "score": 0.124
+  },
+  {
+   "cell": 209,
+   "name": null,
+   "best": "Demon Mail",
+   "score": 0.123
+  },
+  {
+   "cell": 210,
+   "name": null,
+   "best": "Aeolian Cassock",
+   "score": 0.147
+  },
+  {
+   "cell": 211,
+   "name": "Zol Ring",
+   "file": "Zol_Ring_DD.png",
+   "score": 1.0,
+   "runner_up": 0.306
+  },
+  {
+   "cell": 212,
+   "name": "Heirloom Ring",
+   "file": "Heirloom_Ring_DD.png",
+   "score": 1.0,
+   "runner_up": 0.287
+  },
+  {
+   "cell": 213,
+   "name": "Cleric's Ring",
+   "file": "Clerics_Ring_DD.png",
+   "score": 1.0,
+   "runner_up": 0.287
+  },
+  {
+   "cell": 214,
+   "name": "Lord Sun's Ring",
+   "file": "Lord_Suns_Ring_DD.png",
+   "score": 1.0,
+   "runner_up": 0.238
+  },
+  {
+   "cell": 215,
+   "name": "Lady Moon's Ring",
+   "file": "Lady_Moons_Ring_DD.png",
+   "score": 1.0,
+   "runner_up": 0.271
+  },
+  {
+   "cell": 216,
+   "name": "Aeolian Cassock",
+   "file": "Aeolian_Cassock_DD.png",
+   "score": 1.0,
+   "runner_up": 0.192
+  },
+  {
+   "cell": 217,
+   "name": "Sanan Dress",
+   "file": "Sanan_Dress_DD.png",
+   "score": 1.0,
+   "runner_up": 0.143
+  },
+  {
+   "cell": 218,
+   "name": "Iris Robe",
+   "file": "Iris_Robe_DD.png",
+   "score": 1.0,
+   "runner_up": 0.123
+  },
+  {
+   "cell": 219,
+   "name": "Jerkin",
+   "file": "Jerkin_DD.png",
+   "score": 1.0,
+   "runner_up": 0.157
+  },
+  {
+   "cell": 220,
+   "name": "Magical Cassock",
+   "file": "Magical_Cassock_DD.png",
+   "score": 1.0,
+   "runner_up": 0.194
+  },
+  {
+   "cell": 221,
+   "name": "Muni Robe",
+   "file": "Muni_Robe_DD.png",
+   "score": 1.0,
+   "runner_up": 0.117
+  },
+  {
+   "cell": 222,
+   "name": "Mysterious Robe",
+   "file": "Mysterious_Robe_DD.png",
+   "score": 1.0,
+   "runner_up": 0.184
+  },
+  {
+   "cell": 223,
+   "name": "Feathered Robe",
+   "file": "Feathered_Robe_DD.png",
+   "score": 1.0,
+   "runner_up": 0.12
+  },
+  {
+   "cell": 224,
+   "name": "One-piece Dress",
+   "file": "One_piece_Dress_DD.png",
+   "score": 1.0,
+   "runner_up": 0.082
+  },
+  {
+   "cell": 225,
+   "name": "Blessed Robe",
+   "file": "Blessed_Robe_DD.png",
+   "score": 1.0,
+   "runner_up": 0.161
+  },
+  {
+   "cell": 226,
+   "name": "Silk Robe",
+   "file": "Silk_Robe_DD.png",
+   "score": 1.0,
+   "runner_up": 0.186
+  },
+  {
+   "cell": 227,
+   "name": "Travel Robe",
+   "file": "Travel_Robe_DD.png",
+   "score": 1.0,
+   "runner_up": 0.213
+  },
+  {
+   "cell": 228,
+   "name": "Atropos' Rod",
+   "file": "Atropos_Rod_DD.png",
+   "score": 1.0,
+   "runner_up": 0.278
+  },
+  {
+   "cell": 229,
+   "name": "Crystal Rod",
+   "file": "Crystal_Rod_DD.png",
+   "score": 1.0,
+   "runner_up": 0.243
+  },
+  {
+   "cell": 230,
+   "name": "Demonic Staff",
+   "file": "Demonic_Staff_DD.png",
+   "score": 1.0,
+   "runner_up": 0.176
+  },
+  {
+   "cell": 231,
+   "name": "Zodiac Wand",
+   "file": "Zodiac_Wand_DD.png",
+   "score": 1.0,
+   "runner_up": 0.207
+  },
+  {
+   "cell": 232,
+   "name": "Lachesis' Rule",
+   "file": "Lachesis_Rule_DD.png",
+   "score": 1.0,
+   "runner_up": 0.285
+  },
+  {
+   "cell": 233,
+   "name": "Magic Rod",
+   "file": "Magic_Rod_DD.png",
+   "score": 1.0,
+   "runner_up": 0.157
+  },
+  {
+   "cell": 234,
+   "name": "Psynergy Rod",
+   "file": "Psynergy_Rod_DD.png",
+   "score": 1.0,
+   "runner_up": 0.242
+  },
+  {
+   "cell": 235,
+   "name": "Frost Wand",
+   "file": "Frost_Wand_DD.png",
+   "score": 1.0,
+   "runner_up": 0.218
+  },
+  {
+   "cell": 236,
+   "name": "Witch's Wand",
+   "file": "Witchs_Wand_DD.png",
+   "score": 1.0,
+   "runner_up": 0.231
+  },
+  {
+   "cell": 237,
+   "name": "Wooden Stick",
+   "file": "Wooden_Stick_DD.png",
+   "score": 1.0,
+   "runner_up": 0.246
+  },
+  {
+   "cell": 238,
+   "name": "Assassin Blade",
+   "file": "Assassin_Blade_DD.png",
+   "score": 1.0,
+   "runner_up": 0.348
+  },
+  {
+   "cell": 239,
+   "name": "Battle Rapier",
+   "file": "Battle_Rapier_DD.png",
+   "score": 1.0,
+   "runner_up": 0.718
+  },
+  {
+   "cell": 240,
+   "name": "Elven Rapier",
+   "file": "Elven_Rapier_DD.png",
+   "score": 1.0,
+   "runner_up": 0.648
+  },
+  {
+   "cell": 241,
+   "name": "Hunter's Sword",
+   "file": "Hunters_Sword_DD.png",
+   "score": 1.0,
+   "runner_up": 0.6
+  },
+  {
+   "cell": 242,
+   "name": "Kikuichimonji",
+   "file": "Kikuichimonji_DD.png",
+   "score": 1.0,
+   "runner_up": 0.743
+  },
+  {
+   "cell": 243,
+   "name": "Rusty Sword",
+   "file": "Rusty_Sword_2_DD.png",
+   "score": 1.0,
+   "runner_up": 0.473
+  },
+  {
+   "cell": 244,
+   "name": "Masamune",
+   "file": "Masamune_DD.png",
+   "score": 1.0,
+   "runner_up": 0.743
+  },
+  {
+   "cell": 245,
+   "name": "Master Rapier",
+   "file": "Master_Rapier_DD.png",
+   "score": 1.0,
+   "runner_up": 0.663
+  },
+  {
+   "cell": 246,
+   "name": "Mystery Blade",
+   "file": "Mystery_Blade_DD.png",
+   "score": 1.0,
+   "runner_up": 0.469
+  },
+  {
+   "cell": 247,
+   "name": "Phaeton's Blade",
+   "file": "Phaetons_Blade_DD.png",
+   "score": 1.0,
+   "runner_up": 0.624
+  },
+  {
+   "cell": 248,
+   "name": "Ninja Blade",
+   "file": "Ninja_Blade_DD.png",
+   "score": 1.0,
+   "runner_up": 0.603
+  },
+  {
+   "cell": 249,
+   "name": "Short Sword",
+   "file": "Short_Sword_DD.png",
+   "score": 1.0,
+   "runner_up": 0.516
+  },
+  {
+   "cell": 250,
+   "name": "Swift Sword",
+   "file": "Swift_Sword_DD.png",
+   "score": 1.0,
+   "runner_up": 0.564
+  },
+  {
+   "cell": 251,
+   "name": "Sylph Rapier",
+   "file": "Sylph_Rapier_DD.png",
+   "score": 1.0,
+   "runner_up": 0.484
+  },
+  {
+   "cell": 252,
+   "name": "Tisiphone Edge",
+   "file": "Tisiphone_Edge_DD.png",
+   "score": 1.0,
+   "runner_up": 0.282
+  },
+  {
+   "cell": 253,
+   "name": "Verdant Sword",
+   "file": "Verdant_Sword_DD.png",
+   "score": 1.0,
+   "runner_up": 0.387
+  },
+  {
+   "cell": 254,
+   "name": "Aegis Shield",
+   "file": "Aegis_Shield_DD.png",
+   "score": 1.0,
+   "runner_up": 0.112
+  },
+  {
+   "cell": 255,
+   "name": "Bronze Shield",
+   "file": "Bronze_Shield_DD.png",
+   "score": 1.0,
+   "runner_up": 0.124
+  },
+  {
+   "cell": 256,
+   "name": "Cosmos Shield",
+   "file": "Cosmos_Shield_DD.png",
+   "score": 1.0,
+   "runner_up": 0.126
+  },
+  {
+   "cell": 257,
+   "name": "Dragon Shield",
+   "file": "Dragon_Shield_DD.png",
+   "score": 1.0,
+   "runner_up": 0.236
+  },
+  {
+   "cell": 258,
+   "name": "Iron Shield",
+   "file": "Iron_Shield_DD.png",
+   "score": 1.0,
+   "runner_up": 0.14
+  },
+  {
+   "cell": 259,
+   "name": "Knight's Shield",
+   "file": "Knights_Shield_DD.png",
+   "score": 1.0,
+   "runner_up": 0.135
+  },
+  {
+   "cell": 260,
+   "name": "Mirrored Shield",
+   "file": "Mirrored_Shield_DD.png",
+   "score": 1.0,
+   "runner_up": 0.08
+  },
+  {
+   "cell": 261,
+   "name": "Terra Shield",
+   "file": "Terra_Shield_DD.png",
+   "score": 1.0,
+   "runner_up": 0.215
+  },
+  {
+   "cell": 262,
+   "name": "Wooden Shield",
+   "file": "Wooden_Shield_DD.png",
+   "score": 1.0,
+   "runner_up": 0.114
+  },
+  {
+   "cell": 263,
+   "name": null,
+   "best": "Long Sword",
+   "score": 0.098
+  },
+  {
+   "cell": 264,
+   "name": null,
+   "best": "Bronze Helm",
+   "score": 0.167
+  },
+  {
+   "cell": 265,
+   "name": null,
+   "best": "Silver Helm",
+   "score": 0.233
+  },
+  {
+   "cell": 266,
+   "name": null,
+   "best": "Cotton Shirt",
+   "score": 0.061
+  },
+  {
+   "cell": 267,
+   "name": null,
+   "best": "Silk Robe",
+   "score": 0.139
+  },
+  {
+   "cell": 268,
+   "name": null,
+   "best": "Kimono",
+   "score": 0.161
+  },
+  {
+   "cell": 269,
+   "name": null,
+   "best": "Adept's Clothes",
+   "score": 0.113
+  },
+  {
+   "cell": 270,
+   "name": null,
+   "best": "Dragon Mail",
+   "score": 0.102
+  },
+  {
+   "cell": 271,
+   "name": null,
+   "best": "Adept's Clothes",
+   "score": 0.134
+  }
+ ],
+ "psynergy": [
+  {
+   "cell": 0,
+   "name": "Fresh Breeze",
+   "file": "Fresh_Breeze.png",
+   "score": 1.0,
+   "runner_up": 0.378
+  },
+  {
+   "cell": 1,
+   "name": "Healthy Wind",
+   "file": "Healthy_Wind.png",
+   "score": 0.991,
+   "runner_up": 0.401
+  },
+  {
+   "cell": 2,
+   "name": "Healthy Gust",
+   "file": "Healthy_Gust.png",
+   "score": 0.902,
+   "runner_up": 0.273
+  },
+  {
+   "cell": 3,
+   "name": "Astral Blast",
+   "file": "Astral_Blast.png",
+   "score": 0.988,
+   "runner_up": 0.07
+  },
+  {
+   "cell": 4,
+   "name": "Cure Poison",
+   "file": "Cure_Poison.png",
+   "score": 0.982,
+   "runner_up": 0.142
+  },
+  {
+   "cell": 5,
+   "name": "Douse",
+   "file": "Douse.png",
+   "score": 1.0,
+   "runner_up": 0.568
+  },
+  {
+   "cell": 6,
+   "name": "Drench",
+   "file": "Drench.png",
+   "score": 0.891,
+   "runner_up": 0.199
+  },
+  {
+   "cell": 7,
+   "name": "Deluge",
+   "file": "Deluge.png",
+   "score": 0.872,
+   "runner_up": 0.436
+  },
+  {
+   "cell": 8,
+   "name": "Restore",
+   "file": "Restore.png",
+   "score": 1.0,
+   "runner_up": 0.062
+  },
+  {
+   "cell": 9,
+   "name": "Fire Bomb",
+   "file": "Fire_Bomb.png",
+   "score": 1.0,
+   "runner_up": 0.72
+  },
+  {
+   "cell": 10,
+   "name": "Cluster Bomb",
+   "file": "Cluster_Bomb.png",
+   "score": 0.954,
+   "runner_up": 0.552
+  },
+  {
+   "cell": 11,
+   "name": "Carpet Bomb",
+   "file": "Carpet_Bomb.png",
+   "score": 0.918,
+   "runner_up": 0.41
+  },
+  {
+   "cell": 12,
+   "name": "Dragon Cloud",
+   "file": "Dragon_Cloud.png",
+   "score": 0.976,
+   "runner_up": 0.315
+  },
+  {
+   "cell": 13,
+   "name": "Epicenter",
+   "file": "Epicenter.png",
+   "score": 0.883,
+   "runner_up": 0.195
+  },
+  {
+   "cell": 14,
+   "name": "Beam",
+   "file": "Beam.png",
+   "score": 0.93,
+   "runner_up": 0.378
+  },
+  {
+   "cell": 15,
+   "name": "Cycle Beam",
+   "file": "Cycle_Beam.png",
+   "score": 0.901,
+   "runner_up": 0.283
+  },
+  {
+   "cell": 16,
+   "name": "Searing Beam",
+   "file": "Searing_Beam.png",
+   "score": 0.89,
+   "runner_up": 0.198
+  },
+  {
+   "cell": 17,
+   "name": "Planetary",
+   "file": "Planetary.png",
+   "score": 0.937,
+   "runner_up": 0.113
+  },
+  {
+   "cell": 18,
+   "name": "Raging Heat",
+   "file": "Raging_Heat.png",
+   "score": 1.0,
+   "runner_up": 0.157
+  },
+  {
+   "cell": 19,
+   "name": "Fiery Abyss",
+   "file": "Fiery_Abyss.png",
+   "score": 0.967,
+   "runner_up": 0.192
+  },
+  {
+   "cell": 20,
+   "name": "Dire Inferno",
+   "file": "Dire_Inferno.png",
+   "score": 0.915,
+   "runner_up": 0.103
+  },
+  {
+   "cell": 21,
+   "name": "Weapon Grace",
+   "file": "Weapon_Grace.png",
+   "score": 0.877,
+   "runner_up": 0.072
+  },
+  {
+   "cell": 22,
+   "name": "Thorn",
+   "file": "Thorn.png",
+   "score": 0.993,
+   "runner_up": 0.447
+  },
+  {
+   "cell": 23,
+   "name": "Briar",
+   "file": "Briar.png",
+   "score": 0.901,
+   "runner_up": 0.417
+  },
+  {
+   "cell": 24,
+   "name": "Nettle",
+   "file": "Nettle.png",
+   "score": 0.878,
+   "runner_up": 0.363
+  },
+  {
+   "cell": 25,
+   "name": "Blast",
+   "file": "Blast.png",
+   "score": 1.0,
+   "runner_up": 0.265
+  },
+  {
+   "cell": 26,
+   "name": "Mad Blast",
+   "file": "Mad_Blast.png",
+   "score": 1.0,
+   "runner_up": 0.318
+  },
+  {
+   "cell": 27,
+   "name": "Fiery Blast",
+   "file": "Fiery_Blast.png",
+   "score": 0.937,
+   "runner_up": 0.238
+  },
+  {
+   "cell": 28,
+   "name": "Psynergy Surge",
+   "file": "Psynergy_Surge.png",
+   "score": 0.871,
+   "runner_up": 0.193
+  },
+  {
+   "cell": 29,
+   "name": "Psynergy Slam",
+   "file": "Psynergy_Slam.png",
+   "score": 0.809,
+   "runner_up": 0.094
+  },
+  {
+   "cell": 30,
+   "name": "Speed Punch",
+   "file": "Speed_Punch.png",
+   "score": 0.97,
+   "runner_up": 0.071
+  },
+  {
+   "cell": 31,
+   "name": "Froth",
+   "file": "Froth.png",
+   "score": 1.0,
+   "runner_up": 0.478
+  },
+  {
+   "cell": 32,
+   "name": "Froth Sphere",
+   "file": "Froth_Sphere.png",
+   "score": 0.974,
+   "runner_up": 0.326
+  },
+  {
+   "cell": 33,
+   "name": "Froth Spiral",
+   "file": "Froth_Spiral.png",
+   "score": 0.94,
+   "runner_up": 0.168
+  },
+  {
+   "cell": 34,
+   "name": "Beastform",
+   "file": "Beastform.png",
+   "score": 0.94,
+   "runner_up": 0.134
+  },
+  {
+   "cell": 35,
+   "name": "Cold Snap",
+   "file": "Cold_Snap.png",
+   "score": 1.0,
+   "runner_up": 0.559
+  },
+  {
+   "cell": 36,
+   "name": "Coldforge",
+   "file": "Coldforge.png",
+   "score": 0.941,
+   "runner_up": 0.81
+  },
+  {
+   "cell": 37,
+   "name": "Frostbite",
+   "file": "Frostbite.png",
+   "score": 0.87,
+   "runner_up": 0.179
+  },
+  {
+   "cell": 38,
+   "name": "Cool",
+   "file": "Cool.png",
+   "score": 1.0,
+   "runner_up": 0.719
+  },
+  {
+   "cell": 39,
+   "name": "Supercool",
+   "file": "Supercool.png",
+   "score": 0.87,
+   "runner_up": 0.451
+  },
+  {
+   "cell": 40,
+   "name": "Megacool",
+   "file": "Megacool.png",
+   "score": 0.859,
+   "runner_up": 0.204
+  },
+  {
+   "cell": 41,
+   "name": "Crush",
+   "file": "Crush.png",
+   "score": 0.995,
+   "runner_up": 0.059
+  },
+  {
+   "cell": 42,
+   "name": "Cure",
+   "file": "Cure.png",
+   "score": 1.0,
+   "runner_up": 0.785
+  },
+  {
+   "cell": 43,
+   "name": "Cure Well",
+   "file": "Cure_Well.png",
+   "score": 1.0,
+   "runner_up": 0.606
+  },
+  {
+   "cell": 44,
+   "name": "Potent Cure",
+   "file": "Potent_Cure.png",
+   "score": 0.949,
+   "runner_up": 0.285
+  },
+  {
+   "cell": 45,
+   "name": "Curse",
+   "file": "Curse.png",
+   "score": 1.0,
+   "runner_up": 0.428
+  },
+  {
+   "cell": 46,
+   "name": "Starburst",
+   "file": "Starburst.png",
+   "score": 1.0,
+   "runner_up": 0.302
+  },
+  {
+   "cell": 47,
+   "name": "Nova",
+   "file": "Nova.png",
+   "score": 0.915,
+   "runner_up": 0.197
+  },
+  {
+   "cell": 48,
+   "name": "Supernova",
+   "file": "Supernova.png",
+   "score": 0.893,
+   "runner_up": 0.151
+  },
+  {
+   "cell": 49,
+   "name": "Condemn",
+   "file": "Condemn.png",
+   "score": 1.0,
+   "runner_up": 0.413
+  },
+  {
+   "cell": 50,
+   "name": "Diamond Berg",
+   "file": "Diamond_Berg.png",
+   "score": 0.925,
+   "runner_up": 0.567
+  },
+  {
+   "cell": 51,
+   "name": "Diamond Dust",
+   "file": "Diamond_Dust.png",
+   "score": 1.0,
+   "runner_up": 0.142
+  },
+  {
+   "cell": 52,
+   "name": "Drain",
+   "file": "Drain.png",
+   "score": 0.997,
+   "runner_up": 0.439
+  },
+  {
+   "cell": 53,
+   "name": "Psy Drain",
+   "file": "Psy_Drain.png",
+   "score": 1.0,
+   "runner_up": 0.436
+  },
+  {
+   "cell": 54,
+   "name": "Arid Heat",
+   "file": "Arid_Heat.png",
+   "score": 1.0,
+   "runner_up": 0.454
+  },
+  {
+   "cell": 55,
+   "name": "Arid Blast",
+   "file": "Arid_Blast.png",
+   "score": 0.993,
+   "runner_up": 0.28
+  },
+  {
+   "cell": 56,
+   "name": "Arid Scorch",
+   "file": "Arid_Scorch.png",
+   "score": 0.911,
+   "runner_up": 0.12
+  },
+  {
+   "cell": 57,
+   "name": "Dull",
+   "file": "Dull.png",
+   "score": 0.997,
+   "runner_up": 0.689
+  },
+  {
+   "cell": 58,
+   "name": "Blunt",
+   "file": "Blunt.png",
+   "score": 0.931,
+   "runner_up": 0.637
+  },
+  {
+   "cell": 59,
+   "name": "Fear Puppet",
+   "file": "Fear_Puppet.png",
+   "score": 1.0,
+   "runner_up": 0.132
+  },
+  {
+   "cell": 60,
+   "name": "Fireball",
+   "file": "Fireball.png",
+   "score": 1.0,
+   "runner_up": 0.606
+  },
+  {
+   "cell": 61,
+   "name": "Fire Orb",
+   "file": "Fire_Orb.png",
+   "score": 0.932,
+   "runner_up": 0.454
+  },
+  {
+   "cell": 62,
+   "name": "Inferno",
+   "file": "Inferno.png",
+   "score": 0.913,
+   "runner_up": 0.285
+  },
+  {
+   "cell": 63,
+   "name": "Flare",
+   "file": "Flare.png",
+   "score": 0.99,
+   "runner_up": 0.268
+  },
+  {
+   "cell": 64,
+   "name": "Flare Wall",
+   "file": "Flare_Wall.png",
+   "score": 1.0,
+   "runner_up": 0.245
+  },
+  {
+   "cell": 65,
+   "name": "Flare Storm",
+   "file": "Flare_Storm.png",
+   "score": 0.891,
+   "runner_up": 0.176
+  },
+  {
+   "cell": 66,
+   "name": "Shuriken",
+   "file": "Shuriken.png",
+   "score": 0.971,
+   "runner_up": 0.09
+  },
+  {
+   "cell": 67,
+   "name": "Fume",
+   "file": "Fume.png",
+   "score": 0.98,
+   "runner_up": 0.221
+  },
+  {
+   "cell": 68,
+   "name": "Serpent Fume",
+   "file": "Serpent_Fume.png",
+   "score": 0.916,
+   "runner_up": 0.239
+  },
+  {
+   "cell": 69,
+   "name": "Dragon Fume",
+   "file": "Dragon_Fume.png",
+   "score": 0.855,
+   "runner_up": 0.165
+  },
+  {
+   "cell": 70,
+   "name": "Gaia",
+   "file": "Gaia.png",
+   "score": 1.0,
+   "runner_up": 0.277
+  },
+  {
+   "cell": 71,
+   "name": "Mother Gaia",
+   "file": "Mother_Gaia.png",
+   "score": 0.98,
+   "runner_up": 0.22
+  },
+  {
+   "cell": 72,
+   "name": "Grand Gaia",
+   "file": "Grand_Gaia.png",
+   "score": 0.894,
+   "runner_up": 0.18
+  },
+  {
+   "cell": 73,
+   "name": "Rockfall",
+   "file": "Rockfall.png",
+   "score": 1.0,
+   "runner_up": 0.311
+  },
+  {
+   "cell": 74,
+   "name": "Rockslide",
+   "file": "Rockslide.png",
+   "score": 0.978,
+   "runner_up": 0.202
+  },
+  {
+   "cell": 75,
+   "name": "Avalanche",
+   "file": "Avalanche.png",
+   "score": 0.947,
+   "runner_up": 0.098
+  },
+  {
+   "cell": 76,
+   "name": null,
+   "best": "Crush",
+   "score": 0.111
+  },
+  {
+   "cell": 77,
+   "name": "Growth",
+   "file": "Growth.png",
+   "score": 1.0,
+   "runner_up": 0.203
+  },
+  {
+   "cell": 78,
+   "name": "Mad Growth",
+   "file": "Mad_Growth.png",
+   "score": 0.967,
+   "runner_up": 0.276
+  },
+  {
+   "cell": 79,
+   "name": "Wild Growth",
+   "file": "Wild_Growth.png",
+   "score": 0.869,
+   "runner_up": 0.156
+  },
+  {
+   "cell": 80,
+   "name": "Quick Strike",
+   "file": "Quick_Strike.png",
+   "score": 0.853,
+   "runner_up": 0.055
+  },
+  {
+   "cell": 81,
+   "name": "Demon Night",
+   "file": "Demon_Night.png",
+   "score": 0.95,
+   "runner_up": 0.1
+  },
+  {
+   "cell": 82,
+   "name": "Thorny Grave",
+   "file": "Thorny_Grave.png",
+   "score": 0.94,
+   "runner_up": 0.113
+  },
+  {
+   "cell": 83,
+   "name": "Ice",
+   "file": "Ice.png",
+   "score": 1.0,
+   "runner_up": 0.506
+  },
+  {
+   "cell": 84,
+   "name": "Ice Horn",
+   "file": "Ice_Horn.png",
+   "score": 0.967,
+   "runner_up": 0.243
+  },
+  {
+   "cell": 85,
+   "name": "Ice Missile",
+   "file": "Ice_Missile.png",
+   "score": 0.914,
+   "runner_up": 0.208
+  },
+  {
+   "cell": 86,
+   "name": "Delude",
+   "file": "Delude.png",
+   "score": 0.991,
+   "runner_up": 0.073
+  },
+  {
+   "cell": 87,
+   "name": "Impact",
+   "file": "Impact.png",
+   "score": 0.996,
+   "runner_up": 0.853
+  },
+  {
+   "cell": 88,
+   "name": "High Impact",
+   "file": "High_Impact.png",
+   "score": 0.91,
+   "runner_up": 0.739
+  },
+  {
+   "cell": 89,
+   "name": "Death Plunge",
+   "file": "Death_Plunge.png",
+   "score": 0.923,
+   "runner_up": 0.106
+  },
+  {
+   "cell": 90,
+   "name": null,
+   "best": "Psynergy Surge",
+   "score": 0.546
+  },
+  {
+   "cell": 91,
+   "name": "Helm Splitter",
+   "file": "Helm_Splitter.png",
+   "score": 0.994,
+   "runner_up": 0.09
+  },
+  {
+   "cell": 92,
+   "name": "Skull Splitter",
+   "file": "Skull_Splitter.png",
+   "score": 0.978,
+   "runner_up": 0.261
+  },
+  {
+   "cell": 93,
+   "name": "Mist",
+   "file": "Mist.png",
+   "score": 1.0,
+   "runner_up": 0.346
+  },
+  {
+   "cell": 94,
+   "name": "Lava Shower",
+   "file": "Lava_Shower.png",
+   "score": 1.0,
+   "runner_up": 0.553
+  },
+  {
+   "cell": 95,
+   "name": "Molten Bath",
+   "file": "Molten_Bath.png",
+   "score": 1.0,
+   "runner_up": 0.348
+  },
+  {
+   "cell": 96,
+   "name": "Magma Storm",
+   "file": "Magma_Storm.png",
+   "score": 0.903,
+   "runner_up": 0.161
+  },
+  {
+   "cell": 97,
+   "name": "Odyssey",
+   "file": "Odyssey.png",
+   "score": 0.919,
+   "runner_up": 0.067
+  },
+  {
+   "cell": 98,
+   "name": "Cutting Edge",
+   "file": "Cutting_Edge.png",
+   "score": 0.982,
+   "runner_up": 0.145
+  },
+  {
+   "cell": 99,
+   "name": "Ragnarok",
+   "file": "Ragnarok.png",
+   "score": 0.997,
+   "runner_up": 0.075
+  },
+  {
+   "cell": 100,
+   "name": "Bolt",
+   "file": "Bolt.png",
+   "score": 1.0,
+   "runner_up": 0.421
+  },
+  {
+   "cell": 101,
+   "name": "Flash Bolt",
+   "file": "Flash_Bolt.png",
+   "score": 0.995,
+   "runner_up": 0.454
+  },
+  {
+   "cell": 102,
+   "name": "Blue Bolt",
+   "file": "Blue_Bolt.png",
+   "score": 0.944,
+   "runner_up": 0.287
+  },
+  {
+   "cell": 103,
+   "name": "Thunder Mine",
+   "file": "Thunder_Mine.png",
+   "score": 0.935,
+   "runner_up": 0.17
+  },
+  {
+   "cell": 104,
+   "name": "Magic Shell",
+   "file": "Magic_Shell.png",
+   "score": 0.988,
+   "runner_up": 0.647
+  },
+  {
+   "cell": 105,
+   "name": "Magic Shield",
+   "file": "Magic_Shield.png",
+   "score": 0.989,
+   "runner_up": 0.621
+  },
+  {
+   "cell": 106,
+   "name": "Annihilation",
+   "file": "Annihilation.png",
+   "score": 0.907,
+   "runner_up": 0.348
+  },
+  {
+   "cell": 107,
+   "name": "Roaring Dragon",
+   "file": "Roaring_Dragon.png",
+   "score": 0.937,
+   "runner_up": 0.304
+  },
+  {
+   "cell": 108,
+   "name": "Slaying Dragon",
+   "file": "Slaying_Dragon.png",
+   "score": 0.91,
+   "runner_up": 0.304
+  },
+  {
+   "cell": 109,
+   "name": "Reigning Dragon",
+   "file": "Reigning_Dragon.png",
+   "score": 0.91,
+   "runner_up": 0.322
+  },
+  {
+   "cell": 110,
+   "name": null,
+   "best": "Cure Poison",
+   "score": 0.131
+  },
+  {
+   "cell": 111,
+   "name": "Move",
+   "file": "Move.png",
+   "score": 1.0,
+   "runner_up": 0.062
+  },
+  {
+   "cell": 112,
+   "name": "Keelhaul",
+   "file": "Keelhaul.png",
+   "score": 0.964,
+   "runner_up": 0.47
+  },
+  {
+   "cell": 113,
+   "name": "Vicious Chop",
+   "file": "Vicious_Chop.png",
+   "score": 0.948,
+   "runner_up": 0.451
+  },
+  {
+   "cell": 114,
+   "name": null,
+   "best": "Plasma",
+   "score": 0.189
+  },
+  {
+   "cell": 115,
+   "name": "Shine Plasma",
+   "file": "Shine_Plasma.png",
+   "score": 0.928,
+   "runner_up": 0.304
+  },
+  {
+   "cell": 116,
+   "name": "Spark Plasma",
+   "file": "Spark_Plasma.png",
+   "score": 0.919,
+   "runner_up": 0.23
+  },
+  {
+   "cell": 117,
+   "name": "Plasma",
+   "file": "Plasma.png",
+   "score": 1.0,
+   "runner_up": 0.322
+  },
+  {
+   "cell": 118,
+   "name": "Toxic Gift",
+   "file": "Toxic_Gift.png",
+   "score": 0.889,
+   "runner_up": 0.048
+  },
+  {
+   "cell": 119,
+   "name": "Ply",
+   "file": "Ply.png",
+   "score": 1.0,
+   "runner_up": 0.714
+  },
+  {
+   "cell": 120,
+   "name": "Ply Well",
+   "file": "Ply_Well.png",
+   "score": 0.994,
+   "runner_up": 0.675
+  },
+  {
+   "cell": 121,
+   "name": "Pure Ply",
+   "file": "Pure_Ply.png",
+   "score": 0.957,
+   "runner_up": 0.496
+  },
+  {
+   "cell": 122,
+   "name": null,
+   "best": "Supernova",
+   "score": 0.067
+  },
+  {
+   "cell": 123,
+   "name": "Prism",
+   "file": "Prism.png",
+   "score": 1.0,
+   "runner_up": 0.317
+  },
+  {
+   "cell": 124,
+   "name": "Hail Prism",
+   "file": "Hail_Prism.png",
+   "score": 0.927,
+   "runner_up": 0.261
+  },
+  {
+   "cell": 125,
+   "name": "Freeze Prism",
+   "file": "Freeze_Prism.png",
+   "score": 0.876,
+   "runner_up": 0.265
+  },
+  {
+   "cell": 126,
+   "name": "Guard",
+   "file": "Guard.png",
+   "score": 0.989,
+   "runner_up": 0.618
+  },
+  {
+   "cell": 127,
+   "name": "Protect",
+   "file": "Protect.png",
+   "score": 0.991,
+   "runner_up": 0.696
+  },
+  {
+   "cell": 128,
+   "name": "Gale",
+   "file": "Gale.png",
+   "score": 1.0,
+   "runner_up": 0.609
+  },
+  {
+   "cell": 129,
+   "name": "Typhoon",
+   "file": "Typhoon.png",
+   "score": 0.942,
+   "runner_up": 0.498
+  },
+  {
+   "cell": 130,
+   "name": "Hurricane",
+   "file": "Hurricane.png",
+   "score": 0.882,
+   "runner_up": 0.403
+  },
+  {
+   "cell": 131,
+   "name": "Quake",
+   "file": "Quake.png",
+   "score": 1.0,
+   "runner_up": 0.307
+  },
+  {
+   "cell": 132,
+   "name": "Earthquake",
+   "file": "Earthquake.png",
+   "score": 0.981,
+   "runner_up": 0.251
+  },
+  {
+   "cell": 133,
+   "name": "Quake Sphere",
+   "file": "Quake_Sphere.png",
+   "score": 0.898,
+   "runner_up": 0.185
+  },
+  {
+   "cell": 134,
+   "name": "Thunderclap",
+   "file": "Thunderclap.png",
+   "score": 1.0,
+   "runner_up": 0.648
+  },
+  {
+   "cell": 135,
+   "name": "Thunderbolt",
+   "file": "Thunderbolt.png",
+   "score": 0.985,
+   "runner_up": 0.57
+  },
+  {
+   "cell": 136,
+   "name": "Thunderhead",
+   "file": "Thunderhead.png",
+   "score": 0.97,
+   "runner_up": 0.449
+  },
+  {
+   "cell": 137,
+   "name": "Ray",
+   "file": "Ray.png",
+   "score": 1.0,
+   "runner_up": 0.393
+  },
+  {
+   "cell": 138,
+   "name": "Storm Ray",
+   "file": "Storm_Ray.png",
+   "score": 0.96,
+   "runner_up": 0.416
+  },
+  {
+   "cell": 139,
+   "name": "Destruct Ray",
+   "file": "Destruct_Ray.png",
+   "score": 0.903,
+   "runner_up": 0.248
+  },
+  {
+   "cell": 140,
+   "name": "Ward",
+   "file": "Ward.png",
+   "score": 0.988,
+   "runner_up": 0.647
+  },
+  {
+   "cell": 141,
+   "name": "Resist",
+   "file": "Resist.png",
+   "score": 0.989,
+   "runner_up": 0.641
+  },
+  {
+   "cell": 142,
+   "name": "Retreat",
+   "file": "Retreat.png",
+   "score": 0.989,
+   "runner_up": 0.129
+  },
+  {
+   "cell": 143,
+   "name": "Revive",
+   "file": "Revive.png",
+   "score": 0.95,
+   "runner_up": 0.075
+  },
+  {
+   "cell": 144,
+   "name": "Haunt",
+   "file": "Haunt.png",
+   "score": 0.997,
+   "runner_up": 0.051
+  },
+  {
+   "cell": 145,
+   "name": null,
+   "best": "Debilitate",
+   "score": 0.113
+  },
+  {
+   "cell": 146,
+   "name": "Plume Edge",
+   "file": "Plume_Edge.png",
+   "score": 0.923,
+   "runner_up": 0.437
+  },
+  {
+   "cell": 147,
+   "name": "Liquifier",
+   "file": "Liquifier.png",
+   "score": 0.943,
+   "runner_up": 0.093
+  },
+  {
+   "cell": 148,
+   "name": null,
+   "best": "Spark Plasma",
+   "score": 0.104
+  },
+  {
+   "cell": 149,
+   "name": "Weaken",
+   "file": "Weaken.png",
+   "score": 0.997,
+   "runner_up": 0.573
+  },
+  {
+   "cell": 150,
+   "name": "Enfeeble",
+   "file": "Enfeeble.png",
+   "score": 0.993,
+   "runner_up": 0.624
+  },
+  {
+   "cell": 151,
+   "name": null,
+   "best": "Heat Wave",
+   "score": 0.108
+  },
+  {
+   "cell": 152,
+   "name": "Planet Diver",
+   "file": "Planet_Diver.png",
+   "score": 1.0,
+   "runner_up": 0.153
+  },
+  {
+   "cell": 153,
+   "name": "Slash",
+   "file": "Slash.png",
+   "score": 1.0,
+   "runner_up": 0.539
+  },
+  {
+   "cell": 154,
+   "name": "Wind Slash",
+   "file": "Wind_Slash.png",
+   "score": 1.0,
+   "runner_up": 0.337
+  },
+  {
+   "cell": 155,
+   "name": "Sonic Slash",
+   "file": "Sonic_Slash.png",
+   "score": 0.929,
+   "runner_up": 0.207
+  },
+  {
+   "cell": 156,
+   "name": "Sleep",
+   "file": "Sleep.png",
+   "score": 0.99,
+   "runner_up": 0.07
+  },
+  {
+   "cell": 157,
+   "name": "Slap",
+   "file": "Slap.png",
+   "score": 1.0,
+   "runner_up": 0.321
+  },
+  {
+   "cell": 158,
+   "name": null,
+   "best": "Sleep",
+   "score": 0.092
+  },
+  {
+   "cell": 159,
+   "name": "Whirlwind",
+   "file": "Whirlwind.png",
+   "score": 1.0,
+   "runner_up": 0.2
+  },
+  {
+   "cell": 160,
+   "name": "Tornado",
+   "file": "Tornado.png",
+   "score": 0.947,
+   "runner_up": 0.137
+  },
+  {
+   "cell": 161,
+   "name": "Tempest",
+   "file": "Tempest.png",
+   "score": 0.917,
+   "runner_up": 0.112
+  },
+  {
+   "cell": 162,
+   "name": "Spire",
+   "file": "Spire.png",
+   "score": 1.0,
+   "runner_up": 0.263
+  },
+  {
+   "cell": 163,
+   "name": "Clay Spire",
+   "file": "Clay_Spire.png",
+   "score": 0.921,
+   "runner_up": 0.217
+  },
+  {
+   "cell": 164,
+   "name": "Stone Spire",
+   "file": "Stone_Spire.png",
+   "score": 0.915,
+   "runner_up": 0.137
+  },
+  {
+   "cell": 165,
+   "name": "Break",
+   "file": "Break.png",
+   "score": 0.984,
+   "runner_up": 0.223
+  },
+  {
+   "cell": 166,
+   "name": "Guardian",
+   "file": "Guardian.png",
+   "score": 0.968,
+   "runner_up": 0.621
+  },
+  {
+   "cell": 167,
+   "name": "Protector",
+   "file": "Protector.png",
+   "score": 0.979,
+   "runner_up": 0.692
+  },
+  {
+   "cell": 168,
+   "name": "Punji",
+   "file": "Punji.png",
+   "score": 0.995,
+   "runner_up": 0.725
+  },
+  {
+   "cell": 169,
+   "name": "Punji Trap",
+   "file": "Punji_Trap.png",
+   "score": 0.932,
+   "runner_up": 0.518
+  },
+  {
+   "cell": 170,
+   "name": "Punji Strike",
+   "file": "Punji_Strike.png",
+   "score": 0.884,
+   "runner_up": 0.446
+  },
+  {
+   "cell": 171,
+   "name": null,
+   "best": "Flare Storm",
+   "score": 0.188
+  },
+  {
+   "cell": 172,
+   "name": "Bind",
+   "file": "Bind.png",
+   "score": 0.994,
+   "runner_up": 0.073
+  },
+  {
+   "cell": 173,
+   "name": "Boon",
+   "file": "Boon.png",
+   "score": 1.0,
+   "runner_up": 0.274
+  },
+  {
+   "cell": 174,
+   "name": "Nature's Boon",
+   "file": "Natures_Boon.png",
+   "score": 1.0,
+   "runner_up": 0.303
+  },
+  {
+   "cell": 175,
+   "name": "Vital Boon",
+   "file": "Vital_Boon.png",
+   "score": 0.924,
+   "runner_up": 0.195
+  },
+  {
+   "cell": 176,
+   "name": "Undead Curse",
+   "file": "Undead_Curse.png",
+   "score": 1.0,
+   "runner_up": 0.086
+  },
+  {
+   "cell": 177,
+   "name": "Undead Gloom",
+   "file": "Undead_Gloom.png",
+   "score": 0.884,
+   "runner_up": 0.213
+  },
+  {
+   "cell": 178,
+   "name": "Undead Might",
+   "file": "Undead_Might.png",
+   "score": 0.9,
+   "runner_up": 0.197
+  },
+  {
+   "cell": 179,
+   "name": "Volcano",
+   "file": "Volcano.png",
+   "score": 1.0,
+   "runner_up": 0.353
+  },
+  {
+   "cell": 180,
+   "name": "Eruption",
+   "file": "Eruption.png",
+   "score": 0.919,
+   "runner_up": 0.306
+  },
+  {
+   "cell": 181,
+   "name": "Pyroclasm",
+   "file": "Pyroclasm.png",
+   "score": 0.894,
+   "runner_up": 0.182
+  },
+  {
+   "cell": 182,
+   "name": "Impair",
+   "file": "Impair.png",
+   "score": 0.997,
+   "runner_up": 0.627
+  },
+  {
+   "cell": 183,
+   "name": "Debilitate",
+   "file": "Debilitate.png",
+   "score": 0.994,
+   "runner_up": 0.679
+  },
+  {
+   "cell": 184,
+   "name": "Wish",
+   "file": "Wish.png",
+   "score": 1.0,
+   "runner_up": 0.76
+  },
+  {
+   "cell": 185,
+   "name": "Wish Well",
+   "file": "Wish_Well.png",
+   "score": 0.963,
+   "runner_up": 0.5
+  },
+  {
+   "cell": 186,
+   "name": "Pure Wish",
+   "file": "Pure_Wish.png",
+   "score": 0.912,
+   "runner_up": 0.497
+  },
+  {
+   "cell": 187,
+   "name": "Demon Spear",
+   "file": "Demon_Spear.png",
+   "score": 0.997,
+   "runner_up": 0.835
+  },
+  {
+   "cell": 188,
+   "name": "Angel Spear",
+   "file": "Angel_Spear.png",
+   "score": 0.912,
+   "runner_up": 0.727
+  }
+ ]
+}
