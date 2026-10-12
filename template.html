@@ -1622,11 +1622,11 @@ __SAVEPARSE__
     const order = [firstEl, ...[0, 1, 2, 3].filter(e => e !== firstEl)];
     let acts = '';
     if (cur != null) {
-      const d = state.dj[cur];
+      const isSet = state.dj[cur].s;   // read before the previews: they flip it and then restore a copy of the state
       const tog = previewChange(ci, () => { state.dj[cur].s = !state.dj[cur].s; });
       const rem = previewChange(ci, () => { state.dj[cur].o = null; });
       acts = `<div class="pk-acts">
-        <button type="button" class="pk-opt" data-act="toggle" style="grid-template-columns:1fr"><span class="t"><b>${d.s ? 'Put on Standby' : 'Set it again'}</b></span><span class="ch" style="grid-column:1">${chips(tog.before, tog.after).join('') || '<span class="chg nt">No change</span>'}</span></button>
+        <button type="button" class="pk-opt" data-act="toggle" style="grid-template-columns:1fr"><span class="t"><b>${isSet ? 'Put on Standby' : 'Set it again'}</b></span><span class="ch" style="grid-column:1">${chips(tog.before, tog.after).join('') || '<span class="chg nt">No change</span>'}</span></button>
         <button type="button" class="pk-opt" data-act="remove" style="grid-template-columns:1fr"><span class="t"><b>Remove from ${esc(ch.name)}</b></span><span class="ch" style="grid-column:1">${chips(rem.before, rem.after).join('') || '<span class="chg nt">No change</span>'}</span></button>
       </div>`;
     }

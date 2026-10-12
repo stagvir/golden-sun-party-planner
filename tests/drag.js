@@ -35,6 +35,11 @@ const { chromium } = require(process.argv[2] ? process.argv[2] + '/playwright' :
   console.log('drop into a full column refused:', (await djOwner())[cn] === before[cn], '| toast:', await p.innerText('#toast'));
   await C.click(); await p.waitForTimeout(100);
   console.log('click opens djinn picker:', await p.evaluate(() => !document.getElementById('picker').hidden));
+  // the toggle action names the state you'd move to: a Set djinni offers "Put on Standby", a Standby one "Set it again"
+  { const label = () => p.evaluate(() => document.querySelector('#picker [data-act="toggle"] b').textContent);
+    const set1 = await label(); await p.click('#picker [data-act="toggle"]'); await p.waitForTimeout(100);
+    await C.click(); await p.waitForTimeout(100); const set2 = await label();
+    console.log('Set/Standby toggle labels:', set1, '->', set2, set1 === 'Put on Standby' && set2 === 'Set it again'); await p.keyboard.press('Escape'); }
   // Adept headers sit in the same place on the Gear, Djinn and Modifiers tabs
   const heads = async () => p.evaluate(() => { const t = [...document.querySelectorAll('.view:not([hidden]) table.gtab thead th')]; return JSON.stringify(t.map(th => { const r = th.getBoundingClientRect(); return [Math.round(r.left + scrollX), Math.round(r.top + scrollY), Math.round(r.width)]; })); });
   const hp = {}; for (const t of ['Gear', 'Djinn', 'Mods']) { await p.click('#tab' + t); await p.waitForTimeout(100); hp[t] = await heads(); }
