@@ -536,6 +536,12 @@ body.djdragging, body.djdragging * { cursor: grabbing !important; }
 .mon .mon-spr { display: flex; justify-content: center; align-items: flex-end; padding: 2px 0; }
 .mon .mon-spr img { image-rendering: pixelated; max-width: 100%; height: auto; }
 .mon .gs-l2 { white-space: normal; }
+.mon .mon-ver { display: flex; align-items: center; gap: .5em; flex-wrap: wrap; }
+.mon .mon-ver .lab { color: var(--gs-gold); }
+.mon-grid > .mon { min-width: 0; container-type: inline-size; }
+.mon > * { min-width: 0; }
+@container (max-width: 340px) { .mon-grid .mon .gs-el { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: .3em; } .mon-grid .mon .mon-st { grid-template-columns: repeat(2, auto); } }
+.mon .mon-ver select { min-width: 0; max-width: 100%; }
 .mon .gs-l2 .cl { overflow: visible; }
 .mon .mon-st { display: grid; grid-template-columns: repeat(3, auto); justify-content: space-between; gap: 0 .8em; }
 .mon .mon-st i, .mon .mon-rw i { font-style: normal; color: var(--gs-dim); margin-right: .3em; }
@@ -2003,7 +2009,7 @@ __SAVEPARSE__
   // A monster's element is its highest elemental level (the tables' own 'element' byte is 4 for most enemies, Agatio
   // included, so it isn't that); a tie at the top means no single element
   const monElement = m => { const top = Math.max(...m.elv), at = [0, 1, 2, 3].filter(e => m.elv[e] === top); return at.length === 1 ? at[0] : 4; };
-  function monCard(m, carry) {
+  function monCard(m, carry, vers, vi) {
     const st = [['HP', m.hp], ['PP', m.pp], ['ATK', m.atk], ['DEF', m.def], ['AGL', m.agl], ['LCK', m.lck]].map(([l, v]) => `<span><i>${l}</i>${v}</span>`).join('');
     const lo = Math.min(...m.res), hi = Math.max(...m.res);
     const els = [0, 1, 2, 3].map(e => `<div class="e${e}${m.res[e] === lo && lo !== hi ? ' weak' : ''}" title="${EL[e]}: level ${m.elv[e]}, Power ${m.pow[e]}, Resistance ${m.res[e]}${m.res[e] === lo && lo !== hi ? ' (weakest)' : ''}"><span class="lv"><span class="dot"></span>${m.elv[e]}</span><span class="pr">${m.pow[e]}/${m.res[e]}</span></div>`).join('');
@@ -2014,6 +2020,7 @@ __SAVEPARSE__
     return `<article class="gs gs-card mon" aria-label="${esc(m.n)}">
       ${spr ? `<div class="mon-spr"><img src="${spr[0]}" alt="" width="${spr[1] * 2}" height="${spr[2] * 2}" loading="lazy"></div>` : ''}
       <div class="gs-l1"><span>${esc(m.n)}</span><span class="lv">Lv ${m.lv}</span></div>
+      ${vers && vers.length > 1 ? `<label class="mon-ver"><span class="lab">${vers.length} versions</span><select data-mon="${esc(m.n)}" aria-label="${esc(m.n)}: which version">${vers.map((v, i) => `<option value="${i}" ${i === vi ? 'selected' : ''}>Lv ${v.m.lv} · HP ${v.m.hp}${v.carry ? ' · GS1' : ''}</option>`).join('')}</select></label>` : ''}
       <div class="gs-l2"><span class="cl">${monElement(m) < 4 ? EL[monElement(m)] : 'No single element'}${m.turns > 1 ? ` · ${m.turns} actions a turn` : ''}${regen ? ' · regen ' + regen : ''}</span></div>
       <div class="gs-sep"></div>
       <div class="mon-st">${st}</div>
@@ -2025,18 +2032,41 @@ __SAVEPARSE__
     </article>`;
   }
   const monState = () => state.mon || (state.mon = { q: '', sort: 'id', hideCarry: false });
+  // One card per monster name; versions that differ (by any stat or move) are picked from a dropdown on the card
+  const monPick = {};   // name -> chosen version index, per game
+  function monGroups() {
+    const all = MONSTERS[GM().monsters], tla = GM().monsters === 'tla', ms = monState(), groups = new Map();
+    for (const m of all) {
+      const carry = tla && GS1_MON.has(monKey(m));
+      if (ms.hideCarry && carry) continue;
+      const g = groups.get(m.n) || []; if (!g.some(v => monKey(v.m) === monKey(m))) g.push({ m, carry }); groups.set(m.n, g);
+    }
+    for (const g of groups.values()) g.sort((a, b) => a.m.lv - b.m.lv || a.m.hp - b.m.hp || a.m.id - b.m.id);
+    return groups;
+  }
+  const monPickKey = n => GM().monsters + '|' + n;
+  function monChosen(n, vers) { const i = Math.min(monPick[monPickKey(n)] || 0, vers.length - 1); return [i, vers[i]]; }
   function renderMonsters() {
     if ($('viewMonsters').hidden || !GM().monsters) return;
-    const all = MONSTERS[GM().monsters], ms = monState(), tla = GM().monsters === 'tla';
+    const ms = monState(), tla = GM().monsters === 'tla', all = MONSTERS[GM().monsters];
     $('monQ').value = ms.q; $('monSort').value = ms.sort; $('monCarry').checked = ms.hideCarry; $('monCarryBox').hidden = !tla;
     const q = ms.q.trim().toLowerCase();
-    let list = all.map(m => ({ m, carry: tla && GS1_MON.has(monKey(m)) }))
-      .filter(({ m, carry }) => !(ms.hideCarry && carry) && (!q || [m.n, m.drop || '', ...m.moves].some(t => t.toLowerCase().includes(q))));
+    let list = [...monGroups()].filter(([n, vers]) => !q || vers.some(({ m }) => [m.n, m.drop || '', ...m.moves].some(t => t.toLowerCase().includes(q))))
+      .map(([n, vers]) => { const [vi, v] = monChosen(n, vers); return { n, vers, vi, m: v.m, carry: v.carry }; });
     const k = ms.sort;
-    list.sort((a, b) => k === 'n' ? a.m.n.localeCompare(b.m.n) || a.m.lv - b.m.lv : k === 'id' ? a.m.id - b.m.id : (b.m[k] - a.m[k]) || a.m.n.localeCompare(b.m.n));
-    $('monNote').textContent = `${list.length} of ${all.length} monsters. Element dots show each element's level and Power/Resistance; the weakest resistance is marked. Drop chances are before any djinn bonus.`;
-    $('monList').innerHTML = list.map(({ m, carry }) => monCard(m, carry)).join('') || '<p class="muted">No monsters match.</p>';
+    list.sort((a, b) => k === 'n' ? a.n.localeCompare(b.n) : k === 'id' ? a.vers[0].m.id - b.vers[0].m.id : (b.m[k] - a.m[k]) || a.n.localeCompare(b.n));
+    const nv = list.reduce((t, g) => t + g.vers.length, 0);
+    $('monNote').textContent = `${list.length} monsters (${nv} versions) of ${new Set(all.map(m => m.n)).size}. Element dots show each element's level and Power/Resistance; the weakest resistance is marked. Drop chances are before any djinn bonus.`;
+    $('monList').innerHTML = list.map(g => monCard(g.m, g.carry, g.vers, g.vi)).join('') || '<p class="muted">No monsters match.</p>';
   }
+  // picking a version redraws just that card
+  $('monList').addEventListener('change', e => {
+    const sel = e.target.closest('select[data-mon]'); if (!sel) return;
+    const n = sel.dataset.mon, vers = monGroups().get(n); monPick[monPickKey(n)] = +sel.value;
+    const [vi, v] = monChosen(n, vers), card = sel.closest('.mon');
+    card.outerHTML = monCard(v.m, v.carry, vers, vi);
+    const again = [...$('monList').querySelectorAll('select[data-mon]')].find(x => x.dataset.mon === n); if (again) again.focus();
+  });
   $('monQ').addEventListener('input', e => { monState().q = e.target.value; renderMonsters(); save(); });
   $('monSort').addEventListener('change', e => { monState().sort = e.target.value; renderMonsters(); save(); });
   $('monCarry').addEventListener('change', e => { monState().hideCarry = e.target.checked; renderMonsters(); save(); });
