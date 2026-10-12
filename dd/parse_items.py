@@ -81,7 +81,7 @@ def parse(path):
 
 def finish(it):
     out = {'n': it['n'], 'sl': it['sl'], 'k': it['k'], 'a': it.get('a', 0), 'd': it.get('d', 0)}
-    desc = it['_desc']; parts = [p.strip() for p in re.split(r',\s*', desc) if p.strip()]
+    desc = it['_desc']; parts = [p.strip() for p in re.split(r',\s+(?=[A-Za-z])', desc) if p.strip()]  # not inside numbers like 1,000
     if any(p.lower() == 'cursed' for p in parts): out['c'] = 1
     use = next((p for p in [desc] if p.lower().startswith('use to ')), None)
     e, fx, ul, problems = [], [], [], []

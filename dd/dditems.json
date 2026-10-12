@@ -836,7 +836,6 @@
   "us": {
    "t": "Use to restore 1,000 HP"
   },
-  "note": "000 HP",
   "price": 17200,
   "where": "In the Lost Ship."
  },
@@ -2575,7 +2574,6 @@
   "us": {
    "t": "Use to restore 1,000 HP. May break if used."
   },
-  "note": "000 HP",
   "price": 5600,
   "where": "Chest in the treasure chamber hidden in King Pathos's throne room."
  },
