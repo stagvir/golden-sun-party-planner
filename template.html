@@ -502,14 +502,17 @@ details.sec .peek b { color: #fff; }
 /* when the strip wraps, the Reserve heading goes above slots 5-8 rather than next to Active party */
 @media (max-width: 1799px) { .slot-head.sh-res { order: 1; } .pc.res { order: 2; } }
 .sc-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 22em), 1fr)); }
-.gtab { min-width: 62em; }
-.gtab col.lab { width: 6.5em; }
-/* Gear table: each Adept column is as wide as its longest item name (names are never cut); if the
-   columns together are wider than the window, the table scrolls sideways inside it */
-#gearTable { table-layout: auto; width: max-content; min-width: 100%; }
-#gearTable col.lab { width: 1%; }
-#gearTable tbody th { white-space: normal; }
+/* Gear, Djinn and Modifiers share one column grid so the Adept headers stay put between tabs: a fixed label column
+   and equal Adept columns (--colw, set by fitColumns() to fit the game's longest item name, so names are never cut).
+   Wider windows stretch all three alike; narrower ones scroll all three alike. */
+:root { --labw: 7em; --colw: 12em; --ncol: 8; }
+.gtab { table-layout: fixed; min-width: 0; width: max(100%, calc(var(--labw) + var(--ncol) * var(--colw))); }
+.gtab col.lab { width: var(--labw); }
+.gtab col:not(.lab) { width: var(--colw); }
+.gtab tbody th { white-space: normal; }
 #gearTable .gcell .nm { overflow: visible; text-overflow: clip; }
+/* each tab's explanation block is as tall as the tallest of the three (equalizeNotes), so the tables start at the same height */
+.vnotes { display: grid; gap: 20px; align-content: start; min-height: var(--notes-h, 0); }
 .gamepick { flex-wrap: wrap; min-width: 0; max-width: 100%; }
 .picker { width: min(30em, calc(100vw - 32px)); max-height: min(40em, 75vh); }
 .tip { width: min(22em, calc(100vw - 32px)); }
@@ -518,6 +521,12 @@ details.sec .peek b { color: #fff; }
 .djadd, .djadd:hover, .djadd[aria-expanded="true"] { border-width: 1px; width: auto; height: auto; min-width: 2.4em; padding: 0 .5em; line-height: 1.5;
   border: 1px dashed rgba(255, 255, 255, .55); border-image: none; border-radius: 99px; background: rgba(0, 0, 0, .25); color: #fff; }
 .djadd:hover, .djadd[aria-expanded="true"] { border-style: solid; border-color: #fff; background: var(--cursor); }
+/* djinn drag and drop */
+#djTable .djc { cursor: grab; touch-action: none; user-select: none; }
+.djghost { position: fixed; z-index: 80; pointer-events: none; opacity: .9; filter: drop-shadow(0 4px 8px rgba(0, 0, 0, .6)); }
+.djc.lift { opacity: .35; }
+.djdrop { outline: 2px solid #fff; outline-offset: 1px; background-color: rgba(31, 152, 200, .35); }
+body.djdragging, body.djdragging * { cursor: grabbing !important; }
 /* the showcase section is just the cards on the black screen */
 .showcase.panel { background: transparent; border: 0; box-shadow: none; padding: 0; }
 .grip:hover, .grip:focus-visible { background: rgba(255, 255, 255, .12); }
@@ -587,7 +596,9 @@ details.sec .peek b { color: #fff; }
         <button class="btn sm" type="button" data-revert="gear">Revert gear to baseline</button>
       </div>
     </div>
+    <div class="vnotes">
     <p class="muted gv-note">Click any slot to change it. Changes show against the Adept's current gear (green better, red worse). Taking a one-of-a-kind item from another Adept gives them your old one if they can use it. The totals compare against your baseline.</p>
+    </div>
     <div class="tscroll"><table class="gtab" id="gearTable"></table></div>
   </section>
 
@@ -602,7 +613,9 @@ details.sec .peek b { color: #fff; }
         <button class="btn sm" type="button" data-revert="djinn">Revert djinn to baseline</button>
       </div>
     </div>
+    <div class="vnotes">
     <p class="muted gv-note">Click a djinni to put it on Standby, swap it or remove it; click + to add one (up to 9 each). Each option shows the class it leads to and the change in stats. Taking a djinni from another Adept gives them the one you swapped out. Dashed = Standby, dotted = not collected in your imported save. <span id="djPool"></span></p>
+    </div>
     <div class="tscroll"><table class="gtab djtab" id="djTable"></table></div>
   </section>
 
@@ -616,8 +629,10 @@ details.sec .peek b { color: #fff; }
         <button class="btn sm" type="button" data-revert="mods">Revert modifiers to baseline</button>
       </div>
     </div>
+    <div class="vnotes">
     <p class="muted gv-note" id="ddModsNote" hidden>Dark Dawn's growth curves aren't published, so base stats are entered here. Easiest way: take all gear off in the game, type each Adept's status-screen numbers below, set the same djinn in the Djinn tab, then press Work out base. Level only changes which Psynergy is learned.</p>
     <p class="muted gv-note gbaonly">Levels, stat items used and per-stat corrections for every Adept. Corrections cover the difference between real base stats and the average growth curve (level-up luck). Importing a save fills them in for you. Base values from the curve are shown under each correction.</p>
+    </div>
     <div class="tscroll"><table class="gtab modtab" id="modTable"></table></div>
   </section>
 
@@ -1384,6 +1399,9 @@ __SAVEPARSE__
   // ---------- djinn view ----------
   const djStats = dj => dj.s.map((v, k) => v ? `${STATS_S[k]}+${v}` : '').filter(Boolean).join(' ');
   function renderDjinnTab() {
+    // the unassigned list is kept current even while the tab is hidden: the tabs' explanation heights are matched to it
+    const free = djInGame().filter(i => state.dj[i].o === null);
+    $('djPool').textContent = !free.length ? `All ${djInGame().length} djinn are assigned.` : free.length <= 10 ? `Unassigned: ${free.map(i => D.djinn[i].n).join(', ')}.` : `${free.length} djinn are unassigned.`;
     if ($('viewDjinn').hidden) return;
     const tp = tableParts(), { cols, cur } = tp;
     let h = headHtml(cols, cur) + '<tbody>';
@@ -1401,14 +1419,12 @@ __SAVEPARSE__
         } else if (k === lists[ci].length) {
           cell = `<button type="button" class="djadd" data-ci="${ci}" aria-haspopup="dialog" aria-expanded="false" aria-label="Add a djinni to ${esc(D.chars[ci].name)}">+</button>`;
         }
-        return `<td${resCls(pos)}><div class="djcell">${cell}</div></td>`;
+        return `<td${resCls(pos)} data-ci="${ci}"><div class="djcell">${cell}</div></td>`;
       }).join('') + '</tr>';
     }
     h += `<tr><th scope="row">Djinn</th>` + cols.map((ci, pos) => { const o = owned(ci); return `<td${resCls(pos)}><span class="cnt"><b>${o.length}</b>/${GM().djCap} · ${o.filter(d => d.s).length} Set</span></td>`; }).join('') + '</tr>';
     h += `<tr><th scope="row">Elem Lv</th>` + cols.map((ci, pos) => `<td${resCls(pos)}><span class="els">${[0, 1, 2, 3].map(e => `<span class="etag e${e}">${cur[ci].r.cls.L[e]}</span>`).join('')}</span></td>`).join('') + '</tr>';
     $('djTable').innerHTML = h + '</tbody><tfoot>' + footRows(tp) + '</tfoot>';
-    const free = djInGame().filter(i => state.dj[i].o === null);
-    $('djPool').textContent = !free.length ? `All ${djInGame().length} djinn are assigned.` : free.length <= 10 ? `Unassigned: ${free.map(i => D.djinn[i].n).join(', ')}.` : `${free.length} djinn are unassigned.`;
   }
   // Give djinni i to Adept ci. If `replace` is a djinni ci holds, it is swapped out (to the previous holder, or back to the pool).
   function moveDjinn(ci, i, replace) {
@@ -1570,7 +1586,55 @@ __SAVEPARSE__
     placePicker(btn);
     const first = pk.querySelector('.pk-opt'); if (first) first.focus();
   }
+  // ---------- drag a djinni onto another Adept's djinni (swap) or into their column (move) ----------
+  let djDrag = null, djDragDone = false;
+  function djTarget(e) {
+    const el = document.elementFromPoint(e.clientX, e.clientY); if (!el) return null;
+    const chip = el.closest('#djTable .djc'); if (chip) return { el: chip, ci: +chip.dataset.ci, j: +chip.dataset.dj };
+    const td = el.closest('#djTable td[data-ci]'); return td ? { el: td, ci: +td.dataset.ci, j: null } : null;
+  }
+  function endDjDrag() {
+    if (!djDrag) return;
+    if (djDrag.ghost) djDrag.ghost.remove();
+    djDrag.chip.classList.remove('lift');
+    document.querySelectorAll('.djdrop').forEach(x => x.classList.remove('djdrop'));
+    document.body.classList.remove('djdragging');
+    djDrag = null;
+  }
+  $('djTable').addEventListener('pointerdown', e => {
+    const c = e.target.closest('.djc'); if (!c || e.button !== 0) return;
+    djDrag = { id: e.pointerId, i: +c.dataset.dj, from: +c.dataset.ci, x: e.clientX, y: e.clientY, chip: c, ghost: null };
+  });
+  document.addEventListener('pointermove', e => {
+    if (!djDrag || e.pointerId !== djDrag.id) return;
+    if (!djDrag.ghost) {
+      if (Math.hypot(e.clientX - djDrag.x, e.clientY - djDrag.y) < 6) return;   // a click, so far
+      closePicker(false);
+      const g = djDrag.chip.cloneNode(true); g.classList.add('djghost'); g.removeAttribute('id'); document.body.appendChild(g);
+      djDrag.ghost = g; djDrag.chip.classList.add('lift'); document.body.classList.add('djdragging');
+    }
+    e.preventDefault();
+    djDrag.ghost.style.left = e.clientX + 10 + 'px'; djDrag.ghost.style.top = e.clientY + 6 + 'px';
+    document.querySelectorAll('.djdrop').forEach(x => x.classList.remove('djdrop'));
+    const t = djTarget(e);
+    if (t && t.ci !== djDrag.from) t.el.classList.add('djdrop');
+  });
+  document.addEventListener('pointerup', e => {
+    if (!djDrag || e.pointerId !== djDrag.id) return;
+    const d = djDrag, dragged = !!d.ghost, t = dragged ? djTarget(e) : null;
+    endDjDrag();
+    if (!dragged) return;                      // a plain click: the click handler opens the picker
+    djDragDone = true; setTimeout(() => { djDragDone = false; }, 0);
+    if (!t || t.ci === d.from) return;         // dropped nowhere, or on the same Adept
+    let note;
+    if (t.j != null) note = moveDjinn(t.ci, d.i, t.j);            // onto their djinni: swap the two
+    else if (owned(t.ci).length >= GM().djCap) { toast(`${D.chars[t.ci].name} already has ${GM().djCap} djinn. Drop it on one of theirs to swap.`); return; }
+    else note = moveDjinn(t.ci, d.i, null);                       // into their column: move it there
+    renderAll(); toast(note);
+  });
+  document.addEventListener('pointercancel', e => { if (djDrag && e.pointerId === djDrag.id) endDjDrag(); });
   $('djTable').addEventListener('click', e => {
+    if (djDragDone) return;                    // the end of a drag isn't a click
     const b = e.target.closest('.djc, .djadd'); if (!b) return;
     if (pickerFor && pickerFor.kind === 'djinn' && b.getAttribute('aria-expanded') === 'true') { closePicker(false); return; }
     closePicker(false); openDjinnPicker(b);
@@ -1584,11 +1648,13 @@ __SAVEPARSE__
         const p = previewChange(ci, () => equipClassItem(ci, v));
         const holder = v ? state.chars.findIndex((c, i) => i !== ci && c.item === v) : -1;
         return { v, it: v ? { n: CLASS_ITEM_LABEL[v] } : null, label: v ? l : 'None', cur: cs.item === v, p, holder };
-      });
+      }).filter(r => !r.cur);   // the header already says what's equipped
     } else {
       const opts = optionsFor(ci, sl).opts;
-      rows.push({ v: '', it: null, label: 'None (unequip)', cur: cs.eq[sl] == null, p: previewChange(ci, () => equipItem(ci, sl, null)), holder: -1 });
+      // the item already equipped is left out (the header says "Now: …"); so is "None" when the slot is empty
+      if (cs.eq[sl] != null) rows.push({ v: '', it: null, label: 'None (unequip)', cur: false, p: previewChange(ci, () => equipItem(ci, sl, null)), holder: -1 });
       for (const o of opts) {
+        if (o.id === cs.eq[sl]) continue;
         const holder = state.chars.findIndex((c, i) => i !== ci && c.eq[sl] === o.id);
         rows.push({ v: String(o.id), it: o.it, label: o.it.n, sub: sl === 'w' ? `Atk ${o.it.a}` : `Def ${o.it.d}`, cur: cs.eq[sl] === o.id, p: previewChange(ci, () => equipItem(ci, sl, o.id)), holder });
       }
@@ -1675,11 +1741,15 @@ __SAVEPARSE__
       $(TABS[k]).setAttribute('aria-selected', String(on)); $(TABS[k]).tabIndex = on ? 0 : -1;
     }
   }
+  // The Gear/Djinn/Modifiers tables share one sideways scroll position, so their columns line up across tabs
+  let tableScrollX = 0;
+  ['gearTable', 'djTable', 'modTable'].forEach(id => $(id).parentElement.addEventListener('scroll', e => { if (e.target.offsetParent) tableScrollX = e.target.scrollLeft; }));
   function showView(v) {
     state.view = VIEWS[v] ? v : 'planner';
     closePicker(false); hideTip && hideTip();
     applyView();
     renderAll();
+    ['gearTable', 'djTable', 'modTable'].forEach(id => { const sc = $(id).parentElement; if (sc.offsetParent) sc.scrollLeft = tableScrollX; });
   }
   document.querySelector('.tabs').addEventListener('click', e => { const b = e.target.closest('[data-view]'); if (b) showView(b.dataset.view); });
   document.querySelector('.tabs').addEventListener('keydown', e => {
@@ -1851,14 +1921,46 @@ __SAVEPARSE__
     document.querySelectorAll('.gbaonly').forEach(x => { x.hidden = !!GM().manualBase; });
     $('srcNote').textContent = GM().manualBase ? 'Dark Dawn data comes from the Golden Sun Syndicate class and djinn guides and the Golden Sun Realm item guides; base stats are entered by hand.' : "Data comes from the game's own class, stat, djinn and item tables.";
   }
+  // Width of every Adept column in the Gear/Djinn/Modifiers tables: the longest item name in this game, plus icon and padding
+  const measureCtx = document.createElement('canvas').getContext('2d');
+  function fitColumns() {
+    const root = document.documentElement, fs = parseFloat(getComputedStyle(root).getPropertyValue('--fs')) || 20;
+    measureCtx.font = `${fs}px ${getComputedStyle(document.body).fontFamily}`;
+    const names = Object.entries(D.items).filter(([id]) => inGameItem(id)).map(([, it]) => it.n);
+    if (GM().classItems) names.push(...Object.values(CLASS_ITEM_LABEL));
+    const text = Math.max(0, ...names.map(n => measureCtx.measureText(n).width));
+    const icon = GM().iconSet !== 'dd' && matchMedia('(min-width: 1900px)').matches ? 34 : 24;
+    root.style.setProperty('--colw', Math.ceil(text + icon + 4 + 10 + 8 + 2) + 'px');   // + gap, cell button padding/border, td padding, slack
+    root.style.setProperty('--ncol', String(NCH()));
+  }
+  // Height of the tallest Gear/Djinn/Modifiers explanation at the current width (hidden tabs measured as off-screen copies)
+  function equalizeNotes() {
+    const blocks = ['viewGear', 'viewDjinn', 'viewMods'].map(v => $(v).querySelector('.vnotes'));
+    const shown = blocks.find(b => b.offsetParent); if (!shown) return;
+    const probe = document.createElement('div');
+    probe.style.cssText = `position:absolute;left:-10000px;top:0;visibility:hidden;width:${shown.clientWidth}px`;
+    document.body.appendChild(probe);
+    let h = 0;
+    for (const b of blocks) {
+      const c = b.cloneNode(true); c.style.minHeight = '0'; c.querySelectorAll('[id]').forEach(x => x.removeAttribute('id'));
+      [...c.children].forEach(x => { if (x.hidden) x.remove(); });
+      probe.appendChild(c); h = Math.max(h, c.getBoundingClientRect().height); c.remove();
+    }
+    probe.remove();
+    document.documentElement.style.setProperty('--notes-h', Math.ceil(h) + 'px');
+  }
   function renderAll(opts = {}) {
+    fitColumns();
     renderStrip(); renderSheet(); renderOverview(); renderShowcase(); renderGear(); renderDjinnTab(); renderModsTab(!!opts.modsFootOnly);
     if (typeof syncImportUi === 'function') syncImportUi();
     $('ioText').value = JSON.stringify(state);
     save();
+    equalizeNotes();
     if (opts.keepFocus) { const el = $(opts.keepFocus); if (el) { el.focus(); if (el.type === 'number') { try { el.select(); } catch (e) {} } } }
   }
 
+  if (document.fonts) document.fonts.ready.then(() => { fitColumns(); equalizeNotes(); });
+  addEventListener('resize', () => { fitColumns(); equalizeNotes(); });
   applyView();
   $('gameSel').innerHTML = Object.entries(GAMES).map(([k, g]) => `<option value="${k}" ${g.ready ? '' : 'disabled'}>${esc(g.name)}${g.ready ? '' : ' (coming later)'}</option>`).join('');
   $('gearSort').innerHTML = Object.entries(SORTS).map(([k, s]) => `<option value="${k}">${esc(s.label)}</option>`).join('');
