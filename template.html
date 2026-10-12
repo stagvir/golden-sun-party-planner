@@ -171,6 +171,9 @@ textarea { width: 100%; min-height: 90px; font-family: var(--mono); font-size: .
 .ico.sm { width: 22px; height: 22px; border-radius: 4px; vertical-align: middle; margin-right: 6px; }
 .ico.sm img { width: 16px; height: 16px; }
 .ico.sm svg { width: 13px; height: 13px; }
+/* Dark Dawn sprites are 24x24: show them at native size rather than an uneven scale */
+.ico.dd img { width: 24px; height: 24px; }
+.ico.sm.dd { width: 24px; height: 24px; }
 .gamepick { display: flex; align-items: center; gap: 6px; }
 .importbox { padding-block: 12px; gap: 10px; }
 .importbox summary { list-style: none; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
@@ -360,6 +363,7 @@ details.sec .sec-body { display: grid; gap: 10px; margin-top: 8px; }
 .gs-el img, .gs-dj img { width: 10px; height: 10px; image-rendering: pixelated; vertical-align: -1px; margin-right: 3px; }
 .gs-row { display: flex; flex-wrap: wrap; gap: 2px; align-items: center; min-height: 16px; }
 .gs-row img { width: 16px; height: 16px; image-rendering: pixelated; display: block; }
+.gs-row img.dd { width: 24px; height: 24px; }
 .gs-row .ph { width: 14px; height: 14px; border: 1px dashed var(--gs-dim); border-radius: 2px; margin: 1px; }
 .gs-row .star { width: 8px; height: 8px; margin: 4px; }
 .gs-row .lab { color: var(--gs-gold); font-size: 10px; letter-spacing: .04em; margin-right: 4px; min-width: 22px; }
@@ -1051,7 +1055,7 @@ __SAVEPARSE__
       const els = [0, 1, 2, 3].map(e => `<div title="${EL[e]}: level ${r.cls.L[e]}, Power ${r.el.pow[e]}, Resistance ${r.el.res[e]}"><span class="lv">${star(e)}${r.cls.L[e]}</span>${r.el.unknown ? '' : `<span class="pr">${r.el.pow[e]}/${r.el.res[e]}</span>`}</div>`).join('');
       const eqRows = SLOTS().map(([sl]) => ITEM(cs.eq[sl])).filter(Boolean);
       if (cs.item) eqRows.push({ n: CLASS_ITEM_NAMES[cs.item] });
-      const eq = eqRows.length ? eqRows.map(it => { const src = iconSrc(it); return src ? `<img src="${src}" alt="${esc(it.n)}" title="${esc(it.n)}">` : `<span class="ph" title="${esc(it.n)}"></span>`; }).join('')
+      const eq = eqRows.length ? eqRows.map(it => { const src = iconSrc(it); return src ? `<img${GM().iconSet === 'dd' ? ' class="dd"' : ''} src="${src}" alt="${esc(it.n)}" title="${esc(it.n)}">` : `<span class="ph" title="${esc(it.n)}"></span>`; }).join('')
         : '<span class="gs-empty">No gear</span>';
       const djs = owned(ci);
       const dj = djs.length ? [0, 1, 2, 3].map(e => {
@@ -1061,8 +1065,9 @@ __SAVEPARSE__
         return `<span title="${esc(names)}" class="${set < mine.length ? 'sb' : ''}">${star(e)}${set}${set < mine.length ? '/' + mine.length : ''}</span>`;
       }).join('') : '<span class="gs-empty">No djinn</span>';
       const learned = r.tier.psy.filter(p => p[1] <= cs.lv).sort((a, b) => a[1] - b[1]);
-      const psy = learned.length ? learned.map(([id]) => { const a = D.abil[id], src = GSUI.psy[a.n];
-        return src ? `<img src="${src}" alt="${esc(a.n)}" title="${esc(a.n)}">` : `<img class="star" src="${GSUI.star[a.e] || ''}" alt="${esc(a.n)}" title="${esc(a.n)}">`; }).join('')
+      // Dark Dawn uses its own sprites, falling back to the GBA icon of the same name
+      const psy = learned.length ? learned.map(([id]) => { const a = D.abil[id], own = D.dd && GSUI.psyDD[a.n], src = own || GSUI.psy[a.n];
+        return src ? `<img${own ? ' class="dd"' : ''} src="${src}" alt="${esc(a.n)}" title="${esc(a.n)}">` : `<img class="star" src="${GSUI.star[a.e] || ''}" alt="${esc(a.n)}" title="${esc(a.n)}">`; }).join('')
         : '<span class="gs-empty">None yet</span>';
       h += `<article class="gs gs-card" aria-label="${esc(ch.name)} build">
         <div class="gs-top">${portrait}

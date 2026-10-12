@@ -48,12 +48,12 @@ for s in wanted:
 
 # ---- UI skin assets (portraits, element stars, Psynergy icons) ----
 def uri(path):
-    return 'data:image/gif;base64,' + base64.b64encode(open(path, 'rb').read()).decode()
+    return f'data:{MIME[os.path.splitext(path)[1].lower()]};base64,' + base64.b64encode(open(path, 'rb').read()).decode()
 ui_dir = os.path.join(d, 'ui')
 PORTRAIT = {'Isaac': 'Isaac2', 'Garet': 'Garet2', 'Ivan': 'Ivan', 'Mia': 'Mia', 'Felix': 'Felix2', 'Jenna': 'Jenna2', 'Sheba': 'Sheba', 'Piers': 'Picard',
             'Matthew': 'Matthew_DD', 'Tyrell': 'Tyrell_DD', 'Karis': 'Karis_DD', 'Rief': 'Rief_DD', 'Amiti': 'Amiti_DD', 'Sveta': 'Sveta_DD', 'Eoleo': 'Eoleo_DD', 'Himi': 'Himi_DD'}
 PSY_ALIAS = {'Annihilation': 'Annihalation', 'Guard': 'Gaurd', 'Guardian': 'Gaurdian', 'Thunderhead': 'Thunderstorm'}
-ui = {'portrait': {}, 'star': [], 'frame': None, 'psy': {}}
+ui = {'portrait': {}, 'star': [], 'frame': None, 'psy': {}, 'psyDD': {}}
 if os.path.isdir(ui_dir):
     for c, f in PORTRAIT.items():
         fp = os.path.join(ui_dir, 'portraits', f + '.gif')
@@ -65,7 +65,18 @@ if os.path.isdir(ui_dir):
     for a in data['abil'].values():
         k = norm(PSY_ALIAS.get(a['n'], a['n']))
         if k in files: ui['psy'][a['n']] = uri(files[k])
+    # Dark Dawn's own 24x24 sprites (ui/psynergy_dd, named after the Golden Sun Realm guide). The planner's names
+    # come from the Syndicate guides, which spell two spells differently; same spells by learner, PP and effect.
+    PSY_ALIAS_DD = {'Healing Gust': 'Healthy Gust', 'Toxic Grit': 'Toxic Gift'}
+    dd_abil = json.load(open(os.path.join(d, 'dddata.json')))['abil']
+    dd_dir = os.path.join(ui_dir, 'psynergy_dd')
+    files = {norm(os.path.splitext(f)[0]): os.path.join(dd_dir, f) for f in os.listdir(dd_dir)} if os.path.isdir(dd_dir) else {}
+    for a in dd_abil.values():
+        k = norm(PSY_ALIAS_DD.get(a['n'], a['n']))
+        if k in files: ui['psyDD'][a['n']] = uri(files[k])
 report['psynergy_icons'] = {'matched': len(ui['psy']), 'of': len({a['n'] for a in data['abil'].values()})}
+report['psynergy_icons_dd'] = {'matched': len(ui['psyDD']), 'of': len({a['n'] for a in json.load(open(os.path.join(d, 'dddata.json')))['abil'].values()}),
+                               'missing': sorted({a['n'] for a in json.load(open(os.path.join(d, 'dddata.json')))['abil'].values()} - set(ui['psyDD']))}
 
 t = open(os.path.join(d, 'template.html')).read()
 t = (t.replace('__DDDATA__', open(os.path.join(d, 'dddata.json')).read())
@@ -79,4 +90,4 @@ t = (t.replace('__DDDATA__', open(os.path.join(d, 'dddata.json')).read())
 out = os.path.join(d, 'planner.html')
 open(out, 'w').write(t)
 json.dump(report, open(os.path.join(d, 'icon_report.json'), 'w'), indent=1)
-print('built', out, len(t), 'bytes |', ', '.join(f"{s}: {r['embedded']} icons embedded, {r['items_without_icon']} items without" for s, r in report.items() if 'embedded' in r), '| psynergy icons:', report['psynergy_icons'])
+print('built', out, len(t), 'bytes |', ', '.join(f"{s}: {r['embedded']} icons embedded, {r['items_without_icon']} items without" for s, r in report.items() if 'embedded' in r), '| psynergy icons:', report['psynergy_icons'], '| DD:', report['psynergy_icons_dd'])
