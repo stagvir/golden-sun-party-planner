@@ -521,6 +521,8 @@ details.sec .peek b { color: #fff; }
 .djadd, .djadd:hover, .djadd[aria-expanded="true"] { border-width: 1px; width: auto; height: auto; min-width: 2.4em; padding: 0 .5em; line-height: 1.5;
   border: 1px dashed rgba(255, 255, 255, .55); border-image: none; border-radius: 99px; background: rgba(0, 0, 0, .25); color: #fff; }
 .djadd:hover, .djadd[aria-expanded="true"] { border-style: solid; border-color: #fff; background: var(--cursor); }
+/* Standby djinn: red name, as in the game's Djinn menu (no dashed outline) */
+.djc.stby, .djc.stby:hover { color: #f83030; border-style: solid; border-color: var(--ec); background: rgba(0, 0, 0, .5); }
 /* djinn drag and drop */
 #djTable .djc { cursor: grab; touch-action: none; user-select: none; }
 .djghost { position: fixed; z-index: 80; pointer-events: none; opacity: .9; filter: drop-shadow(0 4px 8px rgba(0, 0, 0, .6)); }
@@ -531,6 +533,8 @@ body.djdragging, body.djdragging * { cursor: grabbing !important; }
 .mon-tools { align-items: end; }
 .mon-tools input[type=search] { width: 14em; }
 .mon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 22em), 1fr)); gap: 8px; align-items: start; }
+.mon .mon-spr { display: flex; justify-content: center; align-items: flex-end; padding: 2px 0; }
+.mon .mon-spr img { image-rendering: pixelated; max-width: 100%; height: auto; }
 .mon .gs-l2 { white-space: normal; }
 .mon .gs-l2 .cl { overflow: visible; }
 .mon .mon-st { display: grid; grid-template-columns: repeat(3, auto); justify-content: space-between; gap: 0 .8em; }
@@ -662,7 +666,7 @@ details.sec .sec-body { gap: 6px; margin-top: 4px; }
       </div>
     </div>
     <div class="vnotes">
-    <p class="muted gv-note">Click a djinni to put it on Standby, swap it or remove it; click + to add one (up to 9 each). Each option shows the class it leads to and the change in stats. Taking a djinni from another Adept gives them the one you swapped out. Dashed = Standby, dotted = not collected in your imported save. <span id="djPool"></span></p>
+    <p class="muted gv-note">Click a djinni to put it on Standby, swap it or remove it; click + to add one (up to 9 each). Each option shows the class it leads to and the change in stats. Taking a djinni from another Adept gives them the one you swapped out. Red name = Standby (ready to summon: no class or stat effect), dotted = not collected in your imported save. <span id="djPool"></span></p>
     </div>
     <div class="tscroll"><table class="gtab djtab" id="djTable"></table></div>
   </section>
@@ -745,6 +749,8 @@ const GSDATA = __DATA__;
 const DDDATA = __DDDATA__;
 // GBA monster tables, extracted from the owner's ROMs by monsters/extract_monsters.py
 const MONSTERS = __MONSTERS__;
+// Battle sprites by monster name: [data URI, width, height] (ui/monsters)
+const MONSPR = __MONSPR__;
 // Item icon sets, embedded at build time. Keys follow the Golden Sun Universe wiki file names:
 // "Warrior's Helm" -> Warriors_Helm (GBA set), Warriors_Helm_DD (Dark Dawn set).
 const GSICONS = __ICONS__;
@@ -2004,7 +2010,9 @@ __SAVEPARSE__
     const counts = new Map(); m.moves.forEach(n => counts.set(n, (counts.get(n) || 0) + 1));
     const moves = [...counts].map(([n, c]) => `<span class="mv">${esc(n)}${c > 1 ? ` <i>×${c}</i>` : ''}</span>`).join('');
     const regen = [m.hpRegen ? `HP +${m.hpRegen}` : '', m.ppRegen ? `PP +${m.ppRegen}` : ''].filter(Boolean).join(' · ');
+    const spr = MONSPR[m.n];
     return `<article class="gs gs-card mon" aria-label="${esc(m.n)}">
+      ${spr ? `<div class="mon-spr"><img src="${spr[0]}" alt="" width="${spr[1] * 2}" height="${spr[2] * 2}" loading="lazy"></div>` : ''}
       <div class="gs-l1"><span>${esc(m.n)}</span><span class="lv">Lv ${m.lv}</span></div>
       <div class="gs-l2"><span class="cl">${monElement(m) < 4 ? EL[monElement(m)] : 'No single element'}${m.turns > 1 ? ` · ${m.turns} actions a turn` : ''}${regen ? ' · regen ' + regen : ''}</span></div>
       <div class="gs-sep"></div>

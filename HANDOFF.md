@@ -49,7 +49,7 @@ Rebuild Dark Dawn data with `cd dd && python3 parse.py && python3 build_dd.py . 
 - Checks: all 377 Archipelago TLA entries match field for field (names except two hyphens Archipelago drops); wiki spot checks (Phoenix, Anger Ball, Living Armor, ...); GS1 record 0 is the same "???" placeholder as TLA's, and its names line up with stats ("Mystery Man" = the lv 10, 3000 HP opening fight).
 - Drop code *n* = 1/2^(n-1) (code 9 = 1/256, the wiki's figure for the Tisiphone Edge).
 - 100 TLA records are identical to GS1 ones (likely carried over and unused); the tab marks them and can hide them. The encounter/formation tables aren't found yet; they would settle this and give real enemy parties for the damage simulator.
-- Sprites: not added yet (the owner has them).
+- Sprites: `ui/monsters/` (the owner's battle sprites, mostly animated GIFs), matched by name in `ui/monsters/sprites.json`; `build.py` inlines them at 2x. 193 of 236 names have one. Saturos/Menardi/Agatio/Karst use their `_Front` pose, Mystery Man/Woman use Saturos/Menardi, "Grisly" uses Grizzly.gif. The 43 without are mostly palette-swapped variants (Fire Bird, the coloured Balls, ...) whose recoloured sprites weren't in the zip.
 
 ## Model and formulas (GBA, verified)
 

@@ -79,7 +79,17 @@ report['psynergy_icons_dd'] = {'matched': len(ui['psyDD']), 'of': len({a['n'] fo
                                'missing': sorted({a['n'] for a in json.load(open(os.path.join(d, 'dddata.json')))['abil'].values()} - set(ui['psyDD']))}
 
 t = open(os.path.join(d, 'template.html')).read()
-t = (t.replace('__MONSTERS__', open(os.path.join(d, 'monsters.json')).read())
+# Monster battle sprites (ui/monsters, mapped by name in sprites.json): name -> [data URI, width, height]
+from PIL import Image
+monspr = {}
+mdir = os.path.join(ui_dir, 'monsters')
+if os.path.isdir(mdir):
+    for n, f in json.load(open(os.path.join(mdir, 'sprites.json'))).items():
+        fp = os.path.join(mdir, f); w, h = Image.open(fp).size
+        monspr[n] = [uri(fp), w, h]
+# (count printed at the end)
+t = (t.replace('__MONSPR__', json.dumps(monspr, separators=(',', ':')))
+      .replace('__MONSTERS__', open(os.path.join(d, 'monsters.json')).read())
       .replace('__DDDATA__', open(os.path.join(d, 'dddata.json')).read())
       .replace('__DATA__', json.dumps(data, separators=(',', ':')))
       .replace('__ICONS__', json.dumps(icons, separators=(',', ':')))
@@ -94,4 +104,4 @@ t = (t.replace('__MONSTERS__', open(os.path.join(d, 'monsters.json')).read())
 out = os.path.join(d, 'planner.html')
 open(out, 'w').write(t)
 json.dump(report, open(os.path.join(d, 'icon_report.json'), 'w'), indent=1)
-print('built', out, len(t), 'bytes |', ', '.join(f"{s}: {r['embedded']} icons embedded, {r['items_without_icon']} items without" for s, r in report.items() if 'embedded' in r), '| psynergy icons:', report['psynergy_icons'], '| DD:', report['psynergy_icons_dd'])
+print('built', out, len(t), 'bytes |', ', '.join(f"{s}: {r['embedded']} icons embedded, {r['items_without_icon']} items without" for s, r in report.items() if 'embedded' in r), '| psynergy icons:', report['psynergy_icons'], '| DD:', report['psynergy_icons_dd'], '| monster sprites:', len(monspr))
