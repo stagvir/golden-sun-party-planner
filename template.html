@@ -36,7 +36,7 @@ h2 { font-size: var(--fs); }
 h3 { font-size: var(--fs); }
 .lbl { font-size: var(--fs); text-transform: uppercase; letter-spacing: 0; color: var(--muted); font-weight: 400; }
 .num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
-button, select, input { font: inherit; color: inherit; }
+button, select, input, textarea { font: inherit; color: inherit; text-shadow: inherit; }  /* browsers drop text-shadow on controls; the game shadows all text */
 button { cursor: pointer; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .btn { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 5px 10px; }
@@ -409,7 +409,7 @@ header.top p { color: var(--muted); }
 .btn:hover, .toggle:hover, .toggle:has(input:checked), .pc .mv button:hover:not(:disabled), .djadd:hover, .djadd[aria-expanded="true"],
 .tabs button:hover, .tabs button[aria-selected="true"] { border-image-source: var(--frame-sel); color: #fff; }
 input[type=number], select, textarea { background: #003447; border: 2px solid; border-color: #000 #a5a5a5 #a5a5a5 #000; border-radius: 0; color: #fff;
-  text-shadow: none; }
+}
 select option { background: #00526b; color: #fff; }
 .lvl input[type=range], .toggle input { accent-color: #6fb4f4; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
