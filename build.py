@@ -80,12 +80,17 @@ report['psynergy_icons_dd'] = {'matched': len(ui['psyDD']), 'of': len({a['n'] fo
 
 t = open(os.path.join(d, 'template.html')).read()
 # Monster battle sprites (ui/monsters, mapped by name in sprites.json): name -> [data URI, width, height]
-from PIL import Image
+import struct
+def gif_size(fp):
+    # GIF logical screen size: little-endian width, height after the 6-byte signature (no Pillow needed in CI)
+    with open(fp, 'rb') as fh: head = fh.read(10)
+    if head[:6] not in (b'GIF87a', b'GIF89a'): sys.exit(f'{fp}: not a GIF')
+    return struct.unpack('<HH', head[6:10])
 monspr = {}
 mdir = os.path.join(ui_dir, 'monsters')
 if os.path.isdir(mdir):
     for n, f in json.load(open(os.path.join(mdir, 'sprites.json'))).items():
-        fp = os.path.join(mdir, f); w, h = Image.open(fp).size
+        fp = os.path.join(mdir, f); w, h = gif_size(fp)
         monspr[n] = [uri(fp), w, h]
 # (count printed at the end)
 t = (t.replace('__MONSPR__', json.dumps(monspr, separators=(',', ':')))
