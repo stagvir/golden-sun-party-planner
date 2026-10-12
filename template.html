@@ -320,6 +320,8 @@ details.sec .sec-body { display: grid; gap: 10px; margin-top: 8px; }
 .chg.dn { color: var(--bad); background: var(--bad-bg); }
 .chg.nt { color: var(--muted); background: var(--sunk); font-family: var(--body); }
 .chg.sw { color: var(--warn); background: var(--sunk); font-family: var(--body); }
+.chg.swp { display: inline-flex; align-items: center; gap: 2px; padding: 1px 4px 1px 3px; }
+.chg.swp img { width: 32px; height: 32px; image-rendering: pixelated; display: block; }
 
 .toast-fixed { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 60;
   background: var(--fg); color: var(--bg); padding: 8px 14px; border-radius: 8px; font-size: var(--fs); max-width: calc(100vw - 32px); box-shadow: 0 6px 20px rgba(0,0,0,.2); }
@@ -1241,8 +1243,11 @@ __SAVEPARSE__
     if (state.owned && state.owned[id]) return state.owned[id];
     return 1;
   }
+  // Who the last equip/djinn move took from (and whether they got the old one back); the pickers show it as portraits
+  let lastSwap = null;
   // Equip item `id` (or null) in slot `sl` for Adept ci. Returns a description of any swap made.
   function equipItem(ci, sl, id) {
+    lastSwap = null;
     const cs = state.chars[ci], prev = cs.eq[sl];
     if (prev === id) return null;
     let note = null;
@@ -1250,7 +1255,7 @@ __SAVEPARSE__
       const holders = state.chars.map((c, i) => i).filter(i => i !== ci && state.chars[i].eq[sl] === id);
       if (holders.length + 1 > copiesAvailable(id)) {
         const h = holders[0], back = prev != null && (D.items[prev].m >> h) & 1 ? prev : null;
-        state.chars[h].eq[sl] = back;
+        state.chars[h].eq[sl] = back; lastSwap = { from: h, back: back != null };
         note = `Took ${D.items[id].n} from ${D.chars[h].name}` + (back != null ? `; ${D.chars[h].name} now has ${D.items[back].n}` : prev != null ? ` (${D.chars[h].name} can't use ${D.items[prev].n}, so that slot is now empty)` : '');
       }
     }
@@ -1258,12 +1263,13 @@ __SAVEPARSE__
     return note;
   }
   function equipClassItem(ci, v) {
+    lastSwap = null;
     const cs = state.chars[ci], prev = cs.item;
     if (prev === v) return null;
     let note = null;
     if (v) {
       const h = state.chars.findIndex((c, i) => i !== ci && c.item === v);
-      if (h >= 0) { state.chars[h].item = prev || ''; note = `Took the ${CLASS_ITEM_LABEL[v]} from ${D.chars[h].name}` + (prev ? `; ${D.chars[h].name} now has the ${CLASS_ITEM_LABEL[prev]}` : ''); }
+      if (h >= 0) { state.chars[h].item = prev || ''; lastSwap = { from: h, back: !!prev }; note = `Took the ${CLASS_ITEM_LABEL[v]} from ${D.chars[h].name}` + (prev ? `; ${D.chars[h].name} now has the ${CLASS_ITEM_LABEL[prev]}` : ''); }
     }
     cs.item = v;
     return note;
@@ -1295,10 +1301,17 @@ __SAVEPARSE__
   function previewChange(ci, apply) {
     const snap = buildSnap();
     const before = statsVector(compute(ci));
-    const note = apply();
+    const note = apply(), swap = lastSwap;
     const after = statsVector(compute(ci));
     buildLoad(snap);
-    return { before, after, note };
+    return { before, after, note, swap };
+  }
+  // A swap as portraits: "−" the Adept it's taken from, "+" if they get the old one back. The sentence is the hover/screen-reader text.
+  function swapChips(p) {
+    const s = p.swap, nm = D.chars[s.from].name, por = GSUI.portrait[nm];
+    const face = por ? `<img src="${por}" alt="">` : esc(nm);
+    const txt = esc(p.note.replace(/^Took /, 'Takes '));
+    return [`<span class="chg dn swp" title="${txt}" aria-label="${txt}">−${face}</span>`].concat(s.back ? [`<span class="chg up swp" title="${txt}" aria-hidden="true">+${face}</span>`] : []);
   }
   function chips(before, after) {
     const out = [];
@@ -1387,13 +1400,15 @@ __SAVEPARSE__
   }
   // Give djinni i to Adept ci. If `replace` is a djinni ci holds, it is swapped out (to the previous holder, or back to the pool).
   function moveDjinn(ci, i, replace) {
+    lastSwap = null;
     const d = state.dj[i], from = d.o;
     let note = null;
     if (replace != null) {
       const r = state.dj[replace];
-      if (from != null && from !== ci) { r.o = from; r.s = true; note = `Took ${D.djinn[i].n} from ${D.chars[from].name}; ${D.chars[from].name} gets ${D.djinn[replace].n}`; }
+      if (from != null && from !== ci) { r.o = from; r.s = true; lastSwap = { from, back: true }; note = `Took ${D.djinn[i].n} from ${D.chars[from].name}; ${D.chars[from].name} gets ${D.djinn[replace].n}`; }
       else { r.o = null; }
     } else if (from != null && from !== ci) {
+      lastSwap = { from, back: false };
       note = `Took ${D.djinn[i].n} from ${D.chars[from].name}`;
     }
     d.o = ci; d.s = true;
@@ -1530,7 +1545,7 @@ __SAVEPARSE__
         const dj = D.djinn[i], d = { ...state.dj[i] };   // copy: the preview below moves the real one temporarily
         const p = previewChange(ci, () => moveDjinn(ci, i, cur));
         const ch2 = chips(p.before, p.after);
-        if (p.note) ch2.push(`<span class="chg sw">${esc(p.note.replace(/^Took /, 'Takes '))}</span>`);
+        if (p.note) ch2.push(...(p.swap ? swapChips(p) : [`<span class="chg sw">${esc(p.note.replace(/^Took /, 'Takes '))}</span>`]));
         if (!ch2.length) ch2.push('<span class="chg nt">No change</span>');
         const where = d.o === null ? 'Unassigned' : `On ${D.chars[d.o].name}${d.s ? '' : ' (Standby)'}`;
         const miss = state.djHave && !state.djHave[i] ? ' · not collected' : '';
@@ -1571,7 +1586,7 @@ __SAVEPARSE__
     $('picker').innerHTML = `<div class="pk-head"><b>${esc(ch.name)} · ${sl === 'c' ? 'Class item' : SLOT_NAME[sl]}</b><span>Now: ${esc(curName)}. Changes are to ${esc(ch.name)}'s final stats.</span></div>
       <div class="pk-list" role="listbox" aria-label="Choose ${sl === 'c' ? 'class item' : SLOT_NAME[sl]}">` + rows.map(row => {
         const ch = row.cur ? ['<span class="chg nt">Equipped</span>'] : chips(row.p.before, row.p.after);
-        if (!row.cur && row.p.note) ch.push(`<span class="chg sw">${esc(row.p.note.replace(/^Took /, 'Takes '))}</span>`);
+        if (!row.cur && row.p.note) ch.push(...(row.p.swap ? swapChips(row.p) : [`<span class="chg sw">${esc(row.p.note.replace(/^Took /, 'Takes '))}</span>`]));
         else if (!row.cur && row.holder >= 0) ch.push(`<span class="chg nt">Also on ${esc(D.chars[row.holder].name)}</span>`);
         if (!ch.length) ch.push('<span class="chg nt">No change</span>');
         return `<button type="button" role="option" class="pk-opt ${row.cur ? 'cur' : ''}" aria-selected="${row.cur}" data-v="${row.v}">
