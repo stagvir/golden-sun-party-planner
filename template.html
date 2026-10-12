@@ -313,6 +313,8 @@ details.sec .sec-body { display: grid; gap: 10px; margin-top: 8px; }
 .pk-opt .t b { font-weight: 400; font-size: var(--fs); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .pk-opt .t small { color: var(--muted); font-size: var(--fs); white-space: nowrap; }
 .pk-opt .ch { grid-column: 2; display: flex; flex-wrap: wrap; gap: 4px; }
+/* a faint rule between options */
+.pk-opt + .pk-opt, .pk-grp + .pk-opt { box-shadow: 0 -3px 0 -2px rgba(255, 255, 255, .16); }
 .chg { font-size: var(--fs); font-family: var(--mono); font-variant-numeric: tabular-nums; padding: 0 5px; border-radius: 4px; line-height: 1.5; }
 .chg.up { color: var(--good); background: var(--good-bg); }
 .chg.dn { color: var(--bad); background: var(--bad-bg); }
