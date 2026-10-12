@@ -1,0 +1,42 @@
+Luminier | Swordsman | V0 Me1 Ma0 J0 | 100% 90% 110% 110% 90% 120%
+Luminier | Defender | V0 Me2 Ma0 J0 | 120% 100% 120% 120% 100% 120%
+Luminier | Cavalier | V0 Me4 Ma0 J0 | 140% 110% 130% 130% 110% 120%
+Luminier | Luminier | V0 Me6 Ma1 J0 | 170% 130% 140% 140% 130% 120%
+Luminier | Radiant | V0 Me7 Ma2 J0 | 190% 140% 150% 150% 140% 120%
+Dragoon | Dragoon | V3 Me3 Ma0 J0 | 160% 130% 140% 140% 110% 130%
+Dragoon | Templar | V4 Me4 Ma0 J0 | 180% 140% 150% 150% 120% 130%
+Dragoon | Paladin | V4 Me5 Ma0 J0 | 200% 150% 160% 160% 130% 130%
+Page | Page | V0 Me0 Ma0 J1 | 100% 120% 110% 100% 120% 90%
+Page | Illusionist | V0 Me0 Ma0 J2 | 120% 130% 120% 110% 130% 90%
+Page | Enchanter | V0 Me0 Ma0 J4 | 140% 140% 130% 120% 140% 90%
+Page | Conjurer | V0 Me0 Ma1 J6 | 170% 160% 140% 130% 160% 90%
+Page | War Adept | V0 Me0 Ma2 J7 | 190% 170% 150% 140% 170% 90%
+Ninja | Ninja | V3 Me0 Ma0 J3 | 160% 140% 150% 120% 170% 80%
+Ninja | Disciple | V4 Me0 Ma0 J4 | 180% 150% 160% 130% 180% 80%
+Ninja | Master | V4 Me0 Ma0 J5 | 200% 160% 170% 140% 190% 80%
+Pilgrim1 | Ascetic | V0 Me6 Ma0 J0 | 120% 140% 110% 120% 140% 120%
+Pilgrim1 | Water Monk | V0 Me7 Ma1 J0 | 150% 160% 130% 140% 160% 120%
+Pilgrim2 | Ascetic | V0 Me0 Ma0 J6 | 120% 140% 110% 120% 140% 120%
+Pilgrim2 | Fire Monk | V0 Me0 Ma1 J7 | 150% 160% 130% 140% 160% 120%
+Brute | Brute | V1 Me0 Ma0 J0 | 100% 70% 120% 90% 110% 70%
+Brute | Ruffian | V2 Me0 Ma0 J0 | 120% 80% 130% 100% 120% 70%
+Brute | Savage | V4 Me0 Ma0 J0 | 140% 90% 140% 110% 130% 70%
+Brute | Barbarian | V5 Me0 Ma0 J0 | 160% 100% 150% 120% 140% 70%
+Brute | Berserker | V6 Me0 Ma1 J0 | 180% 110% 160% 130% 150% 70%
+Brute | Chaos Lord | V7 Me0 Ma2 J0 | 200% 120% 170% 140% 160% 70%
+Samurai | Samurai | V4 Me0 Ma0 J3 | 190% 130% 150% 140% 140% 90%
+Samurai | Ronin | V5 Me0 Ma0 J4 | 210% 140% 160% 150% 150% 90%
+Pirate | Pirate | V0 Me0 Ma0 J0 | 110% 90% 100% 100% 90% 120%
+Pirate | Cannoneer | V0 Me0 Ma2 J0 | 130% 100% 110% 110% 100% 120%
+Pirate | Corsair | V0 Me0 Ma4 J0 | 150% 110% 120% 120% 110% 120%
+Pirate | Pirate King | V0 Me0 Ma6 J0 | 170% 120% 130% 130% 120% 120%
+Pirate | Hull Reaver | V0 Me0 Ma8 J0 | 190% 130% 140% 140% 130% 120%
+Luminier PSY: Ply@1 [above Defender], Blast@2, Guard@3, Cure Poison@5, Avoid@6 [above Defender], Wish@8 [above Cavalier], Mad Blast@10, Cutting Edge@11 [becomes Plume Edge after Luminier], Restore@13, Protect@15, Ply Well@16 [above Defender], Wish Well@22 [above Cavalier], Fiery Blast@28, Break@30, Pure Ply@34 [above Defender], Pure Wish@46 [above Cavalier]
+Dragoon PSY: Ply@1, Blast@2, Thorn@4, Cure Poison@5, Avoid@6, Wish@8, Mad Blast@10, Cutting Edge@11 [becomes Plume Edge after Templar], Restore@13, Ply Well@16, Briar@17, Wish Well@22, Fiery Blast@27, Pure Ply@34, Nettle@36, Pure Wish@46
+Page PSY: Delude@1, Guard@3 [above Enchanter], Impact@5 [above Enchanter], Ward@6, Volcano@8, Weaken@9, Astral Blast@11 [becomes Thunder Mine after Conjurer], Sleep@14, Protect@15 [above Enchanter], High Impact@21 [above Enchanter], Resist@22, Eruption@22 [above Page], Enfeeble@25, Drain@31, Psy Drain@39, Pyroclasm@48
+Ninja PSY: Gale@1, Punji@4, Fire Bomb@6, Mist@7, Thunderclap@8, Death Plunge@12 [becomes Death Leap after Disciple], Punji Trap@15, Cluster Bomb@16, Typhoon@18, Shuriken@21, Thunderbolt@26, Annihilation@31, Punji Strike@36, Carpet Bomb@40, Hurricane@44, Thunderhead@50
+Pilgrim1 PSY: Douse@1, Cure Poison@5, Prism@6, Volcano@8 [above Ascetic], Wish@9 [above Ascetic], Drench@12, Restore@13, Hail Prism@20, Eruption@22 [above Ascetic], Wish Well@24 [above Ascetic], Deluge@30, Break@34, Pure Wish@46 [above Ascetic], Pyroclasm@48 [above Ascetic], Freeze Prism@52
+Pilgrim2 PSY: Slash@1, Ward@6 [above Ascetic], Volcano@8 [above Ascetic], Plasma@9, Wind Slash@10, Bind@18, Eruption@22 [above Ascetic], Resist@24 [above Ascetic], Shine Plasma@26, Sonic Slash@30, Drain@33, Psy Drain@41, Pyroclasm@48 [above Ascetic], Spark Plasma@50
+Brute PSY: Growth@1, Fireball@1, Spire@7 [above Savage], Impair@9 [above Savage], Mad Growth@12, Planet Diver@13 [becomes Planetary after Berserker], Fire Orb@14, Haunt@17, Revive@19 [above Savage], Clay Spire@20 [above Savage], Debilitate@23 [above Savage], Curse@24, Wild Growth@28, Condemn@29, Inferno@36, Stone Spire@42 [above Savage]
+Samurai PSY: Guardian@3, Demon Spear@5, Rockfall@6, Lava Shower@8, Magic Shell@10, Dragon Cloud@12 [becomes Epicenter after Ronin], Protector@15, Demon Night@18 [becomes Thorny Grave after Ronin], Angel Spear@21, Molten Bath@22, Rockslide@24, Magic Shield@27, Helm Splitter@33 [becomes Skull Splitter after Ronin], Quick Strike@40, Magma Storm@48, Avalanche@54
+Pirate PSY: Flare@1, Guard@3, Fume@5, Flare Wall@6, Beam@7, Impair@10, Keelhaul@12 [becomes Vicious Chop after Pirate King], Protect@15, Flare Storm@18, Cycle Beam@21, Debilitate@23, Serpent Fume@26, Searing Beam@37, Dragon Fume@47

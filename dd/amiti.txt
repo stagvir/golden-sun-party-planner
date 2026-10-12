@@ -1,0 +1,40 @@
+Swordsman | Cavalier | V6 Me0 Ma0 J0 | 140% 110% 130% 130% 110% 120%
+Swordsman | Guardian | V6 Me1 Ma0 J0 | 170% 130% 140% 140% 130% 120%
+Luminier | Luminier | V0 Me1 Ma6 J0 | 170% 130% 140% 140% 130% 120%
+Water Seer | Seer | V1 Me0 Ma0 J0 | 90% 130% 90% 90% 110% 100%
+Water Seer | Diviner | V2 Me0 Ma0 J0 | 110% 140% 100% 100% 120% 100%
+Water Seer | Shaman | V4 Me0 Ma0 J0 | 120% 150% 110% 110% 130% 100%
+Water Seer | Druid | V6 Me1 Ma0 J0 | 150% 170% 130% 130% 150% 100%
+Water Seer | Oracle | V7 Me2 Ma0 J0 | 170% 180% 140% 140% 160% 100%
+Medium | Medium | V3 Me0 Ma0 J3 | 130% 170% 120% 120% 150% 90%
+Medium | Dark Shaman | V5 Me0 Ma0 J4 | 170% 190% 140% 140% 170% 90%
+Pilgrim | Pilgrim | V0 Me0 Ma1 J0 | 90% 120% 90% 100% 120% 120%
+Pilgrim | Wanderer | V0 Me0 Ma2 J0 | 110% 130% 100% 110% 130% 120%
+Pilgrim | Ascetic | V0 Me0 Ma4 J0 | 120% 140% 110% 120% 140% 120%
+Pilgrim | Water Monk | V0 Me1 Ma6 J0 | 150% 160% 130% 140% 160% 120%
+Pilgrim | Guru | V0 Me2 Ma7 J0 | 170% 170% 140% 150% 170% 120%
+Ranger | Ranger | V0 Me0 Ma3 J3 | 130% 160% 120% 120% 160% 120%
+Ranger | Bard | V0 Me0 Ma4 J4 | 150% 170% 130% 130% 170% 120%
+Ranger | Warlock | V0 Me0 Ma5 J4 | 170% 180% 140% 140% 180% 120%
+Sage | Hermit | V0 Me0 Ma0 J1 | 80% 140% 80% 90% 130% 120%
+Sage | Elder | V0 Me0 Ma0 J2 | 90% 150% 90% 100% 140% 120%
+Sage | Scholar | V0 Me0 Ma0 J4 | 110% 160% 100% 110% 150% 120%
+Sage | Savant | V0 Me0 Ma0 J5 | 130% 170% 110% 120% 160% 120%
+Sage | Sage | V0 Me1 Ma0 J6 | 150% 180% 120% 130% 170% 120%
+Sage | Wizard | V0 Me2 Ma0 J7 | 170% 190% 130% 140% 180% 120%
+White Mage | White Mage | V3 Me0 Ma0 J4 | 150% 180% 130% 130% 150% 130%
+White Mage | Pure Mage | V4 Me0 Ma0 J5 | 170% 190% 140% 140% 160% 130%
+Aqua Squire | Aqua Squire | V0 Me0 Ma0 J0 | 110% 90% 100% 100% 90% 120%
+Aqua Squire | Aqua Knight | V0 Me2 Ma0 J0 | 130% 100% 110% 110% 100% 120%
+Aqua Squire | Aqua Prince | V0 Me4 Ma0 J0 | 150% 110% 120% 120% 110% 120%
+Aqua Squire | Aqua Lord | V0 Me6 Ma0 J0 | 170% 120% 130% 130% 120% 120%
+Aqua Squire | Aqua Master | V0 Me8 Ma0 J0 | 190% 130% 140% 140% 130% 120%
+Swordsman PSY: Ply@1 [higher than Defender], Thorn@4, Cure Poison@5, Avoid@6 [higher than Defender], Wish@8 [higher than Cavalier], Cutting Edge@11 [transforms to Plume Edge after Guardian], Restore@13, Briar@14, Ply Well@16 [higher than Defender], Revive@19, Wish Well@22 [higher than Cavalier], Break@30, Pure Ply@34 [higher than Defender], Nettle@36, Pure Wish@46 [higher than Cavalier]
+Luminier PSY: Ply@1 [higher than Defender], Blast@2, Guard@3, Cure Poison@5, Avoid@6 [higher than Defender], Wish@8 [higher than Cavalier], Mad Blast@10, Cutting Edge@11 [transforms to Plume Edge after Luminier], Restore@13, Protect@15, Ply Well@16 [higher than Defender], Wish Well@22 [higher than Cavalier], Fiery Blast@28, Break@30, Pure Ply@34 [higher than Defender], Pure Wish@46 [higher than Cavalier]
+Water Seer PSY: Cure@1, Froth@2, Growth@3, Cure Poison@5, Wish@8 [higher than Shaman], Cure Well@10, Mad Growth@12, Restore@13, Froth Sphere@14, Revive@19 [higher than Shaman], Wish Well@22 [higher than Shaman], Potent Cure@26, Wild Growth@29, Break@30, Froth Spiral@40, Pure Wish@46 [higher than Shaman]
+Medium PSY: Bolt@1, Froth@2, Cure@3, Flash Bolt@6, Cure Well@10, Froth Sphere@14, Haunt@17, Revive@19, Curse@20, Blue Bolt@22, Potent Cure@26, Condemn@29, Drain@31, Psy Drain@36, Froth Spiral@40
+Pilgrim PSY: Douse@1, Cure Poison@5, Prism@6, Volcano@8 [higher than Ascetic], Wish@9 [higher than Ascetic], Drench@12, Restore@13, Hail Prism@20, Eruption@22 [higher than Ascetic], Wish Well@24 [higher than Ascetic], Deluge@30, Break@34, Pure Wish@46 [higher than Ascetic], Pyroclasm@48 [higher than Ascetic], Freeze Prism@52
+Ranger PSY: Slash@1, Douse@2, Ward@6, Volcano@8, Wind Slash@10, Drench@12, Bind@18, Eruption@22, Resist@24, Deluge@30, Sonic Slash@30, Drain@33, Break@34, Psy Drain@41, Pyroclasm@48
+Sage PSY: Impact@1, Prism@6, Plasma@8, Wish@12 [higher than Scholar], Bind@18, High Impact@21, Hail Prism@22, Wish Well@24 [higher than Scholar], Shine Plasma@26, Break@30, Drain@31, Psy Drain@39, Pure Wish@46 [higher than Scholar], Spark Plasma@50, Freeze Prism@52
+White Mage PSY: Cure Poison@1, Prism@6, Plasma@8, Ward@9, Dull@11, Wish@12, Restore@13, Revive@17, Hail Prism@22, Wish Well@24, Shine Plasma@26, Resist@31, Blunt@37, Pure Wish@46, Spark Plasma@46, Freeze Prism@52
+Aqua Squire PSY: Douse@2, Ply@2, Cool@4, Cure Poison@5, Avoid@6 [higher than Aqua Knight], Diamond Dust@12 [transforms to Diamond Berg after Aqua Lord], Restore@13, Ply Well@17, Supercool@21, Deluge@30, Break@30, Pure Ply@35, Megacool@48

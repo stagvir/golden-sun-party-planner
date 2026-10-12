@@ -1,0 +1,6 @@
+node_modules/
+out/
+icon_report.json
+archipelago-data/
+planner.html
+testdata/user/

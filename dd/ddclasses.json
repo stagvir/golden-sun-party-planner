@@ -1,0 +1,10362 @@
+{
+"Matthew": {
+"el": 0,
+"lines": [
+{
+"line": "Knight",
+"tiers": [
+{
+"n": "Squire",
+"req": [
+0,
+0,
+0,
+0
+],
+"mult": [
+110,
+80,
+110,
+100,
+110,
+100
+]
+},
+{
+"n": "Knight",
+"req": [
+2,
+0,
+0,
+0
+],
+"mult": [
+130,
+90,
+120,
+110,
+120,
+100
+]
+},
+{
+"n": "Gallant",
+"req": [
+4,
+0,
+0,
+0
+],
+"mult": [
+150,
+100,
+130,
+120,
+130,
+100
+]
+},
+{
+"n": "Lord",
+"req": [
+6,
+0,
+0,
+0
+],
+"mult": [
+170,
+110,
+140,
+130,
+140,
+100
+]
+},
+{
+"n": "Slayer",
+"req": [
+8,
+0,
+0,
+0
+],
+"mult": [
+190,
+120,
+150,
+140,
+150,
+100
+]
+}
+],
+"psy": [
+[
+"Cure",
+1,
+""
+],
+[
+"Quake",
+2,
+""
+],
+[
+"Earthquake",
+4,
+""
+],
+[
+"Spire",
+6,
+""
+],
+[
+"Gaia",
+7,
+"Gallant or higher"
+],
+[
+"Cure Well",
+10,
+""
+],
+[
+"Ragnarok",
+13,
+"transforms to Odyssey after Lord"
+],
+[
+"Quake Sphere",
+14,
+""
+],
+[
+"Revive",
+19,
+"Gallant or higher"
+],
+[
+"Clay Spire",
+20,
+""
+],
+[
+"Mother Gaia",
+24,
+"Gallant or higher"
+],
+[
+"Potent Cure",
+26,
+""
+],
+[
+"Stone Spire",
+42,
+""
+],
+[
+"Grand Gaia",
+54,
+"Gallant or higher"
+]
+]
+},
+{
+"line": "Swordsman",
+"tiers": [
+{
+"n": "Crusader",
+"req": [
+0,
+1,
+0,
+0
+],
+"mult": [
+100,
+90,
+110,
+110,
+90,
+120
+]
+},
+{
+"n": "Defender",
+"req": [
+0,
+2,
+0,
+0
+],
+"mult": [
+120,
+100,
+120,
+120,
+100,
+120
+]
+},
+{
+"n": "Cavalier",
+"req": [
+0,
+4,
+0,
+0
+],
+"mult": [
+140,
+110,
+130,
+130,
+110,
+120
+]
+},
+{
+"n": "Guardian",
+"req": [
+1,
+6,
+0,
+0
+],
+"mult": [
+170,
+130,
+140,
+140,
+130,
+120
+]
+},
+{
+"n": "Protector",
+"req": [
+2,
+7,
+0,
+0
+],
+"mult": [
+190,
+140,
+150,
+150,
+140,
+120
+]
+}
+],
+"psy": [
+[
+"Ply",
+1,
+"Defender or higher"
+],
+[
+"Thorn",
+4,
+""
+],
+[
+"Cure Poison",
+5,
+""
+],
+[
+"Avoid",
+6,
+"Defender or higher"
+],
+[
+"Wish",
+8,
+"Cavalier or higher"
+],
+[
+"Cutting Edge",
+11,
+"transforms to Plume Edge after Guardian"
+],
+[
+"Restore",
+13,
+""
+],
+[
+"Briar",
+14,
+""
+],
+[
+"Ply Well",
+16,
+"Defender or higher"
+],
+[
+"Revive",
+19,
+""
+],
+[
+"Wish Well",
+22,
+"Cavalier or higher"
+],
+[
+"Break",
+30,
+""
+],
+[
+"Pure Ply",
+34,
+"Defender or higher"
+],
+[
+"Nettle",
+36,
+""
+],
+[
+"Pure Wish",
+46,
+"Cavalier or higher"
+]
+]
+},
+{
+"line": "Dragoon",
+"tiers": [
+{
+"n": "Dragoon",
+"req": [
+0,
+3,
+3,
+0
+],
+"mult": [
+160,
+130,
+140,
+140,
+110,
+130
+]
+},
+{
+"n": "Templar",
+"req": [
+0,
+4,
+4,
+0
+],
+"mult": [
+180,
+140,
+150,
+150,
+120,
+130
+]
+},
+{
+"n": "Paladin",
+"req": [
+0,
+5,
+4,
+0
+],
+"mult": [
+200,
+150,
+160,
+160,
+130,
+130
+]
+}
+],
+"psy": [
+[
+"Ply",
+1,
+""
+],
+[
+"Blast",
+2,
+""
+],
+[
+"Thorn",
+4,
+""
+],
+[
+"Cure Poison",
+5,
+""
+],
+[
+"Avoid",
+6,
+""
+],
+[
+"Wish",
+8,
+""
+],
+[
+"Mad Blast",
+10,
+""
+],
+[
+"Cutting Edge",
+11,
+"transforms to Plume Edge after Templar"
+],
+[
+"Restore",
+13,
+""
+],
+[
+"Ply Well",
+16,
+""
+],
+[
+"Briar",
+17,
+""
+],
+[
+"Wish Well",
+22,
+""
+],
+[
+"Fiery Blast",
+27,
+""
+],
+[
+"Pure Ply",
+34,
+""
+],
+[
+"Nettle",
+36,
+""
+],
+[
+"Pure Wish",
+46,
+""
+]
+]
+},
+{
+"line": "Apprentice",
+"tiers": [
+{
+"n": "Apprentice",
+"req": [
+0,
+0,
+0,
+1
+],
+"mult": [
+100,
+120,
+110,
+100,
+120,
+90
+]
+},
+{
+"n": "Illusionist",
+"req": [
+0,
+0,
+0,
+2
+],
+"mult": [
+120,
+130,
+120,
+110,
+130,
+90
+]
+},
+{
+"n": "Enchanter",
+"req": [
+0,
+0,
+0,
+4
+],
+"mult": [
+140,
+140,
+130,
+120,
+140,
+90
+]
+},
+{
+"n": "Conjurer",
+"req": [
+1,
+0,
+0,
+6
+],
+"mult": [
+170,
+160,
+140,
+130,
+160,
+90
+]
+},
+{
+"n": "War Adept",
+"req": [
+2,
+0,
+0,
+7
+],
+"mult": [
+190,
+170,
+150,
+140,
+170,
+90
+]
+}
+],
+"psy": [
+[
+"Delude",
+1,
+""
+],
+[
+"Impact",
+5,
+"Enchanter or higher"
+],
+[
+"Gaia",
+6,
+""
+],
+[
+"Ward",
+6,
+"Enchanter or higher"
+],
+[
+"Weaken",
+9,
+""
+],
+[
+"Astral Blast",
+11,
+"transforms to Thunder Mine after Conjurer"
+],
+[
+"Sleep",
+14,
+""
+],
+[
+"Haunt",
+17,
+""
+],
+[
+"Curse",
+20,
+""
+],
+[
+"High Impact",
+21,
+"Enchanter or higher"
+],
+[
+"Resist",
+22,
+"Enchanter or higher"
+],
+[
+"Mother Gaia",
+24,
+""
+],
+[
+"Enfeeble",
+25,
+""
+],
+[
+"Drain",
+31,
+""
+],
+[
+"Psy Drain",
+39,
+""
+],
+[
+"Grand Gaia",
+54,
+""
+]
+]
+},
+{
+"line": "Ninja",
+"tiers": [
+{
+"n": "Ninja",
+"req": [
+0,
+0,
+3,
+3
+],
+"mult": [
+160,
+140,
+150,
+120,
+170,
+80
+]
+},
+{
+"n": "Disciple",
+"req": [
+0,
+0,
+4,
+4
+],
+"mult": [
+180,
+150,
+160,
+130,
+180,
+80
+]
+},
+{
+"n": "Master",
+"req": [
+0,
+0,
+4,
+5
+],
+"mult": [
+200,
+160,
+170,
+140,
+190,
+80
+]
+}
+],
+"psy": [
+[
+"Gale",
+1,
+""
+],
+[
+"Punji",
+4,
+""
+],
+[
+"Fire Bomb",
+6,
+""
+],
+[
+"Mist",
+7,
+""
+],
+[
+"Thunderclap",
+8,
+""
+],
+[
+"Death Plunge",
+12,
+"transforms to Death Leap after Disciple"
+],
+[
+"Punji Trap",
+15,
+""
+],
+[
+"Cluster Bomb",
+16,
+""
+],
+[
+"Typhoon",
+18,
+""
+],
+[
+"Shuriken",
+21,
+""
+],
+[
+"Thunderbolt",
+26,
+""
+],
+[
+"Annihilation",
+31,
+""
+],
+[
+"Punji Strike",
+36,
+""
+],
+[
+"Carpet Bomb",
+40,
+""
+],
+[
+"Hurricane",
+44,
+""
+],
+[
+"Thunderhead",
+50,
+""
+]
+]
+},
+{
+"line": "Water Seer",
+"tiers": [
+{
+"n": "Shaman",
+"req": [
+0,
+6,
+0,
+0
+],
+"mult": [
+120,
+150,
+110,
+110,
+130,
+100
+]
+},
+{
+"n": "Druid",
+"req": [
+1,
+7,
+0,
+0
+],
+"mult": [
+150,
+170,
+130,
+130,
+150,
+100
+]
+}
+],
+"psy": [
+[
+"Cure",
+1,
+""
+],
+[
+"Froth",
+2,
+""
+],
+[
+"Growth",
+3,
+""
+],
+[
+"Cure Poison",
+5,
+""
+],
+[
+"Wish",
+8,
+"Shaman or higher"
+],
+[
+"Cure Well",
+10,
+""
+],
+[
+"Mad Growth",
+12,
+""
+],
+[
+"Restore",
+13,
+""
+],
+[
+"Froth Sphere",
+14,
+""
+],
+[
+"Revive",
+19,
+"Shaman or higher"
+],
+[
+"Wish Well",
+22,
+"Shaman or higher"
+],
+[
+"Potent Cure",
+26,
+""
+],
+[
+"Wild Growth",
+29,
+""
+],
+[
+"Break",
+30,
+""
+],
+[
+"Froth Spiral",
+40,
+""
+],
+[
+"Pure Wish",
+46,
+"Shaman or higher"
+]
+]
+},
+{
+"line": "Wind Seer",
+"tiers": [
+{
+"n": "Shaman",
+"req": [
+0,
+0,
+0,
+6
+],
+"mult": [
+120,
+150,
+110,
+110,
+130,
+100
+]
+},
+{
+"n": "Druid",
+"req": [
+1,
+0,
+0,
+7
+],
+"mult": [
+150,
+170,
+130,
+130,
+150,
+100
+]
+}
+],
+"psy": [
+[
+"Cure",
+1,
+""
+],
+[
+"Bolt",
+2,
+""
+],
+[
+"Growth",
+3,
+""
+],
+[
+"Flash Bolt",
+6,
+""
+],
+[
+"Ward",
+7,
+"Shaman or higher"
+],
+[
+"Cure Well",
+10,
+""
+],
+[
+"Mad Growth",
+12,
+""
+],
+[
+"Bind",
+18,
+""
+],
+[
+"Revive",
+19,
+"Shaman or higher"
+],
+[
+"Blue Bolt",
+22,
+""
+],
+[
+"Resist",
+23,
+"Shaman or higher"
+],
+[
+"Potent Cure",
+26,
+""
+],
+[
+"Wild Growth",
+29,
+""
+],
+[
+"Drain",
+31,
+""
+],
+[
+"Psy Drain",
+39,
+""
+]
+]
+},
+{
+"line": "Brute",
+"tiers": [
+{
+"n": "Brute",
+"req": [
+0,
+0,
+1,
+0
+],
+"mult": [
+100,
+70,
+120,
+90,
+110,
+70
+]
+},
+{
+"n": "Ruffian",
+"req": [
+0,
+0,
+2,
+0
+],
+"mult": [
+120,
+80,
+130,
+100,
+120,
+70
+]
+},
+{
+"n": "Savage",
+"req": [
+0,
+0,
+4,
+0
+],
+"mult": [
+140,
+90,
+140,
+110,
+130,
+70
+]
+},
+{
+"n": "Barbarian",
+"req": [
+0,
+0,
+5,
+0
+],
+"mult": [
+160,
+100,
+150,
+120,
+140,
+70
+]
+},
+{
+"n": "Berserker",
+"req": [
+1,
+0,
+6,
+0
+],
+"mult": [
+180,
+110,
+160,
+130,
+150,
+70
+]
+},
+{
+"n": "Chaos Lord",
+"req": [
+2,
+0,
+7,
+0
+],
+"mult": [
+200,
+120,
+170,
+140,
+160,
+70
+]
+}
+],
+"psy": [
+[
+"Growth",
+1,
+""
+],
+[
+"Fireball",
+1,
+""
+],
+[
+"Spire",
+7,
+"Savage or higher"
+],
+[
+"Impair",
+9,
+"Savage or higher"
+],
+[
+"Mad Growth",
+12,
+""
+],
+[
+"Planet Diver",
+13,
+"transforms to Planetary after Berserker"
+],
+[
+"Fire Orb",
+14,
+""
+],
+[
+"Haunt",
+17,
+""
+],
+[
+"Revive",
+19,
+"Savage or higher"
+],
+[
+"Clay Spire",
+20,
+"Savage or higher"
+],
+[
+"Debilitate",
+23,
+"Savage or higher"
+],
+[
+"Curse",
+24,
+""
+],
+[
+"Wild Growth",
+28,
+""
+],
+[
+"Condemn",
+29,
+""
+],
+[
+"Inferno",
+36,
+""
+],
+[
+"Stone Spire",
+42,
+"Savage or higher"
+]
+]
+},
+{
+"line": "Samurai",
+"tiers": [
+{
+"n": "Samurai",
+"req": [
+0,
+0,
+4,
+3
+],
+"mult": [
+190,
+130,
+150,
+140,
+140,
+90
+]
+},
+{
+"n": "Ronin",
+"req": [
+0,
+0,
+5,
+4
+],
+"mult": [
+210,
+140,
+160,
+150,
+150,
+90
+]
+}
+],
+"psy": [
+[
+"Guardian",
+3,
+""
+],
+[
+"Demon Spear",
+5,
+""
+],
+[
+"Rockfall",
+6,
+""
+],
+[
+"Lava Shower",
+8,
+""
+],
+[
+"Magic Shell",
+10,
+""
+],
+[
+"Dragon Cloud",
+12,
+"transforms to Epicenter after Ronin"
+],
+[
+"Protector",
+15,
+""
+],
+[
+"Demon Night",
+18,
+"transforms to Thorny Grave after Ronin"
+],
+[
+"Angel Spear",
+21,
+""
+],
+[
+"Molten Bath",
+22,
+""
+],
+[
+"Rockslide",
+24,
+""
+],
+[
+"Magic Shield",
+27,
+""
+],
+[
+"Helm Splitter",
+33,
+"transforms to Skull Splitter after Ronin"
+],
+[
+"Quick Strike",
+40,
+""
+],
+[
+"Magma Storm",
+48,
+""
+],
+[
+"Avalanche",
+54,
+""
+]
+]
+}
+]
+},
+"Tyrell": {
+"el": 2,
+"lines": [
+{
+"line": "Guard",
+"tiers": [
+{
+"n": "Guard",
+"req": [
+0,
+0,
+0,
+0
+],
+"mult": [
+110,
+80,
+100,
+110,
+70,
+100
+]
+},
+{
+"n": "Soldier",
+"req": [
+0,
+0,
+2,
+0
+],
+"mult": [
+130,
+90,
+110,
+120,
+80,
+100
+]
+},
+{
+"n": "Warrior",
+"req": [
+0,
+0,
+4,
+0
+],
+"mult": [
+150,
+100,
+120,
+130,
+90,
+100
+]
+},
+{
+"n": "Champion",
+"req": [
+0,
+0,
+6,
+0
+],
+"mult": [
+170,
+110,
+130,
+140,
+100,
+100
+]
+},
+{
+"n": "Hero",
+"req": [
+0,
+0,
+8,
+0
+],
+"mult": [
+190,
+120,
+140,
+150,
+110,
+100
+]
+}
+],
+"psy": [
+[
+"Flare",
+1,
+""
+],
+[
+"Guard",
+3,
+"higher than Warrior"
+],
+[
+"Starburst",
+5,
+""
+],
+[
+"Flare Wall",
+6,
+""
+],
+[
+"Volcano",
+8,
+""
+],
+[
+"Impair",
+9,
+"higher than Warrior"
+],
+[
+"Heat Wave",
+12,
+"transforms to Liquifier after Champion"
+],
+[
+"Protect",
+15,
+"higher than Warrior"
+],
+[
+"Nova",
+15,
+""
+],
+[
+"Flare Storm",
+18,
+""
+],
+[
+"Eruption",
+22,
+""
+],
+[
+"Debilitate",
+26,
+"higher than Warrior"
+],
+[
+"Supernova",
+40,
+""
+],
+[
+"Pyroclasm",
+48,
+""
+]
+]
+},
+{
+"line": "Luminier",
+"tiers": [
+{
+"n": "Swordsman",
+"req": [
+0,
+1,
+0,
+0
+],
+"mult": [
+100,
+90,
+110,
+110,
+90,
+120
+]
+},
+{
+"n": "Defender",
+"req": [
+0,
+2,
+0,
+0
+],
+"mult": [
+120,
+100,
+120,
+120,
+100,
+120
+]
+},
+{
+"n": "Cavalier",
+"req": [
+0,
+4,
+0,
+0
+],
+"mult": [
+140,
+110,
+130,
+130,
+110,
+120
+]
+},
+{
+"n": "Luminier",
+"req": [
+0,
+6,
+1,
+0
+],
+"mult": [
+170,
+130,
+140,
+140,
+130,
+120
+]
+},
+{
+"n": "Radiant",
+"req": [
+0,
+7,
+2,
+0
+],
+"mult": [
+190,
+140,
+150,
+150,
+140,
+120
+]
+}
+],
+"psy": [
+[
+"Ply",
+1,
+"higher than Defender"
+],
+[
+"Blast",
+2,
+""
+],
+[
+"Guard",
+3,
+""
+],
+[
+"Cure Poison",
+5,
+""
+],
+[
+"Avoid",
+6,
+"higher than Defender"
+],
+[
+"Wish",
+8,
+"higher than Cavalier"
+],
+[
+"Mad Blast",
+10,
+""
+],
+[
+"Cutting Edge",
+11,
+"transforms to Plume Edge after Luminier"
+],
+[
+"Restore",
+13,
+""
+],
+[
+"Protect",
+15,
+""
+],
+[
+"Ply Well",
+16,
+"higher than Defender"
+],
+[
+"Wish Well",
+22,
+"higher than Cavalier"
+],
+[
+"Fiery Blast",
+28,
+""
+],
+[
+"Break",
+30,
+""
+],
+[
+"Pure Ply",
+34,
+"higher than Defender"
+],
+[
+"Pure Wish",
+46,
+"higher than Cavalier"
+]
+]
+},
+{
+"line": "Dragoon",
+"tiers": [
+{
+"n": "Dragoon",
+"req": [
+3,
+3,
+0,
+0
+],
+"mult": [
+160,
+130,
+140,
+140,
+110,
+130
+]
+},
+{
+"n": "Templar",
+"req": [
+4,
+4,
+0,
+0
+],
+"mult": [
+180,
+140,
+150,
+150,
+120,
+130
+]
+},
+{
+"n": "Paladin",
+"req": [
+4,
+5,
+0,
+0
+],
+"mult": [
+200,
+150,
+160,
+160,
+130,
+130
+]
+}
+],
+"psy": [
+[
+"Ply",
+1,
+""
+],
+[
+"Blast",
+2,
+""
+],
+[
+"Thorn",
+4,
+""
+],
+[
+"Cure Poison",
+5,
+""
+],
+[
+"Avoid",
+6,
+""
+],
+[
+"Wish",
+8,
+""
+],
+[
+"Mad Blast",
+10,
+""
+],
+[
+"Cutting Edge",
+11,
+"transforms to Plume Edge after Templar"
+],
+[
+"Restore",
+13,
+""
+],
+[
+"Ply Well",
+16,
+""
+],
+[
+"Briar",
+17,
+""
+],
+[
+"Wish Well",
+22,
+""
+],
+[
+"Fiery Blast",
+27,
+""
+],
+[
+"Pure Ply",
+34,
+""
+],
+[
+"Nettle",
+36,
+""
+],
+[
+"Pure Wish",
+46,
+""
+]
+]
+},
+{
+"line": "Page",
+"tiers": [
+{
+"n": "Page",
+"req": [
+0,
+0,
+0,
+1
+],
+"mult": [
+100,
+120,
+110,
+100,
+120,
+90
+]
+},
+{
+"n": "Illusionist",
+"req": [
+0,
+0,
+0,
+2
+],
+"mult": [
+120,
+130,
+120,
+110,
+130,
+90
+]
+},
+{
+"n": "Enchanter",
+"req": [
+0,
+0,
+0,
+4
+],
+"mult": [
+140,
+140,
+130,
+120,
+140,
+90
+]
+},
+{
+"n": "Conjurer",
+"req": [
+0,
+0,
+1,
+6
+],
+"mult": [
+170,
+160,
+140,
+130,
+160,
+90
+]
+},
+{
+"n": "War Adept",
+"req": [
+0,
+0,
+2,
+7
+],
+"mult": [
+190,
+170,
+150,
+140,
+170,
+90
+]
+}
+],
+"psy": [
+[
+"Delude",
+1,
+""
+],
+[
+"Guard",
+3,
+"higher than Enchanter"
+],
+[
+"Impact",
+5,
+"higher than Enchanter"
+],
+[
+"Ward",
+6,
+""
+],
+[
+"Volcano",
+8,
+""
+],
+[
+"Weaken",
+9,
+""
+],
+[
+"Astral Blast",
+11,
+"transforms to Thunder Mine after Conjurer"
+],
+[
+"Sleep",
+14,
+""
+],
+[
+"Protect",
+15,
+"higher than Enchanter"
+],
+[
+"High Impact",
+21,
+"higher than Enchanter"
+],
+[
+"Resist",
+22,
+""
+],
+[
+"Eruption",
+22,
+"higher than Page"
+],
+[
+"Enfeeble",
+25,
+""
+],
+[
+"Drain",
+31,
+""
+],
+[
+"Psy Drain",
+39,
+""
+],
+[
+"Pyroclasm",
+48,
+""
+]
+]
+},
+{
+"line": "Ninja",
+"tiers": [
+{
+"n": "Ninja",
+"req": [
+3,
+0,
+0,
+3
+],
+"mult": [
+160,
+140,
+150,
+120,
+170,
+80
+]
+},
+{
+"n": "Disciple",
+"req": [
+4,
+0,
+0,
+4
+],
+"mult": [
+180,
+150,
+160,
+130,
+180,
+80
+]
+},
+{
+"n": "Master",
+"req": [
+4,
+0,
+0,
+5
+],
+"mult": [
+200,
+160,
+170,
+140,
+190,
+80
+]
+}
+],
+"psy": [
+[
+"Gale",
+1,
+""
+],
+[
+"Punji",
+4,
+""
+],
+[
+"Fire Bomb",
+6,
+""
+],
+[
+"Mist",
+7,
+""
+],
+[
+"Thunderclap",
+8,
+""
+],
+[
+"Death Plunge",
+12,
+"transforms to Death Leap after Disciple"
+],
+[
+"Punji Trap",
+15,
+""
+],
+[
+"Cluster Bomb",
+16,
+""
+],
+[
+"Typhoon",
+18,
+""
+],
+[
+"Shuriken",
+21,
+""
+],
+[
+"Thunderbolt",
+26,
+""
+],
+[
+"Annihilation",
+31,
+""
+],
+[
+"Punji Strike",
+36,
+""
+],
+[
+"Carpet Bomb",
+40,
+""
+],
+[
+"Hurricane",
+44,
+""
+],
+[
+"Thunderhead",
+50,
+""
+]
+]
+},
+{
+"line": "Pilgrim1",
+"tiers": [
+{
+"n": "Ascetic",
+"req": [
+0,
+6,
+0,
+0
+],
+"mult": [
+120,
+140,
+110,
+120,
+140,
+120
+]
+},
+{
+"n": "Water Monk",
+"req": [
+0,
+7,
+1,
+0
+],
+"mult": [
+150,
+160,
+130,
+140,
+160,
+120
+]
+}
+],
+"psy": [
+[
+"Douse",
+1,
+""
+],
+[
+"Cure Poison",
+5,
+""
+],
+[
+"Prism",
+6,
+""
+],
+[
+"Volcano",
+8,
+"higher than Ascetic"
+],
+[
+"Wish",
+9,
+"higher than Ascetic"
+],
+[
+"Drench",
+12,
+""
+],
+[
+"Restore",
+13,
+""
+],
+[
+"Hail Prism",
+20,
+""
+],
+[
+"Eruption",
+22,
+"higher than Ascetic"
+],
+[
+"Wish Well",
+24,
+"higher than Ascetic"
+],
+[
+"Deluge",
+30,
+""
+],
+[
+"Break",
+34,
+""
+],
+[
+"Pure Wish",
+46,
+"higher than Ascetic"
+],
+[
+"Pyroclasm",
+48,
+"higher than Ascetic"
+],
+[
+"Freeze Prism",
+52,
+""
+]
+]
+},
+{
+"line": "Pilgrim2",
+"tiers": [
+{
+"n": "Ascetic",
+"req": [
+0,
+0,
+0,
+6
+],
+"mult": [
+120,
+140,
+110,
+120,
+140,
+120
+]
+},
+{
+"n": "Fire Monk",
+"req": [
+0,
+0,
+1,
+7
+],
+"mult": [
+150,
+160,
+130,
+140,
+160,
+120
+]
+}
+],
+"psy": [
+[
+"Slash",
+1,
+""
+],
+[
+"Ward",
+6,
+"higher than Ascetic"
+],
+[
+"Volcano",
+8,
+"higher than Ascetic"
+],
+[
+"Plasma",
+9,
+""
+],
+[
+"Wind Slash",
+10,
+""
+],
+[
+"Bind",
+18,
+""
+],
+[
+"Eruption",
+22,
+"higher than Ascetic"
+],
+[
+"Resist",
+24,
+"higher than Ascetic"
+],
+[
+"Shine Plasma",
+26,
+""
+],
+[
+"Sonic Slash",
+30,
+""
+],
+[
+"Drain",
+33,
+""
+],
+[
+"Psy Drain",
+41,
+""
+],
+[
+"Pyroclasm",
+48,
+"higher than Ascetic"
+],
+[
+"Spark Plasma",
+50,
+""
+]
+]
+},
+{
+"line": "Brute",
+"tiers": [
+{
+"n": "Brute",
+"req": [
+1,
+0,
+0,
+0
+],
+"mult": [
+100,
+70,
+120,
+90,
+110,
+70
+]
+},
+{
+"n": "Ruffian",
+"req": [
+2,
+0,
+0,
+0
+],
+"mult": [
+120,
+80,
+130,
+100,
+120,
+70
+]
+},
+{
+"n": "Savage",
+"req": [
+4,
+0,
+0,
+0
+],
+"mult": [
+140,
+90,
+140,
+110,
+130,
+70
+]
+},
+{
+"n": "Barbarian",
+"req": [
+5,
+0,
+0,
+0
+],
+"mult": [
+160,
+100,
+150,
+120,
+140,
+70
+]
+},
+{
+"n": "Berserker",
+"req": [
+6,
+0,
+1,
+0
+],
+"mult": [
+180,
+110,
+160,
+130,
+150,
+70
+]
+},
+{
+"n": "Chaos Lord",
+"req": [
+7,
+0,
+2,
+0
+],
+"mult": [
+200,
+120,
+170,
+140,
+160,
+70
+]
+}
+],
+"psy": [
+[
+"Growth",
+1,
+""
+],
+[
+"Fireball",
+1,
+""
+],
+[
+"Spire",
+7,
+"higher than Savage"
+],
+[
+"Impair",
+9,
+"higher than Savage"
+],
+[
+"Mad Growth",
+12,
+""
+],
+[
+"Planet Diver",
+13,
+"transforms to Planetary after Berserker"
+],
+[
+"Fire Orb",
+14,
+""
+],
+[
+"Haunt",
+17,
+""
+],
+[
+"Revive",
+19,
+"higher than Savage"
+],
+[
+"Clay Spire",
+20,
+"higher than Savage"
+],
+[
+"Debilitate",
+23,
+"higher than Savage"
+],
+[
+"Curse",
+24,
+""
+],
+[
+"Wild Growth",
+28,
+""
+],
+[
+"Condemn",
+29,
+""
+],
+[
+"Inferno",
+36,
+""
+],
+[
+"Stone Spire",
+42,
+"higher than Savage"
+]
+]
+},
+{
+"line": "Samurai",
+"tiers": [
+{
+"n": "Samurai",
+"req": [
+4,
+0,
+0,
+3
+],
+"mult": [
+190,
+130,
+150,
+140,
+140,
+90
+]
+},
+{
+"n": "Ronin",
+"req": [
+5,
+0,
+0,
+4
+],
+"mult": [
+210,
+140,
+160,
+150,
+150,
+90
+]
+}
+],
+"psy": [
+[
+"Guardian",
+3,
+""
+],
+[
+"Demon Spear",
+5,
+""
+],
+[
+"Rockfall",
+6,
+""
+],
+[
+"Lava Shower",
+8,
+""
+],
+[
+"Magic Shell",
+10,
+""
+],
+[
+"Dragon Cloud",
+12,
+"transforms to Epicenter after Ronin"
+],
+[
+"Protector",
+15,
+""
+],
+[
+"Demon Night",
+18,
+"transforms to Thorny Grave after Ronin"
+],
+[
+"Angel Spear",
+21,
+""
+],
+[
+"Molten Bath",
+22,
+""
+],
+[
+"Rockslide",
+24,
+""
+],
+[
+"Magic Shield",
+27,
+""
+],
+[
+"Helm Splitter",
+33,
+"transforms to Skull Splitter after Ronin"
+],
+[
+"Quick Strike",
+40,
+""
+],
+[
+"Magma Storm",
+48,
+""
+],
+[
+"Avalanche",
+54,
+""
+]
+]
+}
+]
+},
+"Karis": {
+"el": 3,
+"lines": [
+{
+"line": "Magician",
+"tiers": [
+{
+"n": "Wind Seer",
+"req": [
+0,
+0,
+0,
+0
+],
+"mult": [
+80,
+140,
+80,
+90,
+130,
+110
+]
+},
+{
+"n": "Magician",
+"req": [
+0,
+0,
+0,
+2
+],
+"mult": [
+90,
+150,
+90,
+100,
+140,
+110
+]
+},
+{
+"n": "Mage",
+"req": [
+0,
+0,
+0,
+4
+],
+"mult": [
+110,
+160,
+100,
+110,
+150,
+110
+]
+},
+{
+"n": "Magister",
+"req": [
+0,
+0,
+0,
+6
+],
+"mult": [
+130,
+170,
+110,
+120,
+160,
+110
+]
+},
+{
+"n": "Sorcerer",
+"req": [
+0,
+0,
+0,
+8
+],
+"mult": [
+150,
+180,
+120,
+130,
+170,
+110
+]
+}
+],
+"psy": [
+[
+"Whirlwind",
+1,
+""
+],
+[
+"Impact",
+5,
+"class must be higher than Magician"
+],
+[
+"Ward",
+6,
+"class must be higher than Mage"
+],
+[
+"Fresh Breeze",
+6,
+""
+],
+[
+"Plasma",
+8,
+""
+],
+[
+"Sleep",
+12,
+""
+],
+[
+"Healthy Wind",
+14,
+""
+],
+[
+"Bind",
+17,
+""
+],
+[
+"Tornado",
+18,
+""
+],
+[
+"High Impact",
+21,
+"class must be higher than Magician"
+],
+[
+"Resist",
+22,
+"class must be higher than Mage"
+],
+[
+"Shine Plasma",
+26,
+""
+],
+[
+"Healing Gust",
+30,
+""
+],
+[
+"Tempest",
+44,
+""
+],
+[
+"Spark Plasma",
+50,
+""
+]
+]
+},
+{
+"line": "Apprentice",
+"tiers": [
+{
+"n": "Enchanter",
+"req": [
+6,
+0,
+0,
+0
+],
+"mult": [
+140,
+140,
+130,
+120,
+140,
+90
+]
+},
+{
+"n": "Conjurer",
+"req": [
+7,
+0,
+0,
+1
+],
+"mult": [
+170,
+160,
+140,
+130,
+160,
+90
+]
+}
+],
+"psy": [
+[
+"Delude",
+1,
+""
+],
+[
+"Impact",
+5,
+"class must be higher than Enchanter"
+],
+[
+"Gaia",
+6,
+""
+],
+[
+"Ward",
+6,
+"class must be higher than Enchanter"
+],
+[
+"Weaken",
+9,
+""
+],
+[
+"Astral Blast",
+11,
+"transforms to Thunder Mine after Conjurer class"
+],
+[
+"Sleep",
+14,
+""
+],
+[
+"Haunt",
+17,
+""
+],
+[
+"Curse",
+20,
+""
+],
+[
+"High Impact",
+21,
+"class must be higher than Enchanter"
+],
+[
+"Resist",
+22,
+"class must be higher than Enchanter"
+],
+[
+"Mother Gaia",
+24,
+""
+],
+[
+"Enfeeble",
+25,
+""
+],
+[
+"Drain",
+31,
+""
+],
+[
+"Psy Drain",
+39,
+""
+],
+[
+"Grand Gaia",
+54,
+""
+]
+]
+},
+{
+"line": "Page",
+"tiers": [
+{
+"n": "Enchanter",
+"req": [
+0,
+0,
+6,
+0
+],
+"mult": [
+140,
+140,
+130,
+120,
+140,
+90
+]
+},
+{
+"n": "Conjurer",
+"req": [
+0,
+0,
+7,
+1
+],
+"mult": [
+170,
+160,
+140,
+130,
+160,
+90
+]
+}
+],
+"psy": [
+[
+"Delude",
+1,
+""
+],
+[
+"Guard",
+3,
+"class must be higher than Enchanter"
+],
+[
+"Impact",
+5,
+"class must be higher than Enchanter"
+],
+[
+"Ward",
+6,
+""
+],
+[
+"Volcano",
+8,
+""
+],
+[
+"Weaken",
+9,
+""
+],
+[
+"Astral Blast",
+11,
+"transforms to Thunder Mine after Conjurer class"
+],
+[
+"Sleep",
+14,
+""
+],
+[
+"Protect",
+15,
+"class must be higher than Enchanter"
+],
+[
+"High Impact",
+21,
+"class must be higher than Enchanter"
+],
+[
+"Resist",
+22,
+""
+],
+[
+"Eruption",
+22,
+"class must be higher than Page"
+],
+[
+"Enfeeble",
+25,
+""
+],
+[
+"Drain",
+31,
+""
+],
+[
+"Psy Drain",
+39,
+""
+],
+[
+"Pyroclasm",
+48,
+""
+]
+]
+},
+{
+"line": "Wind Seer",
+"tiers": [
+{
+"n": "Seer",
+"req": [
+1,
+0,
+0,
+0
+],
+"mult": [
+90,
+130,
+90,
+90,
+110,
+100
+]
+},
+{
+"n": "Diviner",
+"req": [
+2,
+0,
+0,
+0
+],
+"mult": [
+110,
+140,
+100,
+100,
+120,
+100
+]
+},
+{
+"n": "Shaman",
+"req": [
+4,
+0,
+0,
+0
+],
+"mult": [
+120,
+150,
+110,
+110,
+130,
+100
+]
+},
+{
+"n": "Druid",
+"req": [
+6,
+0,
+0,
+1
+],
+"mult": [
+150,
+170,
+130,
+130,
+150,
+100
+]
+},
+{
+"n": "Oracle",
+"req": [
+7,
+0,
+0,
+2
+],
+"mult": [
+170,
+180,
+140,
+140,
+160,
+100
+]
+}
+],
+"psy": [
+[
+"Cure",
+1,
+""
+],
+[
+"Bolt",
+2,
+""
+],
+[
+"Growth",
+3,
+""
+],
+[
+"Flash Bolt",
+6,
+""
+],
+[
+"Ward",
+7,
+"class must be higher than Shaman"
+],
+[
+"Cure Well",
+10,
+""
+],
+[
+"Mad Growth",
+12,
+""
+],
+[
+"Bind",
+18,
+""
+],
+[
+"Revive",
+19,
+"class must be higher than Shaman"
+],
+[
+"Blue Bolt",
+22,
+""
+],
+[
+"Resist",
+23,
+"class must be higher than Shaman"
+],
+[
+"Potent Cure",
+26,
+""
+],
+[
+"Wild Growth",
+29,
+""
+],
+[
+"Drain",
+31,
+""
+],
+[
+"Psy Drain",
+39,
+""
+]
+]
+},
+{
+"line": "Medium",
+"tiers": [
+{
+"n": "Medium",
+"req": [
+3,
+3,
+0,
+0
+],
+"mult": [
+130,
+170,
+120,
+120,
+150,
+90
+]
+},
+{
+"n": "Conjurer",
+"req": [
+4,
+4,
+0,
+0
+],
+"mult": [
+150,
+180,
+130,
+130,
+160,
+90
+]
+},
+{
+"n": "Dark Shaman",
+"req": [
+5,
+4,
+0,
+0
+],
+"mult": [
+170,
+190,
+140,
+140,
+170,
+90
+]
+}
+],
+"psy": [
+[
+"Bolt",
+1,
+""
+],
+[
+"Froth",
+2,
+""
+],
+[
+"Cure",
+3,
+""
+],
+[
+"Flash Bolt",
+6,
+""
+],
+[
+"Cure Well",
+10,
+""
+],
+[
+"Froth Sphere",
+14,
+""
+],
+[
+"Haunt",
+17,
+""
+],
+[
+"Revive",
+19,
+""
+],
+[
+"Curse",
+20,
+""
+],
+[
+"Blue Bolt",
+22,
+""
+],
+[
+"Potent Cure",
+26,
+""
+],
+[
+"Condemn",
+29,
+""
+],
+[
+"Drain",
+31,
+""
+],
+[
+"Psy Drain",
+36,
+""
+],
+[
+"Froth Spiral",
+40,
+""
+]
+]
+},
+{
+"line": "Pilgrim",
+"tiers": [
+{
+"n": "Pilgrim",
+"req": [
+0,
+0,
+1,
+0
+],
+"mult": [
+90,
+120,
+90,
+100,
+120,
+120
+]
+},
+{
+"n": "Wanderer",
+"req": [
+0,
+0,
+2,
+0
+],
+"mult": [
+110,
+130,
+100,
+110,
+130,
+120
+]
+},
+{
+"n": "Ascetic",
+"req": [
+0,
+0,
+4,
+0
+],
+"mult": [
+120,
+140,
+110,
+120,
+140,
+120
+]
+},
+{
+"n": "Fire Monk",
+"req": [
+0,
+0,
+6,
+1
+],
+"mult": [
+150,
+160,
+130,
+140,
+160,
+120
+]
+},
+{
+"n": "Guru",
+"req": [
+0,
+0,
+7,
+2
+],
+"mult": [
+170,
+170,
+140,
+150,
+170,
+120
+]
+}
+],
+"psy": [
+[
+"Slash",
+1,
+""
+],
+[
+"Ward",
+6,
+"class must be higher than Ascetic"
+],
+[
+"Volcano",
+8,
+"class must be higher than Ascetic"
+],
+[
+"Plasma",
+9,
+""
+],
+[
+"Wind Slash",
+10,
+""
+],
+[
+"Bind",
+18,
+""
+],
+[
+"Eruption",
+22,
+"class must be higher than Ascetic"
+],
+[
+"Resist",
+24,
+"class must be higher than Ascetic"
+],
+[
+"Shine Plasma",
+26,
+""
+],
+[
+"Sonic Slash",
+30,
+""
+],
+[
+"Drain",
+33,
+""
+],
+[
+"Psy Drain",
+41,
+""
+],
+[
+"Pyroclasm",
+48,
+"class must be higher than Ascetic"
+],
+[
+"Spark Plasma",
+50,
+""
+]
+]
+},
+{
+"line": "Ranger",
+"tiers": [
+{
+"n": "Ranger",
+"req": [
+0,
+3,
+3,
+0
+],
+"mult": [
+130,
+160,
+120,
+120,
+160,
+120
+]
+},
+{
+"n": "Bard",
+"req": [
+0,
+4,
+4,
+0
+],
+"mult": [
+150,
+170,
+130,
+130,
+170,
+120
+]
+},
+{
+"n": "Warlock",
+"req": [
+0,
+4,
+5,
+0
+],
+"mult": [
+170,
+180,
+140,
+140,
+180,
+120
+]
+}
+],
+"psy": [
+[
+"Slash",
+1,
+""
+],
+[
+"Douse",
+2,
+""
+],
+[
+"Ward",
+6,
+""
+],
+[
+"Volcano",
+8,
+""
+],
+[
+"Wind Slash",
+10,
+""
+],
+[
+"Drench",
+12,
+""
+],
+[
+"Bind",
+18,
+""
+],
+[
+"Eruption",
+22,
+""
+],
+[
+"Resist",
+24,
+""
+],
+[
+"Deluge",
+30,
+""
+],
+[
+"Sonic Slash",
+30,
+""
+],
+[
+"Drain",
+33,
+""
+],
+[
+"Break",
+34,
+""
+],
+[
+"Psy Drain",
+41,
+""
+],
+[
+"Pyroclasm",
+48,
+""
+]
+]
+},
+{
+"line": "Sage",
+"tiers": [
+{
+"n": "Hermit",
+"req": [
+0,
+1,
+0,
+0
+],
+"mult": [
+80,
+140,
+80,
+90,
+130,
+120
+]
+},
+{
+"n": "Elder",
+"req": [
+0,
+2,
+0,
+0
+],
+"mult": [
+90,
+150,
+90,
+100,
+140,
+120
+]
+},
+{
+"n": "Scholar",
+"req": [
+0,
+4,
+0,
+0
+],
+"mult": [
+110,
+160,
+100,
+110,
+150,
+120
+]
+},
+{
+"n": "Savant",
+"req": [
+0,
+5,
+0,
+0
+],
+"mult": [
+130,
+170,
+110,
+120,
+160,
+120
+]
+},
+{
+"n": "Sage",
+"req": [
+0,
+6,
+0,
+1
+],
+"mult": [
+150,
+180,
+120,
+130,
+170,
+120
+]
+},
+{
+"n": "Wizard",
+"req": [
+0,
+7,
+0,
+2
+],
+"mult": [
+170,
+190,
+130,
+140,
+180,
+120
+]
+}
+],
+"psy": [
+[
+"Impact",
+1,
+""
+],
+[
+"Prism",
+6,
+""
+],
+[
+"Plasma",
+8,
+""
+],
+[
+"Wish",
+12,
+"class must be higher than Scholar"
+],
+[
+"Bind",
+18,
+""
+],
+[
+"High Impact",
+21,
+""
+],
+[
+"Hail Prism",
+22,
+""
+],
+[
+"Wish Well",
+24,
+"class must be higher than Scholar"
+],
+[
+"Shine Plasma",
+26,
+""
+],
+[
+"Break",
+30,
+""
+],
+[
+"Drain",
+31,
+""
+],
+[
+"Psy Drain",
+39,
+""
+],
+[
+"Pure Wish",
+46,
+"class must be higher than Scholar"
+],
+[
+"Spark Plasma",
+50,
+""
+],
+[
+"Freeze Prism",
+52,
+""
+]
+]
+},
+{
+"line": "White Mage",
+"tiers": [
+{
+"n": "White Mage",
+"req": [
+3,
+4,
+0,
+0
+],
+"mult": [
+150,
+180,
+130,
+130,
+150,
+130
+]
+},
+{
+"n": "Pure Mage",
+"req": [
+4,
+5,
+0,
+0
+],
+"mult": [
+170,
+190,
+140,
+140,
+160,
+130
+]
+}
+],
+"psy": [
+[
+"Cure Poison",
+1,
+""
+],
+[
+"Prism",
+6,
+""
+],
+[
+"Plasma",
+8,
+""
+],
+[
+"Ward",
+9,
+""
+],
+[
+"Dull",
+11,
+""
+],
+[
+"Wish",
+12,
+""
+],
+[
+"Restore",
+13,
+""
+],
+[
+"Revive",
+17,
+""
+],
+[
+"Hail Prism",
+22,
+""
+],
+[
+"Wish Well",
+24,
+""
+],
+[
+"Shine Plasma",
+26,
+""
+],
+[
+"Resist",
+31,
+""
+],
+[
+"Blunt",
+37,
+""
+],
+[
+"Pure Wish",
+46,
+""
+],
+[
+"Spark Plasma",
+46,
+""
+],
+[
+"Freeze Prism",
+52,
+""
+]
+]
+}
+]
+},
+"Rief": {
+"el": 1,
+"lines": [
+{
+"line": "Priest",
+"tiers": [
+{
+"n": "Water Seer",
+"req": [
+0,
+0,
+0,
+0
+],
+"mult": [
+90,
+130,
+90,
+100,
+80,
+130
+]
+},
+{
+"n": "Scribe",
+"req": [
+0,
+2,
+0,
+0
+],
+"mult": [
+100,
+140,
+100,
+110,
+90,
+130
+]
+},
+{
+"n": "Cleric",
+"req": [
+0,
+4,
+0,
+0
+],
+"mult": [
+120,
+150,
+110,
+120,
+100,
+130
+]
+},
+{
+"n": "Paragon",
+"req": [
+0,
+6,
+0,
+0
+],
+"mult": [
+140,
+160,
+120,
+130,
+110,
+130
+]
+},
+{
+"n": "Angel",
+"req": [
+0,
+8,
+0,
+0
+],
+"mult": [
+160,
+170,
+130,
+140,
+120,
+130
+]
+}
+],
+"psy": [
+[
+"Ply",
+1,
+""
+],
+[
+"Douse",
+2,
+""
+],
+[
+"Ice",
+4,
+""
+],
+[
+"Cure Poison",
+5,
+""
+],
+[
+"Wish",
+8,
+"higher than Cleric"
+],
+[
+"Drench",
+12,
+""
+],
+[
+"Restore",
+13,
+""
+],
+[
+"Ply Well",
+16,
+""
+],
+[
+"Ice Horn",
+17,
+""
+],
+[
+"Wish Well",
+22,
+"higher than Cleric"
+],
+[
+"Break",
+30,
+""
+],
+[
+"Pure Ply",
+34,
+""
+],
+[
+"Ice Missile",
+42,
+""
+],
+[
+"Pure Wish",
+46,
+"higher than Cleric"
+]
+]
+},
+{
+"line": "Swordsman",
+"tiers": [
+{
+"n": "Cavalier",
+"req": [
+6,
+0,
+0,
+0
+],
+"mult": [
+140,
+110,
+130,
+130,
+110,
+120
+]
+},
+{
+"n": "Guardian",
+"req": [
+6,
+1,
+0,
+0
+],
+"mult": [
+170,
+130,
+140,
+140,
+130,
+120
+]
+}
+],
+"psy": [
+[
+"Ply",
+1,
+"higher than Defender"
+],
+[
+"Thorn",
+4,
+""
+],
+[
+"Cure Poison",
+5,
+""
+],
+[
+"Avoid",
+6,
+"higher than Defender"
+],
+[
+"Wish",
+8,
+"higher than Cavalier"
+],
+[
+"Cutting Edge",
+11,
+"transforms to Plume Edge after Guardian"
+],
+[
+"Restore",
+13,
+""
+],
+[
+"Briar",
+14,
+""
+],
+[
+"Ply Well",
+16,
+"higher than Defender"
+],
+[
+"Revive",
+19,
+""
+],
+[
+"Wish Well",
+22,
+"higher than Cavalier"
+],
+[
+"Break",
+30,
+""
+],
+[
+"Pure Ply",
+34,
+"higher than Defender"
+],
+[
+"Nettle",
+36,
+""
+],
+[
+"Pure Wish",
+46,
+"higher than Cavalier"
+]
+]
+},
+{
+"line": "Luminier",
+"tiers": [
+{
+"n": "Luminier",
+"req": [
+0,
+1,
+6,
+0
+],
+"mult": [
+170,
+130,
+140,
+140,
+130,
+120
+]
+}
+],
+"psy": [
+[
+"Ply",
+1,
+"higher than Defender"
+],
+[
+"Blast",
+2,
+""
+],
+[
+"Guard",
+3,
+""
+],
+[
+"Cure Poison",
+5,
+""
+],
+[
+"Avoid",
+6,
+"higher than Defender"
+],
+[
+"Wish",
+8,
+"higher than Cavalier"
+],
+[
+"Mad Blast",
+10,
+""
+],
+[
+"Cutting Edge",
+11,
+"transforms to Plume Edge after Luminier"
+],
+[
+"Restore",
+13,
+""
+],
+[
+"Protect",
+15,
+""
+],
+[
+"Ply Well",
+16,
+"higher than Defender"
+],
+[
+"Wish Well",
+22,
+"higher than Cavalier"
+],
+[
+"Fiery Blast",
+28,
+""
+],
+[
+"Break",
+30,
+""
+],
+[
+"Pure Ply",
+34,
+"higher than Defender"
+],
+[
+"Pure Wish",
+46,
+"higher than Cavalier"
+]
+]
+},
+{
+"line": "Water Seer",
+"tiers": [
+{
+"n": "Seer",
+"req": [
+1,
+0,
+0,
+0
+],
+"mult": [
+90,
+130,
+90,
+90,
+110,
+100
+]
+},
+{
+"n": "Diviner",
+"req": [
+2,
+0,
+0,
+0
+],
+"mult": [
+110,
+140,
+100,
+100,
+120,
+100
+]
+},
+{
+"n": "Shaman",
+"req": [
+4,
+0,
+0,
+0
+],
+"mult": [
+120,
+150,
+110,
+110,
+130,
+100
+]
+},
+{
+"n": "Druid",
+"req": [
+6,
+1,
+0,
+0
+],
+"mult": [
+150,
+170,
+130,
+130,
+150,
+100
+]
+},
+{
+"n": "Oracle",
+"req": [
+7,
+2,
+0,
+0
+],
+"mult": [
+170,
+180,
+140,
+140,
+160,
+100
+]
+}
+],
+"psy": [
+[
+"Cure",
+1,
+""
+],
+[
+"Froth",
+2,
+""
+],
+[
+"Growth",
+3,
+""
+],
+[
+"Cure Poison",
+5,
+""
+],
+[
+"Wish",
+8,
+"higher than Shaman"
+],
+[
+"Cure Well",
+10,
+""
+],
+[
+"Mad Growth",
+12,
+""
+],
+[
+"Restore",
+13,
+""
+],
+[
+"Froth Sphere",
+14,
+""
+],
+[
+"Revive",
+19,
+"higher than Shaman"
+],
+[
+"Wish Well",
+22,
+"higher than Shaman"
+],
+[
+"Potent Cure",
+26,
+""
+],
+[
+"Wild Growth",
+29,
+""
+],
+[
+"Break",
+30,
+""
+],
+[
+"Froth Spiral",
+40,
+""
+],
+[
+"Pure Wish",
+46,
+"higher than Shaman"
+]
+]
+},
+{
+"line": "Medium",
+"tiers": [
+{
+"n": "Medium",
+"req": [
+3,
+0,
+0,
+3
+],
+"mult": [
+130,
+170,
+120,
+120,
+150,
+90
+]
+},
+{
+"n": "Conjurer",
+"req": [
+4,
+0,
+0,
+4
+],
+"mult": [
+150,
+180,
+130,
+130,
+160,
+90
+]
+},
+{
+"n": "Dark Shaman",
+"req": [
+5,
+0,
+0,
+4
+],
+"mult": [
+170,
+190,
+140,
+140,
+170,
+90
+]
+}
+],
+"psy": [
+[
+"Bolt",
+1,
+""
+],
+[
+"Froth",
+2,
+""
+],
+[
+"Cure",
+3,
+""
+],
+[
+"Flash Bolt",
+6,
+""
+],
+[
+"Cure Well",
+10,
+""
+],
+[
+"Froth Sphere",
+14,
+""
+],
+[
+"Haunt",
+17,
+""
+],
+[
+"Revive",
+19,
+""
+],
+[
+"Curse",
+20,
+""
+],
+[
+"Blue Bolt",
+22,
+""
+],
+[
+"Potent Cure",
+26,
+""
+],
+[
+"Condemn",
+29,
+""
+],
+[
+"Drain",
+31,
+""
+],
+[
+"Psy Drain",
+36,
+""
+],
+[
+"Froth Spiral",
+40,
+""
+]
+]
+},
+{
+"line": "Pilgrim",
+"tiers": [
+{
+"n": "Pilgrim",
+"req": [
+0,
+0,
+1,
+0
+],
+"mult": [
+90,
+120,
+90,
+100,
+120,
+120
+]
+},
+{
+"n": "Wanderer",
+"req": [
+0,
+0,
+2,
+0
+],
+"mult": [
+110,
+130,
+100,
+110,
+130,
+120
+]
+},
+{
+"n": "Ascetic",
+"req": [
+0,
+0,
+4,
+0
+],
+"mult": [
+120,
+140,
+110,
+120,
+140,
+120
+]
+},
+{
+"n": "Water Monk",
+"req": [
+0,
+1,
+6,
+0
+],
+"mult": [
+150,
+160,
+130,
+140,
+160,
+120
+]
+},
+{
+"n": "Guru",
+"req": [
+0,
+2,
+7,
+0
+],
+"mult": [
+170,
+170,
+140,
+150,
+170,
+120
+]
+}
+],
+"psy": [
+[
+"Douse",
+1,
+""
+],
+[
+"Cure Poison",
+5,
+""
+],
+[
+"Prism",
+6,
+""
+],
+[
+"Volcano",
+8,
+"higher than Ascetic"
+],
+[
+"Wish",
+9,
+"higher than Ascetic"
+],
+[
+"Drench",
+12,
+""
+],
+[
+"Restore",
+13,
+""
+],
+[
+"Hail Prism",
+20,
+""
+],
+[
+"Eruption",
+22,
+"higher than Ascetic"
+],
+[
+"Wish Well",
+24,
+"higher than Ascetic"
+],
+[
+"Deluge",
+30,
+""
+],
+[
+"Break",
+34,
+""
+],
+[
+"Pure Wish",
+46,
+"higher than Ascetic"
+],
+[
+"Pyroclasm",
+48,
+"higher than Ascetic"
+],
+[
+"Freeze Prism",
+52,
+""
+]
+]
+},
+{
+"line": "Ranger",
+"tiers": [
+{
+"n": "Ranger",
+"req": [
+0,
+0,
+3,
+3
+],
+"mult": [
+130,
+160,
+120,
+120,
+160,
+120
+]
+},
+{
+"n": "Bard",
+"req": [
+0,
+0,
+4,
+4
+],
+"mult": [
+150,
+170,
+130,
+130,
+170,
+120
+]
+},
+{
+"n": "Warlock",
+"req": [
+0,
+0,
+5,
+4
+],
+"mult": [
+170,
+180,
+140,
+140,
+180,
+120
+]
+}
+],
+"psy": [
+[
+"Slash",
+1,
+""
+],
+[
+"Douse",
+2,
+""
+],
+[
+"Ward",
+6,
+""
+],
+[
+"Volcano",
+8,
+""
+],
+[
+"Wind Slash",
+10,
+""
+],
+[
+"Drench",
+12,
+""
+],
+[
+"Bind",
+18,
+""
+],
+[
+"Eruption",
+22,
+""
+],
+[
+"Resist",
+24,
+""
+],
+[
+"Deluge",
+30,
+""
+],
+[
+"Sonic Slash",
+30,
+""
+],
+[
+"Drain",
+33,
+""
+],
+[
+"Break",
+34,
+""
+],
+[
+"Psy Drain",
+41,
+""
+],
+[
+"Pyroclasm",
+48,
+""
+]
+]
+},
+{
+"line": "Sage",
+"tiers": [
+{
+"n": "Hermit",
+"req": [
+0,
+0,
+0,
+1
+],
+"mult": [
+80,
+140,
+80,
+90,
+130,
+120
+]
+},
+{
+"n": "Elder",
+"req": [
+0,
+0,
+0,
+2
+],
+"mult": [
+90,
+150,
+90,
+100,
+140,
+120
+]
+},
+{
+"n": "Scholar",
+"req": [
+0,
+0,
+0,
+4
+],
+"mult": [
+110,
+160,
+100,
+110,
+150,
+120
+]
+},
+{
+"n": "Savant",
+"req": [
+0,
+0,
+0,
+5
+],
+"mult": [
+130,
+170,
+110,
+120,
+160,
+120
+]
+},
+{
+"n": "Sage",
+"req": [
+0,
+1,
+0,
+6
+],
+"mult": [
+150,
+180,
+120,
+130,
+170,
+120
+]
+},
+{
+"n": "Wizard",
+"req": [
+0,
+2,
+0,
+7
+],
+"mult": [
+170,
+190,
+130,
+140,
+180,
+120
+]
+}
+],
+"psy": [
+[
+"Impact",
+1,
+""
+],
+[
+"Prism",
+6,
+""
+],
+[
+"Plasma",
+8,
+""
+],
+[
+"Wish",
+12,
+"higher than Scholar"
+],
+[
+"Bind",
+18,
+""
+],
+[
+"High Impact",
+21,
+""
+],
+[
+"Hail Prism",
+22,
+""
+],
+[
+"Wish Well",
+24,
+"higher than Scholar"
+],
+[
+"Shine Plasma",
+26,
+""
+],
+[
+"Break",
+30,
+""
+],
+[
+"Drain",
+31,
+""
+],
+[
+"Psy Drain",
+39,
+""
+],
+[
+"Pure Wish",
+46,
+"higher than Scholar"
+],
+[
+"Spark Plasma",
+50,
+""
+],
+[
+"Freeze Prism",
+52,
+""
+]
+]
+},
+{
+"line": "White Mage",
+"tiers": [
+{
+"n": "White Mage",
+"req": [
+3,
+0,
+0,
+4
+],
+"mult": [
+150,
+180,
+130,
+130,
+150,
+130
+]
+},
+{
+"n": "Pure Mage",
+"req": [
+4,
+0,
+0,
+5
+],
+"mult": [
+170,
+190,
+140,
+140,
+160,
+130
+]
+}
+],
+"psy": [
+[
+"Cure Poison",
+1,
+""
+],
+[
+"Prism",
+6,
+""
+],
+[
+"Plasma",
+8,
+""
+],
+[
+"Ward",
+9,
+""
+],
+[
+"Dull",
+11,
+""
+],
+[
+"Wish",
+12,
+""
+],
+[
+"Restore",
+13,
+""
+],
+[
+"Revive",
+17,
+""
+],
+[
+"Hail Prism",
+22,
+""
+],
+[
+"Wish Well",
+24,
+""
+],
+[
+"Shine Plasma",
+26,
+""
+],
+[
+"Resist",
+31,
+""
+],
+[
+"Blunt",
+37,
+""
+],
+[
+"Pure Wish",
+46,
+""
+],
+[
+"Spark Plasma",
+46,
+""
+],
+[
+"Freeze Prism",
+52,
+""
+]
+]
+}
+]
+},
+"Amiti": {
+"el": 1,
+"lines": [
+{
+"line": "Swordsman",
+"tiers": [
+{
+"n": "Cavalier",
+"req": [
+6,
+0,
+0,
+0
+],
+"mult": [
+140,
+110,
+130,
+130,
+110,
+120
+]
+},
+{
+"n": "Guardian",
+"req": [
+6,
+1,
+0,
+0
+],
+"mult": [
+170,
+130,
+140,
+140,
+130,
+120
+]
+}
+],
+"psy": [
+[
+"Ply",
+1,
+"higher than Defender"
+],
+[
+"Thorn",
+4,
+""
+],
+[
+"Cure Poison",
+5,
+""
+],
+[
+"Avoid",
+6,
+"higher than Defender"
+],
+[
+"Wish",
+8,
+"higher than Cavalier"
+],
+[
+"Cutting Edge",
+11,
+"transforms to Plume Edge after Guardian"
+],
+[
+"Restore",
+13,
+""
+],
+[
+"Briar",
+14,
+""
+],
+[
+"Ply Well",
+16,
+"higher than Defender"
+],
+[
+"Revive",
+19,
+""
+],
+[
+"Wish Well",
+22,
+"higher than Cavalier"
+],
+[
+"Break",
+30,
+""
+],
+[
+"Pure Ply",
+34,
+"higher than Defender"
+],
+[
+"Nettle",
+36,
+""
+],
+[
+"Pure Wish",
+46,
+"higher than Cavalier"
+]
+]
+},
+{
+"line": "Luminier",
+"tiers": [
+{
+"n": "Luminier",
+"req": [
+0,
+1,
+6,
+0
+],
+"mult": [
+170,
+130,
+140,
+140,
+130,
+120
+]
+}
+],
+"psy": [
+[
+"Ply",
+1,
+"higher than Defender"
+],
+[
+"Blast",
+2,
+""
+],
+[
+"Guard",
+3,
+""
+],
+[
+"Cure Poison",
+5,
+""
+],
+[
+"Avoid",
+6,
+"higher than Defender"
+],
+[
+"Wish",
+8,
+"higher than Cavalier"
+],
+[
+"Mad Blast",
+10,
+""
+],
+[
+"Cutting Edge",
+11,
+"transforms to Plume Edge after Luminier"
+],
+[
+"Restore",
+13,
+""
+],
+[
+"Protect",
+15,
+""
+],
+[
+"Ply Well",
+16,
+"higher than Defender"
+],
+[
+"Wish Well",
+22,
+"higher than Cavalier"
+],
+[
+"Fiery Blast",
+28,
+""
+],
+[
+"Break",
+30,
+""
+],
+[
+"Pure Ply",
+34,
+"higher than Defender"
+],
+[
+"Pure Wish",
+46,
+"higher than Cavalier"
+]
+]
+},
+{
+"line": "Water Seer",
+"tiers": [
+{
+"n": "Seer",
+"req": [
+1,
+0,
+0,
+0
+],
+"mult": [
+90,
+130,
+90,
+90,
+110,
+100
+]
+},
+{
+"n": "Diviner",
+"req": [
+2,
+0,
+0,
+0
+],
+"mult": [
+110,
+140,
+100,
+100,
+120,
+100
+]
+},
+{
+"n": "Shaman",
+"req": [
+4,
+0,
+0,
+0
+],
+"mult": [
+120,
+150,
+110,
+110,
+130,
+100
+]
+},
+{
+"n": "Druid",
+"req": [
+6,
+1,
+0,
+0
+],
+"mult": [
+150,
+170,
+130,
+130,
+150,
+100
+]
+},
+{
+"n": "Oracle",
+"req": [
+7,
+2,
+0,
+0
+],
+"mult": [
+170,
+180,
+140,
+140,
+160,
+100
+]
+}
+],
+"psy": [
+[
+"Cure",
+1,
+""
+],
+[
+"Froth",
+2,
+""
+],
+[
+"Growth",
+3,
+""
+],
+[
+"Cure Poison",
+5,
+""
+],
+[
+"Wish",
+8,
+"higher than Shaman"
+],
+[
+"Cure Well",
+10,
+""
+],
+[
+"Mad Growth",
+12,
+""
+],
+[
+"Restore",
+13,
+""
+],
+[
+"Froth Sphere",
+14,
+""
+],
+[
+"Revive",
+19,
+"higher than Shaman"
+],
+[
+"Wish Well",
+22,
+"higher than Shaman"
+],
+[
+"Potent Cure",
+26,
+""
+],
+[
+"Wild Growth",
+29,
+""
+],
+[
+"Break",
+30,
+""
+],
+[
+"Froth Spiral",
+40,
+""
+],
+[
+"Pure Wish",
+46,
+"higher than Shaman"
+]
+]
+},
+{
+"line": "Medium",
+"tiers": [
+{
+"n": "Medium",
+"req": [
+3,
+0,
+0,
+3
+],
+"mult": [
+130,
+170,
+120,
+120,
+150,
+90
+]
+},
+{
+"n": "Dark Shaman",
+"req": [
+5,
+0,
+0,
+4
+],
+"mult": [
+170,
+190,
+140,
+140,
+170,
+90
+]
+}
+],
+"psy": [
+[
+"Bolt",
+1,
+""
+],
+[
+"Froth",
+2,
+""
+],
+[
+"Cure",
+3,
+""
+],
+[
+"Flash Bolt",
+6,
+""
+],
+[
+"Cure Well",
+10,
+""
+],
+[
+"Froth Sphere",
+14,
+""
+],
+[
+"Haunt",
+17,
+""
+],
+[
+"Revive",
+19,
+""
+],
+[
+"Curse",
+20,
+""
+],
+[
+"Blue Bolt",
+22,
+""
+],
+[
+"Potent Cure",
+26,
+""
+],
+[
+"Condemn",
+29,
+""
+],
+[
+"Drain",
+31,
+""
+],
+[
+"Psy Drain",
+36,
+""
+],
+[
+"Froth Spiral",
+40,
+""
+]
+]
+},
+{
+"line": "Pilgrim",
+"tiers": [
+{
+"n": "Pilgrim",
+"req": [
+0,
+0,
+1,
+0
+],
+"mult": [
+90,
+120,
+90,
+100,
+120,
+120
+]
+},
+{
+"n": "Wanderer",
+"req": [
+0,
+0,
+2,
+0
+],
+"mult": [
+110,
+130,
+100,
+110,
+130,
+120
+]
+},
+{
+"n": "Ascetic",
+"req": [
+0,
+0,
+4,
+0
+],
+"mult": [
+120,
+140,
+110,
+120,
+140,
+120
+]
+},
+{
+"n": "Water Monk",
+"req": [
+0,
+1,
+6,
+0
+],
+"mult": [
+150,
+160,
+130,
+140,
+160,
+120
+]
+},
+{
+"n": "Guru",
+"req": [
+0,
+2,
+7,
+0
+],
+"mult": [
+170,
+170,
+140,
+150,
+170,
+120
+]
+}
+],
+"psy": [
+[
+"Douse",
+1,
+""
+],
+[
+"Cure Poison",
+5,
+""
+],
+[
+"Prism",
+6,
+""
+],
+[
+"Volcano",
+8,
+"higher than Ascetic"
+],
+[
+"Wish",
+9,
+"higher than Ascetic"
+],
+[
+"Drench",
+12,
+""
+],
+[
+"Restore",
+13,
+""
+],
+[
+"Hail Prism",
+20,
+""
+],
+[
+"Eruption",
+22,
+"higher than Ascetic"
+],
+[
+"Wish Well",
+24,
+"higher than Ascetic"
+],
+[
+"Deluge",
+30,
+""
+],
+[
+"Break",
+34,
+""
+],
+[
+"Pure Wish",
+46,
+"higher than Ascetic"
+],
+[
+"Pyroclasm",
+48,
+"higher than Ascetic"
+],
+[
+"Freeze Prism",
+52,
+""
+]
+]
+},
+{
+"line": "Ranger",
+"tiers": [
+{
+"n": "Ranger",
+"req": [
+0,
+0,
+3,
+3
+],
+"mult": [
+130,
+160,
+120,
+120,
+160,
+120
+]
+},
+{
+"n": "Bard",
+"req": [
+0,
+0,
+4,
+4
+],
+"mult": [
+150,
+170,
+130,
+130,
+170,
+120
+]
+},
+{
+"n": "Warlock",
+"req": [
+0,
+0,
+5,
+4
+],
+"mult": [
+170,
+180,
+140,
+140,
+180,
+120
+]
+}
+],
+"psy": [
+[
+"Slash",
+1,
+""
+],
+[
+"Douse",
+2,
+""
+],
+[
+"Ward",
+6,
+""
+],
+[
+"Volcano",
+8,
+""
+],
+[
+"Wind Slash",
+10,
+""
+],
+[
+"Drench",
+12,
+""
+],
+[
+"Bind",
+18,
+""
+],
+[
+"Eruption",
+22,
+""
+],
+[
+"Resist",
+24,
+""
+],
+[
+"Deluge",
+30,
+""
+],
+[
+"Sonic Slash",
+30,
+""
+],
+[
+"Drain",
+33,
+""
+],
+[
+"Break",
+34,
+""
+],
+[
+"Psy Drain",
+41,
+""
+],
+[
+"Pyroclasm",
+48,
+""
+]
+]
+},
+{
+"line": "Sage",
+"tiers": [
+{
+"n": "Hermit",
+"req": [
+0,
+0,
+0,
+1
+],
+"mult": [
+80,
+140,
+80,
+90,
+130,
+120
+]
+},
+{
+"n": "Elder",
+"req": [
+0,
+0,
+0,
+2
+],
+"mult": [
+90,
+150,
+90,
+100,
+140,
+120
+]
+},
+{
+"n": "Scholar",
+"req": [
+0,
+0,
+0,
+4
+],
+"mult": [
+110,
+160,
+100,
+110,
+150,
+120
+]
+},
+{
+"n": "Savant",
+"req": [
+0,
+0,
+0,
+5
+],
+"mult": [
+130,
+170,
+110,
+120,
+160,
+120
+]
+},
+{
+"n": "Sage",
+"req": [
+0,
+1,
+0,
+6
+],
+"mult": [
+150,
+180,
+120,
+130,
+170,
+120
+]
+},
+{
+"n": "Wizard",
+"req": [
+0,
+2,
+0,
+7
+],
+"mult": [
+170,
+190,
+130,
+140,
+180,
+120
+]
+}
+],
+"psy": [
+[
+"Impact",
+1,
+""
+],
+[
+"Prism",
+6,
+""
+],
+[
+"Plasma",
+8,
+""
+],
+[
+"Wish",
+12,
+"higher than Scholar"
+],
+[
+"Bind",
+18,
+""
+],
+[
+"High Impact",
+21,
+""
+],
+[
+"Hail Prism",
+22,
+""
+],
+[
+"Wish Well",
+24,
+"higher than Scholar"
+],
+[
+"Shine Plasma",
+26,
+""
+],
+[
+"Break",
+30,
+""
+],
+[
+"Drain",
+31,
+""
+],
+[
+"Psy Drain",
+39,
+""
+],
+[
+"Pure Wish",
+46,
+"higher than Scholar"
+],
+[
+"Spark Plasma",
+50,
+""
+],
+[
+"Freeze Prism",
+52,
+""
+]
+]
+},
+{
+"line": "White Mage",
+"tiers": [
+{
+"n": "White Mage",
+"req": [
+3,
+0,
+0,
+4
+],
+"mult": [
+150,
+180,
+130,
+130,
+150,
+130
+]
+},
+{
+"n": "Pure Mage",
+"req": [
+4,
+0,
+0,
+5
+],
+"mult": [
+170,
+190,
+140,
+140,
+160,
+130
+]
+}
+],
+"psy": [
+[
+"Cure Poison",
+1,
+""
+],
+[
+"Prism",
+6,
+""
+],
+[
+"Plasma",
+8,
+""
+],
+[
+"Ward",
+9,
+""
+],
+[
+"Dull",
+11,
+""
+],
+[
+"Wish",
+12,
+""
+],
+[
+"Restore",
+13,
+""
+],
+[
+"Revive",
+17,
+""
+],
+[
+"Hail Prism",
+22,
+""
+],
+[
+"Wish Well",
+24,
+""
+],
+[
+"Shine Plasma",
+26,
+""
+],
+[
+"Resist",
+31,
+""
+],
+[
+"Blunt",
+37,
+""
+],
+[
+"Pure Wish",
+46,
+""
+],
+[
+"Spark Plasma",
+46,
+""
+],
+[
+"Freeze Prism",
+52,
+""
+]
+]
+},
+{
+"line": "Aqua Squire",
+"tiers": [
+{
+"n": "Aqua Squire",
+"req": [
+0,
+0,
+0,
+0
+],
+"mult": [
+110,
+90,
+100,
+100,
+90,
+120
+]
+},
+{
+"n": "Aqua Knight",
+"req": [
+0,
+2,
+0,
+0
+],
+"mult": [
+130,
+100,
+110,
+110,
+100,
+120
+]
+},
+{
+"n": "Aqua Prince",
+"req": [
+0,
+4,
+0,
+0
+],
+"mult": [
+150,
+110,
+120,
+120,
+110,
+120
+]
+},
+{
+"n": "Aqua Lord",
+"req": [
+0,
+6,
+0,
+0
+],
+"mult": [
+170,
+120,
+130,
+130,
+120,
+120
+]
+},
+{
+"n": "Aqua Master",
+"req": [
+0,
+8,
+0,
+0
+],
+"mult": [
+190,
+130,
+140,
+140,
+130,
+120
+]
+}
+],
+"psy": [
+[
+"Douse",
+2,
+""
+],
+[
+"Ply",
+2,
+""
+],
+[
+"Cool",
+4,
+""
+],
+[
+"Cure Poison",
+5,
+""
+],
+[
+"Avoid",
+6,
+"higher than Aqua Knight"
+],
+[
+"Diamond Dust",
+12,
+"transforms to Diamond Berg after Aqua Lord"
+],
+[
+"Restore",
+13,
+""
+],
+[
+"Ply Well",
+17,
+""
+],
+[
+"Supercool",
+21,
+""
+],
+[
+"Deluge",
+30,
+""
+],
+[
+"Break",
+30,
+""
+],
+[
+"Pure Ply",
+35,
+""
+],
+[
+"Megacool",
+48,
+""
+]
+]
+}
+]
+},
+"Sveta": {
+"el": 3,
+"lines": [
+{
+"line": "Apprentice",
+"tiers": [
+{
+"n": "Enchanter",
+"req": [
+6,
+0,
+0,
+0
+],
+"mult": [
+140,
+140,
+130,
+120,
+140,
+90
+]
+},
+{
+"n": "Conjurer",
+"req": [
+7,
+0,
+0,
+1
+],
+"mult": [
+170,
+160,
+140,
+130,
+160,
+90
+]
+}
+],
+"psy": [
+[
+"Delude",
+1,
+""
+],
+[
+"Impact",
+5,
+"above Enchanter"
+],
+[
+"Gaia",
+6,
+""
+],
+[
+"Ward",
+6,
+"above Enchanter"
+],
+[
+"Weaken",
+9,
+""
+],
+[
+"Astral Blast",
+11,
+"becomes Thunder Mine after Conjurer"
+],
+[
+"Sleep",
+14,
+""
+],
+[
+"Haunt",
+17,
+""
+],
+[
+"Curse",
+20,
+""
+],
+[
+"High Impact",
+21,
+"above Enchanter"
+],
+[
+"Resist",
+22,
+"above Enchanter"
+],
+[
+"Mother Gaia",
+24,
+""
+],
+[
+"Enfeeble",
+25,
+""
+],
+[
+"Drain",
+31,
+""
+],
+[
+"Psy Drain",
+39,
+""
+],
+[
+"Grand Gaia",
+54,
+""
+]
+]
+},
+{
+"line": "Page",
+"tiers": [
+{
+"n": "Enchanter",
+"req": [
+0,
+0,
+6,
+0
+],
+"mult": [
+140,
+140,
+130,
+120,
+140,
+90
+]
+},
+{
+"n": "Conjurer",
+"req": [
+0,
+0,
+7,
+1
+],
+"mult": [
+170,
+160,
+140,
+130,
+160,
+90
+]
+}
+],
+"psy": [
+[
+"Delude",
+1,
+""
+],
+[
+"Guard",
+3,
+"above Enchanter"
+],
+[
+"Impact",
+5,
+"above Enchanter"
+],
+[
+"Ward",
+6,
+""
+],
+[
+"Volcano",
+8,
+""
+],
+[
+"Weaken",
+9,
+""
+],
+[
+"Astral Blast",
+11,
+"becomes Thunder Mine after Conjurer"
+],
+[
+"Sleep",
+14,
+""
+],
+[
+"Protect",
+15,
+"above Enchanter"
+],
+[
+"High Impact",
+21,
+"above Enchanter"
+],
+[
+"Resist",
+22,
+""
+],
+[
+"Eruption",
+22,
+"above Page"
+],
+[
+"Enfeeble",
+25,
+""
+],
+[
+"Drain",
+31,
+""
+],
+[
+"Psy Drain",
+39,
+""
+],
+[
+"Pyroclasm",
+48,
+""
+]
+]
+},
+{
+"line": "Medium",
+"tiers": [
+{
+"n": "Medium",
+"req": [
+3,
+3,
+0,
+0
+],
+"mult": [
+130,
+170,
+120,
+120,
+150,
+90
+]
+},
+{
+"n": "Conjurer",
+"req": [
+4,
+4,
+0,
+0
+],
+"mult": [
+150,
+180,
+130,
+130,
+160,
+90
+]
+},
+{
+"n": "Dark Shaman",
+"req": [
+5,
+4,
+0,
+0
+],
+"mult": [
+170,
+190,
+140,
+140,
+170,
+90
+]
+}
+],
+"psy": [
+[
+"Bolt",
+1,
+""
+],
+[
+"Froth",
+2,
+""
+],
+[
+"Cure",
+3,
+""
+],
+[
+"Flash Bolt",
+6,
+""
+],
+[
+"Cure Well",
+10,
+""
+],
+[
+"Froth Sphere",
+14,
+""
+],
+[
+"Haunt",
+17,
+""
+],
+[
+"Revive",
+19,
+""
+],
+[
+"Curse",
+20,
+""
+],
+[
+"Blue Bolt",
+22,
+""
+],
+[
+"Potent Cure",
+26,
+""
+],
+[
+"Condemn",
+29,
+""
+],
+[
+"Drain",
+31,
+""
+],
+[
+"Psy Drain",
+36,
+""
+],
+[
+"Froth Spiral",
+40,
+""
+]
+]
+},
+{
+"line": "Pilgrim",
+"tiers": [
+{
+"n": "Pilgrim",
+"req": [
+0,
+0,
+1,
+0
+],
+"mult": [
+90,
+120,
+90,
+100,
+120,
+120
+]
+},
+{
+"n": "Wanderer",
+"req": [
+0,
+0,
+2,
+0
+],
+"mult": [
+110,
+130,
+100,
+110,
+130,
+120
+]
+},
+{
+"n": "Ascetic",
+"req": [
+0,
+0,
+4,
+0
+],
+"mult": [
+120,
+140,
+110,
+120,
+140,
+120
+]
+},
+{
+"n": "Fire Monk",
+"req": [
+0,
+0,
+6,
+1
+],
+"mult": [
+150,
+160,
+130,
+140,
+160,
+120
+]
+},
+{
+"n": "Guru",
+"req": [
+0,
+0,
+7,
+2
+],
+"mult": [
+170,
+170,
+140,
+150,
+170,
+120
+]
+}
+],
+"psy": [
+[
+"Slash",
+1,
+""
+],
+[
+"Ward",
+6,
+"above Ascetic"
+],
+[
+"Volcano",
+8,
+"above Ascetic"
+],
+[
+"Plasma",
+9,
+""
+],
+[
+"Wind Slash",
+10,
+""
+],
+[
+"Bind",
+18,
+""
+],
+[
+"Eruption",
+22,
+"above Ascetic"
+],
+[
+"Resist",
+24,
+"above Ascetic"
+],
+[
+"Shine Plasma",
+26,
+""
+],
+[
+"Sonic Slash",
+30,
+""
+],
+[
+"Drain",
+33,
+""
+],
+[
+"Psy Drain",
+41,
+""
+],
+[
+"Pyroclasm",
+48,
+"above Ascetic"
+],
+[
+"Spark Plasma",
+50,
+""
+]
+]
+},
+{
+"line": "Ranger",
+"tiers": [
+{
+"n": "Ranger",
+"req": [
+0,
+3,
+3,
+0
+],
+"mult": [
+130,
+160,
+120,
+120,
+160,
+120
+]
+},
+{
+"n": "Bard",
+"req": [
+0,
+4,
+4,
+0
+],
+"mult": [
+150,
+170,
+130,
+130,
+170,
+120
+]
+},
+{
+"n": "Warlock",
+"req": [
+0,
+4,
+5,
+0
+],
+"mult": [
+170,
+180,
+140,
+140,
+180,
+120
+]
+}
+],
+"psy": [
+[
+"Slash",
+1,
+""
+],
+[
+"Douse",
+2,
+""
+],
+[
+"Ward",
+6,
+""
+],
+[
+"Volcano",
+8,
+""
+],
+[
+"Wind Slash",
+10,
+""
+],
+[
+"Drench",
+12,
+""
+],
+[
+"Bind",
+18,
+""
+],
+[
+"Eruption",
+22,
+""
+],
+[
+"Resist",
+24,
+""
+],
+[
+"Deluge",
+30,
+""
+],
+[
+"Sonic Slash",
+30,
+""
+],
+[
+"Drain",
+33,
+""
+],
+[
+"Break",
+34,
+""
+],
+[
+"Psy Drain",
+41,
+""
+],
+[
+"Pyroclasm",
+48,
+""
+]
+]
+},
+{
+"line": "Sage",
+"tiers": [
+{
+"n": "Hermit",
+"req": [
+0,
+1,
+0,
+0
+],
+"mult": [
+80,
+140,
+80,
+90,
+130,
+120
+]
+},
+{
+"n": "Elder",
+"req": [
+0,
+2,
+0,
+0
+],
+"mult": [
+90,
+150,
+90,
+100,
+140,
+120
+]
+},
+{
+"n": "Scholar",
+"req": [
+0,
+4,
+0,
+0
+],
+"mult": [
+110,
+160,
+100,
+110,
+150,
+120
+]
+},
+{
+"n": "Savant",
+"req": [
+0,
+5,
+0,
+0
+],
+"mult": [
+130,
+170,
+110,
+120,
+160,
+120
+]
+},
+{
+"n": "Sage",
+"req": [
+0,
+6,
+0,
+1
+],
+"mult": [
+150,
+180,
+120,
+130,
+170,
+120
+]
+},
+{
+"n": "Wizard",
+"req": [
+0,
+7,
+0,
+2
+],
+"mult": [
+170,
+190,
+130,
+140,
+180,
+120
+]
+}
+],
+"psy": [
+[
+"Impact",
+1,
+""
+],
+[
+"Prism",
+6,
+""
+],
+[
+"Plasma",
+8,
+""
+],
+[
+"Wish",
+12,
+"above Scholar"
+],
+[
+"Bind",
+18,
+""
+],
+[
+"High Impact",
+21,
+""
+],
+[
+"Hail Prism",
+22,
+""
+],
+[
+"Wish Well",
+24,
+"above Scholar"
+],
+[
+"Shine Plasma",
+26,
+""
+],
+[
+"Break",
+30,
+""
+],
+[
+"Drain",
+31,
+""
+],
+[
+"Psy Drain",
+39,
+""
+],
+[
+"Pure Wish",
+46,
+"above Scholar"
+],
+[
+"Spark Plasma",
+50,
+""
+],
+[
+"Freeze Prism",
+52,
+""
+]
+]
+},
+{
+"line": "White Mage",
+"tiers": [
+{
+"n": "White Mage",
+"req": [
+3,
+4,
+0,
+0
+],
+"mult": [
+150,
+180,
+130,
+130,
+150,
+130
+]
+},
+{
+"n": "Pure Mage",
+"req": [
+4,
+5,
+0,
+0
+],
+"mult": [
+170,
+190,
+140,
+140,
+160,
+130
+]
+}
+],
+"psy": [
+[
+"Cure Poison",
+1,
+""
+],
+[
+"Prism",
+6,
+""
+],
+[
+"Plasma",
+8,
+""
+],
+[
+"Ward",
+9,
+""
+],
+[
+"Dull",
+11,
+""
+],
+[
+"Wish",
+12,
+""
+],
+[
+"Restore",
+13,
+""
+],
+[
+"Revive",
+17,
+""
+],
+[
+"Hail Prism",
+22,
+""
+],
+[
+"Wish Well",
+24,
+""
+],
+[
+"Shine Plasma",
+26,
+""
+],
+[
+"Resist",
+31,
+""
+],
+[
+"Blunt",
+37,
+""
+],
+[
+"Pure Wish",
+46,
+""
+],
+[
+"Spark Plasma",
+46,
+""
+],
+[
+"Freeze Prism",
+52,
+""
+]
+]
+},
+{
+"line": "Beastling",
+"tiers": [
+{
+"n": "Beastling",
+"req": [
+0,
+0,
+0,
+0
+],
+"mult": [
+110,
+120,
+90,
+100,
+110,
+100
+]
+},
+{
+"n": "Wildrunner",
+"req": [
+0,
+0,
+0,
+2
+],
+"mult": [
+130,
+130,
+100,
+110,
+120,
+100
+]
+},
+{
+"n": "Shapeshifter",
+"req": [
+0,
+0,
+0,
+4
+],
+"mult": [
+150,
+140,
+110,
+120,
+130,
+100
+]
+},
+{
+"n": "Beast Master",
+"req": [
+0,
+0,
+0,
+6
+],
+"mult": [
+170,
+160,
+130,
+130,
+140,
+100
+]
+},
+{
+"n": "Prime Beast",
+"req": [
+0,
+0,
+0,
+8
+],
+"mult": [
+190,
+170,
+140,
+140,
+150,
+100
+]
+}
+],
+"psy": [
+[
+"Whirlwind",
+1,
+""
+],
+[
+"Slash",
+3,
+""
+],
+[
+"Ray",
+4,
+""
+],
+[
+"Cure Poison",
+5,
+""
+],
+[
+"Boon",
+7,
+""
+],
+[
+"Wind Slash",
+11,
+""
+],
+[
+"Restore",
+13,
+""
+],
+[
+"Storm Ray",
+14,
+""
+],
+[
+"Nature's Boon",
+16,
+""
+],
+[
+"Tornado",
+18,
+""
+],
+[
+"Vital Boon",
+24,
+""
+],
+[
+"Sonic Slash",
+31,
+""
+],
+[
+"Destruct Ray",
+36,
+""
+],
+[
+"Tempest",
+44,
+""
+]
+]
+},
+{
+"line": "Scrapper",
+"tiers": [
+{
+"n": "Scrapper",
+"req": [
+1,
+0,
+0,
+0
+],
+"mult": [
+90,
+80,
+110,
+110,
+120,
+120
+]
+},
+{
+"n": "Grappler",
+"req": [
+2,
+0,
+0,
+0
+],
+"mult": [
+110,
+90,
+120,
+120,
+130,
+120
+]
+},
+{
+"n": "Brawler",
+"req": [
+4,
+0,
+0,
+0
+],
+"mult": [
+120,
+100,
+130,
+130,
+140,
+120
+]
+},
+{
+"n": "Bruiser",
+"req": [
+6,
+0,
+0,
+1
+],
+"mult": [
+150,
+110,
+140,
+140,
+160,
+120
+]
+},
+{
+"n": "Gladiator",
+"req": [
+7,
+0,
+0,
+2
+],
+"mult": [
+170,
+120,
+150,
+150,
+170,
+120
+]
+}
+],
+"psy": [
+[
+"Growth",
+3,
+""
+],
+[
+"Cure Poison",
+5,
+""
+],
+[
+"Boon",
+7,
+""
+],
+[
+"Speed Punch",
+10,
+""
+],
+[
+"Restore",
+13,
+""
+],
+[
+"Mad Growth",
+15,
+""
+],
+[
+"Nature's Boon",
+16,
+""
+],
+[
+"Revive",
+20,
+""
+],
+[
+"Psynergy Slam",
+23,
+""
+],
+[
+"Vital Boon",
+24,
+""
+],
+[
+"Wild Growth",
+29,
+""
+],
+[
+"Psynergy Surge",
+35,
+""
+]
+]
+}
+]
+},
+"Eoleo": {
+"el": 2,
+"lines": [
+{
+"line": "Luminier",
+"tiers": [
+{
+"n": "Swordsman",
+"req": [
+0,
+1,
+0,
+0
+],
+"mult": [
+100,
+90,
+110,
+110,
+90,
+120
+]
+},
+{
+"n": "Defender",
+"req": [
+0,
+2,
+0,
+0
+],
+"mult": [
+120,
+100,
+120,
+120,
+100,
+120
+]
+},
+{
+"n": "Cavalier",
+"req": [
+0,
+4,
+0,
+0
+],
+"mult": [
+140,
+110,
+130,
+130,
+110,
+120
+]
+},
+{
+"n": "Luminier",
+"req": [
+0,
+6,
+1,
+0
+],
+"mult": [
+170,
+130,
+140,
+140,
+130,
+120
+]
+},
+{
+"n": "Radiant",
+"req": [
+0,
+7,
+2,
+0
+],
+"mult": [
+190,
+140,
+150,
+150,
+140,
+120
+]
+}
+],
+"psy": [
+[
+"Ply",
+1,
+"above Defender"
+],
+[
+"Blast",
+2,
+""
+],
+[
+"Guard",
+3,
+""
+],
+[
+"Cure Poison",
+5,
+""
+],
+[
+"Avoid",
+6,
+"above Defender"
+],
+[
+"Wish",
+8,
+"above Cavalier"
+],
+[
+"Mad Blast",
+10,
+""
+],
+[
+"Cutting Edge",
+11,
+"becomes Plume Edge after Luminier"
+],
+[
+"Restore",
+13,
+""
+],
+[
+"Protect",
+15,
+""
+],
+[
+"Ply Well",
+16,
+"above Defender"
+],
+[
+"Wish Well",
+22,
+"above Cavalier"
+],
+[
+"Fiery Blast",
+28,
+""
+],
+[
+"Break",
+30,
+""
+],
+[
+"Pure Ply",
+34,
+"above Defender"
+],
+[
+"Pure Wish",
+46,
+"above Cavalier"
+]
+]
+},
+{
+"line": "Dragoon",
+"tiers": [
+{
+"n": "Dragoon",
+"req": [
+3,
+3,
+0,
+0
+],
+"mult": [
+160,
+130,
+140,
+140,
+110,
+130
+]
+},
+{
+"n": "Templar",
+"req": [
+4,
+4,
+0,
+0
+],
+"mult": [
+180,
+140,
+150,
+150,
+120,
+130
+]
+},
+{
+"n": "Paladin",
+"req": [
+4,
+5,
+0,
+0
+],
+"mult": [
+200,
+150,
+160,
+160,
+130,
+130
+]
+}
+],
+"psy": [
+[
+"Ply",
+1,
+""
+],
+[
+"Blast",
+2,
+""
+],
+[
+"Thorn",
+4,
+""
+],
+[
+"Cure Poison",
+5,
+""
+],
+[
+"Avoid",
+6,
+""
+],
+[
+"Wish",
+8,
+""
+],
+[
+"Mad Blast",
+10,
+""
+],
+[
+"Cutting Edge",
+11,
+"becomes Plume Edge after Templar"
+],
+[
+"Restore",
+13,
+""
+],
+[
+"Ply Well",
+16,
+""
+],
+[
+"Briar",
+17,
+""
+],
+[
+"Wish Well",
+22,
+""
+],
+[
+"Fiery Blast",
+27,
+""
+],
+[
+"Pure Ply",
+34,
+""
+],
+[
+"Nettle",
+36,
+""
+],
+[
+"Pure Wish",
+46,
+""
+]
+]
+},
+{
+"line": "Page",
+"tiers": [
+{
+"n": "Page",
+"req": [
+0,
+0,
+0,
+1
+],
+"mult": [
+100,
+120,
+110,
+100,
+120,
+90
+]
+},
+{
+"n": "Illusionist",
+"req": [
+0,
+0,
+0,
+2
+],
+"mult": [
+120,
+130,
+120,
+110,
+130,
+90
+]
+},
+{
+"n": "Enchanter",
+"req": [
+0,
+0,
+0,
+4
+],
+"mult": [
+140,
+140,
+130,
+120,
+140,
+90
+]
+},
+{
+"n": "Conjurer",
+"req": [
+0,
+0,
+1,
+6
+],
+"mult": [
+170,
+160,
+140,
+130,
+160,
+90
+]
+},
+{
+"n": "War Adept",
+"req": [
+0,
+0,
+2,
+7
+],
+"mult": [
+190,
+170,
+150,
+140,
+170,
+90
+]
+}
+],
+"psy": [
+[
+"Delude",
+1,
+""
+],
+[
+"Guard",
+3,
+"above Enchanter"
+],
+[
+"Impact",
+5,
+"above Enchanter"
+],
+[
+"Ward",
+6,
+""
+],
+[
+"Volcano",
+8,
+""
+],
+[
+"Weaken",
+9,
+""
+],
+[
+"Astral Blast",
+11,
+"becomes Thunder Mine after Conjurer"
+],
+[
+"Sleep",
+14,
+""
+],
+[
+"Protect",
+15,
+"above Enchanter"
+],
+[
+"High Impact",
+21,
+"above Enchanter"
+],
+[
+"Resist",
+22,
+""
+],
+[
+"Eruption",
+22,
+"above Page"
+],
+[
+"Enfeeble",
+25,
+""
+],
+[
+"Drain",
+31,
+""
+],
+[
+"Psy Drain",
+39,
+""
+],
+[
+"Pyroclasm",
+48,
+""
+]
+]
+},
+{
+"line": "Ninja",
+"tiers": [
+{
+"n": "Ninja",
+"req": [
+3,
+0,
+0,
+3
+],
+"mult": [
+160,
+140,
+150,
+120,
+170,
+80
+]
+},
+{
+"n": "Disciple",
+"req": [
+4,
+0,
+0,
+4
+],
+"mult": [
+180,
+150,
+160,
+130,
+180,
+80
+]
+},
+{
+"n": "Master",
+"req": [
+4,
+0,
+0,
+5
+],
+"mult": [
+200,
+160,
+170,
+140,
+190,
+80
+]
+}
+],
+"psy": [
+[
+"Gale",
+1,
+""
+],
+[
+"Punji",
+4,
+""
+],
+[
+"Fire Bomb",
+6,
+""
+],
+[
+"Mist",
+7,
+""
+],
+[
+"Thunderclap",
+8,
+""
+],
+[
+"Death Plunge",
+12,
+"becomes Death Leap after Disciple"
+],
+[
+"Punji Trap",
+15,
+""
+],
+[
+"Cluster Bomb",
+16,
+""
+],
+[
+"Typhoon",
+18,
+""
+],
+[
+"Shuriken",
+21,
+""
+],
+[
+"Thunderbolt",
+26,
+""
+],
+[
+"Annihilation",
+31,
+""
+],
+[
+"Punji Strike",
+36,
+""
+],
+[
+"Carpet Bomb",
+40,
+""
+],
+[
+"Hurricane",
+44,
+""
+],
+[
+"Thunderhead",
+50,
+""
+]
+]
+},
+{
+"line": "Pilgrim1",
+"tiers": [
+{
+"n": "Ascetic",
+"req": [
+0,
+6,
+0,
+0
+],
+"mult": [
+120,
+140,
+110,
+120,
+140,
+120
+]
+},
+{
+"n": "Water Monk",
+"req": [
+0,
+7,
+1,
+0
+],
+"mult": [
+150,
+160,
+130,
+140,
+160,
+120
+]
+}
+],
+"psy": [
+[
+"Douse",
+1,
+""
+],
+[
+"Cure Poison",
+5,
+""
+],
+[
+"Prism",
+6,
+""
+],
+[
+"Volcano",
+8,
+"above Ascetic"
+],
+[
+"Wish",
+9,
+"above Ascetic"
+],
+[
+"Drench",
+12,
+""
+],
+[
+"Restore",
+13,
+""
+],
+[
+"Hail Prism",
+20,
+""
+],
+[
+"Eruption",
+22,
+"above Ascetic"
+],
+[
+"Wish Well",
+24,
+"above Ascetic"
+],
+[
+"Deluge",
+30,
+""
+],
+[
+"Break",
+34,
+""
+],
+[
+"Pure Wish",
+46,
+"above Ascetic"
+],
+[
+"Pyroclasm",
+48,
+"above Ascetic"
+],
+[
+"Freeze Prism",
+52,
+""
+]
+]
+},
+{
+"line": "Pilgrim2",
+"tiers": [
+{
+"n": "Ascetic",
+"req": [
+0,
+0,
+0,
+6
+],
+"mult": [
+120,
+140,
+110,
+120,
+140,
+120
+]
+},
+{
+"n": "Fire Monk",
+"req": [
+0,
+0,
+1,
+7
+],
+"mult": [
+150,
+160,
+130,
+140,
+160,
+120
+]
+}
+],
+"psy": [
+[
+"Slash",
+1,
+""
+],
+[
+"Ward",
+6,
+"above Ascetic"
+],
+[
+"Volcano",
+8,
+"above Ascetic"
+],
+[
+"Plasma",
+9,
+""
+],
+[
+"Wind Slash",
+10,
+""
+],
+[
+"Bind",
+18,
+""
+],
+[
+"Eruption",
+22,
+"above Ascetic"
+],
+[
+"Resist",
+24,
+"above Ascetic"
+],
+[
+"Shine Plasma",
+26,
+""
+],
+[
+"Sonic Slash",
+30,
+""
+],
+[
+"Drain",
+33,
+""
+],
+[
+"Psy Drain",
+41,
+""
+],
+[
+"Pyroclasm",
+48,
+"above Ascetic"
+],
+[
+"Spark Plasma",
+50,
+""
+]
+]
+},
+{
+"line": "Brute",
+"tiers": [
+{
+"n": "Brute",
+"req": [
+1,
+0,
+0,
+0
+],
+"mult": [
+100,
+70,
+120,
+90,
+110,
+70
+]
+},
+{
+"n": "Ruffian",
+"req": [
+2,
+0,
+0,
+0
+],
+"mult": [
+120,
+80,
+130,
+100,
+120,
+70
+]
+},
+{
+"n": "Savage",
+"req": [
+4,
+0,
+0,
+0
+],
+"mult": [
+140,
+90,
+140,
+110,
+130,
+70
+]
+},
+{
+"n": "Barbarian",
+"req": [
+5,
+0,
+0,
+0
+],
+"mult": [
+160,
+100,
+150,
+120,
+140,
+70
+]
+},
+{
+"n": "Berserker",
+"req": [
+6,
+0,
+1,
+0
+],
+"mult": [
+180,
+110,
+160,
+130,
+150,
+70
+]
+},
+{
+"n": "Chaos Lord",
+"req": [
+7,
+0,
+2,
+0
+],
+"mult": [
+200,
+120,
+170,
+140,
+160,
+70
+]
+}
+],
+"psy": [
+[
+"Growth",
+1,
+""
+],
+[
+"Fireball",
+1,
+""
+],
+[
+"Spire",
+7,
+"above Savage"
+],
+[
+"Impair",
+9,
+"above Savage"
+],
+[
+"Mad Growth",
+12,
+""
+],
+[
+"Planet Diver",
+13,
+"becomes Planetary after Berserker"
+],
+[
+"Fire Orb",
+14,
+""
+],
+[
+"Haunt",
+17,
+""
+],
+[
+"Revive",
+19,
+"above Savage"
+],
+[
+"Clay Spire",
+20,
+"above Savage"
+],
+[
+"Debilitate",
+23,
+"above Savage"
+],
+[
+"Curse",
+24,
+""
+],
+[
+"Wild Growth",
+28,
+""
+],
+[
+"Condemn",
+29,
+""
+],
+[
+"Inferno",
+36,
+""
+],
+[
+"Stone Spire",
+42,
+"above Savage"
+]
+]
+},
+{
+"line": "Samurai",
+"tiers": [
+{
+"n": "Samurai",
+"req": [
+4,
+0,
+0,
+3
+],
+"mult": [
+190,
+130,
+150,
+140,
+140,
+90
+]
+},
+{
+"n": "Ronin",
+"req": [
+5,
+0,
+0,
+4
+],
+"mult": [
+210,
+140,
+160,
+150,
+150,
+90
+]
+}
+],
+"psy": [
+[
+"Guardian",
+3,
+""
+],
+[
+"Demon Spear",
+5,
+""
+],
+[
+"Rockfall",
+6,
+""
+],
+[
+"Lava Shower",
+8,
+""
+],
+[
+"Magic Shell",
+10,
+""
+],
+[
+"Dragon Cloud",
+12,
+"becomes Epicenter after Ronin"
+],
+[
+"Protector",
+15,
+""
+],
+[
+"Demon Night",
+18,
+"becomes Thorny Grave after Ronin"
+],
+[
+"Angel Spear",
+21,
+""
+],
+[
+"Molten Bath",
+22,
+""
+],
+[
+"Rockslide",
+24,
+""
+],
+[
+"Magic Shield",
+27,
+""
+],
+[
+"Helm Splitter",
+33,
+"becomes Skull Splitter after Ronin"
+],
+[
+"Quick Strike",
+40,
+""
+],
+[
+"Magma Storm",
+48,
+""
+],
+[
+"Avalanche",
+54,
+""
+]
+]
+},
+{
+"line": "Pirate",
+"tiers": [
+{
+"n": "Pirate",
+"req": [
+0,
+0,
+0,
+0
+],
+"mult": [
+110,
+90,
+100,
+100,
+90,
+120
+]
+},
+{
+"n": "Cannoneer",
+"req": [
+0,
+0,
+2,
+0
+],
+"mult": [
+130,
+100,
+110,
+110,
+100,
+120
+]
+},
+{
+"n": "Corsair",
+"req": [
+0,
+0,
+4,
+0
+],
+"mult": [
+150,
+110,
+120,
+120,
+110,
+120
+]
+},
+{
+"n": "Pirate King",
+"req": [
+0,
+0,
+6,
+0
+],
+"mult": [
+170,
+120,
+130,
+130,
+120,
+120
+]
+},
+{
+"n": "Hull Reaver",
+"req": [
+0,
+0,
+8,
+0
+],
+"mult": [
+190,
+130,
+140,
+140,
+130,
+120
+]
+}
+],
+"psy": [
+[
+"Flare",
+1,
+""
+],
+[
+"Guard",
+3,
+""
+],
+[
+"Fume",
+5,
+""
+],
+[
+"Flare Wall",
+6,
+""
+],
+[
+"Beam",
+7,
+""
+],
+[
+"Impair",
+10,
+""
+],
+[
+"Keelhaul",
+12,
+"becomes Vicious Chop after Pirate King"
+],
+[
+"Protect",
+15,
+""
+],
+[
+"Flare Storm",
+18,
+""
+],
+[
+"Cycle Beam",
+21,
+""
+],
+[
+"Debilitate",
+23,
+""
+],
+[
+"Serpent Fume",
+26,
+""
+],
+[
+"Searing Beam",
+37,
+""
+],
+[
+"Dragon Fume",
+47,
+""
+]
+]
+}
+]
+},
+"Himi": {
+"el": 0,
+"lines": [
+{
+"line": "Swordsman",
+"tiers": [
+{
+"n": "Crusader",
+"req": [
+0,
+1,
+0,
+0
+],
+"mult": [
+100,
+90,
+110,
+110,
+90,
+120
+]
+},
+{
+"n": "Defender",
+"req": [
+0,
+2,
+0,
+0
+],
+"mult": [
+120,
+100,
+120,
+120,
+100,
+120
+]
+},
+{
+"n": "Cavalier",
+"req": [
+0,
+4,
+0,
+0
+],
+"mult": [
+140,
+110,
+130,
+130,
+110,
+120
+]
+},
+{
+"n": "Guardian",
+"req": [
+1,
+6,
+0,
+0
+],
+"mult": [
+170,
+130,
+140,
+140,
+130,
+120
+]
+},
+{
+"n": "Protector",
+"req": [
+2,
+7,
+0,
+0
+],
+"mult": [
+190,
+140,
+150,
+150,
+140,
+120
+]
+}
+],
+"psy": [
+[
+"Ply",
+1,
+"class above Defender"
+],
+[
+"Thorn",
+4,
+""
+],
+[
+"Cure Poison",
+5,
+""
+],
+[
+"Avoid",
+6,
+"class above Defender"
+],
+[
+"Wish",
+8,
+"class above Cavalier"
+],
+[
+"Cutting Edge",
+11,
+"becomes Plume Edge after Guardian"
+],
+[
+"Restore",
+13,
+""
+],
+[
+"Briar",
+14,
+""
+],
+[
+"Ply Well",
+16,
+"class above Defender"
+],
+[
+"Revive",
+19,
+""
+],
+[
+"Wish Well",
+22,
+"class above Cavalier"
+],
+[
+"Break",
+30,
+""
+],
+[
+"Pure Ply",
+34,
+"class above Defender"
+],
+[
+"Nettle",
+36,
+""
+],
+[
+"Pure Wish",
+46,
+"class above Cavalier"
+]
+]
+},
+{
+"line": "Dragoon",
+"tiers": [
+{
+"n": "Dragoon",
+"req": [
+0,
+3,
+3,
+0
+],
+"mult": [
+160,
+130,
+140,
+140,
+110,
+130
+]
+},
+{
+"n": "Templar",
+"req": [
+0,
+4,
+4,
+0
+],
+"mult": [
+180,
+140,
+150,
+150,
+120,
+130
+]
+},
+{
+"n": "Paladin",
+"req": [
+0,
+5,
+4,
+0
+],
+"mult": [
+200,
+150,
+160,
+160,
+130,
+130
+]
+}
+],
+"psy": [
+[
+"Ply",
+1,
+""
+],
+[
+"Blast",
+2,
+""
+],
+[
+"Thorn",
+4,
+""
+],
+[
+"Cure Poison",
+5,
+""
+],
+[
+"Avoid",
+6,
+""
+],
+[
+"Wish",
+8,
+""
+],
+[
+"Mad Blast",
+10,
+""
+],
+[
+"Cutting Edge",
+11,
+"becomes Plume Edge after Templar"
+],
+[
+"Restore",
+13,
+""
+],
+[
+"Ply Well",
+16,
+""
+],
+[
+"Briar",
+17,
+""
+],
+[
+"Wish Well",
+22,
+""
+],
+[
+"Fiery Blast",
+27,
+""
+],
+[
+"Pure Ply",
+34,
+""
+],
+[
+"Nettle",
+36,
+""
+],
+[
+"Pure Wish",
+46,
+""
+]
+]
+},
+{
+"line": "Apprentice",
+"tiers": [
+{
+"n": "Apprentice",
+"req": [
+0,
+0,
+0,
+1
+],
+"mult": [
+100,
+120,
+110,
+100,
+120,
+90
+]
+},
+{
+"n": "Illusionist",
+"req": [
+0,
+0,
+0,
+2
+],
+"mult": [
+120,
+130,
+120,
+110,
+130,
+90
+]
+},
+{
+"n": "Enchanter",
+"req": [
+0,
+0,
+0,
+4
+],
+"mult": [
+140,
+140,
+130,
+120,
+140,
+90
+]
+},
+{
+"n": "Conjurer",
+"req": [
+1,
+0,
+0,
+6
+],
+"mult": [
+170,
+160,
+140,
+130,
+160,
+90
+]
+},
+{
+"n": "War Adept",
+"req": [
+2,
+0,
+0,
+7
+],
+"mult": [
+190,
+170,
+150,
+140,
+170,
+90
+]
+}
+],
+"psy": [
+[
+"Delude",
+1,
+""
+],
+[
+"Impact",
+5,
+"class above Enchanter"
+],
+[
+"Gaia",
+6,
+""
+],
+[
+"Ward",
+6,
+"class above Enchanter"
+],
+[
+"Weaken",
+9,
+""
+],
+[
+"Astral Blast",
+11,
+"becomes Thunder Mine after Conjurer"
+],
+[
+"Sleep",
+14,
+""
+],
+[
+"Haunt",
+17,
+""
+],
+[
+"Curse",
+20,
+""
+],
+[
+"High Impact",
+21,
+"class above Enchanter"
+],
+[
+"Resist",
+22,
+"class above Enchanter"
+],
+[
+"Mother Gaia",
+24,
+""
+],
+[
+"Enfeeble",
+25,
+""
+],
+[
+"Drain",
+31,
+""
+],
+[
+"Psy Drain",
+39,
+""
+],
+[
+"Grand Gaia",
+54,
+""
+]
+]
+},
+{
+"line": "Ninja",
+"tiers": [
+{
+"n": "Ninja",
+"req": [
+0,
+0,
+3,
+3
+],
+"mult": [
+160,
+140,
+150,
+120,
+170,
+80
+]
+},
+{
+"n": "Disciple",
+"req": [
+0,
+0,
+4,
+4
+],
+"mult": [
+180,
+150,
+160,
+130,
+180,
+80
+]
+},
+{
+"n": "Master",
+"req": [
+0,
+0,
+4,
+5
+],
+"mult": [
+200,
+160,
+170,
+140,
+190,
+80
+]
+}
+],
+"psy": [
+[
+"Gale",
+1,
+""
+],
+[
+"Punji",
+4,
+""
+],
+[
+"Fire Bomb",
+6,
+""
+],
+[
+"Mist",
+7,
+""
+],
+[
+"Thunderclap",
+8,
+""
+],
+[
+"Death Plunge",
+12,
+"becomes Death Leap after Disciple"
+],
+[
+"Punji Trap",
+15,
+""
+],
+[
+"Cluster Bomb",
+16,
+""
+],
+[
+"Typhoon",
+18,
+""
+],
+[
+"Shuriken",
+21,
+""
+],
+[
+"Thunderbolt",
+26,
+""
+],
+[
+"Annihilation",
+31,
+""
+],
+[
+"Punji Strike",
+36,
+""
+],
+[
+"Carpet Bomb",
+40,
+""
+],
+[
+"Hurricane",
+44,
+""
+],
+[
+"Thunderhead",
+50,
+""
+]
+]
+},
+{
+"line": "Water Seer",
+"tiers": [
+{
+"n": "Shaman",
+"req": [
+0,
+6,
+0,
+0
+],
+"mult": [
+120,
+150,
+110,
+110,
+130,
+100
+]
+},
+{
+"n": "Druid",
+"req": [
+1,
+7,
+0,
+0
+],
+"mult": [
+150,
+170,
+130,
+130,
+150,
+100
+]
+}
+],
+"psy": [
+[
+"Cure",
+1,
+""
+],
+[
+"Froth",
+2,
+""
+],
+[
+"Growth",
+3,
+""
+],
+[
+"Cure Poison",
+5,
+""
+],
+[
+"Wish",
+8,
+"class above Shaman"
+],
+[
+"Cure Well",
+10,
+""
+],
+[
+"Mad Growth",
+12,
+""
+],
+[
+"Restore",
+13,
+""
+],
+[
+"Froth Sphere",
+14,
+""
+],
+[
+"Revive",
+19,
+"class above Shaman"
+],
+[
+"Wish Well",
+22,
+"class above Shaman"
+],
+[
+"Potent Cure",
+26,
+""
+],
+[
+"Wild Growth",
+29,
+""
+],
+[
+"Break",
+30,
+""
+],
+[
+"Froth Spiral",
+40,
+""
+],
+[
+"Pure Wish",
+46,
+"class above Shaman"
+]
+]
+},
+{
+"line": "Wind Seer",
+"tiers": [
+{
+"n": "Shaman",
+"req": [
+0,
+0,
+0,
+6
+],
+"mult": [
+120,
+150,
+110,
+110,
+130,
+100
+]
+},
+{
+"n": "Druid",
+"req": [
+1,
+0,
+0,
+7
+],
+"mult": [
+150,
+170,
+130,
+130,
+150,
+100
+]
+}
+],
+"psy": [
+[
+"Cure",
+1,
+""
+],
+[
+"Bolt",
+2,
+""
+],
+[
+"Growth",
+3,
+""
+],
+[
+"Flash Bolt",
+6,
+""
+],
+[
+"Ward",
+7,
+"class above Shaman"
+],
+[
+"Cure Well",
+10,
+""
+],
+[
+"Mad Growth",
+12,
+""
+],
+[
+"Bind",
+18,
+""
+],
+[
+"Revive",
+19,
+"class above Shaman"
+],
+[
+"Blue Bolt",
+22,
+""
+],
+[
+"Resist",
+23,
+"class above Shaman"
+],
+[
+"Potent Cure",
+26,
+""
+],
+[
+"Wild Growth",
+29,
+""
+],
+[
+"Drain",
+31,
+""
+],
+[
+"Psy Drain",
+39,
+""
+]
+]
+},
+{
+"line": "Miko",
+"tiers": [
+{
+"n": "Miko",
+"req": [
+0,
+0,
+0,
+0
+],
+"mult": [
+80,
+150,
+70,
+90,
+120,
+120
+]
+},
+{
+"n": "High Miko",
+"req": [
+2,
+0,
+0,
+0
+],
+"mult": [
+90,
+160,
+80,
+100,
+130,
+120
+]
+},
+{
+"n": "Master Miko",
+"req": [
+4,
+0,
+0,
+0
+],
+"mult": [
+110,
+170,
+90,
+110,
+140,
+120
+]
+},
+{
+"n": "Mystic Miko",
+"req": [
+6,
+0,
+0,
+0
+],
+"mult": [
+130,
+180,
+100,
+120,
+150,
+120
+]
+},
+{
+"n": "Radiant Miko",
+"req": [
+8,
+0,
+0,
+0
+],
+"mult": [
+150,
+190,
+110,
+130,
+160,
+120
+]
+}
+],
+"psy": [
+[
+"Cure",
+1,
+""
+],
+[
+"Growth",
+2,
+""
+],
+[
+"Thorn",
+4,
+""
+],
+[
+"Cure Well",
+10,
+""
+],
+[
+"Mad Growth",
+12,
+""
+],
+[
+"Briar",
+14,
+""
+],
+[
+"Revive",
+19,
+""
+],
+[
+"Weapon Grace",
+21,
+""
+],
+[
+"Potent Cure",
+26,
+""
+],
+[
+"Wild Growth",
+28,
+""
+],
+[
+"Roaring Dragon",
+31,
+""
+],
+[
+"Nettle",
+36,
+""
+],
+[
+"Slaying Dragon",
+39,
+""
+],
+[
+"Reigning Dragon",
+50,
+""
+]
+]
+},
+{
+"line": "Curse Mage",
+"tiers": [
+{
+"n": "Curse Mage",
+"req": [
+0,
+0,
+1,
+0
+],
+"mult": [
+80,
+140,
+90,
+90,
+110,
+100
+]
+},
+{
+"n": "Channeler",
+"req": [
+0,
+0,
+2,
+0
+],
+"mult": [
+90,
+150,
+100,
+100,
+120,
+100
+]
+},
+{
+"n": "Puppet Mage",
+"req": [
+0,
+0,
+4,
+0
+],
+"mult": [
+110,
+160,
+110,
+110,
+130,
+100
+]
+},
+{
+"n": "Curse Master",
+"req": [
+0,
+0,
+5,
+0
+],
+"mult": [
+130,
+170,
+120,
+120,
+140,
+100
+]
+},
+{
+"n": "Soul Siphon",
+"req": [
+1,
+0,
+6,
+0
+],
+"mult": [
+150,
+180,
+130,
+130,
+150,
+100
+]
+},
+{
+"n": "Diabolist",
+"req": [
+2,
+0,
+7,
+0
+],
+"mult": [
+170,
+190,
+140,
+140,
+160,
+100
+]
+}
+],
+"psy": [
+[
+"Undead Curse",
+1,
+""
+],
+[
+"Fear Puppet",
+5,
+""
+],
+[
+"Raging Heat",
+9,
+""
+],
+[
+"Impair",
+10,
+""
+],
+[
+"Curse",
+14,
+""
+],
+[
+"Haunt",
+17,
+""
+],
+[
+"Fiery Abyss",
+22,
+""
+],
+[
+"Debilitate",
+23,
+""
+],
+[
+"Undead Gloom",
+26,
+""
+],
+[
+"Condemn",
+29,
+""
+],
+[
+"Drain",
+31,
+""
+],
+[
+"Toxic Grit",
+33,
+""
+],
+[
+"Psy Drain",
+39,
+""
+],
+[
+"Undead Might",
+47,
+""
+],
+[
+"Dire Inferno",
+53,
+""
+]
+]
+}
+]
+}
+}

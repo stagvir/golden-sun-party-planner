@@ -1,0 +1,42 @@
+Apprentice | Enchanter | V6 Me0 Ma0 J0 | 140% 140% 130% 120% 140% 90%
+Apprentice | Conjurer | V7 Me0 Ma0 J1 | 170% 160% 140% 130% 160% 90%
+Page | Enchanter | V0 Me0 Ma6 J0 | 140% 140% 130% 120% 140% 90%
+Page | Conjurer | V0 Me0 Ma7 J1 | 170% 160% 140% 130% 160% 90%
+Medium | Medium | V3 Me3 Ma0 J0 | 130% 170% 120% 120% 150% 90%
+Medium | Conjurer | V4 Me4 Ma0 J0 | 150% 180% 130% 130% 160% 90%
+Medium | Dark Shaman | V5 Me4 Ma0 J0 | 170% 190% 140% 140% 170% 90%
+Pilgrim | Pilgrim | V0 Me0 Ma1 J0 | 90% 120% 90% 100% 120% 120%
+Pilgrim | Wanderer | V0 Me0 Ma2 J0 | 110% 130% 100% 110% 130% 120%
+Pilgrim | Ascetic | V0 Me0 Ma4 J0 | 120% 140% 110% 120% 140% 120%
+Pilgrim | Fire Monk | V0 Me0 Ma6 J1 | 150% 160% 130% 140% 160% 120%
+Pilgrim | Guru | V0 Me0 Ma7 J2 | 170% 170% 140% 150% 170% 120%
+Ranger | Ranger | V0 Me3 Ma3 J0 | 130% 160% 120% 120% 160% 120%
+Ranger | Bard | V0 Me4 Ma4 J0 | 150% 170% 130% 130% 170% 120%
+Ranger | Warlock | V0 Me4 Ma5 J0 | 170% 180% 140% 140% 180% 120%
+Sage | Hermit | V0 Me1 Ma0 J0 | 80% 140% 80% 90% 130% 120%
+Sage | Elder | V0 Me2 Ma0 J0 | 90% 150% 90% 100% 140% 120%
+Sage | Scholar | V0 Me4 Ma0 J0 | 110% 160% 100% 110% 150% 120%
+Sage | Savant | V0 Me5 Ma0 J0 | 130% 170% 110% 120% 160% 120%
+Sage | Sage | V0 Me6 Ma0 J1 | 150% 180% 120% 130% 170% 120%
+Sage | Wizard | V0 Me7 Ma0 J2 | 170% 190% 130% 140% 180% 120%
+White Mage | White Mage | V3 Me4 Ma0 J0 | 150% 180% 130% 130% 150% 130%
+White Mage | Pure Mage | V4 Me5 Ma0 J0 | 170% 190% 140% 140% 160% 130%
+Beastling | Beastling | V0 Me0 Ma0 J0 | 110% 120% 90% 100% 110% 100%
+Beastling | Wildrunner | V0 Me0 Ma0 J2 | 130% 130% 100% 110% 120% 100%
+Beastling | Shapeshifter | V0 Me0 Ma0 J4 | 150% 140% 110% 120% 130% 100%
+Beastling | Beast Master | V0 Me0 Ma0 J6 | 170% 160% 130% 130% 140% 100%
+Beastling | Prime Beast | V0 Me0 Ma0 J8 | 190% 170% 140% 140% 150% 100%
+Scrapper | Scrapper | V1 Me0 Ma0 J0 | 90% 80% 110% 110% 120% 120%
+Scrapper | Grappler | V2 Me0 Ma0 J0 | 110% 90% 120% 120% 130% 120%
+Scrapper | Brawler | V4 Me0 Ma0 J0 | 120% 100% 130% 130% 140% 120%
+Scrapper | Bruiser | V6 Me0 Ma0 J1 | 150% 110% 140% 140% 160% 120%
+Scrapper | Gladiator | V7 Me0 Ma0 J2 | 170% 120% 150% 150% 170% 120%
+Apprentice PSY: Delude@1, Impact@5 [above Enchanter], Gaia@6, Ward@6 [above Enchanter], Weaken@9, Astral Blast@11 [becomes Thunder Mine after Conjurer], Sleep@14, Haunt@17, Curse@20, High Impact@21 [above Enchanter], Resist@22 [above Enchanter], Mother Gaia@24, Enfeeble@25, Drain@31, Psy Drain@39, Grand Gaia@54
+Page PSY: Delude@1, Guard@3 [above Enchanter], Impact@5 [above Enchanter], Ward@6, Volcano@8, Weaken@9, Astral Blast@11 [becomes Thunder Mine after Conjurer], Sleep@14, Protect@15 [above Enchanter], High Impact@21 [above Enchanter], Resist@22, Eruption@22 [above Page], Enfeeble@25, Drain@31, Psy Drain@39, Pyroclasm@48
+Medium PSY: Bolt@1, Froth@2, Cure@3, Flash Bolt@6, Cure Well@10, Froth Sphere@14, Haunt@17, Revive@19, Curse@20, Blue Bolt@22, Potent Cure@26, Condemn@29, Drain@31, Psy Drain@36, Froth Spiral@40
+Pilgrim PSY: Slash@1, Ward@6 [above Ascetic], Volcano@8 [above Ascetic], Plasma@9, Wind Slash@10, Bind@18, Eruption@22 [above Ascetic], Resist@24 [above Ascetic], Shine Plasma@26, Sonic Slash@30, Drain@33, Psy Drain@41, Pyroclasm@48 [above Ascetic], Spark Plasma@50
+Ranger PSY: Slash@1, Douse@2, Ward@6, Volcano@8, Wind Slash@10, Drench@12, Bind@18, Eruption@22, Resist@24, Deluge@30, Sonic Slash@30, Drain@33, Break@34, Psy Drain@41, Pyroclasm@48
+Sage PSY: Impact@1, Prism@6, Plasma@8, Wish@12 [above Scholar], Bind@18, High Impact@21, Hail Prism@22, Wish Well@24 [above Scholar], Shine Plasma@26, Break@30, Drain@31, Psy Drain@39, Pure Wish@46 [above Scholar], Spark Plasma@50, Freeze Prism@52
+White Mage PSY: Cure Poison@1, Prism@6, Plasma@8, Ward@9, Dull@11, Wish@12, Restore@13, Revive@17, Hail Prism@22, Wish Well@24, Shine Plasma@26, Resist@31, Blunt@37, Pure Wish@46, Spark Plasma@46, Freeze Prism@52
+Beastling PSY: Whirlwind@1, Slash@3, Ray@4, Cure Poison@5, Boon@7, Wind Slash@11, Restore@13, Storm Ray@14, Nature's Boon@16, Tornado@18, Vital Boon@24, Sonic Slash@31, Destruct Ray@36, Tempest@44
+Scrapper PSY: Growth@3, Cure Poison@5, Boon@7, Speed Punch@10, Restore@13, Mad Growth@15, Nature's Boon@16, Revive@20, Psynergy Slam@23, Vital Boon@24, Wild Growth@29, Psynergy Surge@35

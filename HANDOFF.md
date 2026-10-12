@@ -1,0 +1,165 @@
+# Golden Sun Party Planner — handoff
+
+A single-file HTML planner for **Golden Sun (The Broken Seal)**, **The Lost Age** and **Dark Dawn**.
+
+What it does:
+- Party order, levels, djinn per Adept, and the resulting class.
+- Psynergy, final stats and elemental Power/Resistance.
+- Gear in every slot with stat differences, plus a curated endgame filter.
+- `.sav` import for both GBA games.
+- Live copy: https://claude.ai/artifact/HKT9K8TTmaStUzjqD8tiLG (private to the owner).
+
+## Quick start
+
+```bash
+npm install                     # playwright + jsdom (tests only; the planner itself has no build deps)
+python3 build.py .              # template.html + data + js  ->  planner.html (self-contained, ~500 KB)
+node tests/e2e.js               # pass `$(npm root -g)` as the argument if playwright is installed globally
+```
+
+Open `planner.html` in a browser. Everything is inlined: data, icons as data URIs, and scripts. The page's only external request is Google Fonts.
+
+## Files
+
+| File | Role |
+|---|---|
+| `template.html` | All UI: markup, CSS, and the main script (one IIFE). Placeholders `__DATA__`, `__DDDATA__`, `__ICONS__`, `__UI__`, `__ICON_ALIASES__`, `__LOGIC__`, `__ENDGAME__`, `__SAVEPARSE__` are filled by `build.py`. |
+| `logic.js` | `GSLogic`. Contains `determineClass` (GBA), `determineClassDD`, `baseStat` (growth curves), `gearEffects`, `elemental`, `finalStats`. Shared by the page and the tests. |
+| `endgame.js` | Hand-picked endgame gear lists: `ENDGAME` (TLA) and `ENDGAME_GS1`. |
+| `saveparse.js` | `GSSave.listSlots` / `readSlot`. Auto-detects the GS1 or TLA layout. |
+| `build.py` | Builds `planner.html`. Embeds only the icons that match item names. Writes `icon_report.json`. |
+| `extract.py` | Regenerates `gsdata.json` from the Archipelago GS:TLA data dir (see Data sources). |
+| `gsdata.json` | GBA data: `chars`, `series` (classes), `abil` (Psynergy), `djinn`, `items`, `boost` (stat items). |
+| `dddata.json` | Dark Dawn data, built by `dd/build_dd.py`. Same shape plus `lines`/`mono` per character. `items` is empty. |
+| `dd/` | Raw Dark Dawn tables (`<name>.txt`, `djinn.txt`), `parse.py` (→ `ddclasses.json`), `build_dd.py` (→ `dddata.json`), and the two unlabelled DD icon sheets the user supplied. |
+| `icons/gba/` | Item icons named like wiki files (`Warriors_Helm.gif`). `icon_aliases.json` maps the odd names. A `dd` set is wired up but empty. |
+| `ui/` | Portraits, element stars, frame and Psynergy icons for the game-styled showcase. |
+| `tests/` | Playwright UI tests and node data checks (below). |
+| `testdata/gtc/` | Test saves from game-tools-collection (MIT, licence included). |
+| `testdata/user/` | The owner's real GS1 and TLA saves (3 + 2 slots). |
+
+Rebuild Dark Dawn data with `cd dd && python3 parse.py && python3 build_dd.py . ../gsdata.json && cp dddata.json ..`.
+
+## Model and formulas (GBA, verified)
+
+- **Class.**
+  - Elemental level = 5 for the Adept's own element, plus 1 per Set djinni.
+  - The leading element is the highest level; ties go to the Adept's own element.
+  - Series type is mono, dual or tri; tri needs the symbiotic element.
+  - The highest tier whose requirements are met wins.
+  - Class items (Card, Whip, Tome) force series 22, 23 and 24.
+  - This matches every save checked, including the class-item classes.
+- **Base stats.**
+  - Six curve points per stat, read at levels **0, 20, 40, 60, 80, 100**, with linear interpolation.
+  - Against 248 save Adepts this centres the residual on 0. Most of them are only at Lv 1–33, so high levels are less tested.
+  - Per-Adept "corrections" (`mods`) hold the level-up luck. A save import fills them in.
+- **Final stat.**
+  - `floor(floor((base + djinn + stat items + flat gear + mods) × class% / 100) × gear multiplier)`.
+  - Gear multipliers are effect codes 9 (PP), 13 (AGL) and 14 (LCK); the value is /10.
+- **Elemental.**
+  - Power = 75 + affinity (own 4, neutral 3, opposed 2, symbiotic 1) + 5×level, capped at 200. Resistance uses a base 10 higher.
+  - Saves store these **without gear**; that part matches 100% of save Adepts.
+  - Gear Power/Resist bonuses (codes 15–22) are added on top here, but that addition can't be checked from saves.
+- **Item effect codes:**
+  - 1 HP, 2 HP regen, 3 PP, 4 PP regen, 5 AGL, 6 LCK
+  - 23 unleash %, 25 uncurse, 27 lure
+  - The equip bitmask is indexed by character. Character index: Isaac 0, Garet 1, Ivan 2, Mia 3, Felix 4, Jenna 5, Sheba 6, Piers 7. Element index: V 0, Me 1, Ma 2, J 3. Djinn index: `e*18 + i`.
+
+## Save layouts (`saveparse.js`)
+
+| | TLA | GS1 |
+|---|---|---|
+| Block / checksum span | 0x3000 / bytes 0x10..0x3000, uint16 sum at +8 | 0x1000 / 0x10..0x1000 |
+| First character / stride | 0x530 / 0x14c | 0x510 / 0x14c |
+| Char id (validity) | +0x14a | +0x128 |
+| Party | bitmask at 0x50, order at 0x468 | **count** (1–4) at 0x50, order at 0x448 |
+
+**Shared fields:**
+- Every block starts with "CAMELOT". The slot number is at +7 (slots >2 are backups or other data). The save count is at +0xa; the newest copy wins.
+- Character record:
+  - +0xf level
+  - +0x10 HP, +0x12 PP, +0x18 ATK, +0x1a DEF, +0x1c AGL, +0x1e LCK (base stats)
+  - +0x24+4e Power, +0x26+4e Resist
+  - +0x34 max HP, +0x36 max PP
+  - +0xd8 items: 15×2 bytes; hi-byte bit 0 = id bit 8, bit 1 = equipped, bits 3–7 = qty−1
+  - +0xf8+4e djinn owned, +0x108+4e djinn Set
+  - +0x129 class id. Ids ≥0xc8 are story-only classes, such as GS1's opening "?" class.
+- Item ids 443/444/445 are the TLA class items. GS1 ids 0xc8–0xcf are Psynergy items and are ignored.
+
+## Game modes (`GAMES` in template.html)
+
+**Per-game state.** Each game keeps its own state in localStorage:
+- TLA: `tla-planner-v1`
+- others: `gs-planner-<game>-v1`
+- current game: `gs-planner-game`
+
+`switchGame()` saves one game's state and loads the other's. `D` is rebound per game (`dataFor(g)`).
+
+**Common shape:** `state.order` is always 8 long with the game's characters first. `ORDER()` is the visible slice. `state.dj` is always 72 long, and djinn outside the game are forced unassigned.
+
+### The Broken Seal (`gs1`)
+- 4 Adepts, 28 djinn (index `i < 7` per element), cap of 7 per Adept. The user's saves all show 7.
+- Items come from `GS1_ITEMS`: the gtc GS1 groups, minus Sol Blade (an unused beta item in GS1 with different stats), Masamune and Kusanagi.
+- Uses TLA stats for shared items; spot-checked (e.g. Kikuichimonji identical).
+- The Medium line is renamed Medium / Dark Mage / Death Mage.
+- No class items.
+
+### Dark Dawn (`dd`) — core only
+- **Classes.** Lines, tiers, djinn requirements (as Set-djinn counts), class % and Psynergy by level come per Adept from the Golden Sun Syndicate DD class guide (`goldensun-syndicate.net/dd/classes/character/<name>/`).
+  - These were read through a summarising fetcher. Spot checks matched (Glare and Tinder bonuses match GameFAQs), but a dropped row is possible.
+  - Two rows look odd but are confirmed as the page's content: Amiti's Medium line has no Conjurer tier, and Himi has no Samurai line.
+- **Djinn.** The 72 djinn and their stat bonuses come from the Syndicate DD djinn guide.
+- **`determineClassDD` rule.** It mirrors the GBA rule:
+  - candidate lines must use exactly the present elements;
+  - for two-element mixes, the line's lead element must equal the Adept's leading element (from tier 0; ties in a line's own tier 0 go to the non-own element);
+  - for three elements, the highest scoring tier wins.
+  - Every listed tier is reachable except Rief's and Amiti's Guardian and Luminier tiers. Those are unreachable by the same logic in TLA, where Druid and Water Monk win the tie.
+  - The rule agrees with TLA's picks for the four analogous Adepts in 98.4% of djinn mixes; the rest are DD-specific requirement differences.
+- **Psynergy restrictions.** "X or higher" / "transforms after X" are treated as **inclusive of tier X**; the TLA tables confirm this. Psynergy figures are borrowed from TLA by name; 21 DD-only spells have none.
+- **Base stats are entered by hand** because DD growth curves aren't published.
+  - The Modifiers tab has a "From the status screen (gear removed)" helper. It solves the smallest base that reproduces each shown stat under the current class and djinn.
+  - Level only changes which Psynergy is learned.
+- **Hidden in DD:** the Gear tab, gear filters, Power/Resistance, unleash rows and stat items.
+
+## Tests
+
+The Playwright tests take an optional playwright root as their argument:
+- `tests/e2e.js` — main TLA flows: djinn picker, swaps, standby, Modifiers typing, baseline revert, gear, import, 400px width.
+- `tests/drag.js` — column drag and keyboard reorder in the Djinn, Gear and Modifiers tabs.
+- `tests/gs1ui.js` — Broken Seal mode, game switching, GS1 and TLA import auto-switch.
+- `tests/ddui.js` — Dark Dawn mode, class picks, base-stat solver. Writes screenshots to `out/`.
+- `tests/userimp.js` — imports the owner's saves. Expect 5 "match the game" lines (23/23 Adepts' HP/PP).
+
+Node checks:
+- `tests/usercheck.js <sav>` — per-slot HP/PP/Power/Resist comparison. Run with `NOGEAR=1` to compare elemental values without gear.
+- `tests/curvecheck.js` — growth-curve anchor test.
+- `tests/gs1check.js`, `tests/savecheck.js` — older checks. They need `archipelago-data/items.json` (see below).
+
+## Data sources
+
+- **GBA tables:** github.com/cjmang/Archipelago `worlds/gstla/data` (commit c83307716a88).
+  - Run `python3 -I extract.py <that dir> gsdata.json`.
+  - For the older checks, copy `items.json` to `./archipelago-data/`.
+- **Save layouts and test saves:** github.com/RyudoSynbios/game-tools-collection (MIT, commit 6f5d8064050e).
+  - Files: `src/lib/templates/golden-sun*/saveEditor/template.ts`.
+- **Wiki:** goldensunwiki.net, for icons, mechanics and spot checks. Raw wikitext (`?action=raw`) is robots-blocked for fetchers.
+- **Dark Dawn:** goldensun-syndicate.net/dd/classes/ and /dd/djinn/.
+- **Sprites:** GBA item, portrait and Psynergy sprites from the user's zip (fan-wiki sprites). Keep the page private.
+
+## Open work, in rough priority
+
+1. **Dark Dawn gear.**
+   - Needs an item table (stats, unleashes, who can equip). No clean source was found; Syndicate DD has no item guide.
+   - Icons: `dd/icon_sheets/dd_item_icons.png` is unlabelled (rows = item type, columns = palette variants). For now, use one icon per slot type, or get the wiki's named `*_DD.gif` files.
+   - The `dd` icon set plumbing already exists (`GAMES.dd.iconSet`, `iconKey` appends `_DD`).
+2. **Dark Dawn elemental Power/Resistance and growth curves.**
+   - Unpublished. Options: decode DD `.sav` files (would also give an importer and curve fitting) or extract from the user's own ROM.
+3. **Phase 3: damage estimates** (the original goal).
+   - Generic target sliders first, then an enemy picker (`enemies.json` in the Archipelago data).
+   - Psynergy: base × (1 + (Pow − Res)/200).
+   - Physical and unleash: ATK-vs-DEF with the /400 elemental factor.
+   - Unleash secondary-effect codes aren't mapped yet.
+4. **Minor gaps.**
+   - GS1 item stats are assumed equal to TLA beyond the spot checks.
+   - The GS1 7-djinn cap isn't sourced, only consistent with the saves.
+   - Growth curves are less tested above Lv 33.

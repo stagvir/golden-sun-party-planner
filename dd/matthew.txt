@@ -1,0 +1,42 @@
+Knight | Squire | V0 Me0 Ma0 J0 | 110% 80% 110% 100% 110% 100%
+Knight | Knight | V2 Me0 Ma0 J0 | 130% 90% 120% 110% 120% 100%
+Knight | Gallant | V4 Me0 Ma0 J0 | 150% 100% 130% 120% 130% 100%
+Knight | Lord | V6 Me0 Ma0 J0 | 170% 110% 140% 130% 140% 100%
+Knight | Slayer | V8 Me0 Ma0 J0 | 190% 120% 150% 140% 150% 100%
+Swordsman | Crusader | V0 Me1 Ma0 J0 | 100% 90% 110% 110% 90% 120%
+Swordsman | Defender | V0 Me2 Ma0 J0 | 120% 100% 120% 120% 100% 120%
+Swordsman | Cavalier | V0 Me4 Ma0 J0 | 140% 110% 130% 130% 110% 120%
+Swordsman | Guardian | V1 Me6 Ma0 J0 | 170% 130% 140% 140% 130% 120%
+Swordsman | Protector | V2 Me7 Ma0 J0 | 190% 140% 150% 150% 140% 120%
+Dragoon | Dragoon | V0 Me3 Ma3 J0 | 160% 130% 140% 140% 110% 130%
+Dragoon | Templar | V0 Me4 Ma4 J0 | 180% 140% 150% 150% 120% 130%
+Dragoon | Paladin | V0 Me5 Ma4 J0 | 200% 150% 160% 160% 130% 130%
+Apprentice | Apprentice | V0 Me0 Ma0 J1 | 100% 120% 110% 100% 120% 90%
+Apprentice | Illusionist | V0 Me0 Ma0 J2 | 120% 130% 120% 110% 130% 90%
+Apprentice | Enchanter | V0 Me0 Ma0 J4 | 140% 140% 130% 120% 140% 90%
+Apprentice | Conjurer | V1 Me0 Ma0 J6 | 170% 160% 140% 130% 160% 90%
+Apprentice | War Adept | V2 Me0 Ma0 J7 | 190% 170% 150% 140% 170% 90%
+Ninja | Ninja | V0 Me0 Ma3 J3 | 160% 140% 150% 120% 170% 80%
+Ninja | Disciple | V0 Me0 Ma4 J4 | 180% 150% 160% 130% 180% 80%
+Ninja | Master | V0 Me0 Ma4 J5 | 200% 160% 170% 140% 190% 80%
+Water Seer | Shaman | V0 Me6 Ma0 J0 | 120% 150% 110% 110% 130% 100%
+Water Seer | Druid | V1 Me7 Ma0 J0 | 150% 170% 130% 130% 150% 100%
+Wind Seer | Shaman | V0 Me0 Ma0 J6 | 120% 150% 110% 110% 130% 100%
+Wind Seer | Druid | V1 Me0 Ma0 J7 | 150% 170% 130% 130% 150% 100%
+Brute | Brute | V0 Me0 Ma1 J0 | 100% 70% 120% 90% 110% 70%
+Brute | Ruffian | V0 Me0 Ma2 J0 | 120% 80% 130% 100% 120% 70%
+Brute | Savage | V0 Me0 Ma4 J0 | 140% 90% 140% 110% 130% 70%
+Brute | Barbarian | V0 Me0 Ma5 J0 | 160% 100% 150% 120% 140% 70%
+Brute | Berserker | V1 Me0 Ma6 J0 | 180% 110% 160% 130% 150% 70%
+Brute | Chaos Lord | V2 Me0 Ma7 J0 | 200% 120% 170% 140% 160% 70%
+Samurai | Samurai | V0 Me0 Ma4 J3 | 190% 130% 150% 140% 140% 90%
+Samurai | Ronin | V0 Me0 Ma5 J4 | 210% 140% 160% 150% 150% 90%
+Knight PSY: Cure@1, Quake@2, Earthquake@4, Spire@6, Gaia@7 [Gallant or higher], Cure Well@10, Ragnarok@13 [transforms to Odyssey after Lord], Quake Sphere@14, Revive@19 [Gallant or higher], Clay Spire@20, Mother Gaia@24 [Gallant or higher], Potent Cure@26, Stone Spire@42, Grand Gaia@54 [Gallant or higher]
+Swordsman PSY: Ply@1 [Defender or higher], Thorn@4, Cure Poison@5, Avoid@6 [Defender or higher], Wish@8 [Cavalier or higher], Cutting Edge@11 [transforms to Plume Edge after Guardian], Restore@13, Briar@14, Ply Well@16 [Defender or higher], Revive@19, Wish Well@22 [Cavalier or higher], Break@30, Pure Ply@34 [Defender or higher], Nettle@36, Pure Wish@46 [Cavalier or higher]
+Dragoon PSY: Ply@1, Blast@2, Thorn@4, Cure Poison@5, Avoid@6, Wish@8, Mad Blast@10, Cutting Edge@11 [transforms to Plume Edge after Templar], Restore@13, Ply Well@16, Briar@17, Wish Well@22, Fiery Blast@27, Pure Ply@34, Nettle@36, Pure Wish@46
+Apprentice PSY: Delude@1, Impact@5 [Enchanter or higher], Gaia@6, Ward@6 [Enchanter or higher], Weaken@9, Astral Blast@11 [transforms to Thunder Mine after Conjurer], Sleep@14, Haunt@17, Curse@20, High Impact@21 [Enchanter or higher], Resist@22 [Enchanter or higher], Mother Gaia@24, Enfeeble@25, Drain@31, Psy Drain@39, Grand Gaia@54
+Ninja PSY: Gale@1, Punji@4, Fire Bomb@6, Mist@7, Thunderclap@8, Death Plunge@12 [transforms to Death Leap after Disciple], Punji Trap@15, Cluster Bomb@16, Typhoon@18, Shuriken@21, Thunderbolt@26, Annihilation@31, Punji Strike@36, Carpet Bomb@40, Hurricane@44, Thunderhead@50
+Water Seer PSY: Cure@1, Froth@2, Growth@3, Cure Poison@5, Wish@8 [Shaman or higher], Cure Well@10, Mad Growth@12, Restore@13, Froth Sphere@14, Revive@19 [Shaman or higher], Wish Well@22 [Shaman or higher], Potent Cure@26, Wild Growth@29, Break@30, Froth Spiral@40, Pure Wish@46 [Shaman or higher]
+Wind Seer PSY: Cure@1, Bolt@2, Growth@3, Flash Bolt@6, Ward@7 [Shaman or higher], Cure Well@10, Mad Growth@12, Bind@18, Revive@19 [Shaman or higher], Blue Bolt@22, Resist@23 [Shaman or higher], Potent Cure@26, Wild Growth@29, Drain@31, Psy Drain@39
+Brute PSY: Growth@1, Fireball@1, Spire@7 [Savage or higher], Impair@9 [Savage or higher], Mad Growth@12, Planet Diver@13 [transforms to Planetary after Berserker], Fire Orb@14, Haunt@17, Revive@19 [Savage or higher], Clay Spire@20 [Savage or higher], Debilitate@23 [Savage or higher], Curse@24, Wild Growth@28, Condemn@29, Inferno@36, Stone Spire@42 [Savage or higher]
+Samurai PSY: Guardian@3, Demon Spear@5, Rockfall@6, Lava Shower@8, Magic Shell@10, Dragon Cloud@12 [transforms to Epicenter after Ronin], Protector@15, Demon Night@18 [transforms to Thorny Grave after Ronin], Angel Spear@21, Molten Bath@22, Rockslide@24, Magic Shield@27, Helm Splitter@33 [transforms to Skull Splitter after Ronin], Quick Strike@40, Magma Storm@48, Avalanche@54

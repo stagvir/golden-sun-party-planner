@@ -1,0 +1,1768 @@
+<title>Golden Sun Party Planner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus+SC&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Pixelify+Sans:wght@400;600&display=swap">
+<style>
+/* Layout: party strip on top, then character sheet (left) beside the djinn board (right); party table at the foot. */
+:root {
+  --bg: #f3f4f1; --surface: #ffffff; --sunk: #e8eae5; --line: #d3d6ce; --fg: #1f2420; --muted: #5d655d; --accent: #8a6a1f;
+  --venus: #8a5a22; --mercury: #1f6aa5; --mars: #b33a2a; --jupiter: #7a4aa8;
+  --venus-bg: #f3e8d8; --mercury-bg: #dde9f4; --mars-bg: #f6e0dc; --jupiter-bg: #ece2f5;
+  --good: #2f7a45; --warn: #a06a00; --bad: #b42318; --good-bg: #e3f2e7; --bad-bg: #fbe4e1;
+  --display: "Marcellus SC", "Palatino Linotype", Palatino, Georgia, serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --r: 8px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #151816; --surface: #1d211e; --sunk: #252a26; --line: #353b36; --fg: #e6e9e3; --muted: #a0a89f; --accent: #d9b25a;
+  --venus: #e0a868; --mercury: #79b6ea; --mars: #f08a76; --jupiter: #c39cec;
+  --venus-bg: #3a2e1f; --mercury-bg: #1d3042; --mars-bg: #402420; --jupiter-bg: #33274a;
+  --good: #6cc488; --warn: #e2b04a; --bad: #ff8a7a; --good-bg: #1f3a28; --bad-bg: #452321; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #151816; --surface: #1d211e; --sunk: #252a26; --line: #353b36; --fg: #e6e9e3; --muted: #a0a89f; --accent: #d9b25a;
+  --venus: #e0a868; --mercury: #79b6ea; --mars: #f08a76; --jupiter: #c39cec;
+  --venus-bg: #3a2e1f; --mercury-bg: #1d3042; --mars-bg: #402420; --jupiter-bg: #33274a;
+  --good: #6cc488; --warn: #e2b04a; --bad: #ff8a7a; --good-bg: #1f3a28; --bad-bg: #452321; color-scheme: dark }
+
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 14px; line-height: 1.45; }
+.wrap { max-width: 1280px; margin: 0 auto; padding-inline: 16px; padding-block: 20px 40px; display: grid; gap: 20px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 400; margin: 0; text-wrap: balance; letter-spacing: .02em; }
+h1 { font-size: 1.9rem; }
+h2 { font-size: 1.25rem; }
+h3 { font-size: 1rem; }
+.lbl { font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 600; }
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+button, select, input { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.btn { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 5px 10px; }
+.btn:hover { border-color: var(--accent); }
+.btn.sm { padding: 2px 8px; font-size: .8rem; }
+header.top { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: end; justify-content: space-between; }
+header.top p { margin: 4px 0 0; color: var(--muted); max-width: 62ch; }
+.tools { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* element tokens */
+.e0 { --ec: var(--venus); --eb: var(--venus-bg); }
+.e1 { --ec: var(--mercury); --eb: var(--mercury-bg); }
+.e2 { --ec: var(--mars); --eb: var(--mars-bg); }
+.e3 { --ec: var(--jupiter); --eb: var(--jupiter-bg); }
+.e4 { --ec: var(--muted); --eb: var(--sunk); }
+.dot { display: inline-block; width: .7em; height: .7em; border-radius: 50%; background: var(--ec); vertical-align: baseline; }
+.etag { display: inline-flex; align-items: center; gap: 4px; color: var(--ec); font-weight: 500; }
+
+/* party strip */
+.strip { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 8px; }
+[hidden] { display: none !important; }
+.strip.four { grid-template-columns: repeat(4, minmax(0, 1fr)); max-width: 760px; }
+.slot-head { grid-column: span 4; display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--line); padding-bottom: 2px; }
+.pc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 8px 8px 6px; display: grid; gap: 2px; text-align: left; min-width: 0; position: relative; }
+.pc.sel { border-color: var(--ec); box-shadow: inset 0 0 0 1px var(--ec); background: var(--eb); }
+.pc .pick { all: unset; display: grid; gap: 2px; cursor: pointer; min-width: 0; border-radius: 4px; }
+.pc .pick:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.pc .nm { font-family: var(--display); font-size: 1.05rem; display: flex; align-items: center; gap: 6px; }
+.pc .cl { font-size: .8rem; color: var(--ec); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 500; }
+.pc .meta { font-size: .75rem; color: var(--muted); display: flex; justify-content: space-between; gap: 4px; }
+.pc .mv { display: flex; gap: 4px; margin-top: 4px; }
+.pc .mv button { flex: 1; background: transparent; border: 1px solid var(--line); border-radius: 4px; padding: 0; font-size: .75rem; color: var(--muted); }
+.pc .mv button:disabled { opacity: .35; cursor: default; }
+.pc.dragover { outline: 2px dashed var(--accent); }
+
+/* main */
+.main { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; display: grid; gap: 16px; min-width: 0; }
+.sheet-head { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; justify-content: space-between; }
+.sheet-head .who { display: flex; gap: 10px; align-items: baseline; }
+.sheet-head .who h2 { font-size: 1.6rem; }
+.controls { display: flex; flex-wrap: wrap; gap: 12px 18px; align-items: end; }
+.field { display: grid; gap: 4px; }
+.lvl { display: flex; align-items: center; gap: 8px; }
+.lvl input[type=range] { width: 160px; accent-color: var(--accent); }
+.lvl input[type=number] { width: 4.2em; }
+input[type=number], select, textarea { background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 4px 6px; }
+
+.classbox { background: var(--eb); border-radius: var(--r); padding: 12px 14px; display: grid; gap: 8px; border: 1px solid transparent; }
+.classbox .cname { font-family: var(--display); font-size: 1.5rem; color: var(--ec); line-height: 1.1; }
+.classbox .sub { color: var(--muted); font-size: .85rem; }
+.tierbar { display: flex; gap: 4px; flex-wrap: wrap; }
+.tierbar span { font-size: .75rem; padding: 2px 8px; border-radius: 99px; border: 1px solid var(--line); color: var(--muted); background: var(--surface); }
+.tierbar span.on { border-color: var(--ec); color: var(--surface); background: var(--ec); }
+.tierbar span.past { color: var(--ec); border-color: var(--ec); }
+.warn { color: var(--warn); font-size: .82rem; }
+.ellv { display: flex; gap: 14px; flex-wrap: wrap; font-size: .85rem; }
+
+.next { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+.next div { font-size: .78rem; border: 1px dashed var(--line); border-radius: 6px; padding: 4px 6px; min-width: 0; }
+.next b { color: var(--ec); font-weight: 600; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.mydj { display: flex; flex-wrap: wrap; gap: 6px; }
+.mydj .chip { padding-right: 2px; }
+
+table { border-collapse: collapse; width: 100%; }
+th, td { text-align: right; padding: 5px 8px; border-bottom: 1px solid var(--line); }
+th { font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; }
+th:first-child, td:first-child { text-align: left; }
+.tscroll { overflow-x: auto; }
+td.final { font-weight: 600; color: var(--fg); }
+td .modin { width: 4.2em; text-align: right; }
+.stats td { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.stats td:first-child { font-family: var(--body); }
+.muted { color: var(--muted); }
+
+.psy td, .psy th { text-align: left; }
+.psy td.r { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.psy tr.locked td { color: var(--muted); }
+.psy tr.locked .pn { opacity: .75; }
+.psy .pn { font-weight: 500; }
+.kind { font-size: .75rem; padding: 1px 6px; border-radius: 4px; background: var(--sunk); white-space: nowrap; }
+
+/* djinn board */
+.board { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.ecol { display: grid; gap: 6px; align-content: start; }
+.ecol h3 { color: var(--ec); display: flex; justify-content: space-between; align-items: baseline; }
+.chips { display: flex; flex-wrap: wrap; gap: 5px; }
+.chip { display: inline-flex; align-items: center; gap: 5px; border: 1px solid var(--line); background: var(--surface); border-radius: 99px; padding: 2px 8px 2px 4px; font-size: .8rem; line-height: 1.5; }
+.chip .ini { font-family: var(--mono); font-size: .66rem; min-width: 1.9em; text-align: center; border-radius: 99px; padding: 0 3px; background: var(--sunk); color: var(--muted); }
+.chip.mine { background: var(--eb); border-color: var(--ec); }
+.chip.mine .ini { background: var(--ec); color: var(--surface); }
+.chip.other { opacity: .62; }
+.chip.stby { border-style: dashed; }
+.chip.stby .ini { background: transparent; color: var(--ec); border: 1px dashed var(--ec); }
+.chip:hover { border-color: var(--ec); opacity: 1; }
+.chip .x { border: 0; background: transparent; color: var(--muted); padding: 0 4px; font-size: .9rem; }
+.chip .tg { border: 0; background: transparent; padding: 0; color: inherit; font: inherit; }
+.legend { font-size: .78rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 14px; }
+
+details { border-top: 1px solid var(--line); padding-top: 12px; }
+summary { cursor: pointer; font-weight: 600; }
+details ul { margin: 8px 0 0; padding-left: 18px; color: var(--muted); max-width: 80ch; }
+details li { margin: 4px 0; }
+textarea { width: 100%; min-height: 90px; font-family: var(--mono); font-size: .75rem; box-sizing: border-box; }
+.io { display: grid; gap: 8px; }
+.toast { font-size: .8rem; color: var(--good); min-height: 1.2em; }
+
+@media (max-width: 1000px) {
+  .main { grid-template-columns: minmax(0, 1fr); }
+  .strip { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .strip, .strip.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .slot-head { grid-column: span 2; }
+  .board { grid-template-columns: minmax(0, 1fr); }
+  .next { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lvl input[type=range] { width: 120px; }
+}
+/* gear */
+.gear { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 14px; }
+.slot { display: grid; gap: 3px; min-width: 0; }
+.slot select { width: 100%; min-width: 0; }
+.slot .pickrow { display: flex; gap: 8px; align-items: center; min-width: 0; }
+.ico { flex: none; width: 32px; height: 32px; display: inline-grid; place-items: center; border-radius: 6px; background: var(--sunk); border: 1px solid var(--line); box-sizing: border-box; }
+.ico img { width: 32px; height: 32px; image-rendering: pixelated; image-rendering: crisp-edges; display: block; }
+.ico.gba, .ico.dd { background: none; border: 0; }
+.ico.glyph { color: var(--muted); }
+.ico.glyph svg { width: 18px; height: 18px; }
+.ico.empty { opacity: .45; }
+.ico.sm { width: 22px; height: 22px; border-radius: 4px; vertical-align: middle; margin-right: 6px; }
+.ico.sm img { width: 16px; height: 16px; }
+.ico.sm svg { width: 13px; height: 13px; }
+.gamepick { display: flex; align-items: center; gap: 6px; }
+.importbox { padding-block: 12px; gap: 10px; }
+.importbox summary { list-style: none; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.importbox summary::-webkit-details-marker { display: none; }
+.importbox summary::before { content: "+"; font-family: var(--mono); color: var(--accent); width: 1ch; }
+.importbox[open] summary::before { content: "−"; }
+.imp-title { font-family: var(--display); font-size: 1.1rem; }
+.imp-body { display: grid; gap: 10px; }
+.imp-body p { margin: 0; max-width: 70ch; }
+.imp-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+#saveFile { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.filebtn { cursor: pointer; }
+#saveFile:focus-visible + .filebtn, .filebtn:focus-within { outline: 2px solid var(--accent); }
+.imp-slots { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr)); gap: 8px; }
+.slotbtn { text-align: left; background: var(--bg); border: 1px solid var(--line); border-radius: var(--r); padding: 8px 10px; display: grid; gap: 2px; }
+.slotbtn:hover { border-color: var(--accent); }
+.slotbtn b { font-family: var(--display); font-weight: 400; font-size: 1rem; }
+.slotbtn span { font-size: .8rem; color: var(--muted); }
+.imp-msg { font-size: .88rem; display: grid; gap: 4px; }
+.imp-msg .ok { color: var(--good); }
+.imp-msg .bad { color: var(--warn); }
+.chip.missing { opacity: .38; border-style: dotted; }
+/* collapsible sheet sections */
+details.sec { border-top: 1px solid var(--line); padding-top: 10px; }
+details.sec > summary { list-style: none; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; cursor: pointer; min-height: 24px; }
+details.sec > summary::-webkit-details-marker { display: none; }
+details.sec > summary::before { content: "▾"; color: var(--muted); font-size: .8rem; width: 1ch; transition: transform .12s; }
+details.sec:not([open]) > summary::before { transform: rotate(-90deg); }
+details.sec > summary:hover .lbl { color: var(--fg); }
+details.sec .peek { display: none; font-size: .82rem; color: var(--muted); align-items: center; gap: 4px; flex-wrap: wrap; min-width: 0; }
+details.sec:not([open]) .peek { display: inline-flex; }
+details.sec .peek b { color: var(--fg); font-weight: 600; font-family: var(--mono); }
+details.sec .sec-body { display: grid; gap: 10px; margin-top: 8px; }
+#sheet { gap: 10px; }
+.toggle { border: 1px solid var(--line); border-radius: 6px; padding: 4px 10px; background: var(--surface); cursor: pointer; }
+.toggle:has(input:checked) { border-color: var(--accent); }
+.toggle input { accent-color: var(--accent); margin: 0; }
+.slot .fx { font-size: .76rem; color: var(--muted); min-height: 1.1em; }
+.slot .fx .bad { color: var(--warn); }
+.slot.set select { border-color: var(--accent); }
+.boosts { display: flex; flex-wrap: wrap; gap: 8px 14px; }
+.boosts label { display: grid; gap: 2px; font-size: .78rem; color: var(--muted); }
+.boosts input { width: 4.2em; }
+.final small { font-weight: 400; color: var(--accent); margin-left: 4px; font-size: .72rem; }
+.facts { display: grid; gap: 4px; font-size: .86rem; }
+.facts .k { color: var(--muted); }
+.elt td:first-child { text-align: left; }
+@media (max-width: 560px) { .gear { grid-template-columns: minmax(0, 1fr); } }
+
+
+/* ---------- tabs ---------- */
+.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); }
+.tabs button { background: none; border: 0; border-bottom: 2px solid transparent; padding: 6px 14px 8px; font-family: var(--display); font-size: 1.05rem; color: var(--muted); margin-bottom: -1px; }
+.tabs button[aria-selected="true"] { color: var(--fg); border-bottom-color: var(--accent); }
+.tabs button:hover { color: var(--fg); }
+.view { display: grid; gap: 20px; }
+.view[hidden] { display: none; }
+.gv-note { margin: 0; font-size: .85rem; max-width: 90ch; }
+
+/* ---------- gear grid ---------- */
+.gtab { border-collapse: separate; border-spacing: 0; width: 100%; min-width: 980px; table-layout: fixed; }
+.gtab th, .gtab td { border-bottom: 1px solid var(--line); padding: 3px 4px; text-align: left; vertical-align: middle; }
+.gtab col.lab { width: 88px; }
+.gtab thead th { font-size: .78rem; text-transform: none; letter-spacing: 0; color: var(--fg); font-weight: 600; padding-bottom: 6px; }
+.gtab .who { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.gtab .who img { width: 24px; height: 24px; image-rendering: pixelated; border-radius: 3px; flex: none; }
+.gtab .who div { min-width: 0; display: grid; }
+.gtab .who span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.gtab .who small { font-weight: 400; color: var(--muted); font-size: .72rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.gtab .res { border-left: 2px solid var(--line); }
+.gtab tbody th, .gtab tfoot th { font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; }
+.gcell { width: 100%; display: flex; align-items: center; gap: 4px; min-width: 0; background: none; border: 1px solid transparent; border-radius: 5px; padding: 2px 4px; font-size: .8rem; text-align: left; color: var(--fg); }
+.gcell:hover, .gcell[aria-expanded="true"] { border-color: var(--accent); background: var(--surface); }
+.gcell .nm { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.gcell.empty .nm { color: var(--muted); }
+.gcell.cursed .nm { color: var(--warn); }
+.gcell .ico.sm { margin-right: 0; }
+.gtab tfoot td { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: .82rem; }
+.gtab tfoot tr:first-child th, .gtab tfoot tr:first-child td { border-top: 2px solid var(--line); }
+.gtab tfoot .v { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+.gtab tfoot .els { display: flex; gap: 6px; flex-wrap: wrap; font-size: .74rem; }
+.dlt { font-size: .72rem; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.dlt.up { color: var(--good); } .dlt.dn { color: var(--bad); }
+
+/* ---------- djinn + modifier tables ---------- */
+.gtab tbody tr.grp th { padding-top: 10px; color: var(--fg); font-size: .72rem; }
+.djcell { display: flex; flex-wrap: wrap; gap: 3px; align-items: center; min-height: 26px; }
+.djc { display: inline-flex; align-items: center; gap: 4px; border: 1px solid var(--line); background: var(--eb); border-radius: 99px; padding: 1px 7px 1px 5px; font-size: .74rem; color: var(--fg); line-height: 1.5; }
+.djc:hover, .djc[aria-expanded="true"] { border-color: var(--ec); }
+.djc .dot { width: .6em; height: .6em; }
+.djc.stby { background: transparent; border-style: dashed; border-color: var(--ec); color: var(--muted); }
+.djc.missing { border-style: dotted; opacity: .7; }
+.djadd { border: 1px dashed var(--line); background: none; border-radius: 99px; width: 22px; height: 20px; padding: 0; color: var(--muted); font-size: .9rem; line-height: 1; }
+.djadd:hover, .djadd[aria-expanded="true"] { border-color: var(--accent); color: var(--accent); }
+.gtab .cnt { font-family: var(--mono); font-size: .78rem; color: var(--muted); }
+.gtab .cnt b { color: var(--fg); }
+.modtab td input { width: 100%; max-width: 6.5em; box-sizing: border-box; text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.modtab td small { display: block; color: var(--muted); font-size: .7rem; font-family: var(--mono); }
+.pk-acts { display: flex; gap: 6px; flex-wrap: wrap; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+.pk-grp { font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; padding: 6px 6px 2px; }
+.pk-opt .bon { color: var(--muted); font-size: .72rem; font-family: var(--mono); }
+.sheet-links { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; font-size: .8rem; color: var(--muted); }
+.linkbtn { background: none; border: 0; padding: 0; color: var(--accent); text-decoration: underline; text-underline-offset: 2px; font-size: inherit; }
+
+
+/* column drag */
+.grip { flex: none; width: 14px; height: 26px; display: grid; place-items: center; background: none; border: 0; padding: 0; color: var(--muted); cursor: grab; touch-action: none; border-radius: 4px; }
+.grip svg { width: 8px; height: 14px; fill: currentColor; }
+.grip:hover, .grip:focus-visible { color: var(--accent); background: var(--sunk); }
+.gtab.dragging, .gtab.dragging * { cursor: grabbing !important; user-select: none; }
+.gtab td.lift, .gtab th.lift { background: var(--sunk); opacity: .75; }
+.gtab .drop-before { box-shadow: inset 3px 0 0 var(--accent); }
+.gtab .drop-after { box-shadow: inset -3px 0 0 var(--accent); }
+/* ---------- gear picker ---------- */
+.picker { position: fixed; z-index: 50; width: min(380px, calc(100vw - 32px)); max-height: min(440px, 70vh); display: flex; flex-direction: column;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); box-shadow: 0 10px 30px rgba(0,0,0,.18); }
+.picker[hidden] { display: none; }
+.pk-head { padding: 8px 10px; border-bottom: 1px solid var(--line); display: grid; gap: 2px; }
+.pk-head b { font-family: var(--display); font-weight: 400; font-size: 1rem; }
+.pk-head span { font-size: .78rem; color: var(--muted); }
+.pk-list { overflow-y: auto; padding: 4px; display: grid; gap: 1px; }
+.pk-opt { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 2px 6px; align-items: center; text-align: left; background: none; border: 1px solid transparent; border-radius: 5px; padding: 4px 6px; color: var(--fg); }
+.pk-opt:hover, .pk-opt:focus-visible { background: var(--bg); border-color: var(--line); outline: none; }
+.pk-opt:focus-visible { border-color: var(--accent); }
+.pk-opt.cur { background: var(--bg); }
+.pk-opt .ico.sm { margin: 0; }
+.pk-opt .t { display: flex; gap: 6px; align-items: baseline; min-width: 0; }
+.pk-opt .t b { font-weight: 500; font-size: .86rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pk-opt .t small { color: var(--muted); font-size: .72rem; white-space: nowrap; }
+.pk-opt .ch { grid-column: 2; display: flex; flex-wrap: wrap; gap: 3px; }
+.chg { font-size: .7rem; font-family: var(--mono); font-variant-numeric: tabular-nums; padding: 0 5px; border-radius: 4px; line-height: 1.5; }
+.chg.up { color: var(--good); background: var(--good-bg); }
+.chg.dn { color: var(--bad); background: var(--bad-bg); }
+.chg.nt { color: var(--muted); background: var(--sunk); font-family: var(--body); }
+.chg.sw { color: var(--warn); background: var(--sunk); font-family: var(--body); }
+
+.toast-fixed { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 60;
+  background: var(--fg); color: var(--bg); padding: 8px 14px; border-radius: 8px; font-size: .86rem; max-width: calc(100vw - 32px); box-shadow: 0 6px 20px rgba(0,0,0,.2); }
+.toast-fixed[hidden] { display: none; }
+
+/* ---------- item tooltip ---------- */
+.tip { position: fixed; z-index: 70; width: min(300px, calc(100vw - 32px)); pointer-events: none;
+  background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: var(--r); box-shadow: 0 8px 24px rgba(0,0,0,.18);
+  padding: 10px 12px; display: grid; gap: 6px; font-size: .82rem; }
+.tip[hidden] { display: none; }
+.tip .th { display: flex; gap: 8px; align-items: center; }
+.tip .th .ico { margin: 0; }
+.tip .th b { font-family: var(--display); font-weight: 400; font-size: 1.02rem; line-height: 1.15; }
+.tip .th small { display: block; color: var(--muted); font-size: .74rem; }
+.tip .big { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: .95rem; }
+.tip ul { margin: 0; padding-left: 16px; display: grid; gap: 2px; }
+.tip .k { color: var(--muted); }
+.tip .un { border-top: 1px solid var(--line); padding-top: 6px; display: grid; gap: 2px; }
+.tip .bad { color: var(--warn); }
+.tip .foot { color: var(--muted); font-size: .74rem; border-top: 1px solid var(--line); padding-top: 6px; }
+/* ---------- game-style showcase: one fixed look in both themes, styled after the GBA status screens ---------- */
+:root {
+  --gs-top: #4a78cf; --gs-mid: #2448a0; --gs-bot: #152c70; --gs-edge: #f2f4ff; --gs-out: #0a1433; --gs-in: #9db4ea;
+  --gs-text: #ffffff; --gs-shadow: #0a1433; --gs-dim: #b9c6ea; --gs-gold: #ffe27a;
+  --gs-font: "Pixelify Sans", "Courier New", ui-monospace, monospace;
+}
+.showcase { display: grid; gap: 10px; }
+.sc-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; }
+.sc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 8px; }
+.sc-group { grid-column: 1 / -1; font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 600; margin-top: 2px; }
+.gs { font-family: var(--gs-font); color: var(--gs-text); text-shadow: 1px 1px 0 var(--gs-shadow); font-size: 13px; line-height: 1.2; }
+.gs-card { background: linear-gradient(180deg, var(--gs-top) 0%, var(--gs-mid) 45%, var(--gs-bot) 100%);
+  border: 2px solid var(--gs-edge); border-radius: 6px; box-shadow: 0 0 0 2px var(--gs-out), inset 0 0 0 1px var(--gs-in);
+  padding: 6px 8px; display: grid; gap: 5px; min-width: 0; margin: 2px; }
+.gs-top { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 8px; align-items: center; }
+.gs-por { width: 36px; height: 36px; position: relative; }
+.gs-por img { image-rendering: pixelated; position: absolute; }
+.gs-por .fr { inset: 0; width: 36px; height: 36px; }
+.gs-por .pt { left: 2px; top: 2px; width: 32px; height: 32px; }
+.gs-l1 { display: flex; justify-content: space-between; gap: 6px; font-size: 15px; font-weight: 600; }
+.gs-l1 .lv { color: var(--gs-gold); font-weight: 400; }
+.gs-l2 { display: flex; justify-content: space-between; gap: 6px; color: var(--gs-dim); white-space: nowrap; }
+.gs-l2 .cl { overflow: hidden; text-overflow: ellipsis; }
+.gs-l2 b { color: var(--gs-text); font-weight: 400; }
+.gs-sep { border-top: 1px solid rgba(242, 244, 255, .35); }
+.gs-st { display: grid; grid-template-columns: repeat(4, auto); justify-content: space-between; gap: 0 6px; font-variant-numeric: tabular-nums; }
+.gs-st span i { font-style: normal; color: var(--gs-dim); margin-right: 3px; font-size: 11px; }
+.gs-el { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; text-align: center; font-variant-numeric: tabular-nums; }
+.gs-el div { display: grid; gap: 0; }
+.gs-el .lv { font-size: 13px; }
+.gs-el .pr { font-size: 10px; color: var(--gs-dim); }
+.gs-el img, .gs-dj img { width: 10px; height: 10px; image-rendering: pixelated; vertical-align: -1px; margin-right: 3px; }
+.gs-row { display: flex; flex-wrap: wrap; gap: 2px; align-items: center; min-height: 16px; }
+.gs-row img { width: 16px; height: 16px; image-rendering: pixelated; display: block; }
+.gs-row .ph { width: 14px; height: 14px; border: 1px dashed var(--gs-dim); border-radius: 2px; margin: 1px; }
+.gs-row .star { width: 8px; height: 8px; margin: 4px; }
+.gs-row .lab { color: var(--gs-gold); font-size: 10px; letter-spacing: .04em; margin-right: 4px; min-width: 22px; }
+.gs-dj { display: flex; gap: 8px; flex-wrap: wrap; font-variant-numeric: tabular-nums; }
+.gs-dj .sb { color: var(--gs-dim); }
+.gs-row .gs-dj img { width: 10px; height: 10px; display: inline; margin: 0 3px 0 0; vertical-align: -1px; }
+.gs-empty { color: var(--gs-dim); font-size: 11px; }
+@media (prefers-reduced-motion: no-preference) { .pc, .chip { transition: border-color .12s, background-color .12s; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>Golden Sun Party Planner</h1>
+      <p>Plan djinn, gear and levels for every Adept in <span id="gameName">The Lost Age</span> and see the classes, stats and Psynergy they end up with. <span id="srcNote">Data comes from the game's own class, stat, djinn and item tables.</span></p>
+    </div>
+    <div class="tools">
+      <label class="gamepick"><span class="lbl">Game</span><select id="gameSel"></select></label>
+      <label class="gamepick toggle gearonly"><input type="checkbox" id="endgameOnly"><span>Endgame gear only</span></label>
+      <label class="gamepick toggle" id="ownedToggle" hidden><input type="checkbox" id="ownedOnly"><span>Only gear I own</span></label>
+      <label class="gamepick gearonly"><span class="lbl">Sort gear</span><select id="gearSort"></select></label>
+      <button class="btn" id="btnReset" type="button">Reset example</button>
+    </div>
+  </header>
+
+  <details class="panel importbox" id="importBox">
+    <summary><span class="imp-title">Import from a save file</span> <span class="lbl" id="importStatus"></span></summary>
+    <div class="imp-body">
+      <p class="muted">Pick a Golden Sun or Golden Sun: The Lost Age save (.sav, .srm or .sps from an emulator or flash cart). The planner switches to the matching game. It's read in this browser and never uploaded.</p>
+      <div class="imp-row">
+        <input type="file" id="saveFile" accept=".sav,.srm,.sps,.sa1,.fla,.bin">
+        <label class="btn filebtn" for="saveFile">Choose save file</label>
+        <span class="muted" id="saveFileName">No file chosen</span>
+      </div>
+      <div class="imp-slots" id="saveSlots"></div>
+      <div class="imp-msg" id="importMsg" role="status"></div>
+      <div class="tools"><button class="btn" type="button" id="btnUndoImport" hidden>Undo import</button></div>
+    </div>
+  </details>
+
+  <nav class="tabs" role="tablist" aria-label="Views">
+    <button type="button" role="tab" id="tabPlanner" data-view="planner" aria-controls="viewPlanner" aria-selected="true">Party</button>
+    <button type="button" role="tab" id="tabDjinn" data-view="djinn" aria-controls="viewDjinn" aria-selected="false">Djinn</button>
+    <button type="button" role="tab" id="tabGear" data-view="gear" aria-controls="viewGear" aria-selected="false">Gear</button>
+    <button type="button" role="tab" id="tabMods" data-view="mods" aria-controls="viewMods" aria-selected="false">Modifiers</button>
+  </nav>
+
+  <div id="viewPlanner" role="tabpanel" aria-labelledby="tabPlanner" class="view">
+  <section aria-label="Party order">
+    <div class="strip" id="strip"></div>
+  </section>
+
+  <div class="main">
+    <section class="panel" id="sheet" aria-label="Character sheet"></section>
+    <section class="panel showcase" aria-label="Party builds">
+      <div class="sc-head"><h2>Party builds</h2><span class="lbl">Status-screen view of every Adept</span></div>
+      <div class="sc-grid" id="showcase"></div>
+    </section>
+  </div>
+
+  <section class="panel" aria-label="Party at a glance">
+    <div class="sheet-head"><h2>Party at a glance</h2><span class="lbl">Final stats with djinn and gear</span></div>
+    <div class="tscroll"><table class="stats" id="overview"></table></div>
+  </section>
+  </div>
+
+  <section id="viewGear" role="tabpanel" aria-labelledby="tabGear" class="view panel" hidden>
+    <div class="sheet-head">
+      <h2>Gear</h2>
+      <div class="tools">
+        <button class="btn sm" type="button" data-baseline>Set baseline</button>
+        <button class="btn sm" type="button" data-revert="gear">Revert gear to baseline</button>
+      </div>
+    </div>
+    <p class="muted gv-note">Click any slot to change it. Changes show against the Adept's current gear (green better, red worse). Taking a one-of-a-kind item from another Adept gives them your old one if they can use it. The totals compare against your baseline.</p>
+    <div class="tscroll"><table class="gtab" id="gearTable"></table></div>
+  </section>
+
+  <section id="viewDjinn" role="tabpanel" aria-labelledby="tabDjinn" class="view panel" hidden>
+    <div class="sheet-head">
+      <h2>Djinn</h2>
+      <div class="tools">
+        <button class="btn sm" type="button" id="btnVanilla">All own-element djinn</button>
+        <button class="btn sm" type="button" id="btnSetAll">Set all (no Standby)</button>
+        <button class="btn sm" type="button" id="btnClear">Unset all djinn</button>
+        <button class="btn sm" type="button" data-baseline>Set baseline</button>
+        <button class="btn sm" type="button" data-revert="djinn">Revert djinn to baseline</button>
+      </div>
+    </div>
+    <p class="muted gv-note">Click a djinni to put it on Standby, swap it or remove it; click + to add one (up to 9 each). Each option shows the class it leads to and the change in stats. Taking a djinni from another Adept gives them the one you swapped out. Dashed = Standby, dotted = not collected in your imported save. <span id="djPool"></span></p>
+    <div class="tscroll"><table class="gtab djtab" id="djTable"></table></div>
+  </section>
+
+  <section id="viewMods" role="tabpanel" aria-labelledby="tabMods" class="view panel" hidden>
+    <div class="sheet-head">
+      <h2>Modifiers</h2>
+      <div class="tools">
+        <button class="btn sm gbaonly" type="button" id="btnClearBoosts">Clear stat items</button>
+        <button class="btn sm" type="button" id="btnClearMods">Clear corrections</button>
+        <button class="btn sm" type="button" data-baseline>Set baseline</button>
+        <button class="btn sm" type="button" data-revert="mods">Revert modifiers to baseline</button>
+      </div>
+    </div>
+    <p class="muted gv-note" id="ddModsNote" hidden>Dark Dawn's growth curves aren't published, so base stats are entered here. Easiest way: take all gear off in the game, type each Adept's status-screen numbers below, set the same djinn in the Djinn tab, then press Work out base. Level only changes which Psynergy is learned.</p>
+    <p class="muted gv-note gbaonly">Levels, stat items used and per-stat corrections for every Adept. Corrections cover the difference between real base stats and the average growth curve (level-up luck). Importing a save fills them in for you. Base values from the curve are shown under each correction.</p>
+    <div class="tscroll"><table class="gtab modtab" id="modTable"></table></div>
+  </section>
+
+  <section class="panel footer-panel" aria-label="Save and notes">
+    <details>
+      <summary>Save or load a setup</summary>
+      <div class="io">
+        <p class="muted" style="margin:6px 0 0">Your setup is remembered in this browser. To move it elsewhere, copy the code below and paste it into another copy of this planner.</p>
+        <textarea id="ioText" aria-label="Setup code" spellcheck="false"></textarea>
+        <div class="tools">
+          <button class="btn" type="button" id="btnCopy">Copy code</button>
+          <button class="btn" type="button" id="btnLoad">Load pasted code</button>
+        </div>
+        <div class="toast" id="ioMsg" role="status"></div>
+      </div>
+    </details>
+    <details>
+      <summary>How the numbers are worked out</summary>
+      <ul>
+        <li>Class is picked from each Adept's elemental levels: 5 in their own element plus one per Set djinni. The element with the highest level leads, ties go to the Adept's own element, and the highest class tier whose requirements are met wins. This reproduces every class table on the Golden Sun Universe wiki, including partial classes like Ivan as a Ninja.</li>
+        <li>A few odd mixes (for example a Venus Adept with one Jupiter and one Mars djinni, or djinn of all four elements without a class item) aren't covered by the wiki. Those show a "best guess" warning.</li>
+        <li>Base stats follow the game's growth curve: six points per stat, read as levels 0, 20, 40, 60, 80 and 100 with straight lines between them. Checked against 248 Adepts in real saves from both games, this leaves no bias; level-ups add a small random amount, so real stats sit a few points either side.</li>
+        <li>The Broken Seal uses the same class, stat and item tables as The Lost Age, limited to its four Adepts, 28 djinn (7 per Adept at most) and its own items. Sol Blade, Masamune and Kusanagi are left out there: they exist only as unused data in the first game. The Medium line is called Medium, Dark Mage, Death Mage in the first game. The first game has no class items.</li>
+        <li>Final stat = (base + Set djinn bonuses + stat items + flat gear bonuses + your modifiers) × class percentage, then × any gear multiplier (Elven Shirt, Adept's Helm and the like). The wiki confirms weapon and armor Attack/Defense are added before the class percentage; djinn and other flat bonuses are assumed to work the same way.</li>
+        <li>Stat items use the amount stored in the game's item table: Power Bread +8 HP, Cookie +6 PP, Apple +5 Attack, Hard Nut +3 Defense, Mint +5 Agility, Lucky Pepper +2 Luck. If the game rolls a random amount, these may be the most you can get rather than a fixed gain.</li>
+        <li>Elemental Power = 75 + the Adept's affinity for that element (4 own, 3 neutral, 2 opposed, 1 symbiotic, from the character table) + 5 per elemental level + gear, capped at 200. That gives 104 in the Adept's own element with no djinn, matching the wiki. Resistance works the same way from a base 10 higher. Without gear, both formulas match the values stored in real saves from both games (every Adept checked). The game stores these without equipment bonuses, so gear Power/Resistance bonuses are added on top here, as the item descriptions say, but that part can't be checked against a save.</li>
+        <li>Unleash chance comes from the weapon (35%, or 40% for a few) plus gear such as Hyper Boots. The game describes those as boosting "Criticals"; the wiki lists them as unleash-rate bonuses.</li>
+        <li>Class items (Mysterious Card, Trainer's Whip, Tomegathericon) get their own slot here. I couldn't confirm whether the game makes them share a slot with rings.</li>
+        <li>"Endgame gear only" uses a hand-picked list per slot, chosen from each item's full stats and effects rather than Defense or Attack alone (so Hyper Boots and Ninja Sandals make it for their unleash bonus, and rings are judged by what they do in battle). An item you already have equipped stays in the list, marked "not endgame".</li>
+        <li>Equipping an item another Adept is wearing takes it from them when only one copy exists, and gives them your old item if they can equip it. Items sold in shops are treated as unlimited; with a save imported, your actual number of copies is used.</li>
+        <li>Dark Dawn: class lines, djinn requirements, class percentages, Psynergy by level and djinn bonuses come from the Golden Sun Syndicate's Dark Dawn class and djinn guides, read per Adept. How the game picks between lines isn't published; the planner uses the same rule as the GBA games, which agrees with the GBA class choice in 98% of djinn mixes. Base stats are entered by hand (growth curves aren't published). Psynergy figures (PP, power, range) are borrowed from The Lost Age where the names match; 21 Dark Dawn-only Psynergy show no figures. Elemental Power/Resistance and gear aren't modelled yet.</li>
+        <li>Field-only Psynergy that comes from items (Move, Lift, Teleport and so on) isn't listed.</li>
+      </ul>
+    </details>
+  </section>
+</div>
+
+<div id="picker" class="picker" role="dialog" aria-modal="false" hidden></div>
+<div id="tip" class="tip" role="tooltip" hidden></div>
+<div id="toast" class="toast-fixed" role="status" aria-live="polite" hidden></div>
+
+<script>
+const GSDATA = __DATA__;
+// Dark Dawn: classes and djinn from the Golden Sun Syndicate tables; no growth curves, no gear yet
+const DDDATA = __DDDATA__;
+// Item icon sets, embedded at build time. Keys follow the Golden Sun Universe wiki file names:
+// "Warrior's Helm" -> Warriors_Helm (GBA set), Warriors_Helm_DD (Dark Dawn set).
+const GSICONS = __ICONS__;
+const GSICON_ALIASES = __ICON_ALIASES__;
+// Status-screen skin assets: portraits, element stars, portrait frame, Psynergy icons (GBA sprites)
+const GSUI = __UI__;
+</script>
+<script>
+__LOGIC__
+</script>
+<script>
+__ENDGAME__
+</script>
+<script>
+__SAVEPARSE__
+</script>
+<script>
+(function () {
+  let D = GSDATA; const G = GSLogic;
+  const dataFor = g => g === 'dd' ? DDDATA : GSDATA;
+  const isDD = () => state && state.game === 'dd';
+  const EL = ['Venus', 'Mercury', 'Mars', 'Jupiter'];
+  const ELS = ['V', 'Me', 'Ma', 'J'];
+  const STATS = ['HP', 'PP', 'Attack', 'Defense', 'Agility', 'Luck'];
+  const STATS_S = ['HP', 'PP', 'ATK', 'DEF', 'AGL', 'LCK'];
+  const ITEMS = [['', 'None'], ['card', 'Mysterious Card'], ['whip', "Trainer's Whip"], ['tome', 'Tomegathericon']];
+  const KEY_FOR = g => g === 'tla' ? 'tla-planner-v1' : `gs-planner-${g}-v1`;
+  const CUR_KEY = 'gs-planner-game';
+  const SLOTS = [['w', 'Weapon'], ['b', 'Body'], ['a', 'Arm'], ['h', 'Head'], ['s', 'Shirt'], ['f', 'Boots'], ['r', 'Ring']];
+  const ITEM = id => (id == null ? null : D.items[id] || null);
+
+  // ---------- games & icons ----------
+  // Each game picks its Adepts, djinn and items out of the shared data, plus its icon set.
+  // The Broken Seal reuses The Lost Age's class, stat and item tables (the same engine and the same values for the
+  // items both games share); only what differs is listed here.
+  const GS1_ITEMS = new Set([1, 2, 3, 4, 5, 6, 8, 9, 11, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 31, 32, 33, 34, 35, 36, 37, 38, 43, 44, 45, 46, 47, 48, 49, 50, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 118, 119, 120, 121, 122, 123, 124, 127, 128, 129, 130, 131, 132, 133, 134, 136, 137, 138, 139, 140, 141, 142, 145, 146, 147, 148, 149, 150, 151, 152, 156, 157, 158, 159, 160, 161, 162, 163, 164, 166, 167, 168, 169, 170, 171, 256, 257, 258, 259, 262, 263, 264, 265, 266, 267, 268, 250, 251, 252]);
+  const GAMES = {
+    gs1: { name: 'The Broken Seal', short: 'The Broken Seal', iconSet: 'gba', ready: true, chars: [0, 1, 2, 3], djPer: 7, djCap: 7,
+      items: GS1_ITEMS, classItems: false, endgame: ENDGAME_GS1, tierNames: { 12: { 1: 'Dark Mage', 2: 'Death Mage' } }, example: { order: [0, 1, 2, 3], lv: 30 } },
+    tla: { name: 'The Lost Age', short: 'The Lost Age', iconSet: 'gba', ready: true, chars: [0, 1, 2, 3, 4, 5, 6, 7], djPer: 18, djCap: 9,
+      items: null, classItems: true, endgame: ENDGAME, tierNames: {}, example: { order: [4, 5, 6, 7, 0, 1, 2, 3], lv: 40 } },
+    dd: { name: 'Dark Dawn', short: 'Dark Dawn', iconSet: 'dd', ready: true, chars: [0, 1, 2, 3, 4, 5, 6, 7], djPer: 18, djCap: 9,
+      items: new Set(), classItems: false, endgame: { only: {}, include: [], exclude: [] }, tierNames: {}, manualBase: true, noGear: true,
+      example: { order: [0, 1, 2, 3, 4, 5, 6, 7], lv: 30 } },
+  };
+  const GM = () => GAMES[state.game];
+  const NCH = () => GM().chars.length;
+  const ORDER = () => state.order.slice(0, NCH());
+  const inGameDj = (i, g = GM()) => (i % 18) < g.djPer;
+  const djInGame = () => D.djinn.map((d, i) => i).filter(i => inGameDj(i));
+  const inGameItem = (id, g = GM()) => !g.items || g.items.has(+id);
+  const CHARS = () => GM().chars.map(i => D.chars[i]);
+  // Class names that differ by game (the first game calls the Medium line Dark Mage / Death Mage)
+  const SERIES = {};
+  for (const [g, def] of Object.entries(GAMES)) {
+    if (!def.ready) continue;
+    SERIES[g] = {};
+    for (const [sid, ser] of Object.entries(dataFor(g).series)) {
+      const ren = def.tierNames[sid];
+      SERIES[g][sid] = ren ? { ...ser, tiers: ser.tiers.map((t, ti) => ren[ti] ? { ...t, name: ren[ti] } : t) } : ser;
+    }
+  }
+  const seriesOf = sid => SERIES[state.game][sid];
+  function iconKey(name, set) {
+    const alias = GSICON_ALIASES[set] && GSICON_ALIASES[set][name];
+    if (alias) return alias;
+    const k = name.replace(/['’.]/g, '').replace(/[^A-Za-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+    return set === 'dd' ? k + '_DD' : k;
+  }
+  function iconSrc(it) {
+    if (!it) return null;
+    const set = GAMES[state.game].iconSet, pack = GSICONS[set] || {};
+    return pack[iconKey(it.n, set)] || null;
+  }
+  // Generic slot outlines shown when an item has no icon yet (drawn for this page, not game art)
+  const GLYPH = {
+    w: '<path d="M13.5 2.5 6 10l-1.5-1.5M6 10l2 2M3 13l3-3M11 3.5h2.5V6"/><path d="M4.5 8.5 2.5 10.5M7.5 11.5 5.5 13.5"/>',
+    b: '<path d="M5 2.5h6l2.5 2.5-1.5 2v6.5h-8V7L2.5 5z"/><path d="M6.5 2.5 8 5l1.5-2.5"/>',
+    a: '<path d="M8 2.5 13 4v4c0 3-2.2 4.8-5 5.5C5.2 12.8 3 11 3 8V4z"/>',
+    h: '<path d="M3 11V8a5 5 0 0 1 10 0v3"/><path d="M2.5 11h11M8 3v8"/>',
+    s: '<path d="M5.5 2.5 2.5 4.5 4 7l1.5-.8V13.5h5V6.2L12 7l1.5-2.5-3-2c-.5 1.2-1.5 1.8-2.5 1.8S6 3.7 5.5 2.5z"/>',
+    f: '<path d="M5 2.5h4v6l4 2.5v2.5H3V8.5z"/>',
+    r: '<circle cx="8" cy="9.5" r="4"/><path d="M6.5 4 8 2.5 9.5 4 8 5.5z"/>',
+    c: '<rect x="4" y="2.5" width="8" height="11" rx="1"/><path d="M8 5.5v5M5.5 8h5"/>',
+  };
+  function iconHtml(it, sl, small) {
+    const src = iconSrc(it), set = GAMES[state.game].iconSet;
+    const cls = `ico ${small ? 'sm' : ''}`;
+    if (src) return `<span class="${cls} ${set}"><img src="${src}" alt="" loading="lazy"></span>`;
+    return `<span class="${cls} glyph ${it ? '' : 'empty'}" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round">${GLYPH[sl] || GLYPH.c}</svg></span>`;
+  }
+  const emptyEq = () => ({ w: null, b: null, a: null, h: null, s: null, f: null, r: null });
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  // djinn ids: index in D.djinn (0..71)
+  function exampleState(game = 'tla') {
+    // Example: the usual "everyone keeps their own element" setup with each game's own party up front
+    const g = GAMES[game], ex = g.example;
+    D = dataFor(game);
+    const order = [...ex.order, ...[0, 1, 2, 3, 4, 5, 6, 7].filter(k => !ex.order.includes(k))];
+    const st = { game, view: 'planner', order, sel: order[0], chars: [], dj: [], closed: {} };
+    for (let i = 0; i < 8; i++) st.chars.push({ lv: ex.lv, mods: [0, 0, 0, 0, 0, 0], item: '', eq: emptyEq(), boosts: [0, 0, 0, 0, 0, 0] });
+    giveOwnElement(st);
+    return st;
+  }
+  function giveOwnElement(st) {
+    const g = GAMES[st.game];
+    st.dj = D.djinn.map(() => ({ o: null, s: true }));
+    const byEl = [[], [], [], []];
+    D.djinn.forEach((d, i) => { if (inGameDj(i, g)) byEl[d.e].push(i); });
+    for (let e = 0; e < 4; e++) {
+      const owners = g.chars.filter(i => D.chars[i].el === e);
+      byEl[e].forEach((di, k) => { const o = owners[Math.floor(k / g.djCap)]; st.dj[di] = { o: o === undefined ? null : o, s: true }; });
+    }
+  }
+  function loadGame(game) {
+    D = dataFor(game);
+    try { const raw = localStorage.getItem(KEY_FOR(game)); if (raw) { const s = JSON.parse(raw); s.game = game; return validate(s); } } catch (e) {}
+    return exampleState(game);
+  }
+  function load() {
+    let game = 'tla';
+    try { const g = localStorage.getItem(CUR_KEY); if (GAMES[g] && GAMES[g].ready) game = g; } catch (e) {}
+    return loadGame(game);
+  }
+  function validate(s) {
+    if (!s || !Array.isArray(s.order) || s.order.length !== 8 || !Array.isArray(s.chars) || s.chars.length !== 8 || !Array.isArray(s.dj) || s.dj.length !== 72) throw new Error('bad');
+    if (!GAMES[s.game] || !GAMES[s.game].ready) s.game = 'tla';
+    const g = GAMES[s.game];
+    if ([...s.order].sort().join() !== '0,1,2,3,4,5,6,7') throw new Error('bad');
+    s.order = [...s.order.filter(k => g.chars.includes(k)), ...s.order.filter(k => !g.chars.includes(k))];
+    s.chars.forEach((c, ci) => {
+      c.lv = clamp(+c.lv || 1, 1, 99);
+      c.mods = (c.mods || []).slice(0, 6).map(v => +v || 0); while (c.mods.length < 6) c.mods.push(0);
+      if (!['', 'card', 'whip', 'tome'].includes(c.item) || !g.classItems) c.item = '';
+      c.boosts = (c.boosts || []).slice(0, 6).map(v => clamp(parseInt(v, 10) || 0, 0, 99)); while (c.boosts.length < 6) c.boosts.push(0);
+      const eq = emptyEq();
+      for (const [sl] of SLOTS) {
+        const id = c.eq ? c.eq[sl] : null, it = ITEM(id);
+        if (it && it.sl === sl && (it.m >> ci) & 1 && inGameItem(id, g) && g.chars.includes(ci)) eq[sl] = id;
+      }
+      c.eq = eq;
+    });
+    s.dj = s.dj.map((d, i) => ({ o: (d && Number.isInteger(d.o) && g.chars.includes(d.o) && inGameDj(i, g)) ? d.o : null, s: !(d && d.s === false) }));
+    if (!g.chars.includes(s.sel)) s.sel = s.order[0];
+    s.endgame = s.endgame === true;
+    s.closed = (s.closed && typeof s.closed === 'object') ? s.closed : {};
+    s.view = ['planner', 'djinn', 'gear', 'mods'].includes(s.view) ? s.view : 'planner';
+    delete s.gearBase;
+    if (!(s.base && Array.isArray(s.base.chars) && s.base.chars.length === 8 && s.base.chars.every(g => g && g.eq && Array.isArray(g.mods) && Array.isArray(g.boosts)) && Array.isArray(s.base.dj) && s.base.dj.length === 72)) s.base = null;
+    s.owned = (s.owned && typeof s.owned === 'object') ? s.owned : null;
+    s.ownedOnly = !!(s.owned && s.ownedOnly);
+    s.djHave = Array.isArray(s.djHave) && s.djHave.length === 72 ? s.djHave.map(Boolean) : null;
+    s.imported = s.imported && typeof s.imported === 'object' ? s.imported : null;
+    if (typeof s.sort !== 'string') s.sort = 'name';
+    return s;
+  }
+  function save() { try { localStorage.setItem(KEY_FOR(state.game), JSON.stringify(state)); localStorage.setItem(CUR_KEY, state.game); } catch (e) {} }
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+  let state = load();
+
+  // ---------- derived ----------
+  function owned(ci) { return state.dj.map((d, i) => ({ ...d, i })).filter(d => d.o === ci); }
+  function counts(ci, onlySet = true) {
+    const c = [0, 0, 0, 0];
+    owned(ci).forEach(d => { if (!onlySet || d.s) c[D.djinn[d.i].e]++; });
+    return c;
+  }
+  function compute(ci) {
+    const ch = D.chars[ci], cs = state.chars[ci];
+    const cnt = counts(ci);
+    const cls = D.dd ? G.determineClassDD(ch, cnt, D) : G.determineClass(ch, cnt, cs.item || null, D);
+    const series = seriesOf(cls.sid), tier = series.tiers[cls.ti];
+    const base = ch.curve.map(cv => G.baseStat(cv, cs.lv));
+    const dj = [0, 0, 0, 0, 0, 0];
+    owned(ci).forEach(d => { if (d.s) D.djinn[d.i].s.forEach((v, k) => dj[k] += v); });
+    const items = SLOTS.map(([sl]) => ITEM(cs.eq[sl]));
+    const gear = G.gearEffects(items);
+    const boost = [0, 0, 0, 0, 0, 0];
+    D.boost.forEach((b, i) => { boost[b.s] += b.v * cs.boosts[i]; });
+    const pre = base.map((b, k) => b + dj[k] + boost[k] + gear.flat[k] + cs.mods[k]);
+    const fin = G.finalStats(pre, tier.mult, gear);
+    // Dark Dawn's elemental Power/Resistance formula isn't published, so it isn't shown there
+    const el = D.dd ? { pow: [0, 0, 0, 0], res: [0, 0, 0, 0], unknown: true } : G.elemental(ch.aff, cls.L, gear);
+    const weapon = ITEM(cs.eq.w);
+    return { ch, cs, cnt, cls, series, tier, base, dj, boost, gear, pre, fin, el, weapon };
+  }
+  const className = r => seriesOf(r.sid).tiers[r.ti].name;
+
+  // ---------- party strip ----------
+  let dragFrom = null;
+  function renderStrip() {
+    const s = $('strip');
+    let h = '<div class="slot-head"><span class="lbl">Active party</span><span class="lbl">Slots 1–4</span></div>' +
+            (NCH() > 4 ? '<div class="slot-head"><span class="lbl">Reserve</span><span class="lbl">Slots 5–8</span></div>' : '');
+    s.classList.toggle('four', NCH() <= 4);
+    ORDER().forEach((ci, pos) => {
+      const r = compute(ci);
+      const n = owned(ci).length;
+      h += `<div class="pc e${r.ch.el} ${state.sel === ci ? 'sel' : ''}" draggable="true" data-pos="${pos}">
+        <button type="button" class="pick" data-pos="${pos}" aria-pressed="${state.sel === ci}">
+        <span class="nm"><span class="dot"></span>${esc(r.ch.name)}</span>
+        <span class="cl">${esc(r.tier.name)}${r.cls.certain ? '' : ' ?'}</span>
+        <span class="meta"><span>Lv <span class="num">${r.cs.lv}</span></span><span class="num">${n}/${GM().djCap} djinn</span></span>
+        <span class="meta"><span>HP <span class="num">${r.fin[0]}</span></span><span>PP <span class="num">${r.fin[1]}</span></span></span>
+        </button>
+        <span class="mv">
+          <button type="button" data-mv="-1" data-pos="${pos}" aria-label="Move ${esc(r.ch.name)} earlier" ${pos === 0 ? 'disabled' : ''}>◀</button>
+          <button type="button" data-mv="1" data-pos="${pos}" aria-label="Move ${esc(r.ch.name)} later" ${pos === NCH() - 1 ? 'disabled' : ''}>▶</button>
+        </span></div>`;
+    });
+    s.innerHTML = h;
+  }
+  function move(pos, to) {
+    if (to < 0 || to > NCH() - 1 || to === pos) return;
+    const o = state.order; const [c] = o.splice(pos, 1); o.splice(to, 0, c);
+    renderAll();
+  }
+  $('strip').addEventListener('click', e => {
+    const mv = e.target.closest('[data-mv]');
+    if (mv) { e.stopPropagation(); const p = +mv.dataset.pos; move(p, p + +mv.dataset.mv); return; }
+    const pc = e.target.closest('.pick'); if (!pc) return;
+    state.sel = state.order[+pc.dataset.pos]; renderAll();
+  });
+  $('strip').addEventListener('dragstart', e => { const pc = e.target.closest('.pc'); if (pc) { dragFrom = +pc.dataset.pos; e.dataTransfer.effectAllowed = 'move'; } });
+  $('strip').addEventListener('dragover', e => { const pc = e.target.closest('.pc'); if (pc && dragFrom !== null) { e.preventDefault(); pc.classList.add('dragover'); } });
+  $('strip').addEventListener('dragleave', e => { const pc = e.target.closest('.pc'); if (pc) pc.classList.remove('dragover'); });
+  $('strip').addEventListener('drop', e => { const pc = e.target.closest('.pc'); if (pc && dragFrom !== null) { e.preventDefault(); move(dragFrom, +pc.dataset.pos); } dragFrom = null; });
+  $('strip').addEventListener('dragend', () => { dragFrom = null; });
+
+  // ---------- sheet ----------
+  function abilKind(a) {
+    if (a.unk) return '—';
+    switch (a.d) {
+      case 1: return `Heal ${a.p}`;
+      case 2: return 'Support';
+      case 3: return `Attack +${a.p}`;
+      case 4: return `Attack ×${(a.p / 10).toFixed(1)}`;
+      case 5: case 6: return a.p ? `Power ${a.p}` : 'Effect';
+      case 9: return 'Support';
+      default: return a.p ? `Power ${a.p}` : 'Effect';
+    }
+  }
+  const rangeTxt = r => r === 255 ? 'All' : r === 1 ? '1' : String(2 * r - 1);
+
+  // ---------- gear helpers ----------
+  const fmtX = v => '×' + (Math.round(v * 100) / 100);
+  function effParts(it) {
+    const p = [];
+    if (it.sl !== 'w' && it.a) p.push(`Attack +${it.a}`);
+    if (it.u) p.push(`Unleash ${it.u.n} (${it.u.e < 4 ? EL[it.u.e] : 'none'}, ${it.u.r}%)`);
+    if (it.us) p.push(`In battle: ${it.us.t.replace(/^Use to /i, '').replace(/^./, c => c.toUpperCase())}`);
+    for (const [t, v] of (it.e || [])) {
+      const sg = v >= 0 ? '+' + v : String(v);
+      if (t === 1) p.push(`HP ${sg}`); else if (t === 2) p.push(`HP regen ${sg}`);
+      else if (t === 3) p.push(`PP ${sg}`); else if (t === 4) p.push(`PP regen ${sg}`);
+      else if (t === 5) p.push(`Agility ${sg}`); else if (t === 6) p.push(`Luck ${sg}`);
+      else if (t === 9) p.push(`PP ${fmtX(v / 10)}`); else if (t === 13) p.push(`Agility ${fmtX(v / 10)}`); else if (t === 14) p.push(`Luck ${fmtX(v / 10)}`);
+      else if (t >= 15 && t <= 18) p.push(`${EL[t - 15]} Power ${sg}`);
+      else if (t >= 19 && t <= 22) p.push(`${EL[t - 19]} Resist ${sg}`);
+      else if (t === 23) p.push(`Unleash rate +${v}%`);
+      else if (t === 25) p.push('Cancels curses');
+      else if (t === 27) p.push('More random battles');
+    }
+    return p;
+  }
+  const ENDGAME_SETS = {}; for (const [g, def] of Object.entries(GAMES)) if (def.ready) ENDGAME_SETS[g] = endgameSet(dataFor(g).items, def.endgame);
+  const ENDGAME_SET = { has: id => ENDGAME_SETS[state.game].has(id) };
+  // Sort keys for gear lists. Multipliers (Elven Shirt x1.5, Turtle Boots x0.5) rank above/below any flat bonus.
+  const effSum = (it, codes) => (it.e || []).filter(([t]) => codes.includes(t)).reduce((s, [, v]) => s + v, 0);
+  const effMul = (it, code) => (it.e || []).filter(([t]) => t === code).reduce((m, [, v]) => m * v / 10, 1);
+  const SORTS = {
+    name: { label: 'Alphabetical' },
+    atk: { label: 'Attack', v: it => it.a, show: v => `Atk ${v}` },
+    def: { label: 'Defense', v: it => it.d, show: v => `Def ${v}` },
+    hp: { label: 'Max HP', v: it => effSum(it, [1]), show: v => `HP +${v}` },
+    pp: { label: 'Max PP', v: it => effSum(it, [3]) + (effMul(it, 9) - 1) * 1000, show: (v, it) => effMul(it, 9) !== 1 ? `PP ${fmtX(effMul(it, 9))}` : `PP +${effSum(it, [3])}` },
+    agl: { label: 'Agility', v: it => effSum(it, [5]) + (effMul(it, 13) - 1) * 1000, show: (v, it) => effMul(it, 13) !== 1 ? `Agility ${fmtX(effMul(it, 13))}` : `Agility +${effSum(it, [5])}` },
+    lck: { label: 'Luck', v: it => effSum(it, [6]) + (effMul(it, 14) - 1) * 1000, show: (v, it) => effMul(it, 14) !== 1 ? `Luck ${fmtX(effMul(it, 14))}` : `Luck +${effSum(it, [6])}` },
+    hpr: { label: 'HP recovery', v: it => effSum(it, [2]), show: v => `HP regen +${v}` },
+    ppr: { label: 'PP recovery', v: it => effSum(it, [4]), show: v => `PP regen +${v}` },
+    unl: { label: 'Unleash rate', v: it => (it.u ? it.u.r : 0) + effSum(it, [23]), show: (v, it) => it.u ? `Unleash ${it.u.r}%${effSum(it, [23]) ? ' +' + effSum(it, [23]) + '%' : ''}` : `Unleash +${v}%` },
+    pow: { label: 'Elemental Power (total)', v: it => effSum(it, [15, 16, 17, 18]), show: v => `Power +${v}` },
+    res: { label: 'Resistance (total)', v: it => effSum(it, [19, 20, 21, 22]), show: v => `Resist ${v >= 0 ? '+' : ''}${v}` },
+  };
+  function optionsFor(ci, sl) {
+    const cur = state.chars[ci].eq[sl];
+    const all = Object.entries(D.items).filter(([id, it]) => it.sl === sl && (it.m >> ci) & 1 && inGameItem(id));
+    const list = all.filter(([id]) => +id === cur ||
+      ((!state.endgame || ENDGAME_SET.has(+id)) && (!state.ownedOnly || !state.owned || state.owned[id])));
+    const prim = it => sl === 'w' ? it.a : it.d;
+    const S = SORTS[state.sort] || SORTS.name;
+    if (S.v) list.sort((x, y) => (S.v(y[1]) - S.v(x[1])) || x[1].n.localeCompare(y[1].n) || (prim(y[1]) - prim(x[1])));
+    else list.sort((x, y) => x[1].n.localeCompare(y[1].n) || (prim(y[1]) - prim(x[1])));
+    const showExtra = S.v && !['atk', 'def'].includes(state.sort);
+    const names = {}; list.forEach(([, it]) => { names[it.n] = (names[it.n] || 0) + 1; });
+    const opts = list.map(([id, it]) => {
+      const extra = showExtra && S.v(it) ? ` · ${S.show(S.v(it), it)}` : '';
+      return { id: +id, it, label: `${it.n}${names[it.n] > 1 ? ` (${it.k})` : ''} · ${sl === 'w' ? 'Atk ' + it.a : 'Def ' + it.d}${extra}${it.c ? ' · cursed' : ''}${state.endgame && !ENDGAME_SET.has(+id) ? ' · not endgame' : ''}${state.ownedOnly && state.owned && !state.owned[id] ? ' · not owned' : ''}` };
+    });
+    return { opts, shown: list.length, total: all.length };
+  }
+  function holders(id, except) {
+    return state.chars.map((c, i) => i).filter(i => i !== except && SLOTS.some(([sl]) => state.chars[i].eq[sl] === id));
+  }
+  function gearHtml(ci, r) {
+    const cs = state.chars[ci];
+    let h = SLOTS.map(([sl, label]) => {
+      const cur = cs.eq[sl], it = ITEM(cur);
+      const of = optionsFor(ci, sl);
+      const opts = of.opts.map(o => `<option value="${o.id}" ${o.id === cur ? 'selected' : ''}>${esc(o.label)}</option>`).join('');
+      label = (state.endgame || state.ownedOnly) ? `${label} <span class="muted" style="text-transform:none;letter-spacing:0;font-weight:400">· ${of.shown} of ${of.total}</span>` : label;
+      let fx = '';
+      if (it) {
+        const parts = effParts(it).map(esc);
+        if (it.c) parts.unshift('<span class="bad">Cursed</span>');
+        const dup = holders(cur, ci);
+        if (dup.length && !it.b) parts.push(`<span class="bad">Also on ${dup.map(i => esc(D.chars[i].name)).join(', ')}; not sold in shops</span>`);
+        fx = parts.join(' · ') || '<span class="muted">No extra effects</span>';
+      }
+      return `<div class="slot ${it ? 'set' : ''}"><label class="lbl" for="eq-${ci}-${sl}">${label}</label>
+        <div class="pickrow">${iconHtml(it, sl)}<select id="eq-${ci}-${sl}" data-eq="${sl}"><option value="">None</option>${opts}</select></div><div class="fx">${fx}</div></div>`;
+    }).join('');
+    const itemOpts = ITEMS.map(([v, l]) => {
+      const holder = v ? state.chars.findIndex((c, i) => c.item === v && i !== ci) : -1;
+      const note = holder >= 0 ? ` (on ${D.chars[holder].name})` : '';
+      return `<option value="${v}" ${cs.item === v ? 'selected' : ''}>${esc(l + note)}</option>`;
+    }).join('');
+    const CLASS_ITEM_NAMES = { card: 'Mysterious Card', whip: "Trainer's Whip", tome: 'Tomegathericon' };
+    const classIt = cs.item ? { n: CLASS_ITEM_NAMES[cs.item] } : null;
+    h += `<div class="slot ${cs.item ? 'set' : ''}"><label class="lbl" for="item-${ci}">Class item</label><div class="pickrow">${iconHtml(classIt, 'c')}<select id="item-${ci}">${itemOpts}</select></div>
+      <div class="fx">${cs.item ? 'Locks the class to its item series' : ''}</div></div>`;
+    return `<div class="gear">${h}</div>`;
+  }
+  function factsHtml(r) {
+    const g = r.gear, rows = [];
+    if (r.weapon && r.weapon.u) {
+      const u = r.weapon.u, tot = u.r + g.unleashBonus;
+      rows.push(`<div><span class="k">Unleash:</span> <b>${esc(u.n)}</b> <span class="etag e${u.e}"><span class="dot"></span>${u.e < 4 ? EL[u.e] : 'No element'}</span> · ${u.r}%${g.unleashBonus ? ` + ${g.unleashBonus}% from gear = <b>${tot}%</b>` : ''} chance per attack</div>`);
+    } else if (r.weapon) {
+      rows.push(`<div><span class="k">Unleash:</span> ${esc(r.weapon.n)} has no unleash.</div>`);
+    } else {
+      rows.push('<div><span class="k">Weapon:</span> none equipped.</div>');
+    }
+    if (g.hpRegen || g.ppRegen) rows.push(`<div><span class="k">Regen each turn:</span> ${g.hpRegen ? `HP +${g.hpRegen}` : ''}${g.hpRegen && g.ppRegen ? ' · ' : ''}${g.ppRegen ? `PP +${g.ppRegen}` : ''}</div>`);
+    if (g.cursed.length) rows.push(`<div class="warn">Cursed: ${g.cursed.map(esc).join(', ')}. ${g.curseFix ? "The Cleric's Ring cancels the curse." : "Cursed gear can stop the wearer acting on some turns. A Cleric's Ring cancels this."}</div>`);
+    if (g.encounters) rows.push('<div><span class="k">Note:</span> raises the random battle rate.</div>');
+    return `<div class="facts">${rows.join('')}</div>`;
+  }
+
+  function renderSheet() {
+    const ci = state.sel, r = compute(ci), ch = r.ch, cs = r.cs;
+    const tiers = r.series.tiers;
+    const kindTxt = { mono: 'Single-element class', dual: 'Two-element class', tri: 'Three-element class', item: 'Class from item', fallback: 'Unusual djinn mix' }[r.cls.kind];
+    // next-djinni preview
+    let next = '';
+    if (!cs.item) {
+      next = '<div class="next">' + [0, 1, 2, 3].map(e => {
+        const c2 = r.cnt.slice(); c2[e]++;
+        const full = owned(ci).length >= GM().djCap;
+        const nr = D.dd ? G.determineClassDD(ch, c2, D) : G.determineClass(ch, c2, null, D);
+        return `<div class="e${e}"><span class="lbl">+1 ${EL[e]}</span><b>${full ? '—' : esc(className(nr)) + (nr.certain ? '' : ' ?')}</b></div>`;
+      }).join('') + '</div>';
+    }
+
+    const mine = owned(ci).map(d => {
+      const dj = D.djinn[d.i];
+      return `<span class="chip mine e${dj.e} ${d.s ? '' : 'stby'}"><button type="button" class="tg" data-tog="${d.i}" title="Switch between Set and Standby"><span class="ini">${d.s ? 'Set' : 'Stby'}</span> ${esc(dj.n)}</button><button type="button" class="x" data-rm="${d.i}" aria-label="Remove ${esc(dj.n)}">×</button></span>`;
+    }).join('') || '<span class="muted">No djinn yet. Pick some from the board.</span>';
+
+    let rows = '';
+    const sgn = v => v ? (v > 0 ? '+' + v : String(v)) : '0';
+    for (let k = 0; k < 6; k++) {
+      const gm = r.gear.mult[k];
+      rows += `<tr><td>${STATS[k]}</td><td>${r.base[k]}</td><td class="muted">${sgn(r.dj[k])}</td><td class="muted">${sgn(r.boost[k])}</td><td class="muted">${sgn(r.gear.flat[k])}</td>
+        <td class="muted">${sgn(cs.mods[k])}</td>
+        <td class="muted">${r.tier.mult[k]}%</td><td class="final">${r.fin[k]}${gm !== 1 ? `<small>${fmtX(gm)}</small>` : ''}</td></tr>`;
+    }
+    const boosts = D.boost.map((b, i) => `<label for="bst-${ci}-${i}">${esc(b.n)} <span>(${STATS_S[b.s]} +${b.v})</span>
+      <input class="num" type="number" min="0" max="99" id="bst-${ci}-${i}" data-bst="${i}" value="${cs.boosts[i]}"></label>`).join('');
+    const elRows = [0, 1, 2, 3].map(e => `<tr><td><span class="etag e${e}"><span class="dot"></span>${EL[e]}</span></td><td>${r.cls.L[e]}</td>${r.el.unknown ? '' : `<td>${r.el.pow[e]}</td><td>${r.el.res[e]}</td>`}</tr>`).join('');
+
+    const psy = r.tier.psy.slice().sort((a, b) => a[1] - b[1]).map(([id, lv]) => {
+      const a = D.abil[id]; if (!a) return '';
+      const lock = lv > cs.lv;
+      return `<tr class="${lock ? 'locked' : ''}"><td class="r">${lv}</td><td class="pn">${esc(a.n)}</td>
+        <td><span class="etag e${a.e}"><span class="dot"></span>${a.e < 4 ? EL[a.e] : '—'}</span></td>
+        <td><span class="kind">${abilKind(a)}</span></td><td class="r">${rangeTxt(a.r)}</td><td class="r">${a.c}</td></tr>`;
+    }).join('');
+    const known = r.tier.psy.filter(p => p[1] <= cs.lv).length;
+
+    $('sheet').className = `panel e${ch.el}`;
+    $('sheet').innerHTML = `
+      <div class="sheet-head">
+        <div class="who"><h2>${esc(ch.name)}</h2><span class="etag e${ch.el}"><span class="dot"></span>${EL[ch.el]} Adept</span></div>
+        <div class="controls">
+          <div class="field"><label class="lbl" for="lv-${ci}">Level</label>
+            <div class="lvl"><input type="range" min="1" max="99" value="${cs.lv}" id="lvr-${ci}" aria-label="Level slider"><input class="num" type="number" min="1" max="99" value="${cs.lv}" id="lv-${ci}"></div></div>
+          <div class="field"><span class="lbl">Sections</span><div class="lvl"><button type="button" class="btn sm" id="secCollapse">Collapse all</button><button type="button" class="btn sm" id="secExpand">Expand all</button></div></div>
+        </div>
+      </div>
+      <div class="classbox"></div>`;
+    // class box (element colour follows the leading element)
+    const lead = r.cls.L.indexOf(Math.max(...r.cls.L));
+    const box = $('sheet').querySelector('.classbox');
+    box.className = `classbox e${r.cls.L[ch.el] === Math.max(...r.cls.L) ? ch.el : lead}`;
+    box.innerHTML = `
+      <div><span class="lbl">${kindTxt}</span><div class="cname">${esc(r.tier.name)}</div>
+        <div class="sub">Tier ${r.cls.ti + 1} of ${tiers.length}${r.cls.ti + 1 < tiers.length ? ` · next: ${esc(tiers[r.cls.ti + 1].name)}` : ' · top of the series'}</div></div>
+      <div class="tierbar">${tiers.map((t, i) => `<span class="${i === r.cls.ti ? 'on' : i < r.cls.ti ? 'past' : ''}">${esc(t.name)}</span>`).join('')}</div>
+      ${r.cls.certain ? '' : '<div class="warn">This djinn mix isn\'t covered by the wiki\'s class tables, so this class is a best guess.</div>'}
+      <div class="ellv">${[0, 1, 2, 3].map(e => `<span class="etag e${e}"><span class="dot"></span>${ELS[e]} <span class="num">${r.cls.L[e]}</span></span>`).join('')}<span class="muted">elemental levels</span></div>`;
+    // Collapsible sections: the summary line stays useful when a section is closed
+    const sec = (key, title, peek, body) => `<details class="sec" data-sec="${key}" ${state.closed[key] ? '' : 'open'}>
+      <summary><span class="lbl">${title}</span><span class="peek">${peek}</span></summary><div class="sec-body">${body}</div></details>`;
+    const gearPeek = SLOTS.map(([sl]) => ITEM(cs.eq[sl])).filter(Boolean).map(it => iconHtml(it, it.sl, true)).join('') || 'Nothing equipped';
+    const djPeek = [0, 1, 2, 3].map(e => { const n = owned(ci).filter(d => D.djinn[d.i].e === e).length; return n ? `<span class="etag e${e}"><span class="dot"></span>${n}</span>` : ''; }).join(' ') || 'None';
+    const statPeek = STATS_S.map((s, k) => `${s} <b>${r.fin[k]}</b>`).join(' · ');
+    const elPeek = [0, 1, 2, 3].map(e => `<span class="etag e${e}"><span class="dot"></span>${r.el.unknown ? 'Lv ' + r.cls.L[e] : r.el.pow[e] + '/' + r.el.res[e]}</span>`).join(' ');
+    const boostPeek = cs.boosts.some(Boolean) ? D.boost.map((b, i) => cs.boosts[i] ? `${b.n} ×${cs.boosts[i]}` : '').filter(Boolean).join(' · ') : 'None';
+    $('sheet').insertAdjacentHTML('beforeend', `
+      ${next ? sec('next', 'Class after one more djinni', '', next) : ''}
+      ${sec('build', 'Djinn & gear', `${djPeek} <span style="margin-left:6px"></span>${gearPeek}`, `<div class="sheet-links">Djinn: ${djPeek} · ${owned(ci).filter(d => !d.s).length ? owned(ci).filter(d => !d.s).length + ' on Standby · ' : ''}<button type="button" class="linkbtn" data-goto="djinn">Edit djinn</button></div>
+        ${GM().noGear ? '<div class="sheet-links">Gear isn\'t modelled for Dark Dawn yet.</div>' : `<div class="sheet-links">Gear: ${gearPeek} <button type="button" class="linkbtn" data-goto="gear">Edit gear</button></div>${factsHtml(r)}`}`)}
+      ${sec('stats', `Stats at level ${cs.lv}`, statPeek, `<div class="tscroll"><table class="stats"><thead><tr><th>Stat</th><th>Base</th><th>Djinn</th><th>Items</th><th>Gear</th><th>Modifier</th><th>Class</th><th>Final</th></tr></thead><tbody>${rows}</tbody></table></div>
+        <span class="sheet-links">Items and Modifier are set in the <button type="button" class="linkbtn" data-goto="mods">Modifiers tab</button>.</span>`)}
+      ${sec('elements', r.el.unknown ? 'Elemental levels' : 'Elements · Power/Resistance', elPeek, `<div class="tscroll"><table class="stats elt"><thead><tr><th>Element</th><th>Level</th>${r.el.unknown ? '' : '<th>Power</th><th>Resistance</th>'}</tr></thead><tbody>${elRows}</tbody></table></div>${r.el.unknown ? '<span class="sheet-links">Dark Dawn\'s Power/Resistance formula isn\'t published, so only elemental levels are shown.</span>' : ''}`)}
+      ${sec('psy', `Psynergy as ${esc(r.tier.name)}`, `${known} of ${r.tier.psy.length} learned by level ${cs.lv}`, `<div class="tscroll"><table class="psy"><thead><tr><th>Lv</th><th>Psynergy</th><th>Element</th><th>Effect</th><th>Targets</th><th>PP</th></tr></thead><tbody>${psy}</tbody></table></div>`)}`);
+  }
+  // Remember which sections are open; 'toggle' doesn't bubble, so listen in the capture phase
+  $('sheet').addEventListener('toggle', e => {
+    const d = e.target; if (!d.matches || !d.matches('details.sec')) return;
+    state.closed[d.dataset.sec] = !d.open; save();
+  }, true);
+  function setAllSections(open) {
+    document.querySelectorAll('#sheet details.sec').forEach(d => { state.closed[d.dataset.sec] = !open; d.open = open; });
+    save();
+  }
+  $('sheet').addEventListener('input', e => {
+    const ci = state.sel, cs = state.chars[ci];
+    if (e.target.id === 'lvr-' + ci) {
+      cs.lv = clamp(parseInt(e.target.value, 10) || 1, 1, 99); renderAll({ keepFocus: e.target.id });
+    } else if (e.target.dataset.mod !== undefined) {
+      cs.mods[+e.target.dataset.mod] = parseInt(e.target.value, 10) || 0; renderAll({ keepFocus: e.target.id });
+    } else if (e.target.dataset.bst !== undefined) {
+      cs.boosts[+e.target.dataset.bst] = clamp(parseInt(e.target.value, 10) || 0, 0, 99); renderAll({ keepFocus: e.target.id });
+    }
+  });
+  $('sheet').addEventListener('change', e => {
+    const ci = state.sel;
+    if (e.target.dataset.eq) {
+      const v = e.target.value;
+      const note = equipItem(ci, e.target.dataset.eq, v === '' ? null : +v);
+      renderAll({ keepFocus: e.target.id }); toast(note);
+    } else if (e.target.id === 'item-' + ci) {
+      const note = equipClassItem(ci, e.target.value);
+      renderAll({ keepFocus: e.target.id }); toast(note);
+    } else if (e.target.id === 'lv-' + ci) {
+      const cs = state.chars[ci]; cs.lv = clamp(parseInt(e.target.value, 10) || 1, 1, 99); renderAll();
+    }
+  });
+  $('sheet').addEventListener('click', e => {
+    const g = e.target.closest('[data-goto]'); if (g) { showView(g.dataset.goto); return; }
+    if (e.target.id === 'secCollapse') { setAllSections(false); return; }
+    if (e.target.id === 'secExpand') { setAllSections(true); return; }
+    const t = e.target.closest('[data-tog]'); if (t) { const d = state.dj[+t.dataset.tog]; d.s = !d.s; renderAll(); return; }
+    const rm = e.target.closest('[data-rm]'); if (rm) { state.dj[+rm.dataset.rm].o = null; renderAll(); }
+  });
+
+  // ---------- djinn board ----------
+  function renderBoard() {
+    const ci = state.sel, full = owned(ci).length >= 9;
+    let h = '';
+    for (let e = 0; e < 4; e++) {
+      const ids = D.djinn.map((d, i) => i).filter(i => D.djinn[i].e === e);
+      const free = ids.filter(i => state.dj[i].o === null).length;
+      h += `<div class="ecol e${e}"><h3><span>${EL[e]}</span><span class="lbl">${free} free</span></h3><div class="chips">` +
+        ids.map(i => {
+          const d = state.dj[i], dj = D.djinn[i];
+          const missing = state.djHave && !state.djHave[i];
+          const cls = (d.o === ci ? 'mine' : d.o === null ? '' : 'other') + (missing ? ' missing' : '');
+          const ini = d.o === null ? '·' : D.chars[d.o].name.slice(0, 2);
+          const bonus = dj.s.map((v, k) => v ? `${STATS_S[k]} +${v}` : '').filter(Boolean).join(', ');
+          const title = `${dj.n}: ${bonus}${d.o !== null ? ` · on ${D.chars[d.o].name}${d.s ? '' : ' (Standby)'}` : ' · unassigned'}${missing ? ' · not collected in your save' : ''}`;
+          const dis = d.o !== ci && full;
+          return `<button type="button" class="chip e${e} ${cls} ${d.s ? '' : 'stby'}" data-dj="${i}" title="${esc(title)}" ${dis ? 'aria-disabled="true"' : ''}><span class="ini">${esc(ini)}</span>${esc(dj.n)}</button>`;
+        }).join('') + '</div></div>';
+    }
+    $('board').innerHTML = h;
+    $('djTarget').textContent = D.chars[ci].name;
+    const used = state.dj.filter(d => d.o !== null).length;
+    $('djSummary').textContent = `${used} of 72 assigned`;
+  }
+  if ($('board')) $('board').addEventListener('click', e => {
+    const b = e.target.closest('[data-dj]'); if (!b) return;
+    const i = +b.dataset.dj, ci = state.sel, d = state.dj[i];
+    if (d.o === ci) { d.o = null; }
+    else { if (owned(ci).length >= 9) return; d.o = ci; d.s = true; }
+    renderAll();
+  });
+
+  // ---------- overview ----------
+  function renderOverview() {
+    let h = `<thead><tr><th>Slot</th><th>Adept</th><th>Lv</th><th>Class</th><th style="text-align:left">Weapon</th>${STATS_S.map(s => `<th>${s}</th>`).join('')}</tr></thead><tbody>`;
+    ORDER().forEach((ci, pos) => {
+      const r = compute(ci);
+      h += `<tr><td>${pos + 1}${pos < 4 ? '' : ' <span class="muted">(reserve)</span>'}</td><td style="text-align:left"><span class="etag e${r.ch.el}"><span class="dot"></span>${esc(r.ch.name)}</span></td><td>${r.cs.lv}</td>
+        <td style="text-align:left;font-family:var(--body)">${esc(r.tier.name)}${r.cls.certain ? '' : ' ?'}</td>
+        <td style="text-align:left;font-family:var(--body);white-space:nowrap">${r.weapon ? iconHtml(r.weapon, 'w', true) + esc(r.weapon.n) : '<span class="muted">None</span>'}</td>${r.fin.map(v => `<td>${v}</td>`).join('')}</tr>`;
+    });
+    $('overview').innerHTML = h + '</tbody>';
+  }
+
+  // ---------- game-style showcase (compact) ----------
+  function renderShowcase() {
+    const star = e => GSUI.star[e] ? `<img src="${GSUI.star[e]}" alt="${EL[e]}">` : `<span class="dot e${e}"></span>`;
+    const CLASS_ITEM_NAMES = { card: 'Mysterious Card', whip: "Trainer's Whip", tome: 'Tomegathericon' };
+    let h = '';
+    ORDER().forEach((ci, pos) => {
+      if (pos === 0) h += '<div class="sc-group">Active party</div>';
+      if (pos === 4) h += '<div class="sc-group">Reserve</div>';
+      const r = compute(ci), ch = r.ch, cs = r.cs;
+      const por = GSUI.portrait[ch.name];
+      const portrait = `<div class="gs-por">${por ? `<img class="pt" src="${por}" alt="">` : ''}${GSUI.frame ? `<img class="fr" src="${GSUI.frame}" alt="">` : ''}</div>`;
+      const stats = [['ATK', 2], ['DEF', 3], ['AGL', 4], ['LCK', 5]].map(([l, k]) => `<span><i>${l}</i>${r.fin[k]}</span>`).join('');
+      const els = [0, 1, 2, 3].map(e => `<div title="${EL[e]}: level ${r.cls.L[e]}, Power ${r.el.pow[e]}, Resistance ${r.el.res[e]}"><span class="lv">${star(e)}${r.cls.L[e]}</span>${r.el.unknown ? '' : `<span class="pr">${r.el.pow[e]}/${r.el.res[e]}</span>`}</div>`).join('');
+      const eqRows = SLOTS.map(([sl]) => ITEM(cs.eq[sl])).filter(Boolean);
+      if (cs.item) eqRows.push({ n: CLASS_ITEM_NAMES[cs.item] });
+      const eq = eqRows.length ? eqRows.map(it => { const src = iconSrc(it); return src ? `<img src="${src}" alt="${esc(it.n)}" title="${esc(it.n)}">` : `<span class="ph" title="${esc(it.n)}"></span>`; }).join('')
+        : '<span class="gs-empty">No gear</span>';
+      const djs = owned(ci);
+      const dj = djs.length ? [0, 1, 2, 3].map(e => {
+        const mine = djs.filter(d => D.djinn[d.i].e === e); if (!mine.length) return '';
+        const set = mine.filter(d => d.s).length;
+        const names = mine.map(d => D.djinn[d.i].n + (d.s ? '' : ' (Standby)')).join(', ');
+        return `<span title="${esc(names)}" class="${set < mine.length ? 'sb' : ''}">${star(e)}${set}${set < mine.length ? '/' + mine.length : ''}</span>`;
+      }).join('') : '<span class="gs-empty">No djinn</span>';
+      const learned = r.tier.psy.filter(p => p[1] <= cs.lv).sort((a, b) => a[1] - b[1]);
+      const psy = learned.length ? learned.map(([id]) => { const a = D.abil[id], src = GSUI.psy[a.n];
+        return src ? `<img src="${src}" alt="${esc(a.n)}" title="${esc(a.n)}">` : `<img class="star" src="${GSUI.star[a.e] || ''}" alt="${esc(a.n)}" title="${esc(a.n)}">`; }).join('')
+        : '<span class="gs-empty">None yet</span>';
+      h += `<article class="gs gs-card" aria-label="${esc(ch.name)} build">
+        <div class="gs-top">${portrait}
+          <div><div class="gs-l1"><span>${esc(ch.name)}</span><span class="lv">Lv ${cs.lv}</span></div>
+            <div class="gs-l2"><span class="cl">${esc(r.tier.name)}${r.cls.certain ? '' : ' ?'}</span><span>HP <b>${r.fin[0]}</b> PP <b>${r.fin[1]}</b></span></div></div></div>
+        <div class="gs-sep"></div>
+        <div class="gs-st">${stats}</div>
+        <div class="gs-el">${els}</div>
+        <div class="gs-sep"></div>
+        ${GM().noGear ? '' : `<div class="gs-row"><span class="lab">GEAR</span>${eq}</div>`}
+        <div class="gs-row"><span class="lab">DJINN</span><span class="gs-dj">${dj}</span></div>
+        <div class="gs-row"><span class="lab">PSY</span>${psy}</div>
+      </article>`;
+    });
+    $('showcase').innerHTML = h;
+  }
+
+  // ---------- equipping with smart swaps (shared by both views) ----------
+  const CLASS_ITEM_LABEL = { card: 'Mysterious Card', whip: "Trainer's Whip", tome: 'Tomegathericon' };
+  const SLOT_NAME = Object.fromEntries(SLOTS.map(([s, n]) => [s, n]));
+  // How many copies of an item exist for this party: shop items are unlimited, an imported save gives exact counts, anything else is one-of-a-kind.
+  function copiesAvailable(id) {
+    const it = D.items[id]; if (!it) return 1;
+    if (it.b) return Infinity;
+    if (state.owned && state.owned[id]) return state.owned[id];
+    return 1;
+  }
+  // Equip item `id` (or null) in slot `sl` for Adept ci. Returns a description of any swap made.
+  function equipItem(ci, sl, id) {
+    const cs = state.chars[ci], prev = cs.eq[sl];
+    if (prev === id) return null;
+    let note = null;
+    if (id != null) {
+      const holders = state.chars.map((c, i) => i).filter(i => i !== ci && state.chars[i].eq[sl] === id);
+      if (holders.length + 1 > copiesAvailable(id)) {
+        const h = holders[0], back = prev != null && (D.items[prev].m >> h) & 1 ? prev : null;
+        state.chars[h].eq[sl] = back;
+        note = `Took ${D.items[id].n} from ${D.chars[h].name}` + (back != null ? `; ${D.chars[h].name} now has ${D.items[back].n}` : prev != null ? ` (${D.chars[h].name} can't use ${D.items[prev].n}, so that slot is now empty)` : '');
+      }
+    }
+    cs.eq[sl] = id;
+    return note;
+  }
+  function equipClassItem(ci, v) {
+    const cs = state.chars[ci], prev = cs.item;
+    if (prev === v) return null;
+    let note = null;
+    if (v) {
+      const h = state.chars.findIndex((c, i) => i !== ci && c.item === v);
+      if (h >= 0) { state.chars[h].item = prev || ''; note = `Took the ${CLASS_ITEM_LABEL[v]} from ${D.chars[h].name}` + (prev ? `; ${D.chars[h].name} now has the ${CLASS_ITEM_LABEL[prev]}` : ''); }
+    }
+    cs.item = v;
+    return note;
+  }
+  let toastTimer = null;
+  function toast(msg) {
+    if (!msg) return;
+    const t = $('toast'); t.textContent = msg; t.hidden = false;
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => { t.hidden = true; }, 4200);
+  }
+  const unleashOf = r => (r.weapon && r.weapon.u ? r.weapon.u.r : 0) + r.gear.unleashBonus;
+
+  // Snapshot/restore the whole build (gear, djinn, levels and modifiers), to preview changes and keep a baseline
+  const buildSnap = () => ({
+    chars: state.chars.map(c => ({ eq: { ...c.eq }, item: c.item, lv: c.lv, mods: c.mods.slice(), boosts: c.boosts.slice() })),
+    dj: state.dj.map(d => ({ o: d.o, s: d.s })),
+  });
+  function buildLoad(s, parts = ['gear', 'djinn', 'mods']) {
+    s.chars.forEach((g, i) => {
+      const c = state.chars[i];
+      if (parts.includes('gear')) { c.eq = { ...g.eq }; c.item = g.item; }
+      if (parts.includes('mods')) { c.lv = g.lv; c.mods = g.mods.slice(); c.boosts = g.boosts.slice(); }
+    });
+    if (parts.includes('djinn')) state.dj = s.dj.map(d => ({ o: d.o, s: d.s }));
+  }
+  function statsVector(r) { return { fin: r.fin.slice(), unl: unleashOf(r), pow: r.el.pow.slice(), res: r.el.res.slice(), cls: r.tier.name }; }
+
+  // Changes to Adept ci's numbers if `apply` were run (also reports any swap)
+  function previewChange(ci, apply) {
+    const snap = buildSnap();
+    const before = statsVector(compute(ci));
+    const note = apply();
+    const after = statsVector(compute(ci));
+    buildLoad(snap);
+    return { before, after, note };
+  }
+  function chips(before, after) {
+    const out = [];
+    const c = (lbl, d, unit = '') => { if (d) out.push(`<span class="chg ${d > 0 ? 'up' : 'dn'}">${lbl} ${d > 0 ? '+' : ''}${d}${unit}</span>`); };
+    STATS_S.forEach((s, k) => c(s, after.fin[k] - before.fin[k]));
+    c('Unleash', after.unl - before.unl, '%');
+    [0, 1, 2, 3].forEach(e => c(`${ELS[e]} Pow`, after.pow[e] - before.pow[e]));
+    [0, 1, 2, 3].forEach(e => c(`${ELS[e]} Res`, after.res[e] - before.res[e]));
+    if (after.cls !== before.cls) out.push(`<span class="chg nt">→ ${esc(after.cls)}</span>`);
+    return out;
+  }
+
+  // ---------- shared pieces for the all-Adept tables ----------
+  const resCls = pos => pos === 4 ? ' class="res"' : '';
+  function ensureBase() { if (!state.base) state.base = buildSnap(); }
+  function tableParts() {
+    ensureBase();
+    const cols = ORDER();
+    const snap = buildSnap(); buildLoad(state.base);
+    const base = {}; cols.forEach(ci => { base[ci] = statsVector(compute(ci)); });
+    buildLoad(snap);
+    const cur = {}; cols.forEach(ci => { cur[ci] = { r: compute(ci) }; cur[ci].v = statsVector(cur[ci].r); });
+    return { cols, base, cur };
+  }
+  function headHtml(cols, cur) {
+    return `<colgroup><col class="lab">${cols.map(() => '<col>').join('')}</colgroup><thead><tr><th></th>` + cols.map((ci, pos) => {
+      const r = cur[ci].r, por = GSUI.portrait[r.ch.name];
+      return `<th${resCls(pos)} data-pos="${pos}"><div class="who"><button type="button" class="grip" data-pos="${pos}" aria-label="Move ${esc(r.ch.name)} (party slot ${pos + 1}). Drag, or use the left and right arrow keys." title="Drag to reorder"><svg viewBox="0 0 8 14" aria-hidden="true"><circle cx="2" cy="2" r="1.1"/><circle cx="6" cy="2" r="1.1"/><circle cx="2" cy="7" r="1.1"/><circle cx="6" cy="7" r="1.1"/><circle cx="2" cy="12" r="1.1"/><circle cx="6" cy="12" r="1.1"/></svg></button>${por ? `<img src="${por}" alt="">` : ''}<div><span>${esc(r.ch.name)}${pos >= 4 ? ' <small>(reserve)</small>' : ''}</span><small>Lv ${r.cs.lv} · ${esc(r.tier.name)}${r.cls.certain ? '' : ' ?'}</small></div></div></th>`;
+    }).join('') + '</tr></thead>';
+  }
+  function footRows({ cols, base, cur }) {
+    const dl = (d, unit = '') => d ? `<span class="dlt ${d > 0 ? 'up' : 'dn'}">${d > 0 ? '+' : ''}${d}${unit}</span>` : '';
+    let h = '';
+    STATS_S.forEach((s, k) => {
+      h += `<tr><th scope="row">${s}</th>` + cols.map((ci, pos) => `<td${resCls(pos)}><span class="v">${cur[ci].v.fin[k]}${dl(cur[ci].v.fin[k] - base[ci].fin[k])}</span></td>`).join('') + '</tr>';
+    });
+    if (D.dd) return h;
+    h += `<tr><th scope="row">Unleash</th>` + cols.map((ci, pos) => `<td${resCls(pos)}><span class="v">${cur[ci].v.unl}%${dl(cur[ci].v.unl - base[ci].unl, '%')}</span></td>`).join('') + '</tr>';
+    for (const [key, lbl] of [['pow', 'Power'], ['res', 'Resist']]) {
+      h += `<tr><th scope="row">${lbl}</th>` + cols.map((ci, pos) => `<td${resCls(pos)}><span class="els">${[0, 1, 2, 3].map(e => {
+        const v = cur[ci].v[key][e], d = v - base[ci][key][e];
+        return `<span class="etag e${e}" title="${EL[e]} ${lbl}">${v}${d ? dl(d) : ''}</span>`; }).join('')}</span></td>`).join('') + '</tr>';
+    }
+    return h;
+  }
+
+  // ---------- gear view ----------
+  const GEAR_ROWS = () => GM().classItems ? [...SLOTS, ['c', 'Class item']] : SLOTS;
+  function renderGear() {
+    if ($('viewGear').hidden) return;
+    const tp = tableParts(), { cols } = tp;
+    let h = headHtml(cols, tp.cur) + '<tbody>';
+    for (const [sl, label] of GEAR_ROWS()) {
+      h += `<tr><th scope="row">${label}</th>` + cols.map((ci, pos) => {
+        const cs = state.chars[ci];
+        const it = sl === 'c' ? (cs.item ? { n: CLASS_ITEM_LABEL[cs.item] } : null) : ITEM(cs.eq[sl]);
+        return `<td${resCls(pos)}><button type="button" class="gcell ${it ? '' : 'empty'} ${it && it.c ? 'cursed' : ''}" data-ci="${ci}" data-sl="${sl}" aria-haspopup="dialog" aria-expanded="false">${iconHtml(it, sl, true)}<span class="nm">${it ? esc(it.n) : '—'}</span></button></td>`;
+      }).join('') + '</tr>';
+    }
+    $('gearTable').innerHTML = h + '</tbody><tfoot>' + footRows(tp) + '</tfoot>';
+  }
+
+  // ---------- djinn view ----------
+  const djStats = dj => dj.s.map((v, k) => v ? `${STATS_S[k]}+${v}` : '').filter(Boolean).join(' ');
+  function renderDjinnTab() {
+    if ($('viewDjinn').hidden) return;
+    const tp = tableParts(), { cols, cur } = tp;
+    let h = headHtml(cols, cur) + '<tbody>';
+    for (let e = 0; e < 4; e++) {
+      h += `<tr><th scope="row"><span class="etag e${e}"><span class="dot"></span>${EL[e]}</span></th>` + cols.map((ci, pos) => {
+        const mine = state.dj.map((d, i) => ({ ...d, i })).filter(d => d.o === ci && D.djinn[d.i].e === e);
+        const full = owned(ci).length >= GM().djCap;
+        const chipsHtml = mine.map(d => {
+          const dj = D.djinn[d.i], miss = state.djHave && !state.djHave[d.i];
+          return `<button type="button" class="djc e${e} ${d.s ? '' : 'stby'} ${miss ? 'missing' : ''}" data-dj="${d.i}" data-ci="${ci}" aria-haspopup="dialog" aria-expanded="false" title="${esc(dj.n)}: ${djStats(dj)}${d.s ? '' : ' · Standby'}"><span class="dot"></span>${esc(dj.n)}</button>`;
+        }).join('');
+        const add = full ? '' : `<button type="button" class="djadd" data-add="${e}" data-ci="${ci}" aria-haspopup="dialog" aria-expanded="false" aria-label="Add a ${EL[e]} djinni to ${esc(D.chars[ci].name)}">+</button>`;
+        return `<td${resCls(pos)}><div class="djcell">${chipsHtml}${add}</div></td>`;
+      }).join('') + '</tr>';
+    }
+    h += `<tr><th scope="row">Djinn</th>` + cols.map((ci, pos) => { const o = owned(ci); return `<td${resCls(pos)}><span class="cnt"><b>${o.length}</b>/${GM().djCap} · ${o.filter(d => d.s).length} Set</span></td>`; }).join('') + '</tr>';
+    h += `<tr><th scope="row">Elem Lv</th>` + cols.map((ci, pos) => `<td${resCls(pos)}><span class="els">${[0, 1, 2, 3].map(e => `<span class="etag e${e}">${cur[ci].r.cls.L[e]}</span>`).join('')}</span></td>`).join('') + '</tr>';
+    $('djTable').innerHTML = h + '</tbody><tfoot>' + footRows(tp) + '</tfoot>';
+    const free = djInGame().filter(i => state.dj[i].o === null);
+    $('djPool').textContent = !free.length ? `All ${djInGame().length} djinn are assigned.` : free.length <= 10 ? `Unassigned: ${free.map(i => D.djinn[i].n).join(', ')}.` : `${free.length} djinn are unassigned.`;
+  }
+  // Give djinni i to Adept ci. If `replace` is a djinni ci holds, it is swapped out (to the previous holder, or back to the pool).
+  function moveDjinn(ci, i, replace) {
+    const d = state.dj[i], from = d.o;
+    let note = null;
+    if (replace != null) {
+      const r = state.dj[replace];
+      if (from != null && from !== ci) { r.o = from; r.s = true; note = `Took ${D.djinn[i].n} from ${D.chars[from].name}; ${D.chars[from].name} gets ${D.djinn[replace].n}`; }
+      else { r.o = null; }
+    } else if (from != null && from !== ci) {
+      note = `Took ${D.djinn[i].n} from ${D.chars[from].name}`;
+    }
+    d.o = ci; d.s = true;
+    return note;
+  }
+
+  // ---------- modifiers view ----------
+  function renderModsTab(footOnly) {
+    if ($('viewMods').hidden) return;
+    const tp = tableParts(), { cols, cur } = tp;
+    if (footOnly && $('modTable').tFoot) {
+      $('modTable').tFoot.innerHTML = footRows(tp);
+      // keep the header (level/class) in step without touching the inputs
+      const nh = document.createElement('table'); nh.innerHTML = headHtml(cols, cur);
+      $('modTable').replaceChild(nh.tHead, $('modTable').tHead);
+      return;
+    }
+    let h = headHtml(cols, cur) + '<tbody>';
+    h += `<tr><th scope="row">Level</th>` + cols.map((ci, pos) => `<td${resCls(pos)}><input class="num" type="number" min="1" max="99" id="mlv-${ci}" data-mlv="${ci}" value="${state.chars[ci].lv}" aria-label="${esc(D.chars[ci].name)} level"></td>`).join('') + '</tr>';
+    if (GM().manualBase) h += statusRows(cols);
+    if (!GM().manualBase) h += `<tr class="grp"><th scope="rowgroup" colspan="${NCH() + 1}">Stat items used</th></tr>`;
+    if (!GM().manualBase) D.boost.forEach((b, i) => {
+      h += `<tr><th scope="row" title="${esc(b.n)}: ${STATS_S[b.s]} +${b.v} each">${esc(b.n)}</th>` + cols.map((ci, pos) => `<td${resCls(pos)}><input class="num" type="number" min="0" max="99" id="mbst-${ci}-${i}" data-mbst="${ci}" data-i="${i}" value="${state.chars[ci].boosts[i]}" aria-label="${esc(D.chars[ci].name)} ${esc(b.n)} used"></td>`).join('') + '</tr>';
+    });
+    h += `<tr class="grp"><th scope="rowgroup" colspan="${NCH() + 1}">${GM().manualBase ? 'Base stats (before class, djinn and items)' : 'Corrections to base stats (level-up variance)'}</th></tr>`;
+    STATS_S.forEach((s, k) => {
+      h += `<tr><th scope="row">${s}</th>` + cols.map((ci, pos) => {
+        const c = state.chars[ci], base = G.baseStat(D.chars[ci].curve[k], c.lv);
+        return `<td${resCls(pos)}><input class="num" type="number" step="1" id="mmod-${ci}-${k}" data-mmod="${ci}" data-k="${k}" value="${c.mods[k]}" aria-label="${esc(D.chars[ci].name)} ${s} ${GM().manualBase ? 'base' : 'correction'}">${GM().manualBase ? '' : `<small>curve ${base} → ${base + c.mods[k]}</small>`}</td>`;
+      }).join('') + '</tr>';
+    });
+    $('modTable').innerHTML = h + '</tbody><tfoot>' + footRows(tp) + '</tfoot>';
+  }
+  $('modTable').addEventListener('input', e => {
+    const el = e.target; if (el.tagName !== 'INPUT') return;
+    const v = parseInt(el.value, 10);
+    if (el.dataset.shown !== undefined) return;
+    if (el.dataset.mlv !== undefined) { if (!(v >= 1 && v <= 99)) return; state.chars[+el.dataset.mlv].lv = v; }
+    else if (el.dataset.mbst !== undefined) state.chars[+el.dataset.mbst].boosts[+el.dataset.i] = clamp(v || 0, 0, 99);
+    else if (el.dataset.mmod !== undefined) state.chars[+el.dataset.mmod].mods[+el.dataset.k] = v || 0;
+    else return;
+    renderAll({ modsFootOnly: true });
+    // refresh the "curve → result" hints in this column without rebuilding inputs
+    const ci = +(el.dataset.mlv ?? el.dataset.mbst ?? el.dataset.mmod);
+    if (!GM().manualBase) STATS_S.forEach((s, k) => { const inp = $(`mmod-${ci}-${k}`); if (inp && inp.nextElementSibling) { const b = G.baseStat(D.chars[ci].curve[k], state.chars[ci].lv); inp.nextElementSibling.textContent = `curve ${b} → ${b + state.chars[ci].mods[k]}`; } });
+  });
+  $('modTable').addEventListener('change', e => { if (e.target.dataset.shown !== undefined) return; renderAll(); });
+  // Dark Dawn: the game only shows final stats, so work base stats out from the status screen.
+  // final = floor((base + djinn) x class% / 100) with no gear on; take the smallest base that reproduces each number.
+  const shown = {};
+  function statusRows(cols) {
+    let h = `<tr class="grp"><th scope="rowgroup" colspan="${NCH() + 1}">From the status screen (gear removed)</th></tr>`;
+    STATS_S.forEach((s, k) => {
+      h += `<tr><th scope="row">${s}</th>` + cols.map((ci, pos) => `<td${resCls(pos)}><input class="num" type="number" min="0" id="mshow-${ci}-${k}" data-shown="${ci}" data-k="${k}" value="${(shown[ci] || [])[k] ?? ''}" placeholder="—" aria-label="${esc(D.chars[ci].name)} ${s} on the status screen"></td>`).join('') + '</tr>';
+    });
+    h += `<tr><th scope="row"></th>` + cols.map((ci, pos) => `<td${resCls(pos)}><button type="button" class="btn sm" data-solve="${ci}">Work out base</button></td>`).join('') + '</tr>';
+    return h;
+  }
+  function solveBase(ci) {
+    const r = compute(ci), vals = shown[ci] || [], out = [];
+    STATS_S.forEach((s, k) => {
+      const t = vals[k]; if (!(t >= 0)) return;
+      const m = r.tier.mult[k], add = r.dj[k] + r.boost[k];
+      const fin = b => Math.floor((b + add) * m / 100);
+      let b = Math.ceil(t * 100 / m) - add - 1;
+      while (fin(b) < t) b++;
+      state.chars[ci].mods[k] = b;
+      out.push(fin(b) === t ? s : s + ' (no exact match: gear on, or a different class or djinn?)');
+    });
+    return out;
+  }
+  $('modTable').addEventListener('input', e => {
+    const el = e.target; if (el.dataset.shown === undefined) return;
+    const ci = +el.dataset.shown; (shown[ci] = shown[ci] || [])[+el.dataset.k] = el.value === '' ? undefined : parseInt(el.value, 10);
+  });
+  $('modTable').addEventListener('click', e => {
+    const b = e.target.closest('[data-solve]'); if (!b) return;
+    const ci = +b.dataset.solve, done = solveBase(ci);
+    renderAll();
+    toast(done.length ? `${D.chars[ci].name}: base ${done.join(', ')} worked out from the status screen with the current class and djinn.` : `Enter ${D.chars[ci].name}'s status-screen numbers first.`);
+  });
+  $('btnClearBoosts').addEventListener('click', () => { state.chars.forEach(c => c.boosts = [0, 0, 0, 0, 0, 0]); renderAll(); toast('Stat items cleared for every Adept.'); });
+  $('btnClearMods').addEventListener('click', () => { state.chars.forEach(c => c.mods = [0, 0, 0, 0, 0, 0]); renderAll(); toast('Corrections cleared for every Adept.'); });
+
+  // ---------- picker ----------
+  let pickerFor = null;
+  function pickerAnchor() {
+    if (!pickerFor) return null;
+    if (pickerFor.kind === 'djinn') return document.querySelector(pickerFor.anchorSel);
+    return document.querySelector(`.gcell[data-ci="${pickerFor.ci}"][data-sl="${pickerFor.sl}"]`);
+  }
+  function closePicker(refocus) {
+    if ($('picker').hidden) return;
+    $('picker').hidden = true;
+    const btn = pickerAnchor();
+    if (btn) btn.setAttribute('aria-expanded', 'false');
+    if (refocus && btn) btn.focus();
+    pickerFor = null;
+  }
+  function placePicker(btn) {
+    const pk = $('picker');
+    const rc = btn.getBoundingClientRect(), pw = pk.offsetWidth, ph = pk.offsetHeight, vw = window.innerWidth, vh = window.innerHeight;
+    const left = Math.min(Math.max(16, rc.left), vw - pw - 16);
+    let top = rc.bottom + 4; if (top + ph > vh - 8) top = Math.max(8, rc.top - ph - 4);
+    pk.style.left = left + 'px'; pk.style.top = top + 'px';
+  }
+  function openDjinnPicker(btn) {
+    const ci = +btn.dataset.ci, ch = D.chars[ci];
+    const cur = btn.dataset.dj !== undefined ? +btn.dataset.dj : null;   // replacing this djinni, or adding (null)
+    const addEl = btn.dataset.add !== undefined ? +btn.dataset.add : null;
+    pickerFor = { kind: 'djinn', ci, cur, anchorSel: cur != null ? `.djc[data-dj="${cur}"]` : `.djadd[data-ci="${ci}"][data-add="${addEl}"]` };
+    const firstEl = cur != null ? D.djinn[cur].e : addEl;
+    const order = [firstEl, ...[0, 1, 2, 3].filter(e => e !== firstEl)];
+    let acts = '';
+    if (cur != null) {
+      const d = state.dj[cur];
+      const tog = previewChange(ci, () => { state.dj[cur].s = !state.dj[cur].s; });
+      const rem = previewChange(ci, () => { state.dj[cur].o = null; });
+      acts = `<div class="pk-acts">
+        <button type="button" class="pk-opt" data-act="toggle" style="grid-template-columns:1fr"><span class="t"><b>${d.s ? 'Put on Standby' : 'Set it again'}</b></span><span class="ch" style="grid-column:1">${chips(tog.before, tog.after).join('') || '<span class="chg nt">No change</span>'}</span></button>
+        <button type="button" class="pk-opt" data-act="remove" style="grid-template-columns:1fr"><span class="t"><b>Remove from ${esc(ch.name)}</b></span><span class="ch" style="grid-column:1">${chips(rem.before, rem.after).join('') || '<span class="chg nt">No change</span>'}</span></button>
+      </div>`;
+    }
+    let list = '';
+    for (const e of order) {
+      const ids = djInGame().filter(i => D.djinn[i].e === e && state.dj[i].o !== ci);
+      ids.sort((a, b) => ((state.dj[a].o === null ? 0 : 1) - (state.dj[b].o === null ? 0 : 1)) || a - b);
+      if (!ids.length) continue;
+      list += `<div class="pk-grp">${EL[e]}</div>` + ids.map(i => {
+        const dj = D.djinn[i], d = { ...state.dj[i] };   // copy: the preview below moves the real one temporarily
+        const p = previewChange(ci, () => moveDjinn(ci, i, cur));
+        const ch2 = chips(p.before, p.after);
+        if (p.note) ch2.push(`<span class="chg sw">${esc(p.note.replace(/^Took /, 'Takes '))}</span>`);
+        if (!ch2.length) ch2.push('<span class="chg nt">No change</span>');
+        const where = d.o === null ? 'Unassigned' : `On ${D.chars[d.o].name}${d.s ? '' : ' (Standby)'}`;
+        const miss = state.djHave && !state.djHave[i] ? ' · not collected' : '';
+        return `<button type="button" role="option" class="pk-opt" data-dj="${i}" aria-selected="false">
+          <span class="etag e${e}" style="justify-content:center"><span class="dot"></span></span><span class="t"><b>${esc(dj.n)}</b><small>${where}${miss}</small><small class="bon">${djStats(dj)}</small></span>
+          <span class="ch">${ch2.join('')}</span></button>`;
+      }).join('');
+    }
+    $('picker').innerHTML = `<div class="pk-head"><b>${esc(ch.name)} · ${cur != null ? 'Swap ' + esc(D.djinn[cur].n) : 'Add a djinni'}</b><span>${cur != null ? 'Standby, remove, or pick a djinni to swap in.' : `${owned(ci).length}/${GM().djCap} djinn. Changes are to ${esc(ch.name)}'s class and final stats.`}</span></div>${acts}<div class="pk-list" role="listbox" aria-label="Choose a djinni">${list}</div>`;
+    const pk = $('picker'); pk.hidden = false; btn.setAttribute('aria-expanded', 'true');
+    placePicker(btn);
+    const first = pk.querySelector('.pk-opt'); if (first) first.focus();
+  }
+  $('djTable').addEventListener('click', e => {
+    const b = e.target.closest('.djc, .djadd'); if (!b) return;
+    if (pickerFor && pickerFor.kind === 'djinn' && b.getAttribute('aria-expanded') === 'true') { closePicker(false); return; }
+    closePicker(false); openDjinnPicker(b);
+  });
+  function openPicker(btn) {
+    const ci = +btn.dataset.ci, sl = btn.dataset.sl, cs = state.chars[ci], ch = D.chars[ci];
+    pickerFor = { kind: 'gear', ci, sl };
+    let rows = [];
+    if (sl === 'c') {
+      rows = ITEMS.map(([v, l]) => {
+        const p = previewChange(ci, () => equipClassItem(ci, v));
+        const holder = v ? state.chars.findIndex((c, i) => i !== ci && c.item === v) : -1;
+        return { v, it: v ? { n: CLASS_ITEM_LABEL[v] } : null, label: v ? l : 'None', cur: cs.item === v, p, holder };
+      });
+    } else {
+      const opts = optionsFor(ci, sl).opts;
+      rows.push({ v: '', it: null, label: 'None (unequip)', cur: cs.eq[sl] == null, p: previewChange(ci, () => equipItem(ci, sl, null)), holder: -1 });
+      for (const o of opts) {
+        const holder = state.chars.findIndex((c, i) => i !== ci && c.eq[sl] === o.id);
+        rows.push({ v: String(o.id), it: o.it, label: o.it.n, sub: sl === 'w' ? `Atk ${o.it.a}` : `Def ${o.it.d}`, cur: cs.eq[sl] === o.id, p: previewChange(ci, () => equipItem(ci, sl, o.id)), holder });
+      }
+    }
+    const curName = sl === 'c' ? (cs.item ? CLASS_ITEM_LABEL[cs.item] : 'nothing') : (ITEM(cs.eq[sl]) ? ITEM(cs.eq[sl]).n : 'nothing');
+    $('picker').innerHTML = `<div class="pk-head"><b>${esc(ch.name)} · ${sl === 'c' ? 'Class item' : SLOT_NAME[sl]}</b><span>Now: ${esc(curName)}. Changes are to ${esc(ch.name)}'s final stats.</span></div>
+      <div class="pk-list" role="listbox" aria-label="Choose ${sl === 'c' ? 'class item' : SLOT_NAME[sl]}">` + rows.map(row => {
+        const ch = row.cur ? ['<span class="chg nt">Equipped</span>'] : chips(row.p.before, row.p.after);
+        if (!row.cur && row.p.note) ch.push(`<span class="chg sw">${esc(row.p.note.replace(/^Took /, 'Takes '))}</span>`);
+        else if (!row.cur && row.holder >= 0) ch.push(`<span class="chg nt">Also on ${esc(D.chars[row.holder].name)}</span>`);
+        if (!ch.length) ch.push('<span class="chg nt">No change</span>');
+        return `<button type="button" role="option" class="pk-opt ${row.cur ? 'cur' : ''}" aria-selected="${row.cur}" data-v="${row.v}">
+          ${iconHtml(row.it, sl === 'c' ? 'c' : sl, true)}<span class="t"><b>${esc(row.label)}</b>${row.sub ? `<small>${row.sub}</small>` : ''}${row.it && row.it.c ? '<small style="color:var(--warn)">cursed</small>' : ''}</span>
+          <span class="ch">${ch.join('')}</span></button>`;
+      }).join('') + '</div>';
+    const pk = $('picker'); pk.hidden = false;
+    btn.setAttribute('aria-expanded', 'true');
+    placePicker(btn);
+    const first = pk.querySelector('.pk-opt.cur') || pk.querySelector('.pk-opt'); if (first) first.focus({ preventScroll: false });
+  }
+  $('gearTable').addEventListener('click', e => {
+    const b = e.target.closest('.gcell'); if (!b) return;
+    if (pickerFor && pickerFor.kind === 'gear' && pickerFor.ci === +b.dataset.ci && pickerFor.sl === b.dataset.sl) { closePicker(false); return; }
+    closePicker(false); openPicker(b);
+  });
+  $('picker').addEventListener('click', e => {
+    const o = e.target.closest('.pk-opt'); if (!o || !pickerFor) return;
+    if (pickerFor.kind === 'djinn') {
+      const { ci, cur } = pickerFor;
+      let note = null;
+      if (o.dataset.act === 'toggle') state.dj[cur].s = !state.dj[cur].s;
+      else if (o.dataset.act === 'remove') state.dj[cur].o = null;
+      else if (o.dataset.dj !== undefined) note = moveDjinn(ci, +o.dataset.dj, cur);
+      closePicker(false); renderAll(); toast(note);
+      const back = o.dataset.dj !== undefined ? document.querySelector(`.djc[data-dj="${o.dataset.dj}"]`) : document.querySelector(`.djadd[data-ci="${ci}"]`);
+      if (back) back.focus();
+      return;
+    }
+    const { ci, sl } = pickerFor, v = o.dataset.v;
+    const note = sl === 'c' ? equipClassItem(ci, v) : equipItem(ci, sl, v === '' ? null : +v);
+    closePicker(false);
+    renderAll();
+    toast(note);
+    const btn = document.querySelector(`.gcell[data-ci="${ci}"][data-sl="${sl}"]`); if (btn) btn.focus();
+  });
+  $('picker').addEventListener('keydown', e => {
+    const opts = [...$('picker').querySelectorAll('.pk-opt')], i = opts.indexOf(document.activeElement);
+    if (e.key === 'ArrowDown') { e.preventDefault(); (opts[i + 1] || opts[0]).focus(); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); (opts[i - 1] || opts[opts.length - 1]).focus(); }
+    else if (e.key === 'Home') { e.preventDefault(); opts[0].focus(); }
+    else if (e.key === 'End') { e.preventDefault(); opts[opts.length - 1].focus(); }
+    else if (e.key === 'Escape') { e.preventDefault(); closePicker(true); }
+    else if (e.key === 'Tab') { closePicker(true); }
+  });
+  document.addEventListener('mousedown', e => { if (!$('picker').hidden && !e.target.closest('#picker') && !e.target.closest('.gcell, .djc, .djadd')) closePicker(false); });
+  window.addEventListener('resize', () => closePicker(false));
+  document.addEventListener('scroll', e => { if (!$('picker').hidden && !(e.target instanceof Element && e.target.closest('#picker'))) closePicker(false); }, true);
+
+  // ---------- baseline ----------
+  document.addEventListener('click', e => {
+    if (e.target.closest('[data-baseline]')) { state.base = buildSnap(); renderAll(); toast('Baseline set to the current build. Totals now compare against it.'); }
+    const rv = e.target.closest('[data-revert]');
+    if (rv && state.base) { const part = rv.dataset.revert; buildLoad(state.base, [part]); renderAll(); toast({ gear: 'Gear', djinn: 'Djinn', mods: 'Levels and modifiers' }[part] + ' reverted to the baseline.'); }
+  });
+
+  // ---------- tabs ----------
+  const VIEWS = { planner: 'viewPlanner', djinn: 'viewDjinn', gear: 'viewGear', mods: 'viewMods' };
+  const TABS = { planner: 'tabPlanner', djinn: 'tabDjinn', gear: 'tabGear', mods: 'tabMods' };
+  function applyView() {
+    if (!VIEWS[state.view] || (state.view === 'gear' && GM().noGear)) state.view = 'planner';
+    $('tabGear').hidden = !!GM().noGear;
+    document.querySelectorAll('.gearonly').forEach(x => { x.hidden = !!GM().noGear; });
+    for (const k in VIEWS) {
+      const on = state.view === k;
+      $(VIEWS[k]).hidden = !on;
+      $(TABS[k]).setAttribute('aria-selected', String(on)); $(TABS[k]).tabIndex = on ? 0 : -1;
+    }
+  }
+  function showView(v) {
+    state.view = VIEWS[v] ? v : 'planner';
+    closePicker(false); hideTip && hideTip();
+    applyView();
+    renderAll();
+  }
+  document.querySelector('.tabs').addEventListener('click', e => { const b = e.target.closest('[data-view]'); if (b) showView(b.dataset.view); });
+  document.querySelector('.tabs').addEventListener('keydown', e => {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    e.preventDefault();
+    const keys = Object.keys(VIEWS), i = keys.indexOf(state.view), n = keys[(i + (e.key === 'ArrowRight' ? 1 : keys.length - 1)) % keys.length];
+    showView(n); $(TABS[n]).focus();
+  });
+
+
+  // ---------- item tooltip (gear view) ----------
+  const CLASS_ITEM_INFO = { card: 'Pierrot', whip: 'Tamer', tome: 'Dark Mage' };
+  function tipHtml(it, sl) {
+    if (!it) return '';
+    if (sl === 'c') {
+      const key = Object.keys(CLASS_ITEM_LABEL).find(k => CLASS_ITEM_LABEL[k] === it.n);
+      return `<div class="th">${iconHtml(it, 'c')}<div><b>${esc(it.n)}</b><small>Class item</small></div></div>
+        <div>Switches the wearer into the ${CLASS_ITEM_INFO[key]} class series. Its tier rises with 1, 2 or 3 djinn of each element other than the Adept's own.</div>`;
+    }
+    const lines = [];
+    for (const [t, v] of (it.e || [])) {
+      const sg = v >= 0 ? '+' + v : String(v);
+      if (t === 1) lines.push(`Max HP ${sg}`); else if (t === 2) lines.push(`Recovers ${v} HP each turn`);
+      else if (t === 3) lines.push(`Max PP ${sg}`); else if (t === 4) lines.push(`Recovers ${v} PP each turn`);
+      else if (t === 5) lines.push(`Agility ${sg}`); else if (t === 6) lines.push(`Luck ${sg}`);
+      else if (t === 9) lines.push(`Max PP ${fmtX(v / 10)}`); else if (t === 13) lines.push(`Agility ${fmtX(v / 10)}`); else if (t === 14) lines.push(`Luck ${fmtX(v / 10)}`);
+      else if (t >= 15 && t <= 18) lines.push(`${EL[t - 15]} Power ${sg}`);
+      else if (t >= 19 && t <= 22) lines.push(`${EL[t - 19]} Resistance ${sg}`);
+      else if (t === 23) lines.push(`Unleash rate +${v}% <span class="k">(in-game: "Criticals")</span>`);
+      else if (t === 25) lines.push('Cancels the effects of cursed gear');
+      else if (t === 27) lines.push('More random battles');
+    }
+    if (it.sl !== 'w' && it.a) lines.unshift(`Attack +${it.a}`);
+    let un = '';
+    if (it.u) {
+      const u = it.u, hit = u.d === 4 ? `Attack ×${(u.p / 10).toFixed(1)}` : `Attack +${u.p}`;
+      un = `<div class="un"><div><span class="k">Unleash</span> <b>${esc(u.n)}</b></div>
+        <div><span class="etag e${u.e}"><span class="dot"></span>${u.e < 4 ? EL[u.e] : 'No element'}</span> · ${hit} · ${u.r}% base chance</div></div>`;
+    }
+    const users = GM().chars.filter(i => (it.m >> i) & 1).map(i => D.chars[i].name);
+    const holders = state.chars.map((c, i) => i).filter(i => state.chars[i].eq[it.sl] === itemId(it)).map(i => D.chars[i].name);
+    const copies = it.b ? 'Sold in shops' : (state.owned && state.owned[itemId(it)] ? `You own ${state.owned[itemId(it)]}` : 'Not sold in shops');
+    return `<div class="th">${iconHtml(it, it.sl)}<div><b>${esc(it.n)}</b><small>${esc(it.k)}</small></div></div>
+      <div class="big">${it.sl === 'w' ? `Attack ${it.a}` : `Defense ${it.d}`}</div>
+      ${lines.length ? `<ul>${lines.map(l => `<li>${l}</li>`).join('')}</ul>` : ''}
+      ${un}
+      ${it.us ? `<div><span class="k">In battle:</span> ${esc(it.us.t)}</div>` : ''}
+      ${it.c ? `<div class="bad">Cursed: can stop the wearer acting some turns unless they wear a Cleric's Ring.</div>` : ''}
+      <div class="foot">${copies} · ${users.length === NCH() ? 'Anyone can equip' : 'Equips: ' + users.join(', ')}${holders.length ? ' · Worn by ' + holders.join(', ') : ''}</div>`;
+  }
+  const ITEM_ID = new Map(Object.entries(GSDATA.items).map(([id, it]) => [it, +id]));
+  const itemId = it => ITEM_ID.get(it);
+  let tipTimer = null, tipEl = null;
+  function showTip(el) {
+    const ci = +el.dataset.ci, sl = el.dataset.sl;
+    let it;
+    if (el.classList.contains('gcell')) it = sl === 'c' ? (state.chars[ci].item ? { n: CLASS_ITEM_LABEL[state.chars[ci].item] } : null) : ITEM(state.chars[ci].eq[sl]);
+    else if (pickerFor) { const v = el.dataset.v; it = pickerFor.sl === 'c' ? (v ? { n: CLASS_ITEM_LABEL[v] } : null) : (v ? D.items[v] : null); }
+    const html = tipHtml(it, el.classList.contains('gcell') ? sl : pickerFor && pickerFor.sl);
+    const tip = $('tip');
+    if (!html) { tip.hidden = true; return; }
+    tip.innerHTML = html; tip.hidden = false;
+    const rc = el.getBoundingClientRect(), tw = tip.offsetWidth, th = tip.offsetHeight, vw = window.innerWidth, vh = window.innerHeight;
+    // beside the picker row, otherwise below the cell
+    let left, top;
+    if (el.classList.contains('pk-opt')) {
+      const pr = $('picker').getBoundingClientRect();
+      left = pr.right + 8 + tw <= vw - 8 ? pr.right + 8 : Math.max(8, pr.left - tw - 8);
+      top = Math.min(Math.max(8, rc.top), vh - th - 8);
+    } else {
+      left = Math.min(Math.max(8, rc.left), vw - tw - 8);
+      top = rc.bottom + 6; if (top + th > vh - 8) top = Math.max(8, rc.top - th - 6);
+    }
+    tip.style.left = left + 'px'; tip.style.top = top + 'px';
+  }
+  function hideTip() { clearTimeout(tipTimer); tipEl = null; $('tip').hidden = true; }
+  function tipTarget(e) { return e.target.closest && e.target.closest('.gcell, .pk-opt'); }
+  document.addEventListener('mouseover', e => {
+    const el = tipTarget(e); if (el === tipEl) return;
+    hideTip(); if (!el) return;
+    tipEl = el; tipTimer = setTimeout(() => showTip(el), 250);
+  });
+  document.addEventListener('focusin', e => { const el = tipTarget(e); if (el) { hideTip(); tipEl = el; showTip(el); } else hideTip(); });
+  document.addEventListener('mousedown', hideTip);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') hideTip(); });
+  window.addEventListener('scroll', e => {
+    const inPicker = e.target instanceof Element && e.target.closest('#picker');
+    if (inPicker && tipEl && tipEl.isConnected && !$('tip').hidden) showTip(tipEl); else if (!inPicker) hideTip();
+  }, true);
+
+
+  // ---------- drag whole columns to reorder the party (Djinn, Gear, Modifiers tabs) ----------
+  function moveOrder(from, to) {
+    if (from === to || to < 0 || to > NCH() - 1) return false;
+    const o = state.order, [c] = o.splice(from, 1); o.splice(to, 0, c);
+    return true;
+  }
+  function colCells(table, pos) {
+    const idx = pos + 2; // 1-based, after the row-label column
+    return table.querySelectorAll(`tr > :nth-child(${idx})`);
+  }
+  let colDrag = null;
+  document.addEventListener('pointerdown', e => {
+    const g = e.target.closest('.gtab .grip'); if (!g || e.button > 0) return;
+    e.preventDefault();
+    const table = g.closest('table'), from = +g.dataset.pos;
+    const ths = [...table.tHead.rows[0].cells].slice(1);
+    colDrag = { table, from, to: from, ths, id: e.pointerId };
+    g.setPointerCapture && g.setPointerCapture(e.pointerId);
+    table.classList.add('dragging');
+    colCells(table, from).forEach(c => c.classList.add('lift'));
+  });
+  document.addEventListener('pointermove', e => {
+    if (!colDrag || e.pointerId !== colDrag.id) return;
+    const { table, ths } = colDrag;
+    let to = ths.length - 1;
+    for (let i = 0; i < ths.length; i++) { const r = ths[i].getBoundingClientRect(); if (e.clientX < r.left + r.width / 2) { to = i; break; } }
+    // `to` is the column the pointer is before; convert to the final index after removing `from`
+    if (e.clientX >= ths[ths.length - 1].getBoundingClientRect().left + ths[ths.length - 1].getBoundingClientRect().width / 2) to = ths.length;
+    table.querySelectorAll('.drop-before, .drop-after').forEach(c => c.classList.remove('drop-before', 'drop-after'));
+    if (to === ths.length) colCells(table, ths.length - 1).forEach(c => c.classList.add('drop-after'));
+    else colCells(table, to).forEach(c => c.classList.add('drop-before'));
+    colDrag.to = to > colDrag.from ? to - 1 : to;
+  });
+  function endColDrag(commit) {
+    if (!colDrag) return;
+    const { table, from, to } = colDrag; colDrag = null;
+    table.classList.remove('dragging');
+    table.querySelectorAll('.lift, .drop-before, .drop-after').forEach(c => c.classList.remove('lift', 'drop-before', 'drop-after'));
+    if (commit && moveOrder(from, to)) {
+      renderAll();
+      const name = D.chars[state.order[to]].name;
+      toast(`${name} moved to slot ${to + 1}${NCH() <= 4 ? '' : to < 4 ? ' (active party)' : ' (reserve)'}.`);
+      const g = document.querySelector(`#${table.id} .grip[data-pos="${to}"]`); if (g) g.focus();
+    }
+  }
+  document.addEventListener('pointerup', e => { if (colDrag && e.pointerId === colDrag.id) endColDrag(true); });
+  document.addEventListener('pointercancel', () => endColDrag(false));
+  document.addEventListener('keydown', e => {
+    const g = e.target.closest && e.target.closest('.gtab .grip'); if (!g) return;
+    if (e.key === 'Escape' && colDrag) { endColDrag(false); return; }
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    e.preventDefault();
+    const from = +g.dataset.pos, to = from + (e.key === 'ArrowRight' ? 1 : -1), id = g.closest('table').id;
+    if (moveOrder(from, to)) { renderAll(); toast(`${D.chars[state.order[to]].name} moved to slot ${to + 1}${NCH() <= 4 ? '' : to < 4 ? ' (active party)' : ' (reserve)'}.`); const ng = document.querySelector(`#${id} .grip[data-pos="${to}"]`); if (ng) ng.focus(); }
+  });
+
+  // Each game keeps its own setup (party, djinn, gear, baseline, import); switching saves one and loads the other.
+  function switchGame(g, quiet) {
+    if (!GAMES[g] || !GAMES[g].ready || g === state.game) return;
+    closePicker(false); hideTip();
+    const view = state.view;
+    save();
+    state = loadGame(g); state.view = view;
+    syncGameUi(); applyView(); renderAll();
+    if (!quiet) { toast(`Switched to ${GAMES[g].short}. Each game keeps its own setup.`); $('importMsg').innerHTML = ''; $('btnUndoImport').hidden = true; undoState = null; }
+  }
+  function syncGameUi() {
+    $('gameSel').value = state.game;
+    $('gameName').textContent = GM().short;
+    $('endgameOnly').checked = state.endgame;
+    $('gearSort').value = SORTS[state.sort] ? state.sort : 'name';
+    document.body.dataset.game = state.game;
+    $('ddModsNote').hidden = !GM().manualBase;
+    document.querySelectorAll('.gbaonly').forEach(x => { x.hidden = !!GM().manualBase; });
+    $('srcNote').textContent = GM().manualBase ? 'Dark Dawn data comes from the Golden Sun Syndicate class and djinn guides; base stats are entered by hand.' : "Data comes from the game's own class, stat, djinn and item tables.";
+  }
+  function renderAll(opts = {}) {
+    renderStrip(); renderSheet(); renderOverview(); renderShowcase(); renderGear(); renderDjinnTab(); renderModsTab(!!opts.modsFootOnly);
+    if (typeof syncImportUi === 'function') syncImportUi();
+    $('ioText').value = JSON.stringify(state);
+    save();
+    if (opts.keepFocus) { const el = $(opts.keepFocus); if (el) { el.focus(); if (el.type === 'number') { try { el.select(); } catch (e) {} } } }
+  }
+
+  applyView();
+  $('gameSel').innerHTML = Object.entries(GAMES).map(([k, g]) => `<option value="${k}" ${g.ready ? '' : 'disabled'}>${esc(g.name)}${g.ready ? '' : ' (coming later)'}</option>`).join('');
+  $('gearSort').innerHTML = Object.entries(SORTS).map(([k, s]) => `<option value="${k}">${esc(s.label)}</option>`).join('');
+  $('gearSort').value = SORTS[state.sort] ? state.sort : 'name';
+  $('gearSort').addEventListener('change', e => { state.sort = e.target.value; renderAll(); });
+  // ---------- save import ----------
+  let saveBuffer = null, saveName = '', undoState = null;
+  const fmtTime = s => `${Math.floor(s / 3600)}h ${String(Math.floor((s % 3600) / 60)).padStart(2, '0')}m`;
+  function syncImportUi() {
+    $('ownedToggle').hidden = !state.owned;
+    $('ownedOnly').checked = state.ownedOnly;
+    $('importStatus').textContent = state.imported ? `Loaded: ${state.imported.file}, slot ${state.imported.slot}` : '';
+  }
+  $('saveFile').addEventListener('change', e => {
+    const f = e.target.files && e.target.files[0];
+    $('saveSlots').innerHTML = ''; $('importMsg').innerHTML = '';
+    if (!f) return;
+    $('saveFileName').textContent = f.name;
+    if (f.size > 4 * 1024 * 1024) { $('importMsg').innerHTML = '<span class="bad">That file is too large to be a GBA save. Pick the .sav file your emulator writes next to the ROM.</span>'; return; }
+    const rd = new FileReader();
+    rd.onload = () => {
+      saveBuffer = rd.result; saveName = f.name;
+      let slots = [];
+      try { slots = GSSave.listSlots(saveBuffer); } catch (err) { slots = []; }
+      const good = slots.filter(s => s.valid);
+      if (!good.length) {
+        $('importMsg').innerHTML = slots.length
+          ? '<span class="bad">This file has save data, but its Adept records don\'t look like Golden Sun or The Lost Age. It may be from another game or damaged.</span>'
+          : '<span class="bad">No Golden Sun save data found in this file. Check it\'s the .sav your emulator or flash cart writes (not an emulator save state).</span>';
+        return;
+      }
+      $('saveSlots').innerHTML = good.map(s => {
+        const lead = s.order.length ? D.chars[s.order[0]].name : '—';
+        const party = s.order.map(k => D.chars[k] ? D.chars[k].name : '?').join(', ');
+        return `<button type="button" class="slotbtn" data-off="${s.off}" data-slot="${s.slot + 1}" data-game="${s.game}">
+          <b>${esc(GAMES[s.game].short)} · Slot ${s.slot + 1}${s.fileName ? ' · ' + esc(s.fileName) : ''}</b>
+          <span>${fmtTime(s.seconds)} played · ${lead} Lv ${s.levels[s.order[0] ?? 0]}</span>
+          <span>Party: ${esc(party)}</span></button>`;
+      }).join('');
+      $('importMsg').innerHTML = `<span>Found ${good.length} save slot${good.length > 1 ? 's' : ''}. Choose one to load.</span>`;
+    };
+    rd.onerror = () => { $('importMsg').innerHTML = '<span class="bad">The file couldn\'t be read. Try choosing it again.</span>'; };
+    rd.readAsArrayBuffer(f);
+  });
+  $('saveSlots').addEventListener('click', e => {
+    const b = e.target.closest('.slotbtn'); if (!b || !saveBuffer) return;
+    const game = b.dataset.game || 'tla';
+    const r = GSSave.readSlot(saveBuffer, +b.dataset.off, game);
+    if (game !== state.game) switchGame(game, true);
+    undoState = JSON.stringify(state);
+    r.chars.forEach((c, k) => {
+      const cs = state.chars[k];
+      cs.lv = clamp(c.level || 1, 1, 99);
+      const curve = D.chars[k].curve.map(cv => G.baseStat(cv, cs.lv));
+      cs.mods = c.base.map((v, j) => v - curve[j]);  // level-up luck and stat items, relative to the average curve
+      cs.boosts = [0, 0, 0, 0, 0, 0];
+      cs.item = c.classItem;
+      cs.eq = emptyEq();
+      for (const id of c.equipped) { const it = D.items[id]; if (it && (it.m >> k) & 1 && inGameItem(id)) cs.eq[it.sl] = id; }
+    });
+    state.dj = D.djinn.map(() => ({ o: null, s: true }));
+    state.djHave = D.djinn.map((d, i) => !inGameDj(i));
+    r.chars.forEach((c, k) => c.djinn.forEach(([e, i, set]) => { const idx = e * 18 + i; if (!inGameDj(idx)) return; state.dj[idx] = { o: k, s: set }; state.djHave[idx] = true; }));
+    const gc = GM().chars;
+    state.order = [...r.order, ...gc.filter(k => !r.order.includes(k)), ...[0, 1, 2, 3, 4, 5, 6, 7].filter(k => !gc.includes(k))];
+    state.owned = r.owned; state.ownedOnly = true;
+    state.imported = { file: saveName, slot: +b.dataset.slot };
+    state.sel = state.order[0];
+    renderAll();
+    // Compare with the stats the game stored, for Adepts who have joined
+    const rows = [];
+    r.order.forEach(k => {
+      const x = compute(k), c = r.chars[k];
+      const ok = x.fin[0] === c.maxHP && x.fin[1] === c.maxPP;
+      // 0xc8 and up are story-only classes (the first game's opening "?" class), which use their own percentages
+      if (!ok && c.classId >= 0xc8) { rows.push(`<span class="muted">${esc(D.chars[k].name)}: still in a story-only class in this save, so the game's HP ${c.maxHP} / PP ${c.maxPP} won't match a normal class yet.</span>`); return; }
+      rows.push(`<span class="${ok ? 'ok' : 'bad'}">${esc(D.chars[k].name)}: HP ${x.fin[0]} / PP ${x.fin[1]}${ok ? ' match the game' : ` (game shows HP ${c.maxHP} / PP ${c.maxPP})`}</span>`);
+    });
+    const djCount = djInGame().filter(i => state.djHave[i]).length;
+    $('importMsg').innerHTML = `<span class="ok">Loaded ${esc(GM().short)} slot ${b.dataset.slot}: levels, base stats, equipment, ${djCount} djinn and party order.</span>
+      <span class="muted">Each Adept's Modifier column now holds the difference between their real base stats and the average curve (level-up luck plus any stat items used).</span>
+      ${rows.join('')}`;
+    $('btnUndoImport').hidden = false;
+  });
+  $('btnUndoImport').addEventListener('click', () => {
+    if (!undoState) return;
+    try { state = validate(JSON.parse(undoState)); } catch (e) { return; }
+    syncGameUi(); applyView();
+    undoState = null; $('btnUndoImport').hidden = true;
+    $('importMsg').innerHTML = '<span>Import undone.</span>';
+    renderAll();
+  });
+  $('ownedOnly').addEventListener('change', e => { state.ownedOnly = e.target.checked; renderAll(); });
+
+  $('endgameOnly').addEventListener('change', e => { state.endgame = e.target.checked; renderAll(); });
+  $('gameSel').addEventListener('change', e => { switchGame(e.target.value); });
+  $('btnVanilla').addEventListener('click', () => { giveOwnElement(state); renderAll(); });
+  $('btnClear').addEventListener('click', () => { state.dj.forEach(d => d.o = null); renderAll(); });
+  $('btnSetAll').addEventListener('click', () => { state.dj.forEach(d => { if (d.o !== null) d.s = true; }); renderAll(); });
+  $('btnReset').addEventListener('click', () => { const v = state.view; state = exampleState(state.game); state.view = v; applyView(); syncGameUi(); renderAll(); });
+  $('btnCopy').addEventListener('click', () => {
+    const t = $('ioText');
+    const done = () => { $('ioMsg').textContent = 'Copied.'; };
+    try { navigator.clipboard.writeText(t.value).then(done, () => { t.select(); $('ioMsg').textContent = 'Selected. Press Ctrl+C or ⌘C to copy.'; }); }
+    catch (e) { t.select(); $('ioMsg').textContent = 'Selected. Press Ctrl+C or ⌘C to copy.'; }
+  });
+  $('btnLoad').addEventListener('click', () => {
+    try { state = validate(JSON.parse($('ioText').value)); syncGameUi(); applyView(); renderAll(); $('ioMsg').textContent = 'Setup loaded.'; }
+    catch (e) { $('ioMsg').textContent = "That code couldn't be read. Paste the whole code copied from this planner."; }
+  });
+
+  syncGameUi();
+  renderAll();
+})();
+</script>
