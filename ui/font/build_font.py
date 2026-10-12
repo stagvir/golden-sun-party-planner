@@ -81,7 +81,7 @@ outlines['space'] = TTGlyphPen(None).glyph(); metrics['space'] = (4 * U, 0)
 for ch, (shape, top, w) in glyphs.items():
     n = f'g{ord(ch):04x}'
     outlines[n] = draw(shape, top)
-    metrics[n] = ((w + 2) * U, 0)                 # glyph + its shadow column + one pixel of space
+    metrics[n] = ((w + 1) * U, 0)                 # glyph + its shadow column (the shadow is the gap)
 fb.setupGlyf(outlines)
 fb.setupHorizontalMetrics(metrics)
 fb.setupHorizontalHeader(ascent=9 * U, descent=-3 * U)

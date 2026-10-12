@@ -29,7 +29,7 @@
 body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: var(--fs); line-height: 1.45; }
 /* Type scales with the window on big screens (16px up to ~1300px wide, ~20px at 1920, max 24px); the page width follows it */
 html { font-size: clamp(16px, calc(9px + 0.55vw), 24px); }
-.wrap { max-width: 80rem; margin: 0 auto; padding-inline: 16px; padding-block: 20px 40px; display: grid; gap: 20px; }
+.wrap { max-width: 100rem; margin: 0 auto; padding-inline: 16px; padding-block: 20px 40px; display: grid; gap: 20px; }
 h1, h2, h3 { font-family: var(--display); font-weight: 400; margin: 0; text-wrap: balance; letter-spacing: 0; }
 h1 { font-size: var(--fs); }
 h2 { font-size: var(--fs); }
@@ -498,6 +498,12 @@ details.sec .peek b { color: #fff; }
 .sc-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 22em), 1fr)); }
 .gtab { min-width: 62em; }
 .gtab col.lab { width: 6.5em; }
+/* Gear table: each Adept column is as wide as its longest item name (names are never cut); if the
+   columns together are wider than the window, the table scrolls sideways inside it */
+#gearTable { table-layout: auto; width: max-content; min-width: 100%; }
+#gearTable col.lab { width: 1%; }
+#gearTable tbody th { white-space: normal; }
+#gearTable .gcell .nm { overflow: visible; text-overflow: clip; }
 .gamepick { flex-wrap: wrap; min-width: 0; max-width: 100%; }
 .picker { width: min(30em, calc(100vw - 32px)); max-height: min(40em, 75vh); }
 .tip { width: min(22em, calc(100vw - 32px)); }
