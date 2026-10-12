@@ -1,0 +1,2615 @@
+[
+ {
+  "n": "Long Sword",
+  "sl": "w",
+  "k": "Long Sword",
+  "a": 14,
+  "d": 0,
+  "ul": [
+   "Critical Strike",
+   "Spin Strike"
+  ],
+  "price": 200,
+  "where": "Patcher's Place, Carver's Camp, Harapa"
+ },
+ {
+  "n": "Broad Sword",
+  "sl": "w",
+  "k": "Long Sword",
+  "a": 40,
+  "d": 0,
+  "ul": [
+   "Critical Strike",
+   "Berserk Rush"
+  ],
+  "price": 1000,
+  "where": "Kaocho, Ayuthay"
+ },
+ {
+  "n": "Storm Brand",
+  "sl": "w",
+  "k": "Long Sword",
+  "a": 60,
+  "d": 0,
+  "ul": [
+   "Critical Strike",
+   "Hurricane"
+  ],
+  "price": 3900,
+  "where": "Barai Temple chest"
+ },
+ {
+  "n": "Claymore",
+  "sl": "w",
+  "k": "Long Sword",
+  "a": 70,
+  "d": 0,
+  "ul": [
+   "Critical Strike",
+   "Spin Strike"
+  ],
+  "price": 4000,
+  "where": "Te Rya, Belinsk, Saha"
+ },
+ {
+  "n": "Great Sword",
+  "sl": "w",
+  "k": "Long Sword",
+  "a": 90,
+  "d": 0,
+  "ul": [
+   "Critical Strike",
+   "Spin Strike",
+   "Fearless Attack"
+  ],
+  "price": 7000,
+  "where": "Yamata City, Harun Village, Tonfon, Champa Camp"
+ },
+ {
+  "n": "Shamshir",
+  "sl": "w",
+  "k": "Long Sword",
+  "a": 99,
+  "d": 0,
+  "ul": [
+   "Power Charge",
+   "Fearless Attack",
+   "Acid Bath"
+  ],
+  "price": 10000,
+  "where": "Talk to the Tonfon weapon shop owner to unlock it for all Artifact shops."
+ },
+ {
+  "n": "Sword of Dusk",
+  "sl": "w",
+  "k": "Long Sword",
+  "a": 100,
+  "d": 0,
+  "ul": [
+   "Critical Strike",
+   "Spin Strike",
+   "Sunset Burst"
+  ],
+  "price": 11500,
+  "where": "Teppe Ruins chest"
+ },
+ {
+  "n": "Silver Blade",
+  "sl": "w",
+  "k": "Long Sword",
+  "a": 108,
+  "d": 0,
+  "ul": [
+   "Critical Move",
+   "Spin Strike",
+   "Aqua Sock"
+  ],
+  "price": 12000,
+  "where": "Talk to the Champa Camp weapon shop owner to unlock it for all Artifact shops."
+ },
+ {
+  "n": "Muramasa",
+  "sl": "w",
+  "k": "Long Sword",
+  "a": 126,
+  "d": 0,
+  "c": 1,
+  "ul": [
+   "Critical Move",
+   "Demonfire",
+   "Zenith Strike"
+  ],
+  "price": 13600,
+  "where": "Harun Channel chest"
+ },
+ {
+  "n": "Gaia Blade",
+  "sl": "w",
+  "k": "Long Sword",
+  "a": 168,
+  "d": 0,
+  "ul": [
+   "Power Charge",
+   "Spiral Assault",
+   "Sky Diver",
+   "Titan Blade"
+  ],
+  "note": "Boosts Earth Power",
+  "price": 17000,
+  "where": "Yamata Ruins chest"
+ },
+ {
+  "n": "Rune Blade",
+  "sl": "w",
+  "k": "Long Sword",
+  "a": 162,
+  "d": 0,
+  "ul": [
+   "Life Nourish",
+   "Vorpal Slash",
+   "Void Beam"
+  ],
+  "price": 15000,
+  "where": "Forged from the Rusty Sword found in the shallow sea south of Yamata City."
+ },
+ {
+  "n": "Levatine",
+  "sl": "w",
+  "k": "Long Sword",
+  "a": 173,
+  "d": 0,
+  "ul": [
+   "Critical Move",
+   "Centurion",
+   "Radiant Fire"
+  ],
+  "price": 19700,
+  "where": "Forged from Mythril Silver."
+ },
+ {
+  "n": "Fire Brand",
+  "sl": "w",
+  "k": "Long Sword",
+  "a": 176,
+  "d": 0,
+  "ul": [
+   "Power Charge",
+   "Fearless Attack",
+   "Purgatory"
+  ],
+  "price": 23400,
+  "where": "Dropped by Pyrodras in Burning Island Cave. (1%)"
+ },
+ {
+  "n": "Excalibur",
+  "sl": "w",
+  "k": "Long Sword",
+  "a": 180,
+  "d": 0,
+  "ul": [
+   "Critical Move",
+   "Rolling Attack",
+   "Sky Diver",
+   "Legend"
+  ],
+  "price": 29200,
+  "where": "Forged from Orihalcon."
+ },
+ {
+  "n": "Sol Blade",
+  "sl": "w",
+  "k": "Long Sword",
+  "a": 200,
+  "d": 0,
+  "ul": [
+   "Centurion",
+   "Radiant Fire",
+   "Purgatory",
+   "Megiddo"
+  ],
+  "note": "key to many locks",
+  "price": 31200,
+  "where": "Apollo Sanctum event"
+ },
+ {
+  "n": "Darksword",
+  "sl": "w",
+  "k": "Long Sword",
+  "a": 210,
+  "d": 0,
+  "c": 1,
+  "ul": [
+   "Mortal Danger",
+   "Spiral Assault",
+   "Sky Diver",
+   "Acheron's Grief"
+  ],
+  "price": 24200,
+  "where": "Forged from Dark Matter."
+ },
+ {
+  "n": "Short Sword",
+  "sl": "w",
+  "k": "Light Blade",
+  "a": 8,
+  "d": 0,
+  "ul": [
+   "Critical Strike"
+  ],
+  "price": 120,
+  "where": "Matthew/Tyrell's first weapon, Patcher's Place"
+ },
+ {
+  "n": "Hunter's Sword",
+  "sl": "w",
+  "k": "Light Blade",
+  "a": 28,
+  "d": 0,
+  "ul": [
+   "Gale Force",
+   "Critical Strike"
+  ],
+  "price": 520,
+  "where": "Harapa, Kaocho"
+ },
+ {
+  "n": "Elven Rapier",
+  "sl": "w",
+  "k": "Light Blade",
+  "a": 44,
+  "d": 0,
+  "ul": [
+   "Critical Strike",
+   "Vorpal Slash"
+  ],
+  "price": 2200,
+  "where": "Konpa Cave chest before the event."
+ },
+ {
+  "n": "Battle Rapier",
+  "sl": "w",
+  "k": "Light Blade",
+  "a": 58,
+  "d": 0,
+  "ul": [
+   "Critical Strike",
+   "Berserk Rush"
+  ],
+  "price": 2900,
+  "where": "Amiti's first weapon, Ayuthay"
+ },
+ {
+  "n": "Mystery Blade",
+  "sl": "w",
+  "k": "Light Blade",
+  "a": 84,
+  "d": 0,
+  "ul": [
+   "Spin Strike",
+   "Life Nourish"
+  ],
+  "price": 6400,
+  "where": "Harapa Ruins chest"
+ },
+ {
+  "n": "Master Rapier",
+  "sl": "w",
+  "k": "Light Blade",
+  "a": 86,
+  "d": 0,
+  "ul": [
+   "Critical Strike",
+   "Spin Strike",
+   "Double Attack"
+  ],
+  "price": 6800,
+  "where": "Belinsk, Saha, Yamata City, Harun Village, Tonfon"
+ },
+ {
+  "n": "Assassin Blade",
+  "sl": "w",
+  "k": "Light Blade",
+  "a": 90,
+  "d": 0,
+  "ul": [
+   "Critical Move",
+   "Mortal Danger"
+  ],
+  "price": 7800,
+  "where": "Belinsk library under the sanctum."
+ },
+ {
+  "n": "Ninja Blade",
+  "sl": "w",
+  "k": "Light Blade",
+  "a": 94,
+  "d": 0,
+  "ul": [
+   "Critical Move",
+   "Cyclone Slash",
+   "Zenith Strike"
+  ],
+  "price": 8800,
+  "where": "Talk to the Yamata City weapon shop owner to unlock it for all Artifact shops."
+ },
+ {
+  "n": "Swift Sword",
+  "sl": "w",
+  "k": "Light Blade",
+  "a": 104,
+  "d": 0,
+  "ul": [
+   "Critical Strike",
+   "Spin Strike",
+   "Sonic Smash"
+  ],
+  "note": "Boosts Wind Power",
+  "price": 9400,
+  "where": "Talk to the Tonfon weapon shop owner to unlock it for all Artifact shops."
+ },
+ {
+  "n": "Sylph Rapier",
+  "sl": "w",
+  "k": "Light Blade",
+  "a": 124,
+  "d": 0,
+  "ul": [
+   "Critical Move",
+   "Double Attack",
+   "Mad Zephyr"
+  ],
+  "price": 10100,
+  "where": "Talon Peak chest"
+ },
+ {
+  "n": "Kikuichimonji",
+  "sl": "w",
+  "k": "Light Blade",
+  "a": 128,
+  "d": 0,
+  "ul": [
+   "Combat Dance",
+   "Zenith Strike",
+   "Asura"
+  ],
+  "price": 13400,
+  "where": "Forged from the Rusty Sword found in the shallow sea southwest of Yamata City."
+ },
+ {
+  "n": "Phaeton's Blade",
+  "sl": "w",
+  "k": "Light Blade",
+  "a": 151,
+  "d": 0,
+  "ul": [
+   "Combat Dance",
+   "Light Surge",
+   "Centurion"
+  ],
+  "price": 13600,
+  "where": "Snowdrift Shrine chest"
+ },
+ {
+  "n": "Masamune",
+  "sl": "w",
+  "k": "Light Blade",
+  "a": 161,
+  "d": 0,
+  "ul": [
+   "Double Attack",
+   "Combat Dance",
+   "Rising Dragon"
+  ],
+  "price": 16400,
+  "where": "Yamata City chest via entering a portal after seeing Uzume."
+ },
+ {
+  "n": "Verdant Sword",
+  "sl": "w",
+  "k": "Light Blade",
+  "a": 165,
+  "d": 0,
+  "ul": [
+   "Gale Force",
+   "Vorpal Slash",
+   "Mad Zephyr",
+   "Emerald Blitz"
+  ],
+  "price": 18000,
+  "where": "Forged from Quality Zol."
+ },
+ {
+  "n": "Tisiphone Edge",
+  "sl": "w",
+  "k": "Light Blade",
+  "a": 178,
+  "d": 0,
+  "ul": [
+   "Vorpal Slash",
+   "Combat Dance",
+   "Light Surge",
+   "Vengeance"
+  ],
+  "price": 23000,
+  "where": "Dropped by Great Dragons in Crossbone Isle. (1%)"
+ },
+ {
+  "n": "Battle Axe",
+  "sl": "w",
+  "k": "Axe",
+  "a": 24,
+  "d": 0,
+  "ul": [
+   "Critical Strike"
+  ],
+  "price": 280,
+  "where": "Carver's Camp, Harapa"
+ },
+ {
+  "n": "Themis' Axe",
+  "sl": "w",
+  "k": "Axe",
+  "a": 30,
+  "d": 0,
+  "ul": [
+   "Power Charge",
+   "Stone Justice"
+  ],
+  "price": 1900,
+  "where": "Goma Highlands Road near Gust."
+ },
+ {
+  "n": "Broad Axe",
+  "sl": "w",
+  "k": "Axe",
+  "a": 50,
+  "d": 0,
+  "ul": [
+   "Critical Strike",
+   "Rolling Attack"
+  ],
+  "price": 1400,
+  "where": "Ayuthay, Border Town, Eoleo's first weapon"
+ },
+ {
+  "n": "Vulcan Axe",
+  "sl": "w",
+  "k": "Axe",
+  "a": 76,
+  "d": 0,
+  "ul": [
+   "Critical Strike",
+   "Barrage"
+  ],
+  "price": 4800,
+  "where": "The Ouroboros in the room before finding Vortex."
+ },
+ {
+  "n": "Great Axe",
+  "sl": "w",
+  "k": "Axe",
+  "a": 80,
+  "d": 0,
+  "ul": [
+   "Power Charge",
+   "Critical Strike",
+   "Berserk Rush"
+  ],
+  "price": 5200,
+  "where": "Belinsk, Port Rago, Yamata City, Tonfon, Champa Camp"
+ },
+ {
+  "n": "Dragon Axe",
+  "sl": "w",
+  "k": "Axe",
+  "a": 100,
+  "d": 0,
+  "ul": [
+   "Critical Strike",
+   "Rolling Attack",
+   "Heat Mirage"
+  ],
+  "price": 10300,
+  "where": "Talk to the Tonfon weapon shop owner to unlock it for all Artifact shops."
+ },
+ {
+  "n": "Giant Axe",
+  "sl": "w",
+  "k": "Axe",
+  "a": 114,
+  "d": 0,
+  "ul": [
+   "Stone Justice",
+   "Berserk Rush",
+   "Meltdown"
+  ],
+  "price": 14000,
+  "where": "Phantasmal Bog chest."
+ },
+ {
+  "n": "Herculean Axe",
+  "sl": "w",
+  "k": "Axe",
+  "a": 186,
+  "d": 0,
+  "ul": [
+   "Stone Justice",
+   "Barrage",
+   "Meltdown",
+   "Olympus Rage"
+  ],
+  "price": 28000,
+  "where": "Forged from Orihalcon."
+ },
+ {
+  "n": "Mace",
+  "sl": "w",
+  "k": "Mace",
+  "a": 6,
+  "d": 0,
+  "ul": [
+   "Critical Strike"
+  ],
+  "price": 80,
+  "where": "Patcher's Place"
+ },
+ {
+  "n": "Heavy Mace",
+  "sl": "w",
+  "k": "Mace",
+  "a": 26,
+  "d": 0,
+  "ul": [
+   "Critical Strike",
+   "Rolling Attack"
+  ],
+  "price": 500,
+  "where": "Harapa, Kaocho"
+ },
+ {
+  "n": "Blow Mace",
+  "sl": "w",
+  "k": "Mace",
+  "a": 45,
+  "d": 0,
+  "ul": [
+   "Critical Strike",
+   "Boost Hack"
+  ],
+  "price": 2800,
+  "where": "Passaj Mountain Climb on your way to getting Bark."
+ },
+ {
+  "n": "Battle Mace",
+  "sl": "w",
+  "k": "Mace",
+  "a": 56,
+  "d": 0,
+  "ul": [
+   "Power Charge",
+   "Critical Strike"
+  ],
+  "price": 2600,
+  "where": "Ayuthay, Border Town"
+ },
+ {
+  "n": "War Mace",
+  "sl": "w",
+  "k": "Mace",
+  "a": 84,
+  "d": 0,
+  "ul": [
+   "Critical Strike",
+   "Rolling Attack",
+   "Berserk Rush"
+  ],
+  "price": 6200,
+  "where": "Belinsk, Port Rago, Yamata City, Harun Village, Tonfon"
+ },
+ {
+  "n": "Grievous Mace",
+  "sl": "w",
+  "k": "Mace",
+  "a": 88,
+  "d": 0,
+  "ul": [
+   "Terra Strike",
+   "Fearless Attack"
+  ],
+  "price": 7000,
+  "where": "Craggy Peak Ruins in the Cancer Zodiac room."
+ },
+ {
+  "n": "Hagbone Mace",
+  "sl": "w",
+  "k": "Mace",
+  "a": 108,
+  "d": 0,
+  "ul": [
+   "Terra Strike",
+   "Wyrd Curse"
+  ],
+  "price": 8400,
+  "where": "Belinsk Ruins in the Mars chamber with the pegs."
+ },
+ {
+  "n": "Thanatos Mace",
+  "sl": "w",
+  "k": "Mace",
+  "a": 125,
+  "d": 0,
+  "ul": [
+   "Critical Strike",
+   "Fearless Attack",
+   "Heartbreak"
+  ],
+  "price": 10400,
+  "where": "Forged from the Old Mace found in the sea area between Kolima Forest and Harun Village."
+ },
+ {
+  "n": "Vajra Mace",
+  "sl": "w",
+  "k": "Mace",
+  "a": 182,
+  "d": 0,
+  "ul": [
+   "Power Charge",
+   "Critical Move",
+   "Boost Hack",
+   "Final Nemesis"
+  ],
+  "price": 24800,
+  "where": "Dropped by Thunder Lizards in Crossbone Isle. (1%)"
+ },
+ {
+  "n": "Wooden Stick",
+  "sl": "w",
+  "k": "Staff",
+  "a": 4,
+  "d": 0,
+  "ul": [
+   "Critical Strike"
+  ],
+  "price": 40,
+  "where": "Karis/Rief's first weapon"
+ },
+ {
+  "n": "Magic Rod",
+  "sl": "w",
+  "k": "Staff",
+  "a": 16,
+  "d": 0,
+  "ul": [
+   "Gale Force",
+   "Murk"
+  ],
+  "price": 380,
+  "where": "Talk to the Carver's Camp weapon shop owner to unlock it for all Artifact shops."
+ },
+ {
+  "n": "Witch's Wand",
+  "sl": "w",
+  "k": "Staff",
+  "a": 32,
+  "d": 0,
+  "ul": [
+   "Critical Strike",
+   "Stun Voltage"
+  ],
+  "price": 860,
+  "where": "Talk to the Harapa weapon shop owner to unlock it for all Artifact shops."
+ },
+ {
+  "n": "Psynergy Rod",
+  "sl": "w",
+  "k": "Staff",
+  "a": 64,
+  "d": 0,
+  "ul": [
+   "Critical Strike",
+   "Psynergy Leech"
+  ],
+  "price": 3800,
+  "where": "Talk to the Passaj or Harun Village weapon shop owner to unlock it for all Artifact shops, also Himi's first weapon."
+ },
+ {
+  "n": "Frost Wand",
+  "sl": "w",
+  "k": "Staff",
+  "a": 76,
+  "d": 0,
+  "ul": [
+   "Critical Strike",
+   "Frost Bite"
+  ],
+  "price": 5400,
+  "where": "Talk to the Te Rya or Harun Village weapon shop owner to unlock it for all Artifact shops."
+ },
+ {
+  "n": "Demonic Staff",
+  "sl": "w",
+  "k": "Staff",
+  "a": 92,
+  "d": 0,
+  "c": 1,
+  "ul": [
+   "Gale Force",
+   "Critical Strike",
+   "Bad Omen"
+  ],
+  "price": 10000,
+  "where": "Talk to the Harun Village weapon shop owner to unlock it for all Artifact shops."
+ },
+ {
+  "n": "Zodiac Wand",
+  "sl": "w",
+  "k": "Staff",
+  "a": 102,
+  "d": 0,
+  "ul": [
+   "Psyphon Seal",
+   "Shining Star"
+  ],
+  "price": 11400,
+  "where": "Inside Briggs's ship in Port Rago."
+ },
+ {
+  "n": "Crystal Rod",
+  "sl": "w",
+  "k": "Staff",
+  "a": 106,
+  "d": 0,
+  "ul": [
+   "Gale Force",
+   "Spiral Assault",
+   "Drown"
+  ],
+  "price": 13400,
+  "where": "Talk to the Champa Camp weapon shop owner to unlock it for all Artifact shops."
+ },
+ {
+  "n": "Atropos' Rod",
+  "sl": "w",
+  "k": "Staff",
+  "a": 169,
+  "d": 0,
+  "ul": [
+   "Critical Strike",
+   "Fearless Attack",
+   "Life Shear"
+  ],
+  "price": 18900,
+  "where": "Dropped by Fenrirs in the Endless Wall world map. (1%)"
+ },
+ {
+  "n": "Lachesis' Rule",
+  "sl": "w",
+  "k": "Staff",
+  "a": 177,
+  "d": 0,
+  "ul": [
+   "Critical Move",
+   "Double Attack",
+   "Spiral Assault",
+   "Apocalypse"
+  ],
+  "price": 21700,
+  "where": "Dropped by Red Wyverns in Crossbone Isle. (1%)"
+ },
+ {
+  "n": "Blessed Ankh",
+  "sl": "w",
+  "k": "Staff",
+  "a": 46,
+  "d": 0,
+  "ul": [
+   "Berserk Rush",
+   "Psyphon Seal"
+  ],
+  "price": 1600,
+  "where": "Talk to the Kaocho or Harun Village weapon shop owner to unlock it for all Artifact shops."
+ },
+ {
+  "n": "Angelic Ankh",
+  "sl": "w",
+  "k": "Staff",
+  "a": 83,
+  "d": 0,
+  "ul": [
+   "Berserk Rush",
+   "Life Leech"
+  ],
+  "price": 6400,
+  "where": "Talk to the Port Rago or Harun Village weapon shop owner to unlock it for all Artifact shops."
+ },
+ {
+  "n": "Clotho's Distaff",
+  "sl": "w",
+  "k": "Staff",
+  "a": 168,
+  "d": 0,
+  "ul": [
+   "Berserk Rush",
+   "Life Leech",
+   "Psynergy Leech"
+  ],
+  "us": {
+   "t": "Use to restore 1,000 HP"
+  },
+  "note": "000 HP",
+  "price": 17200,
+  "where": "In the Lost Ship."
+ },
+ {
+  "n": "Short Bow",
+  "sl": "w",
+  "k": "Bow",
+  "a": 11,
+  "d": 0,
+  "ul": [
+   "Double Shot"
+  ],
+  "price": 300,
+  "where": "Patcher's Place, Carver's Camp"
+ },
+ {
+  "n": "Longbow",
+  "sl": "w",
+  "k": "Bow",
+  "a": 22,
+  "d": 0,
+  "ul": [
+   "Double Shot",
+   "Snipe Shot"
+  ],
+  "price": 800,
+  "where": "Harapa, Kaocho"
+ },
+ {
+  "n": "Composite Bow",
+  "sl": "w",
+  "k": "Bow",
+  "a": 65,
+  "d": 0,
+  "ul": [
+   "Double Shot",
+   "Arrow Shower"
+  ],
+  "price": 1600,
+  "where": "Te Rya, Belinsk"
+ },
+ {
+  "n": "Yew Bow",
+  "sl": "w",
+  "k": "Bow",
+  "a": 120,
+  "d": 0,
+  "ul": [
+   "Snipe Shot",
+   "Triple Burst"
+  ],
+  "price": 13000,
+  "where": "Given to you by the lost woodsman in Kolima Forest."
+ },
+ {
+  "n": "Dragon Bow",
+  "sl": "w",
+  "k": "Bow",
+  "a": 135,
+  "d": 0,
+  "ul": [
+   "Double Shot",
+   "Flame Shot"
+  ],
+  "price": 16000,
+  "where": "Tonfon chest"
+ },
+ {
+  "n": "Zephyr's Bow",
+  "sl": "w",
+  "k": "Bow",
+  "a": 140,
+  "d": 0,
+  "ul": [
+   "Double Shot",
+   "Arrow Shower",
+   "Cyclone Shot"
+  ],
+  "price": 18000,
+  "where": "Examine the east archer statue in the venus area in Apollo Sanctum Gate."
+ },
+ {
+  "n": "Silver Longbow",
+  "sl": "w",
+  "k": "Bow",
+  "a": 150,
+  "d": 0,
+  "ul": [
+   "Double Shot",
+   "Undead Bane",
+   "Star Dust"
+  ],
+  "price": 21000,
+  "where": "Forged from Mythril Silver."
+ },
+ {
+  "n": "Sagittarius Bow",
+  "sl": "w",
+  "k": "Bow",
+  "a": 170,
+  "d": 0,
+  "ul": [
+   "Triple Burst",
+   "Star Dust",
+   "Blue Comet"
+  ],
+  "price": 29000,
+  "where": "Forged from the Worn Bow found in Crossbone Isle."
+ },
+ {
+  "n": "Brass Knuckles",
+  "sl": "w",
+  "k": "Fist",
+  "a": 85,
+  "d": 0,
+  "ul": [
+   "Brutal Strike",
+   "Steel Swarm"
+  ],
+  "price": 4200,
+  "where": "Sveta's first weapon."
+ },
+ {
+  "n": "Spiked Knuckles",
+  "sl": "w",
+  "k": "Fist",
+  "a": 109,
+  "d": 0,
+  "ul": [
+   "Force Off",
+   "Galactic Blow"
+  ],
+  "price": 8500,
+  "where": "Talk to the Champa Camp weapon shop owner to unlock it for all Artifact shops."
+ },
+ {
+  "n": "Beast Knuckles",
+  "sl": "w",
+  "k": "Fist",
+  "a": 120,
+  "d": 0,
+  "ul": [
+   "Galactic Blow",
+   "Savage Raptor"
+  ],
+  "price": 9200,
+  "where": "Belinsk Castle, distract the guard by Slapping the bell."
+ },
+ {
+  "n": "Umbra Knuckles",
+  "sl": "w",
+  "k": "Fist",
+  "a": 160,
+  "d": 0,
+  "ul": [
+   "Savage Raptor",
+   "Feral Rush",
+   "Shadow Cannon"
+  ],
+  "note": "Proof against light",
+  "price": 11000,
+  "where": "Burning Island Cave chest"
+ },
+ {
+  "n": "Anpsi Knuckles",
+  "sl": "w",
+  "k": "Fist",
+  "a": 165,
+  "d": 0,
+  "ul": [
+   "Force Cannon",
+   "Feral Rush",
+   "Satellite Crash"
+  ],
+  "price": 14000,
+  "where": "Dropped by Grand Chimeras in Crossbone Isle. (0.5%)"
+ },
+ {
+  "n": "Iron Claw",
+  "sl": "w",
+  "k": "Claw",
+  "a": 105,
+  "d": 0,
+  "ul": [
+   "Wind Blade",
+   "Spin Slice"
+  ],
+  "price": 7200,
+  "where": "Talk to the Yamata City weapon shop owner to unlock it for all Artifact shops."
+ },
+ {
+  "n": "Berserker Claw",
+  "sl": "w",
+  "k": "Claw",
+  "a": 150,
+  "d": 0,
+  "ul": [
+   "Wind Blade",
+   "Rising Light"
+  ],
+  "price": 10000,
+  "where": "Dropped by Cerberus in Passaj Mountain Climb post-eclipse. (1%)"
+ },
+ {
+  "n": "Mythril Claw",
+  "sl": "w",
+  "k": "Claw",
+  "a": 160,
+  "d": 0,
+  "ul": [
+   "Endless Edges",
+   "Dimension Rift"
+  ],
+  "price": 12000,
+  "where": "Forged from Mythril Silver."
+ },
+ {
+  "n": "Bloody Claw",
+  "sl": "w",
+  "k": "Claw",
+  "a": 194,
+  "d": 0,
+  "c": 1,
+  "ul": [
+   "Endless Edges",
+   "Foul Saw",
+   "Crimson Cut"
+  ],
+  "price": 19000,
+  "where": "Crossbone Isle chest"
+ },
+ {
+  "n": "Leather Armor",
+  "sl": "b",
+  "k": "Armor",
+  "a": 0,
+  "d": 12,
+  "price": 240,
+  "where": "Harapa and Ayuthay shop."
+ },
+ {
+  "n": "Psynergy Armor",
+  "sl": "b",
+  "k": "Armor",
+  "a": 0,
+  "d": 21,
+  "e": [
+   [
+    3,
+    20
+   ]
+  ],
+  "note": "Boosts PP",
+  "price": 1000,
+  "where": "Passaj shop."
+ },
+ {
+  "n": "Chain Mail",
+  "sl": "b",
+  "k": "Armor",
+  "a": 0,
+  "d": 25,
+  "price": 2000,
+  "where": "Te Rya Village shop."
+ },
+ {
+  "n": "Ixion Mail",
+  "sl": "b",
+  "k": "Armor",
+  "a": 0,
+  "d": 26,
+  "e": [
+   [
+    20,
+    20
+   ],
+   [
+    22,
+    20
+   ]
+  ],
+  "note": "Resists Wind & Water",
+  "price": 1300,
+  "where": "Ouroboros chest. Enter the room to the right of the Sol Mask."
+ },
+ {
+  "n": "Armored Shell",
+  "sl": "b",
+  "k": "Armor",
+  "a": 0,
+  "d": 30,
+  "price": 3600,
+  "where": "Belinsk, Port Rago, and Champa Camp shops. Craggy Peak Ruins chest."
+ },
+ {
+  "n": "Plate Mail",
+  "sl": "b",
+  "k": "Armor",
+  "a": 0,
+  "d": 33,
+  "price": 4400,
+  "where": "Saha shop."
+ },
+ {
+  "n": "Spiked Armor",
+  "sl": "b",
+  "k": "Armor",
+  "a": 10,
+  "d": 34,
+  "fx": [
+   "More critical hits"
+  ],
+  "note": "Boosts Attack & criticals",
+  "price": 14000,
+  "where": "Aquarius room chest in Craggy Peak Ruins."
+ },
+ {
+  "n": "Steel Armor",
+  "sl": "b",
+  "k": "Armor",
+  "a": 0,
+  "d": 36,
+  "price": 4900,
+  "where": "Harun Village, Yamata City, and Tonfon shops."
+ },
+ {
+  "n": "Planet Armor",
+  "sl": "b",
+  "k": "Armor",
+  "a": 0,
+  "d": 36,
+  "e": [
+   [
+    15,
+    10
+   ],
+   [
+    16,
+    10
+   ],
+   [
+    17,
+    10
+   ],
+   [
+    18,
+    10
+   ]
+  ],
+  "note": "Boosts elemental Power",
+  "price": 4800,
+  "where": "Port Rago chest sitting northeast of Briggs's ship."
+ },
+ {
+  "n": "Asura's Armor",
+  "sl": "b",
+  "k": "Armor",
+  "a": 5,
+  "d": 42,
+  "e": [
+   [
+    2,
+    8
+   ]
+  ],
+  "note": "Boosts Attack, renews HP",
+  "price": 15000,
+  "where": "Lonely Island Ruins chest, middle path from the entrance."
+ },
+ {
+  "n": "Dragon Mail",
+  "sl": "b",
+  "k": "Armor",
+  "a": 0,
+  "d": 44,
+  "e": [
+   [
+    20,
+    30
+   ],
+   [
+    21,
+    30
+   ]
+  ],
+  "note": "Resists Water & Fire",
+  "price": 17000,
+  "where": "Warrior's Hill chest."
+ },
+ {
+  "n": "Chronos Mail",
+  "sl": "b",
+  "k": "Armor",
+  "a": 0,
+  "d": 47,
+  "e": [
+   [
+    1,
+    20
+   ]
+  ],
+  "note": "Boosts HP",
+  "price": 13100,
+  "where": "Dropped by Grislies in Snow Drift Shrine. (1%)"
+ },
+ {
+  "n": "Demon Mail",
+  "sl": "b",
+  "k": "Armor",
+  "a": 0,
+  "d": 50,
+  "c": 1,
+  "e": [
+   [
+    22,
+    -10
+   ]
+  ],
+  "note": "weak against Wind",
+  "price": 17000,
+  "where": "Crossbone Isle chest, in the bottom level of the second floor."
+ },
+ {
+  "n": "Xylion Armor",
+  "sl": "b",
+  "k": "Armor",
+  "a": 12,
+  "d": 50,
+  "note": "Boosts Attack",
+  "price": 22500,
+  "where": "Forged from Orihalcon."
+ },
+ {
+  "n": "Valkyrie Mail",
+  "sl": "b",
+  "k": "Armor",
+  "a": 0,
+  "d": 53,
+  "fx": [
+   "More critical hits"
+  ],
+  "note": "Boosts criticals",
+  "price": 25500,
+  "where": "Apollo Ascent chest."
+ },
+ {
+  "n": "Cotton Shirt",
+  "sl": "b",
+  "k": "Clothing",
+  "a": 0,
+  "d": 3,
+  "price": 20,
+  "where": "Patcher's Place shop."
+ },
+ {
+  "n": "Travel Vest",
+  "sl": "b",
+  "k": "Clothing",
+  "a": 0,
+  "d": 7,
+  "price": 50,
+  "where": "Carver's Camp and Harapa shops."
+ },
+ {
+  "n": "Adept's Clothes",
+  "sl": "b",
+  "k": "Clothing",
+  "a": 0,
+  "d": 18,
+  "e": [
+   [
+    3,
+    8
+   ]
+  ],
+  "note": "Boosts PP",
+  "price": 850,
+  "where": "Passaj and Ayuthay shops."
+ },
+ {
+  "n": "Elven Shirt",
+  "sl": "b",
+  "k": "Clothing",
+  "a": 0,
+  "d": 22,
+  "e": [
+   [
+    13,
+    15
+   ]
+  ],
+  "note": "Boosts Agility",
+  "price": 1700,
+  "where": "Konpa Ruins chest."
+ },
+ {
+  "n": "Kimono",
+  "sl": "b",
+  "k": "Clothing",
+  "a": 0,
+  "d": 25,
+  "e": [
+   [
+    21,
+    10
+   ],
+   [
+    5,
+    10
+   ]
+  ],
+  "note": "Boosts Agility, resists Fire",
+  "price": 2800,
+  "where": "Temple of Barai chest."
+ },
+ {
+  "n": "Silver Vest",
+  "sl": "b",
+  "k": "Clothing",
+  "a": 0,
+  "d": 28,
+  "price": 3200,
+  "where": "Port Rago, Harun Village, Yamata City, and Tonfon shops. Search the cabinets in a house on the left side of Tonfon."
+ },
+ {
+  "n": "Ninja Garb",
+  "sl": "b",
+  "k": "Clothing",
+  "a": 0,
+  "d": 36,
+  "e": [
+   [
+    5,
+    30
+   ],
+   [
+    22,
+    10
+   ]
+  ],
+  "note": "Boosts Agility, resists Wind",
+  "price": 6900,
+  "where": "Search the cabinets in the upper part of the Dream Tree."
+ },
+ {
+  "n": "Faery Vest",
+  "sl": "b",
+  "k": "Clothing",
+  "a": 0,
+  "d": 38,
+  "us": {
+   "t": "Use to restore 200 HP. May break if used."
+  },
+  "price": 6900,
+  "where": "Phantasmal Bog chest."
+ },
+ {
+  "n": "Storm Gear",
+  "sl": "b",
+  "k": "Clothing",
+  "a": 0,
+  "d": 42,
+  "e": [
+   [
+    20,
+    30
+   ],
+   [
+    21,
+    30
+   ],
+   [
+    22,
+    30
+   ]
+  ],
+  "note": "Resists Water, Fire & Wind",
+  "price": 9800,
+  "where": "Belinsk chest way to the west side. Must go through the ruins a little to emerge."
+ },
+ {
+  "n": "Umbra Cloak",
+  "sl": "b",
+  "k": "Clothing",
+  "a": 0,
+  "d": 45,
+  "e": [
+   [
+    19,
+    20
+   ],
+   [
+    21,
+    20
+   ]
+  ],
+  "note": "Proof against light",
+  "price": 13000,
+  "where": "Gaia Falls Islet chest."
+ },
+ {
+  "n": "Triton's Ward",
+  "sl": "b",
+  "k": "Clothing",
+  "a": 0,
+  "d": 47,
+  "e": [
+   [
+    16,
+    30
+   ],
+   [
+    20,
+    70
+   ]
+  ],
+  "note": "Boosts and resists Water",
+  "price": 16200,
+  "where": "Otka Island chest. If you have a map handy, it's in the room where the left eye of the skull is."
+ },
+ {
+  "n": "Mythril Clothes",
+  "sl": "b",
+  "k": "Clothing",
+  "a": 0,
+  "d": 49,
+  "fx": [
+   "More critical hits"
+  ],
+  "note": "Boosts criticals",
+  "price": 14900,
+  "where": "Forged from Mythril Silver."
+ },
+ {
+  "n": "One-piece Dress",
+  "sl": "b",
+  "k": "Robe",
+  "a": 0,
+  "d": 4,
+  "price": 25,
+  "where": "Patcher's Place shop."
+ },
+ {
+  "n": "Travel Robe",
+  "sl": "b",
+  "k": "Robe",
+  "a": 0,
+  "d": 10,
+  "price": 200,
+  "where": "Harapa and Kaocho shops."
+ },
+ {
+  "n": "Sanan Dress",
+  "sl": "b",
+  "k": "Robe",
+  "a": 0,
+  "d": 19,
+  "us": {
+   "t": "Use to reduce enemy Attack. May break if used."
+  },
+  "price": 1600,
+  "where": "Chest near the entrance of Kaocho."
+ },
+ {
+  "n": "Silk Robe",
+  "sl": "b",
+  "k": "Robe",
+  "a": 0,
+  "d": 20,
+  "price": 1400,
+  "where": "Passaj shop."
+ },
+ {
+  "n": "Jerkin",
+  "sl": "b",
+  "k": "Robe",
+  "a": 0,
+  "d": 26,
+  "price": 2400,
+  "where": "Te Rya Village and Belinsk shops."
+ },
+ {
+  "n": "Blessed Robe",
+  "sl": "b",
+  "k": "Robe",
+  "a": 0,
+  "d": 36,
+  "e": [
+   [
+    2,
+    5
+   ]
+  ],
+  "note": "Renews HP",
+  "price": 7000,
+  "where": "View the Yamata City armor inventory to unlock it in all Artifact shops."
+ },
+ {
+  "n": "Magical Cassock",
+  "sl": "b",
+  "k": "Robe",
+  "a": 0,
+  "d": 39,
+  "e": [
+   [
+    4,
+    2
+   ]
+  ],
+  "note": "Renews PP",
+  "price": 9000,
+  "where": "View the Tonfon armor inventory to unlock it in all Artifact shops."
+ },
+ {
+  "n": "Muni Robe",
+  "sl": "b",
+  "k": "Robe",
+  "a": 0,
+  "d": 39,
+  "e": [
+   [
+    2,
+    10
+   ]
+  ],
+  "note": "Renews HP",
+  "price": 6300,
+  "where": "Search the cabinets in the house in Belinsk where Pincer is in."
+ },
+ {
+  "n": "Feathered Robe",
+  "sl": "b",
+  "k": "Robe",
+  "a": 0,
+  "d": 45,
+  "e": [
+   [
+    18,
+    20
+   ],
+   [
+    22,
+    30
+   ],
+   [
+    5,
+    30
+   ]
+  ],
+  "note": "Boosts Wind Power & Resist",
+  "price": 14000,
+  "where": "Dropped by Wise Gryphons in Yamata Ruins. (1%)"
+ },
+ {
+  "n": "Aeolian Cassock",
+  "sl": "b",
+  "k": "Robe",
+  "a": 0,
+  "d": 46,
+  "e": [
+   [
+    18,
+    15
+   ],
+   [
+    22,
+    50
+   ]
+  ],
+  "note": "Boosts Wind Power & Resist",
+  "price": 11400,
+  "where": "Apollo Ascent chest."
+ },
+ {
+  "n": "Iris Robe",
+  "sl": "b",
+  "k": "Robe",
+  "a": 0,
+  "d": 47,
+  "e": [
+   [
+    6,
+    15
+   ],
+   [
+    21,
+    30
+   ],
+   [
+    4,
+    12
+   ]
+  ],
+  "note": "Boosts Luck & renews PP",
+  "price": 16600,
+  "where": "Crossbone Isle chest in the fourth floor."
+ },
+ {
+  "n": "Mysterious Robe",
+  "sl": "b",
+  "k": "Robe",
+  "a": 0,
+  "d": 48,
+  "e": [
+   [
+    2,
+    20
+   ],
+   [
+    4,
+    10
+   ]
+  ],
+  "note": "Renews HP & PP",
+  "price": 36500,
+  "where": "View the Champa Camp armor inventory to unlock it in all Artifact shops."
+ },
+ {
+  "n": "Wooden Shield",
+  "sl": "a",
+  "k": "Shield",
+  "a": 0,
+  "d": 6,
+  "price": 40,
+  "where": "Patcher's Place and Carver's Camp shops."
+ },
+ {
+  "n": "Bronze Shield",
+  "sl": "a",
+  "k": "Shield",
+  "a": 0,
+  "d": 14,
+  "price": 500,
+  "where": "Ayuthay and Kaocho shops."
+ },
+ {
+  "n": "Iron Shield",
+  "sl": "a",
+  "k": "Shield",
+  "a": 0,
+  "d": 20,
+  "price": 1200,
+  "where": "Passaj shop."
+ },
+ {
+  "n": "Dragon Shield",
+  "sl": "a",
+  "k": "Shield",
+  "a": 0,
+  "d": 26,
+  "e": [
+   [
+    21,
+    30
+   ]
+  ],
+  "price": 2400,
+  "where": "Ayuthay chest, in the most far west room from the main city area."
+ },
+ {
+  "n": "Knight's Shield",
+  "sl": "a",
+  "k": "Shield",
+  "a": 0,
+  "d": 28,
+  "price": 3000,
+  "where": "Belinsk, Port Rago, Saha"
+ },
+ {
+  "n": "Mirrored Shield",
+  "sl": "a",
+  "k": "Shield",
+  "a": 0,
+  "d": 39,
+  "us": {
+   "t": "Use to delude foes. May break if used."
+  },
+  "price": 5200,
+  "where": "View the Champa Camp armor inventory to unlock it in all Artifact shops."
+ },
+ {
+  "n": "Aegis Shield",
+  "sl": "a",
+  "k": "Shield",
+  "a": 0,
+  "d": 41,
+  "fx": [
+   "More critical hits"
+  ],
+  "note": "Boosts criticals",
+  "price": 6700,
+  "where": "Warrior's Hill chest."
+ },
+ {
+  "n": "Terra Shield",
+  "sl": "a",
+  "k": "Shield",
+  "a": 5,
+  "d": 48,
+  "c": 1,
+  "note": "boosts Attack",
+  "price": 11200,
+  "where": "Forged from Dark Matter."
+ },
+ {
+  "n": "Cosmos Shield",
+  "sl": "a",
+  "k": "Shield",
+  "a": 0,
+  "d": 49,
+  "e": [
+   [
+    19,
+    20
+   ],
+   [
+    20,
+    20
+   ],
+   [
+    21,
+    20
+   ],
+   [
+    22,
+    20
+   ]
+  ],
+  "note": "Boosts all resistances",
+  "price": 12200,
+  "where": "Forged from Orihalcon."
+ },
+ {
+  "n": "Padded Gloves",
+  "sl": "a",
+  "k": "Gloves",
+  "a": 0,
+  "d": 2,
+  "price": 10,
+  "where": "Patcher's Place and Carver's Camp shops."
+ },
+ {
+  "n": "Leather Gloves",
+  "sl": "a",
+  "k": "Gloves",
+  "a": 0,
+  "d": 10,
+  "price": 220,
+  "where": "Kaocho shop."
+ },
+ {
+  "n": "Gauntlets",
+  "sl": "a",
+  "k": "Gloves",
+  "a": 0,
+  "d": 23,
+  "price": 1600,
+  "where": "Te Rya Village and Border Town shops."
+ },
+ {
+  "n": "Slap Glove",
+  "sl": "a",
+  "k": "Gloves",
+  "a": 0,
+  "d": 24,
+  "fx": [
+   "Bestows Psynergy"
+  ],
+  "note": "Bestows Slap Psynergy",
+  "price": 0,
+  "where": "Given by Ryu Kou in Kolima Junction during the story."
+ },
+ {
+  "n": "Vambrace",
+  "sl": "a",
+  "k": "Gloves",
+  "a": 5,
+  "d": 27,
+  "note": "Boosts Attack",
+  "price": 1800,
+  "where": "Examine the warrior statue in the Scorpio room of Craggy Peak Ruins."
+ },
+ {
+  "n": "War Gloves",
+  "sl": "a",
+  "k": "Gloves",
+  "a": 10,
+  "d": 32,
+  "note": "Boosts Attack",
+  "price": 4000,
+  "where": "View the Saha or Harun Village armor inventory to unlock it in all Artifact shops."
+ },
+ {
+  "n": "Aura Gloves",
+  "sl": "a",
+  "k": "Gloves",
+  "a": 0,
+  "d": 36,
+  "us": {
+   "t": "Use to boost Resist. May break if used."
+  },
+  "price": 6500,
+  "where": "Talon Peak chest in the first area."
+ },
+ {
+  "n": "Spirit Gloves",
+  "sl": "a",
+  "k": "Gloves",
+  "a": 0,
+  "d": 40,
+  "e": [
+   [
+    3,
+    20
+   ]
+  ],
+  "note": "Raises PP",
+  "price": 7200,
+  "where": "Chest in the treasure chamber hidden in King Pathos's throne room."
+ },
+ {
+  "n": "Titan Gloves",
+  "sl": "a",
+  "k": "Gloves",
+  "a": 0,
+  "d": 43,
+  "e": [
+   [
+    1,
+    30
+   ]
+  ],
+  "note": "Raises HP",
+  "price": 8100,
+  "where": "Dropped by Brutal Trolls in Burning Island Cave or Gaia Falls Islet. (1%)"
+ },
+ {
+  "n": "Umbra Gauntlet",
+  "sl": "a",
+  "k": "Gloves",
+  "a": 0,
+  "d": 45,
+  "e": [
+   [
+    20,
+    20
+   ],
+   [
+    22,
+    20
+   ]
+  ],
+  "note": "Proof against light",
+  "price": 8800,
+  "where": "Chest in Emperor Unan's treasure room in Tonfon."
+ },
+ {
+  "n": "Big Bang Gloves",
+  "sl": "a",
+  "k": "Gloves",
+  "a": 0,
+  "d": 47,
+  "e": [
+   [
+    17,
+    40
+   ]
+  ],
+  "note": "Boosts Fire Power",
+  "price": 10200,
+  "where": "Forged from Orihalcon."
+ },
+ {
+  "n": "Leather Armlet",
+  "sl": "a",
+  "k": "Bracelet",
+  "a": 0,
+  "d": 7,
+  "price": 180,
+  "where": "Harapa shop."
+ },
+ {
+  "n": "Leda's Bracelet",
+  "sl": "a",
+  "k": "Bracelet",
+  "a": 0,
+  "d": 17,
+  "price": 900,
+  "where": "Passaj and Ayuthay shops."
+ },
+ {
+  "n": "Heavy Armlet",
+  "sl": "a",
+  "k": "Bracelet",
+  "a": 0,
+  "d": 25,
+  "price": 2000,
+  "where": "Te Rya Village and Belinsk shops."
+ },
+ {
+  "n": "Silver Armlet",
+  "sl": "a",
+  "k": "Bracelet",
+  "a": 0,
+  "d": 30,
+  "price": 4000,
+  "where": "Port Rago, Harun Village, Yamata City, and Tonfon shops."
+ },
+ {
+  "n": "Bone Armlet",
+  "sl": "a",
+  "k": "Bracelet",
+  "a": 0,
+  "d": 30,
+  "us": {
+   "t": "Use to haunt a foe. May break if used."
+  },
+  "price": 3000,
+  "where": "Harapa Ruins chest, left of where you obtained Serac."
+ },
+ {
+  "n": "Virtuous Armlet",
+  "sl": "a",
+  "k": "Bracelet",
+  "a": 0,
+  "d": 35,
+  "e": [
+   [
+    17,
+    10
+   ],
+   [
+    18,
+    10
+   ]
+  ],
+  "us": {
+   "t": "Use to restore 100 HP. May break if used."
+  },
+  "price": 7000,
+  "where": "Chest in the branches of the tree near the Dream Tree."
+ },
+ {
+  "n": "Spirit Armlet",
+  "sl": "a",
+  "k": "Bracelet",
+  "a": 0,
+  "d": 38,
+  "e": [
+   [
+    15,
+    10
+   ],
+   [
+    16,
+    10
+   ]
+  ],
+  "us": {
+   "t": "Use to cure ailments. May break if used."
+  },
+  "price": 9000,
+  "where": "View the Yamata City armor inventory to unlock it in all Artifact shops."
+ },
+ {
+  "n": "Jester's Armlet",
+  "sl": "a",
+  "k": "Bracelet",
+  "a": 0,
+  "d": 39,
+  "e": [
+   [
+    3,
+    30
+   ]
+  ],
+  "note": "Raises PP",
+  "price": 5100,
+  "where": "Burning Island Cave chest, sitting in the northwestern part the main entrance room."
+ },
+ {
+  "n": "Air Bangle",
+  "sl": "a",
+  "k": "Bracelet",
+  "a": 0,
+  "d": 39,
+  "e": [
+   [
+    18,
+    30
+   ]
+  ],
+  "note": "Boosts Wind Power",
+  "price": 6000,
+  "where": "Forged from Quality Zol."
+ },
+ {
+  "n": "Mythril Armlet",
+  "sl": "a",
+  "k": "Bracelet",
+  "a": 0,
+  "d": 46,
+  "fx": [
+   "More critical hits"
+  ],
+  "note": "Boosts criticals",
+  "price": 9700,
+  "where": "Forged from Mythril Silver."
+ },
+ {
+  "n": "Open Helm",
+  "sl": "h",
+  "k": "Helm",
+  "a": 0,
+  "d": 9,
+  "price": 180,
+  "where": "Harapa shop."
+ },
+ {
+  "n": "Bronze Helm",
+  "sl": "h",
+  "k": "Helm",
+  "a": 0,
+  "d": 14,
+  "price": 600,
+  "where": "Passaj and Ayuthay shops."
+ },
+ {
+  "n": "Iron Helm",
+  "sl": "h",
+  "k": "Helm",
+  "a": 0,
+  "d": 20,
+  "price": 1600,
+  "where": "Passaj shop."
+ },
+ {
+  "n": "Steel Helm",
+  "sl": "h",
+  "k": "Helm",
+  "a": 0,
+  "d": 27,
+  "price": 3100,
+  "where": "Belinsk shop."
+ },
+ {
+  "n": "Silver Helm",
+  "sl": "h",
+  "k": "Helm",
+  "a": 0,
+  "d": 30,
+  "price": 3900,
+  "where": "Saha shop."
+ },
+ {
+  "n": "Viking Helm",
+  "sl": "h",
+  "k": "Helm",
+  "a": 0,
+  "d": 30,
+  "e": [
+   [
+    20,
+    30
+   ]
+  ],
+  "note": "Boosts Water Resist",
+  "price": 4000,
+  "where": "Harapa Ruins chest, left of where the frozen waterfall drops."
+ },
+ {
+  "n": "Knight's Helm",
+  "sl": "h",
+  "k": "Helm",
+  "a": 0,
+  "d": 33,
+  "price": 4600,
+  "where": "Harun Village, Yamata City, Champa Camp, and Tonfon shops."
+ },
+ {
+  "n": "Warrior's Helm",
+  "sl": "h",
+  "k": "Helm",
+  "a": 0,
+  "d": 35,
+  "e": [
+   [
+    15,
+    10
+   ]
+  ],
+  "fx": [
+   "More critical hits"
+  ],
+  "note": "Boosts Earth Power & criticals",
+  "price": 10000,
+  "where": "Teppe Ruins chest."
+ },
+ {
+  "n": "Minerva Helm",
+  "sl": "h",
+  "k": "Helm",
+  "a": 0,
+  "d": 43,
+  "e": [
+   [
+    3,
+    20
+   ]
+  ],
+  "note": "Raises PP",
+  "price": 8700,
+  "where": "Iceberg Outpost chest. Drop down the chimney on the roof."
+ },
+ {
+  "n": "Gloria Helm",
+  "sl": "h",
+  "k": "Helm",
+  "a": 0,
+  "d": 49,
+  "e": [
+   [
+    2,
+    10
+   ]
+  ],
+  "note": "Renews HP",
+  "price": 13800,
+  "where": "Dropped by Fury Demons in the Apollo area. (1%)"
+ },
+ {
+  "n": "Leather Cap",
+  "sl": "h",
+  "k": "Hat",
+  "a": 0,
+  "d": 3,
+  "price": 30,
+  "where": "Patcher's Place shop."
+ },
+ {
+  "n": "Wooden Cap",
+  "sl": "h",
+  "k": "Hat",
+  "a": 0,
+  "d": 10,
+  "price": 400,
+  "where": "Kaocho shop."
+ },
+ {
+  "n": "Nurse's Cap",
+  "sl": "h",
+  "k": "Hat",
+  "a": 0,
+  "d": 18,
+  "us": {
+   "t": "Use to heal a party member. May break if used."
+  },
+  "price": 1200,
+  "where": "Te Rya Village, search the cabinets in the most eastern house."
+ },
+ {
+  "n": "Lure Cap",
+  "sl": "h",
+  "k": "Hat",
+  "a": 0,
+  "d": 20,
+  "e": [
+   [
+    27,
+    1
+   ]
+  ],
+  "note": "Increases monster attacks",
+  "price": 3000,
+  "where": "Dropped by a Mimic in the Capricorn room of Craggy Peak Ruins."
+ },
+ {
+  "n": "Mail Cap",
+  "sl": "h",
+  "k": "Hat",
+  "a": 0,
+  "d": 23,
+  "price": 2000,
+  "where": "Te Rya Village and Border Town shops."
+ },
+ {
+  "n": "Prophet's Hat",
+  "sl": "h",
+  "k": "Hat",
+  "a": 0,
+  "d": 30,
+  "us": {
+   "t": "Use to predict a foe's doom. May break if used."
+  },
+  "price": 4600,
+  "where": "Passaj chest after transformation, in storage room northeast area of town."
+ },
+ {
+  "n": "Umbra Cowl",
+  "sl": "h",
+  "k": "Hat",
+  "a": 0,
+  "d": 35,
+  "e": [
+   [
+    19,
+    20
+   ],
+   [
+    22,
+    20
+   ]
+  ],
+  "note": "Proof against light",
+  "price": 5500,
+  "where": "Lonely Island Ruins chest."
+ },
+ {
+  "n": "Alastor's Hood",
+  "sl": "h",
+  "k": "Hat",
+  "a": 0,
+  "d": 47,
+  "us": {
+   "t": "Use to haunt a foe. May break if used."
+  },
+  "price": 11800,
+  "where": "Crossbone Isle chest. It's the most northeastern chest in the room with the exploding crumbling rocks."
+ },
+ {
+  "n": "Lucky Cap",
+  "sl": "h",
+  "k": "Crown",
+  "a": 0,
+  "d": 33,
+  "e": [
+   [
+    4,
+    2
+   ]
+  ],
+  "fx": [
+   "More critical hits"
+  ],
+  "note": "Boosts criticals, renews PP",
+  "price": 5200,
+  "where": "Harun Channel chest."
+ },
+ {
+  "n": "Jeweled Crown",
+  "sl": "h",
+  "k": "Crown",
+  "a": 0,
+  "d": 35,
+  "e": [
+   [
+    6,
+    5
+   ]
+  ],
+  "note": "Boosts Luck",
+  "price": 4000,
+  "where": "View the Harun Village armor inventory to unlock it in all Artifact shops."
+ },
+ {
+  "n": "Thunder Crown",
+  "sl": "h",
+  "k": "Crown",
+  "a": 0,
+  "d": 40,
+  "c": 1,
+  "e": [
+   [
+    4,
+    4
+   ]
+  ],
+  "note": "renews PP",
+  "price": 7500,
+  "where": "Yamata Ruins chest."
+ },
+ {
+  "n": "Circlet",
+  "sl": "h",
+  "k": "Circlet",
+  "a": 0,
+  "d": 6,
+  "price": 120,
+  "where": "Carver's Camp and Harapa shops."
+ },
+ {
+  "n": "Silver Circlet",
+  "sl": "h",
+  "k": "Circlet",
+  "a": 0,
+  "d": 16,
+  "price": 1300,
+  "where": "Passaj and Ayuthay shops."
+ },
+ {
+  "n": "Guardian Circlet",
+  "sl": "h",
+  "k": "Circlet",
+  "a": 0,
+  "d": 25,
+  "price": 3400,
+  "where": "Te Rya Village shop."
+ },
+ {
+  "n": "Glittering Tiara",
+  "sl": "h",
+  "k": "Circlet",
+  "a": 0,
+  "d": 27,
+  "us": {
+   "t": "Use to delude foes. May break if used."
+  },
+  "price": 3600,
+  "where": "Ayuthay chest, found directly east of the first raft at the entrance."
+ },
+ {
+  "n": "Platinum Circlet",
+  "sl": "h",
+  "k": "Circlet",
+  "a": 0,
+  "d": 29,
+  "price": 4200,
+  "where": "Belinsk, Port Rago, and Saha shops."
+ },
+ {
+  "n": "Mythril Circlet",
+  "sl": "h",
+  "k": "Circlet",
+  "a": 0,
+  "d": 34,
+  "e": [
+   [
+    4,
+    3
+   ]
+  ],
+  "note": "Renews PP",
+  "price": 7000,
+  "where": "Forged from Mythril Silver."
+ },
+ {
+  "n": "Zol Tiara",
+  "sl": "h",
+  "k": "Circlet",
+  "a": 0,
+  "d": 37,
+  "e": [
+   [
+    22,
+    30
+   ]
+  ],
+  "note": "Boosts Wind Resist",
+  "price": 6000,
+  "where": "Forged from Quality Zol."
+ },
+ {
+  "n": "Demon Circlet",
+  "sl": "h",
+  "k": "Circlet",
+  "a": 0,
+  "d": 50,
+  "c": 1,
+  "fx": [
+   "More critical hits"
+  ],
+  "note": "boosts criticals",
+  "price": 15800,
+  "where": "Forged from Dark Matter."
+ },
+ {
+  "n": "Leather Boots",
+  "sl": "f",
+  "k": "Boots",
+  "a": 0,
+  "d": 6,
+  "note": "Boosts Defense",
+  "price": 270,
+  "where": "Passaj shop."
+ },
+ {
+  "n": "Safety Boots",
+  "sl": "f",
+  "k": "Boots",
+  "a": 0,
+  "d": 12,
+  "e": [
+   [
+    13,
+    7
+   ]
+  ],
+  "note": "Boosts Defense, lowers Agility",
+  "price": 700,
+  "where": "View the Ayuthay armor inventory to unlock it in all Artifact shops, and chest in the upper branches of the Dream Tree."
+ },
+ {
+  "n": "Knight's Greave",
+  "sl": "f",
+  "k": "Boots",
+  "a": 0,
+  "d": 16,
+  "e": [
+   [
+    1,
+    5
+   ]
+  ],
+  "note": "Boosts Defense & HP",
+  "price": 2700,
+  "where": "View the Border Town or Harun Village armor inventory to unlock it in all Artifact shops."
+ },
+ {
+  "n": "Ninja Sandals",
+  "sl": "f",
+  "k": "Boots",
+  "a": 0,
+  "d": 19,
+  "fx": [
+   "More critical hits"
+  ],
+  "note": "Boosts Defense & criticals",
+  "price": 2000,
+  "where": "Finish a sidequest involving a grandmother in Kaocho before the eclipse, and using Spirit Sense on a young girl in Tonfon outside the castle."
+ },
+ {
+  "n": "Hover Greave",
+  "sl": "f",
+  "k": "Boots",
+  "a": 0,
+  "d": 20,
+  "e": [
+   [
+    13,
+    15
+   ]
+  ],
+  "note": "Boosts Agility",
+  "price": 4500,
+  "where": "Forged from Quality Zol."
+ },
+ {
+  "n": "Silver Greave",
+  "sl": "f",
+  "k": "Boots",
+  "a": 0,
+  "d": 22,
+  "e": [
+   [
+    6,
+    4
+   ]
+  ],
+  "note": "Boosts Defense & Luck",
+  "price": 3800,
+  "where": "View the Tonfon armor inventory to unlock it in all Artifact shops."
+ },
+ {
+  "n": "Zol Ring",
+  "sl": "r",
+  "k": "Ring",
+  "a": 0,
+  "d": 0,
+  "e": [
+   [
+    13,
+    18
+   ]
+  ],
+  "note": "Boosts Agility",
+  "price": 2500,
+  "where": "Forged from Quality Zol and given to you by the Passaj Weapon Shop owner for fixing the forge."
+ },
+ {
+  "n": "Lord Sun's Ring",
+  "sl": "r",
+  "k": "Ring",
+  "a": 8,
+  "d": 0,
+  "fx": [
+   "More critical hits"
+  ],
+  "note": "Boosts criticals",
+  "price": 4900,
+  "where": "Chest in Emperor Unan's treasure room in Tonfon."
+ },
+ {
+  "n": "Lady Moon's Ring",
+  "sl": "r",
+  "k": "Ring",
+  "a": 0,
+  "d": 8,
+  "e": [
+   [
+    19,
+    10
+   ],
+   [
+    20,
+    10
+   ],
+   [
+    21,
+    10
+   ],
+   [
+    22,
+    10
+   ]
+  ],
+  "note": "Boosts Defense & Resist",
+  "price": 3300,
+  "where": "Given by Lady Hinechou after returning their children returns to Tonfon in the story."
+ },
+ {
+  "n": "Heirloom Ring",
+  "sl": "r",
+  "k": "Ring",
+  "a": 0,
+  "d": 0,
+  "e": [
+   [
+    16,
+    30
+   ],
+   [
+    20,
+    40
+   ]
+  ],
+  "us": {
+   "t": "Use to restore 1,000 HP. May break if used."
+  },
+  "note": "000 HP",
+  "price": 5600,
+  "where": "Chest in the treasure chamber hidden in King Pathos's throne room."
+ },
+ {
+  "n": "Cleric's Ring",
+  "sl": "r",
+  "k": "Ring",
+  "a": 0,
+  "d": 0,
+  "fx": [
+   "Curse is removable"
+  ],
+  "note": "Suppresses curse effects",
+  "price": 6400,
+  "where": "Crossbone Isle chest in the final room after the one with the skull statue."
+ },
+ {
+  "n": "Umbra Goggles",
+  "sl": "g",
+  "k": "Goggles",
+  "a": 0,
+  "d": 5,
+  "e": [
+   [
+    20,
+    20
+   ],
+   [
+    21,
+    20
+   ]
+  ],
+  "note": "Proof against light",
+  "price": 3300,
+  "where": "Snowdrift Shrine chest."
+ }
+]
