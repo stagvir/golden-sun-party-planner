@@ -245,9 +245,13 @@ details.sec .sec-body { display: grid; gap: 10px; margin-top: 8px; }
 .gtab thead th { font-size: var(--fs); text-transform: none; letter-spacing: 0; color: var(--fg); font-weight: 400; padding-bottom: 6px; }
 .gtab .who { display: flex; align-items: center; gap: 6px; min-width: 0; }
 .gtab .who img { width: 24px; height: 24px; image-rendering: pixelated; border-radius: 3px; flex: none; }
-.gtab .who div { min-width: 0; display: grid; }
-.gtab .who span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.gtab .who small { font-weight: 400; color: var(--muted); font-size: var(--fs); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* row 1: grip, portrait, name, level number at the top right; row 2: the class across the whole column.
+   Text wraps between words when it must, never cut. */
+.gtab .who { display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto; column-gap: 6px; align-items: center; }
+.gtab .who > div { display: contents; }
+.gtab .who .lv { color: var(--accent); text-align: right; }
+.gtab .who small { grid-column: 1 / -1; font-weight: 400; color: var(--muted); font-size: var(--fs); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .gtab .res { border-left: 2px solid var(--line); }
 .gtab tbody th, .gtab tfoot th { font-size: var(--fs); text-transform: uppercase; letter-spacing: 0; color: var(--muted); font-weight: 400; }
 .gcell { width: 100%; display: flex; align-items: center; gap: 4px; min-width: 0; background: none; border: 1px solid transparent; border-radius: 5px; padding: 2px 4px; font-size: var(--fs); text-align: left; color: var(--fg); }
@@ -1314,7 +1318,7 @@ __SAVEPARSE__
   function headHtml(cols, cur) {
     return `<colgroup><col class="lab">${cols.map(() => '<col>').join('')}</colgroup><thead><tr><th></th>` + cols.map((ci, pos) => {
       const r = cur[ci].r, por = GSUI.portrait[r.ch.name];
-      return `<th${resCls(pos)} data-pos="${pos}"><div class="who"><button type="button" class="grip" data-pos="${pos}" aria-label="Move ${esc(r.ch.name)} (party slot ${pos + 1}). Drag, or use the left and right arrow keys." title="Drag to reorder"><svg viewBox="0 0 8 14" aria-hidden="true"><circle cx="2" cy="2" r="1.1"/><circle cx="6" cy="2" r="1.1"/><circle cx="2" cy="7" r="1.1"/><circle cx="6" cy="7" r="1.1"/><circle cx="2" cy="12" r="1.1"/><circle cx="6" cy="12" r="1.1"/></svg></button>${por ? `<img src="${por}" alt="">` : ''}<div><span>${esc(r.ch.name)}${pos >= 4 ? ' <small>(reserve)</small>' : ''}</span><small>Lv ${r.cs.lv} · ${esc(r.tier.name)}${r.cls.certain ? '' : ' ?'}</small></div></div></th>`;
+      return `<th${resCls(pos)} data-pos="${pos}"><div class="who"><button type="button" class="grip" data-pos="${pos}" aria-label="Move ${esc(r.ch.name)} (party slot ${pos + 1}). Drag, or use the left and right arrow keys." title="Drag to reorder"><svg viewBox="0 0 8 14" aria-hidden="true"><circle cx="2" cy="2" r="1.1"/><circle cx="6" cy="2" r="1.1"/><circle cx="2" cy="7" r="1.1"/><circle cx="6" cy="7" r="1.1"/><circle cx="2" cy="12" r="1.1"/><circle cx="6" cy="12" r="1.1"/></svg></button>${por ? `<img src="${por}" alt="">` : ''}<div title="${esc(r.ch.name)}, level ${r.cs.lv}, ${esc(r.tier.name)}"><span class="nm">${esc(r.ch.name)}</span><span class="lv" aria-label="level ${r.cs.lv}">${r.cs.lv}</span><small>${esc(r.tier.name)}${r.cls.certain ? '' : ' ?'}</small></div></div></th>`;
     }).join('') + '</tr></thead>';
   }
   function footRows({ cols, base, cur }) {
