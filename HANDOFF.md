@@ -33,7 +33,7 @@ Open `planner.html` in a browser. Everything is inlined: data, icons as data URI
 | `dddata.json` | Dark Dawn data, built by `dd/build_dd.py`. Same shape plus `lines`/`mono` per character. `items` is empty. |
 | `dd/` | Raw Dark Dawn tables (`<name>.txt`, `djinn.txt`), `parse.py` (→ `ddclasses.json`), `build_dd.py` (→ `dddata.json`), and the two unlabelled DD icon sheets the user supplied. |
 | `icons/gba/` | Item icons named like wiki files (`Warriors_Helm.gif`). `icon_aliases.json` maps the odd names. A `dd` set is wired up but empty. |
-| `ui/` | Portraits, element stars, frame and Psynergy icons for the game-styled showcase. |
+| `ui/` | Portraits, element stars, frame and Psynergy icons for the game-styled showcase. Dark Dawn portraits are `ui/portraits/<Name>_DD.gif`, cut from `dd/icon_sheets/dd_mugshots.png` by `dd/cut_portraits.py`. |
 | `tests/` | Playwright UI tests and node data checks (below). |
 | `testdata/gtc/` | Test saves from game-tools-collection (MIT, licence included). |
 | `testdata/user/` | The owner's real GS1 and TLA saves (3 + 2 slots). |
@@ -144,7 +144,7 @@ Node checks:
   - Files: `src/lib/templates/golden-sun*/saveEditor/template.ts`.
 - **Wiki:** goldensunwiki.net, for icons, mechanics and spot checks. Raw wikitext (`?action=raw`) is robots-blocked for fetchers.
 - **Dark Dawn:** goldensun-syndicate.net/dd/classes/ and /dd/djinn/.
-- **Sprites:** GBA item, portrait and Psynergy sprites from the user's zip (fan-wiki sprites). Keep the page private.
+- **Sprites:** GBA item, portrait and Psynergy sprites from the user's zip (fan-wiki sprites). Dark Dawn mugshots from a user-supplied sheet ("Protagonists' Mugshots", DS rip). Keep the page private.
 
 ## Open work, in rough priority
 

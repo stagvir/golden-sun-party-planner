@@ -48,7 +48,8 @@ for s in wanted:
 def uri(path):
     return 'data:image/gif;base64,' + base64.b64encode(open(path, 'rb').read()).decode()
 ui_dir = os.path.join(d, 'ui')
-PORTRAIT = {'Isaac': 'Isaac2', 'Garet': 'Garet2', 'Ivan': 'Ivan', 'Mia': 'Mia', 'Felix': 'Felix2', 'Jenna': 'Jenna2', 'Sheba': 'Sheba', 'Piers': 'Picard'}
+PORTRAIT = {'Isaac': 'Isaac2', 'Garet': 'Garet2', 'Ivan': 'Ivan', 'Mia': 'Mia', 'Felix': 'Felix2', 'Jenna': 'Jenna2', 'Sheba': 'Sheba', 'Piers': 'Picard',
+            'Matthew': 'Matthew_DD', 'Tyrell': 'Tyrell_DD', 'Karis': 'Karis_DD', 'Rief': 'Rief_DD', 'Amiti': 'Amiti_DD', 'Sveta': 'Sveta_DD', 'Eoleo': 'Eoleo_DD', 'Himi': 'Himi_DD'}
 PSY_ALIAS = {'Annihilation': 'Annihalation', 'Guard': 'Gaurd', 'Guardian': 'Gaurdian', 'Thunderhead': 'Thunderstorm'}
 ui = {'portrait': {}, 'star': [], 'frame': None, 'psy': {}}
 if os.path.isdir(ui_dir):
