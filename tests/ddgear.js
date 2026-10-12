@@ -37,6 +37,9 @@ const { chromium } = require(process.argv[2] ? process.argv[2] + '/playwright' :
   console.log('facts:', (await p.innerText('#sheet .facts')).replace(/\s+/g, ' ').slice(0, 140));
   // Showcase uses Dark Dawn's own Psynergy sprites (GBA icon only where DD has none)
   console.log('DD psy sprites in showcase:', await p.evaluate(() => document.querySelectorAll('#showcase .gs-row img.dd').length > 50), '| GBA psy fallbacks:', await p.evaluate(() => [...document.querySelectorAll('#showcase .gs-row img:not(.dd):not(.star)')].map(i => i.alt).filter(n => !['Venus', 'Mercury', 'Mars', 'Jupiter'].includes(n)).join(',')));
+  // The sheet's Psynergy list has an icon on every row (DD sprites)
+  await p.locator('#sheet details.sec[data-sec="psy"]').evaluate(d => d.open = true);
+  console.log('psy list icons:', await p.evaluate(() => { const r = [...document.querySelectorAll('#sheet table.psy tbody tr')]; return `${r.filter(x => x.querySelector('img.pi.dd')).length}/${r.length} DD`; }));
   await p.setViewportSize({ width: 400, height: 900 }); await p.click('#tabGear');
   console.log('scrollWidth @400:', await p.evaluate(() => document.documentElement.scrollWidth));
   await p.setViewportSize({ width: 1320, height: 1000 }); await p.screenshot({ path: 'out/dd_gear.png' });

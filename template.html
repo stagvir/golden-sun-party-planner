@@ -118,7 +118,12 @@ td .modin { width: 4.2em; text-align: right; }
 .psy td.r { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; }
 .psy tr.locked td { color: var(--muted); }
 .psy tr.locked .pn { opacity: .75; }
-.psy .pn { font-weight: 500; }
+.psy .pn { font-weight: 500; white-space: nowrap; }
+.psy .pi { display: inline-block; width: 16px; height: 16px; margin-right: 6px; vertical-align: middle; image-rendering: pixelated; }
+/* Dark Dawn: 24px sprites; spacers and the odd 16px GBA fallback take the same room so names line up */
+.psy.dd .pi { width: 24px; height: 24px; }
+.psy.dd img.pi:not(.dd) { width: 16px; height: 16px; margin: 4px 10px 4px 4px; }
+.psy tr.locked .pi { opacity: .6; }
 .kind { font-size: .75rem; padding: 1px 6px; border-radius: 4px; background: var(--sunk); white-space: nowrap; }
 
 /* djinn board */
@@ -752,6 +757,12 @@ __SAVEPARSE__
   $('strip').addEventListener('dragend', () => { dragFrom = null; });
 
   // ---------- sheet ----------
+  // Psynergy icon: Dark Dawn's own sprite in Dark Dawn (24px), else the GBA icon of the same name (16px)
+  function psyIcon(a, cls = '') {
+    const own = D.dd && GSUI.psyDD[a.n], src = own || GSUI.psy[a.n];
+    const c = [cls, own ? 'dd' : ''].filter(Boolean).join(' ');
+    return src ? `<img${c ? ` class="${c}"` : ''} src="${src}" alt="" title="${esc(a.n)}">` : '';
+  }
   function abilKind(a) {
     if (a.unk) return '—';
     switch (a.d) {
@@ -912,7 +923,7 @@ __SAVEPARSE__
     const psy = r.tier.psy.slice().sort((a, b) => a[1] - b[1]).map(([id, lv]) => {
       const a = D.abil[id]; if (!a) return '';
       const lock = lv > cs.lv;
-      return `<tr class="${lock ? 'locked' : ''}"><td class="r">${lv}</td><td class="pn">${esc(a.n)}</td>
+      return `<tr class="${lock ? 'locked' : ''}"><td class="r">${lv}</td><td class="pn">${psyIcon(a, 'pi') || '<span class="pi"></span>'}${esc(a.n)}</td>
         <td><span class="etag e${a.e}"><span class="dot"></span>${a.e < 4 ? EL[a.e] : '—'}</span></td>
         <td><span class="kind">${abilKind(a)}</span></td><td class="r">${rangeTxt(a.r)}</td><td class="r">${a.c}</td></tr>`;
     }).join('');
@@ -954,7 +965,7 @@ __SAVEPARSE__
       ${sec('stats', `Stats at level ${cs.lv}`, statPeek, `<div class="tscroll"><table class="stats"><thead><tr><th>Stat</th><th>Base</th><th>Djinn</th><th>Items</th><th>Gear</th><th>Modifier</th><th>Class</th><th>Final</th></tr></thead><tbody>${rows}</tbody></table></div>
         <span class="sheet-links">Items and Modifier are set in the <button type="button" class="linkbtn" data-goto="mods">Modifiers tab</button>.</span>`)}
       ${sec('elements', r.el.unknown ? 'Elemental levels' : 'Elements · Power/Resistance', elPeek, `<div class="tscroll"><table class="stats elt"><thead><tr><th>Element</th><th>Level</th>${r.el.unknown ? '' : '<th>Power</th><th>Resistance</th>'}</tr></thead><tbody>${elRows}</tbody></table></div>${r.el.unknown ? '<span class="sheet-links">Dark Dawn\'s Power/Resistance formula isn\'t published, so only elemental levels are shown.</span>' : ''}`)}
-      ${sec('psy', `Psynergy as ${esc(r.tier.name)}`, `${known} of ${r.tier.psy.length} learned by level ${cs.lv}`, `<div class="tscroll"><table class="psy"><thead><tr><th>Lv</th><th>Psynergy</th><th>Element</th><th>Effect</th><th>Targets</th><th>PP</th></tr></thead><tbody>${psy}</tbody></table></div>`)}`);
+      ${sec('psy', `Psynergy as ${esc(r.tier.name)}`, `${known} of ${r.tier.psy.length} learned by level ${cs.lv}`, `<div class="tscroll"><table class="psy${D.dd ? ' dd' : ''}"><thead><tr><th>Lv</th><th>Psynergy</th><th>Element</th><th>Effect</th><th>Targets</th><th>PP</th></tr></thead><tbody>${psy}</tbody></table></div>`)}`);
   }
   // Remember which sections are open; 'toggle' doesn't bubble, so listen in the capture phase
   $('sheet').addEventListener('toggle', e => {
@@ -1065,9 +1076,8 @@ __SAVEPARSE__
         return `<span title="${esc(names)}" class="${set < mine.length ? 'sb' : ''}">${star(e)}${set}${set < mine.length ? '/' + mine.length : ''}</span>`;
       }).join('') : '<span class="gs-empty">No djinn</span>';
       const learned = r.tier.psy.filter(p => p[1] <= cs.lv).sort((a, b) => a[1] - b[1]);
-      // Dark Dawn uses its own sprites, falling back to the GBA icon of the same name
-      const psy = learned.length ? learned.map(([id]) => { const a = D.abil[id], own = D.dd && GSUI.psyDD[a.n], src = own || GSUI.psy[a.n];
-        return src ? `<img${own ? ' class="dd"' : ''} src="${src}" alt="${esc(a.n)}" title="${esc(a.n)}">` : `<img class="star" src="${GSUI.star[a.e] || ''}" alt="${esc(a.n)}" title="${esc(a.n)}">`; }).join('')
+      const psy = learned.length ? learned.map(([id]) => { const a = D.abil[id], icon = psyIcon(a);
+        return icon ? icon.replace('alt=""', `alt="${esc(a.n)}"`) : `<img class="star" src="${GSUI.star[a.e] || ''}" alt="${esc(a.n)}" title="${esc(a.n)}">`; }).join('')
         : '<span class="gs-empty">None yet</span>';
       h += `<article class="gs gs-card" aria-label="${esc(ch.name)} build">
         <div class="gs-top">${portrait}
