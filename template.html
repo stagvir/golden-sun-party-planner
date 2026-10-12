@@ -303,16 +303,16 @@ details.sec .sec-body { display: grid; gap: 10px; margin-top: 8px; }
 .pk-head { padding: 8px 10px; border-bottom: 1px solid var(--line); display: grid; gap: 2px; }
 .pk-head b { font-family: var(--display); font-weight: 400; font-size: var(--fs); }
 .pk-head span { font-size: var(--fs); color: var(--muted); }
-.pk-list { overflow-y: auto; padding: 4px; display: grid; gap: 1px; }
-.pk-opt { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 2px 6px; align-items: center; text-align: left; background: none; border: 1px solid transparent; border-radius: 5px; padding: 4px 6px; color: var(--fg); }
+.pk-list { overflow-y: auto; overscroll-behavior: contain; padding: 4px; display: grid; gap: 2px; }
+.pk-opt { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 10px; align-items: center; text-align: left; background: none; border: 1px solid transparent; border-radius: 5px; padding: 4px 6px; color: var(--fg); }
 .pk-opt:hover, .pk-opt:focus-visible { background: var(--bg); border-color: var(--line); outline: none; }
 .pk-opt:focus-visible { border-color: var(--accent); }
 .pk-opt.cur { background: var(--bg); }
 .pk-opt .ico.sm { margin: 0; }
-.pk-opt .t { display: flex; gap: 6px; align-items: baseline; min-width: 0; }
+.pk-opt .t { display: flex; flex-wrap: wrap; gap: 0 .6em; align-items: baseline; min-width: 0; }
 .pk-opt .t b { font-weight: 400; font-size: var(--fs); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .pk-opt .t small { color: var(--muted); font-size: var(--fs); white-space: nowrap; }
-.pk-opt .ch { grid-column: 2; display: flex; flex-wrap: wrap; gap: 3px; }
+.pk-opt .ch { grid-column: 2; display: flex; flex-wrap: wrap; gap: 4px; }
 .chg { font-size: var(--fs); font-family: var(--mono); font-variant-numeric: tabular-nums; padding: 0 5px; border-radius: 4px; line-height: 1.5; }
 .chg.up { color: var(--good); background: var(--good-bg); }
 .chg.dn { color: var(--bad); background: var(--bad-bg); }
@@ -1606,6 +1606,13 @@ __SAVEPARSE__
     toast(note);
     const btn = document.querySelector(`.gcell[data-ci="${ci}"][data-sl="${sl}"]`); if (btn) btn.focus();
   });
+  // The mouse wheel over the picker scrolls only its list, never the page behind it (a page scroll would close it)
+  $('picker').addEventListener('wheel', e => {
+    e.preventDefault();
+    const list = $('picker').querySelector('.pk-list'); if (!list) return;
+    const unit = e.deltaMode === 1 ? 20 : e.deltaMode === 2 ? list.clientHeight : 1;
+    list.scrollTop += e.deltaY * unit;
+  }, { passive: false });
   $('picker').addEventListener('keydown', e => {
     const opts = [...$('picker').querySelectorAll('.pk-opt')], i = opts.indexOf(document.activeElement);
     if (e.key === 'ArrowDown') { e.preventDefault(); (opts[i + 1] || opts[0]).focus(); }

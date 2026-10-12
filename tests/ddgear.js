@@ -25,6 +25,12 @@ const { chromium } = require(process.argv[2] ? process.argv[2] + '/playwright' :
   await p.click('.gcell[data-ci="0"][data-sl="w"]');
   await p.locator('#picker .pk-opt', { has: p.locator('b', { hasText: /^Gaia Blade$/ }) }).first().click();
   console.log('Matthew weapon:', (await p.innerText('.gcell[data-ci="0"][data-sl="w"]')).trim(), '| saved id:', await atk());
+  // Mouse wheel over an open picker scrolls its list only: the page stays put and the picker stays open
+  await p.click('.gcell[data-ci="1"][data-sl="w"]'); await p.waitForTimeout(100);
+  { const bx = await p.locator('#picker').boundingBox(), y0 = await p.evaluate(() => scrollY);
+    await p.mouse.move(bx.x + bx.width / 2, bx.y + bx.height / 2); for (let i = 0; i < 20; i++) await p.mouse.wheel(0, 200); await p.waitForTimeout(200);
+    console.log('wheel in picker: page still', await p.evaluate(y => scrollY === y, y0), '| picker open', await p.evaluate(() => !document.getElementById('picker').hidden), '| list scrolled', await p.evaluate(() => document.querySelector('#picker .pk-list').scrollTop > 0)); }
+  await p.keyboard.press('Escape');
   // Unconfirmed flag shows for Sveta's robes, not Rief's
   await p.click('.gcell[data-ci="5"][data-sl="b"]');
   console.log('Sveta robe flagged:', await p.locator('#picker .pk-opt', { has: p.locator('b', { hasText: /^Silk Robe$/ }) }).first().innerText().then(t => /may not be equippable/.test(t)));
