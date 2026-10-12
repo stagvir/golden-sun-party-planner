@@ -8,24 +8,26 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600&display=swap">
 <style>
 /* Layout: party strip on top, then character sheet (left) beside the djinn board (right); party table at the foot. */
-/* One fixed look styled after the GBA menus (blue bevelled windows, pixel font, light-blue selection bar). */
+/* One fixed look taken from the GBA game's default window colour (sampled from a screenshot):
+   flat #006b8c fill, 4px grey/white/grey/black frame, 3px inner bevel, white text with a black shadow, black screen. */
 :root {
-  --bg: #0d1b4d; --surface: #2850b4; --sunk: #183884; --line: #6f8fd8; --fg: #ffffff; --muted: #d0dbf7; --accent: #ffe27a;
-  --venus: #ffc23a; --mercury: #8ad8ff; --mars: #ff7a5c; --jupiter: #d79bff;
-  --venus-bg: rgba(255, 194, 58, .22); --mercury-bg: rgba(108, 200, 255, .22); --mars-bg: rgba(255, 122, 92, .24); --jupiter-bg: rgba(215, 155, 255, .24);
-  --good: #8ff59c; --warn: #ffcf5a; --bad: #ff9a8a; --good-bg: rgba(60, 200, 90, .28); --bad-bg: rgba(255, 90, 70, .28);
+  --bg: #000000; --surface: #006b8c; --sunk: #00526b; --line: #4fa3c2; --fg: #ffffff; --muted: #c9e3ec; --accent: #ffe27a;
+  --venus: #ffc23a; --mercury: #8ae4ff; --mars: #ff8a6a; --jupiter: #e2a8ff;
+  --venus-bg: rgba(255, 194, 58, .22); --mercury-bg: rgba(138, 228, 255, .2); --mars-bg: rgba(255, 138, 106, .24); --jupiter-bg: rgba(226, 168, 255, .24);
+  --good: #9cffa8; --warn: #ffd45e; --bad: #ffa898; --good-bg: rgba(60, 200, 90, .32); --bad-bg: rgba(255, 90, 70, .32);
   --display: "Pixelify Sans", "Courier New", ui-monospace, monospace;
   --body: "Pixelify Sans", "Courier New", ui-monospace, monospace;
   --mono: "Pixelify Sans", "Courier New", ui-monospace, monospace;
-  --r: 6px; color-scheme: dark;
-  /* window skin (the game's default blue) */
-  --win: linear-gradient(180deg, #5a88e0 0%, #2c56bc 38%, #1c3c94 100%);
-  --win-edge: #eef2ff; --win-out: #071233; --win-in: #9db4ea;
-  --sel: linear-gradient(180deg, #84c2f8 0%, #559ced 50%, #3474d4 100%); --sel-edge: #f2faff;
+  --r: 0; color-scheme: dark;
+  /* window skin: 15x15 9-slice frames drawn by ui/misc/make_window.py */
+  --frame: url("__WIN_PNG__"); --frame-sel: url("__WIN_SEL_PNG__");
+  --cursor: #1f98c8; --win-out: #000000; --win-in: #a5a5a5;
 }
 
-body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 14px; line-height: 1.45; }
-.wrap { max-width: 1280px; margin: 0 auto; padding-inline: 16px; padding-block: 20px 40px; display: grid; gap: 20px; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 0.875rem; line-height: 1.45; }
+/* Type scales with the window on big screens (16px up to ~1300px wide, ~20px at 1920, max 24px); the page width follows it */
+html { font-size: clamp(16px, calc(9px + 0.55vw), 24px); }
+.wrap { max-width: 80rem; margin: 0 auto; padding-inline: 16px; padding-block: 20px 40px; display: grid; gap: 20px; }
 h1, h2, h3 { font-family: var(--display); font-weight: 400; margin: 0; text-wrap: balance; letter-spacing: .02em; }
 h1 { font-size: 1.9rem; }
 h2 { font-size: 1.25rem; }
@@ -330,60 +332,57 @@ details.sec .sec-body { display: grid; gap: 10px; margin-top: 8px; }
 .tip .un { border-top: 1px solid var(--line); padding-top: 6px; display: grid; gap: 2px; }
 .tip .bad { color: var(--warn); }
 .tip .foot { color: var(--muted); font-size: .74rem; border-top: 1px solid var(--line); padding-top: 6px; }
-/* ---------- game-style showcase: one fixed look in both themes, styled after the GBA status screens ---------- */
+/* ---------- game-style showcase: status-screen cards (the window frame comes from the GBA menu skin below) ---------- */
 :root {
-  --gs-top: #4a78cf; --gs-mid: #2448a0; --gs-bot: #152c70; --gs-edge: #f2f4ff; --gs-out: #0a1433; --gs-in: #9db4ea;
-  --gs-text: #ffffff; --gs-shadow: #0a1433; --gs-dim: #b9c6ea; --gs-gold: #ffe27a;
+  --gs-text: #ffffff; --gs-shadow: #000000; --gs-dim: #c9e3ec; --gs-gold: #ffe27a;
   --gs-font: "Pixelify Sans", "Courier New", ui-monospace, monospace;
 }
 .showcase { display: grid; gap: 10px; }
 .sc-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; }
 .sc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 8px; }
 .sc-group { grid-column: 1 / -1; font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 600; margin-top: 2px; }
-.gs { font-family: var(--gs-font); color: var(--gs-text); text-shadow: 1px 1px 0 var(--gs-shadow); font-size: 13px; line-height: 1.2; }
-.gs-card { background: linear-gradient(180deg, var(--gs-top) 0%, var(--gs-mid) 45%, var(--gs-bot) 100%);
-  border: 2px solid var(--gs-edge); border-radius: 6px; box-shadow: 0 0 0 2px var(--gs-out), inset 0 0 0 1px var(--gs-in);
-  padding: 6px 8px; display: grid; gap: 5px; min-width: 0; margin: 2px; }
+.gs { font-family: var(--gs-font); color: var(--gs-text); text-shadow: 1px 1px 0 var(--gs-shadow); font-size: 0.8125rem; line-height: 1.2; }
+.gs-card { padding: 4px 6px; display: grid; gap: 5px; min-width: 0; }
 .gs-top { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 8px; align-items: center; }
 .gs-por { width: 36px; height: 36px; position: relative; }
 .gs-por img { image-rendering: pixelated; position: absolute; }
 .gs-por .fr { inset: 0; width: 36px; height: 36px; }
 .gs-por .pt { left: 2px; top: 2px; width: 32px; height: 32px; }
-.gs-l1 { display: flex; justify-content: space-between; gap: 6px; font-size: 15px; font-weight: 600; }
+.gs-l1 { display: flex; justify-content: space-between; gap: 6px; font-size: 0.9375rem; font-weight: 600; }
 .gs-l1 .lv { color: var(--gs-gold); font-weight: 400; }
 .gs-l2 { display: flex; justify-content: space-between; gap: 6px; color: var(--gs-dim); white-space: nowrap; }
 .gs-l2 .cl { overflow: hidden; text-overflow: ellipsis; }
 .gs-l2 b { color: var(--gs-text); font-weight: 400; }
 .gs-sep { border-top: 1px solid rgba(242, 244, 255, .35); }
 .gs-st { display: grid; grid-template-columns: repeat(4, auto); justify-content: space-between; gap: 0 6px; font-variant-numeric: tabular-nums; }
-.gs-st span i { font-style: normal; color: var(--gs-dim); margin-right: 3px; font-size: 11px; }
+.gs-st span i { font-style: normal; color: var(--gs-dim); margin-right: 3px; font-size: 0.6875rem; }
 .gs-el { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; text-align: center; font-variant-numeric: tabular-nums; }
 .gs-el div { display: grid; gap: 0; }
-.gs-el .lv { font-size: 13px; }
-.gs-el .pr { font-size: 10px; color: var(--gs-dim); }
+.gs-el .lv { font-size: 0.8125rem; }
+.gs-el .pr { font-size: 0.625rem; color: var(--gs-dim); }
 .gs-el img, .gs-dj img { width: 10px; height: 10px; image-rendering: pixelated; vertical-align: -1px; margin-right: 3px; }
 .gs-row { display: flex; flex-wrap: wrap; gap: 2px; align-items: center; min-height: 16px; }
 .gs-row img { width: 16px; height: 16px; image-rendering: pixelated; display: block; }
 .gs-row img.dd { width: 24px; height: 24px; }
 .gs-row .ph { width: 14px; height: 14px; border: 1px dashed var(--gs-dim); border-radius: 2px; margin: 1px; }
 .gs-row .star { width: 8px; height: 8px; margin: 4px; }
-.gs-row .lab { color: var(--gs-gold); font-size: 10px; letter-spacing: .04em; margin-right: 4px; min-width: 22px; }
+.gs-row .lab { color: var(--gs-gold); font-size: 0.625rem; letter-spacing: .04em; margin-right: 4px; min-width: 22px; }
 .gs-dj { display: flex; gap: 8px; flex-wrap: wrap; font-variant-numeric: tabular-nums; }
 .gs-dj .sb { color: var(--gs-dim); }
 .gs-row .gs-dj img { width: 10px; height: 10px; display: inline; margin: 0 3px 0 0; vertical-align: -1px; }
-.gs-empty { color: var(--gs-dim); font-size: 11px; }
+.gs-empty { color: var(--gs-dim); font-size: 0.6875rem; }
 @media (prefers-reduced-motion: no-preference) { .pc, .chip { transition: border-color .12s, background-color .12s; } }
 
 /* ================= GBA menu skin =================
-   Every container is a GBA window: blue gradient, light bevel, dark outline. Text is the pixel font with a
-   1px shadow. Selected things get the game's default light-blue cursor bar. Element dots are glossy orbs. */
-body { background: radial-gradient(ellipse at 50% -10%, #1d3478 0%, var(--bg) 60%) fixed, var(--bg); font-size: 15px; line-height: 1.35;
-  text-shadow: 1px 1px 0 var(--win-out); -webkit-font-smoothing: none; }
-.panel, .pc, .picker, .tip, .slotbtn, .classbox, .toast-fixed, .importbox {
-  background: var(--win); border: 2px solid var(--win-edge); border-radius: var(--r);
-  box-shadow: 0 0 0 2px var(--win-out), inset 0 0 0 1px var(--win-in); }
+   Every container is a GBA window (the 9-slice frame image); selected things get the same frame around a
+   lighter fill. Text is the pixel font with a black shadow. Element dots are glossy orbs. */
+body { background: var(--bg); font-size: 0.9375rem; line-height: 1.35; text-shadow: 1px 1px 0 #000; -webkit-font-smoothing: none; }
+/* windows: the frame at 2x (8px frame + 6px bevel), filled with the window colour */
+.panel, .pc, .picker, .tip, .slotbtn, .classbox, .toast-fixed, .importbox, .gs-card {
+  background: none; border: 8px solid transparent; border-radius: 0; box-shadow: none;
+  border-image: var(--frame) 7 fill / 14px stretch; image-rendering: pixelated; }
 /* tall windows: the light top of the gradient stays short so text below it keeps its contrast */
-.panel { padding: 14px; margin: 2px; background: linear-gradient(180deg, #4e7cda 0, #2a52b6 140px, #2048a6 100%); }
+.panel { padding: 10px 12px; }
 h1 { font-size: 2rem; color: var(--accent); text-shadow: 2px 2px 0 var(--win-out); letter-spacing: .03em; }
 h2, h3 { color: #fff; }
 header.top p { color: var(--muted); }
@@ -391,96 +390,101 @@ header.top p { color: var(--muted); }
 .muted, .legend, .sheet-links, .facts .k, .tip .k, .tip .foot, .classbox .sub, .pc .meta { color: var(--muted); }
 
 /* buttons, inputs */
-.btn, .toggle, .mv button, .djadd, .filebtn { background: linear-gradient(180deg, #4a76d6, #24479f); border: 2px solid var(--win-edge);
-  border-radius: 5px; box-shadow: 0 0 0 1px var(--win-out); color: #fff; }
-.btn:hover, .toggle:hover, .toggle:has(input:checked), .pc .mv button:hover:not(:disabled), .djadd:hover, .djadd[aria-expanded="true"] {
-  background: var(--sel); border-color: var(--sel-edge); color: #fff; }
-input[type=number], select, textarea { background: #0e2266; border: 2px solid var(--win-in); border-radius: 4px; color: #fff;
-  box-shadow: inset 1px 1px 0 var(--win-out); text-shadow: none; }
-select option { background: #13296e; color: #fff; }
+/* small controls: the frame at 1x */
+.btn, .toggle, .mv button, .djadd, .filebtn, .tabs button {
+  background: none; border: 4px solid transparent; border-radius: 0; box-shadow: none; color: #fff;
+  border-image: var(--frame) 7 fill / 7px stretch; image-rendering: pixelated; }
+.btn:hover, .toggle:hover, .toggle:has(input:checked), .pc .mv button:hover:not(:disabled), .djadd:hover, .djadd[aria-expanded="true"],
+.tabs button:hover, .tabs button[aria-selected="true"] { border-image-source: var(--frame-sel); color: #fff; }
+input[type=number], select, textarea { background: #003447; border: 2px solid; border-color: #000 #a5a5a5 #a5a5a5 #000; border-radius: 0; color: #fff;
+  text-shadow: none; }
+select option { background: #00526b; color: #fff; }
 .lvl input[type=range], .toggle input { accent-color: #6fb4f4; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .linkbtn { color: var(--accent); }
 
 /* tabs: little windows, the open one in the cursor blue */
 .tabs { border-bottom: 0; gap: 8px; flex-wrap: wrap; }
-.tabs button { background: var(--win); border: 2px solid var(--win-edge); border-radius: 5px; box-shadow: 0 0 0 2px var(--win-out);
-  color: #fff; padding: 4px 14px; margin: 2px; font-size: 1rem; }
-.tabs button:hover { color: #fff; border-color: var(--sel-edge); }
-.tabs button[aria-selected="true"] { background: var(--sel); border-color: var(--sel-edge); color: #fff; }
+.tabs button { padding: 2px 12px; font-size: 1rem; margin: 0; }
 
 /* party strip: the selected Adept is highlighted like the menu cursor row */
 .pc { padding: 7px 8px 6px; }
-.pc.sel { background: var(--sel); border-color: var(--sel-edge); box-shadow: 0 0 0 2px var(--win-out), inset 0 0 0 1px #d8efff; }
+.pc.sel, .slotbtn:hover { border-image-source: var(--frame-sel); }
 .pc.sel .cl, .pc.sel .meta { color: #fff; }
 .pc .cl { color: var(--ec); }
 .pc .nm { font-size: 1.1rem; }
-.slot-head { border-bottom: 1px solid rgba(238, 242, 255, .3); }
+.slot-head { border-bottom: 1px solid rgba(255, 255, 255, .3); }
 
 /* element orbs */
 .dot { width: .8em; height: .8em; vertical-align: -1px;
   background: radial-gradient(circle at 35% 30%, #fff 0 14%, var(--ec) 45%, color-mix(in srgb, var(--ec) 45%, #000) 100%);
-  box-shadow: 0 0 0 1px rgba(7, 18, 51, .7); }
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .7); }
 .etag { color: var(--ec); }
 
 /* class box and tiers */
 .classbox { padding: 10px 12px; }
 .classbox .cname { color: #fff; font-size: 1.5rem; }
-.tierbar span { background: #183884; border: 1px solid var(--win-in); color: var(--muted); border-radius: 4px; }
-.tierbar span.past { color: #fff; border-color: var(--win-edge); }
-.tierbar span.on { background: var(--sel); border-color: var(--sel-edge); color: #fff; }
-.next div { border: 1px dashed rgba(238, 242, 255, .45); }
+.tierbar span { background: rgba(0, 0, 0, .25); border: 1px solid #a5a5a5; color: var(--muted); border-radius: 0; }
+.tierbar span.past { color: #fff; border-color: #fff; }
+.tierbar span.on { background: var(--cursor); border-color: #fff; color: #fff; }
+.next div { border: 1px dashed rgba(255, 255, 255, .45); }
 
 /* tables: menu rows on the window, thin light rules */
-th, td { border-bottom: 1px solid rgba(238, 242, 255, .18); }
-.gtab th, .gtab td { border-bottom: 1px solid rgba(238, 242, 255, .18); }
-.gtab .res { border-left: 2px solid rgba(238, 242, 255, .4); }
+th, td { border-bottom: 1px solid rgba(255, 255, 255, .18); }
+.gtab th, .gtab td { border-bottom: 1px solid rgba(255, 255, 255, .18); }
+.gtab .res { border-left: 2px solid rgba(255, 255, 255, .4); }
 .gtab thead th { color: #fff; }
-.gtab tfoot tr:first-child th, .gtab tfoot tr:first-child td { border-top: 2px solid rgba(238, 242, 255, .5); }
-.kind { background: rgba(7, 18, 51, .35); border-radius: 3px; }
+.gtab tfoot tr:first-child th, .gtab tfoot tr:first-child td { border-top: 2px solid rgba(255, 255, 255, .5); }
+.kind { background: rgba(0, 0, 0, .35); border-radius: 3px; }
 .psy tr:hover td, .stats tr:hover td { background: rgba(255, 255, 255, .06); }
 .gcell { color: #fff; }
-.gcell:hover, .gcell[aria-expanded="true"] { background: var(--sel); border-color: var(--sel-edge); }
+.gcell:hover, .gcell[aria-expanded="true"] { background: var(--cursor); border-color: #fff; }
 .gcell.empty .nm { color: var(--muted); }
-.ico { background: rgba(7, 18, 51, .35); border-color: rgba(238, 242, 255, .3); }
+.ico { background: rgba(0, 0, 0, .35); border-color: rgba(255, 255, 255, .3); }
 .ico.glyph { color: var(--muted); }
 
 /* djinn chips: names in their element colour, like the Djinn menu */
-.chip, .djc { background: rgba(7, 18, 51, .5); border: 1px solid rgba(238, 242, 255, .3); color: var(--ec); }
+.chip, .djc { background: rgba(0, 0, 0, .35); border: 1px solid rgba(255, 255, 255, .3); color: var(--ec); }
 .chip.mine, .djc { border-color: var(--ec); }
 .chip.mine .ini { background: var(--ec); color: var(--win-out); text-shadow: none; }
-.chip .ini { background: rgba(7, 18, 51, .5); color: var(--muted); }
+.chip .ini { background: rgba(0, 0, 0, .5); color: var(--muted); }
 .chip:hover, .djc:hover, .djc[aria-expanded="true"] { border-color: #fff; }
 .djc.stby { color: var(--muted); }
 .ecol h3 { color: var(--ec); }
 
 /* sections */
-details, details.sec { border-top: 1px solid rgba(238, 242, 255, .25); }
+details, details.sec { border-top: 1px solid rgba(255, 255, 255, .25); }
 details.sec > summary::before { color: var(--accent); }
 details.sec .peek b { color: #fff; }
 
 /* picker and tooltip */
-.picker { box-shadow: 0 0 0 2px var(--win-out), inset 0 0 0 1px var(--win-in), 0 10px 30px rgba(0, 0, 0, .45); }
-.pk-head, .pk-acts { border-bottom: 1px solid rgba(238, 242, 255, .3); }
+.picker, .tip, .toast-fixed { filter: drop-shadow(0 8px 18px rgba(0, 0, 0, .6)); }
+.pk-head, .pk-acts { border-bottom: 1px solid rgba(255, 255, 255, .3); }
 .pk-head b { color: #fff; }
 .pk-opt { color: #fff; }
-.pk-opt:hover, .pk-opt:focus-visible, .pk-opt.cur { background: var(--sel); border-color: var(--sel-edge); }
-.pk-opt.cur:not(:hover) { background: rgba(111, 180, 244, .4); }
-.chg.nt, .chg.sw { background: rgba(7, 18, 51, .45); }
-.tip { color: #fff; box-shadow: 0 0 0 2px var(--win-out), inset 0 0 0 1px var(--win-in), 0 8px 24px rgba(0, 0, 0, .45); }
-.tip .un, .tip .foot { border-top: 1px solid rgba(238, 242, 255, .3); }
+.pk-opt:hover, .pk-opt:focus-visible { background: var(--cursor); border-color: #fff; }
+.pk-opt.cur:not(:hover) { background: rgba(31, 152, 200, .45); }
+.chg.nt, .chg.sw { background: rgba(0, 0, 0, .45); }
+.tip { color: #fff; }
+.tip .un, .tip .foot { border-top: 1px solid rgba(255, 255, 255, .3); }
 
 /* toast = the help bar at the bottom of the GBA screens */
-.toast-fixed { color: #fff; padding: 8px 14px; font-size: .95rem; box-shadow: 0 0 0 2px var(--win-out), inset 0 0 0 1px var(--win-in), 0 6px 20px rgba(0, 0, 0, .45); }
+.toast-fixed { color: #fff; padding: 4px 10px; font-size: .95rem; }
 
 /* import box and save slots */
 .importbox { padding: 12px 14px; }
 .importbox summary::before { color: var(--accent); }
 .slotbtn { color: #fff; }
-.slotbtn:hover { background: var(--sel); border-color: var(--sel-edge); }
 .imp-msg .ok { color: var(--good); }
 
-/* the showcase cards are already GBA windows; the section around them no longer needs its own skin */
+/* Big windows: GBA sprites (16px items/Psynergy, 32px portraits) step up to an exact 2x so they keep pace with the text */
+@media (min-width: 1900px) {
+  .ico.sm:not(.dd) { width: 34px; height: 34px; }
+  .ico.sm:not(.dd) img { width: 32px; height: 32px; }
+  .gtab .who img { width: 32px; height: 32px; }
+  .psy:not(.dd) .pi { width: 32px; height: 32px; }
+}
+/* the showcase section is just the cards on the black screen */
 .showcase.panel { background: transparent; border: 0; box-shadow: none; padding: 0; }
 .grip:hover, .grip:focus-visible { background: rgba(255, 255, 255, .12); }
 </style>
