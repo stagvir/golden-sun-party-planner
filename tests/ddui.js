@@ -12,7 +12,7 @@ const { chromium } = require(process.argv[2] ? process.argv[2] + '/playwright' :
   console.log('djinn head:', await txt('#djTable thead'), '| pool:', await txt('#djPool'));
   // Matthew: give 6 Mercury -> Shaman (Water Seer)
   await p.click('#btnClear');
-  const add = async (ci, e, name) => { await p.click(`.djadd[data-ci="${ci}"][data-add="${e}"]`); await p.locator('#picker .pk-opt', { has: p.locator('b', { hasText: new RegExp('^' + name + '$') }) }).first().click(); };
+  const add = async (ci, e, name) => { await p.click(`.djadd[data-ci="${ci}"]`); await p.locator('#picker .pk-opt', { has: p.locator('b', { hasText: new RegExp('^' + name + '$') }) }).first().click(); };
   for (const n of ['Chill', 'Sleet', 'Surge', 'Mist', 'Mellow', 'Claw']) await add(0, 1, n);
   console.log('Matthew 6 Me ->', await p.evaluate(() => document.querySelector('#djTable thead th:nth-child(2) small').textContent));
   await add(0, 0, 'Flint');

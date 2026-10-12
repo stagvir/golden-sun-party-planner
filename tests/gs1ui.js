@@ -12,7 +12,7 @@ const { chromium } = require(process.argv[2] ? process.argv[2] + '/playwright' :
   await p.click('#tabDjinn');
   console.log('djinn cols:', await p.locator('#djTable thead th').count() - 1, '| pool:', await txt('#djPool'), '| counts:', await txt('#djTable tbody tr:nth-child(5)'));
   await p.click('#btnClear');
-  await p.click('.djadd[data-ci="2"][data-add="0"]');
+  await p.click('.djadd[data-ci="2"]');
   console.log('picker Venus djinn listed:', await p.locator('#picker .pk-opt[data-dj]').count(), '(expect 28)');
   await p.keyboard.press('Escape');
   await p.click('#tabGear');

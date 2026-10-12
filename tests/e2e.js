@@ -9,17 +9,17 @@ const { chromium } = require(process.argv[2] ? process.argv[2] + '/playwright' :
   await p.click('#sheet [data-goto="djinn"]'); console.log('edit-djinn link opens:', await p.isVisible('#djTable'));
   // Djinn tab
   await p.click('#btnClear');
-  const felixAdd = (e) => `.djadd[data-ci="4"][data-add="${e}"]`;
+  const felixAdd = (e) => `.djadd[data-ci="4"]`;
   const pickDj = async (name) => { await p.locator('#picker .pk-opt', { has: p.locator('b', { hasText: new RegExp('^' + name + '$') }) }).first().click(); };
   await p.click(felixAdd(3)); console.log('Felix add-Jupiter picker head:', await txt('#picker .pk-head'));
   const gustRow = await txt('#picker .pk-opt[data-dj="54"]'); console.log('Gust option row:', gustRow);
   await pickDj('Gust');
   for (const n of ['Breeze', 'Zephyr', 'Smog', 'Kite']) { await p.click(felixAdd(3)); await pickDj(n); }
   for (const n of ['Forge', 'Fever', 'Corona', 'Scorch']) { await p.click(felixAdd(2)); await pickDj(n); }
-  console.log('Felix after 5J4Ma:', await txt('#djTable thead th:nth-child(2)'), '| count row:', await p.locator('#djTable tbody tr').nth(4).locator('td').first().innerText());
+  console.log('Felix after 5J4Ma:', await txt('#djTable thead th:nth-child(2)'), '| count row:', await p.locator('#djTable tbody tr').nth(9).locator('td').first().innerText());
   console.log('Felix + buttons left (full):', await p.locator('.djadd[data-ci="4"]').count());
   // Isaac (reserve col) takes Gust from Felix
-  await p.click('.djadd[data-ci="0"][data-add="3"]'); await pickDj('Gust');
+  await p.click('.djadd[data-ci="0"]'); await pickDj('Gust');
   console.log('toast:', await txt('#toast'), '| Felix class now:', await txt('#djTable thead th:nth-child(2)'));
   // replace: click Isaac's Gust chip -> swap with Breeze (on Felix) -> Felix gets Gust back
   await p.click('.djc[data-dj="54"]'); console.log('chip picker head:', await txt('#picker .pk-head'));

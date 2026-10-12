@@ -269,7 +269,8 @@ details.sec .sec-body { display: grid; gap: 10px; margin-top: 8px; }
 
 /* ---------- djinn + modifier tables ---------- */
 .gtab tbody tr.grp th { padding-top: 10px; color: var(--fg); font-size: var(--fs); }
-.djcell { display: flex; flex-direction: column; gap: 3px; align-items: flex-start; min-height: 26px; }  /* one djinni per line */
+.djcell { display: flex; align-items: center; min-height: 26px; }
+.djrow th, .djrow td { padding-top: 1px; padding-bottom: 1px; }
 .djc { display: inline-flex; align-items: center; gap: 4px; border: 1px solid var(--line); background: var(--eb); border-radius: 99px; padding: 1px 7px 1px 5px; font-size: var(--fs); color: var(--fg); line-height: 1.5; }
 .djc:hover, .djc[aria-expanded="true"] { border-color: var(--ec); }
 .djc .dot { width: .6em; height: .6em; }
@@ -1382,16 +1383,21 @@ __SAVEPARSE__
     if ($('viewDjinn').hidden) return;
     const tp = tableParts(), { cols, cur } = tp;
     let h = headHtml(cols, cur) + '<tbody>';
-    for (let e = 0; e < 4; e++) {
-      h += `<tr><th scope="row"><span class="etag e${e}"><span class="dot"></span>${EL[e]}</span></th>` + cols.map((ci, pos) => {
-        const mine = state.dj.map((d, i) => ({ ...d, i })).filter(d => d.o === ci && D.djinn[d.i].e === e);
-        const full = owned(ci).length >= GM().djCap;
-        const chipsHtml = mine.map(d => {
+    // One row per djinn slot (djCap): each Adept's djinn fill their column from the top, Venus, Mercury, Mars,
+    // Jupiter in turn; the + sits in the first empty slot
+    const mineOf = ci => state.dj.map((d, i) => ({ ...d, i })).filter(d => d.o === ci).sort((a, b) => D.djinn[a.i].e - D.djinn[b.i].e || a.i - b.i);
+    const lists = Object.fromEntries(cols.map(ci => [ci, mineOf(ci)]));
+    for (let k = 0; k < GM().djCap; k++) {
+      h += `<tr class="djrow"><th scope="row"><span class="muted">${k + 1}</span></th>` + cols.map((ci, pos) => {
+        const d = lists[ci][k];
+        let cell = '';
+        if (d) {
           const dj = D.djinn[d.i], miss = state.djHave && !state.djHave[d.i];
-          return `<button type="button" class="djc e${e} ${d.s ? '' : 'stby'} ${miss ? 'missing' : ''}" data-dj="${d.i}" data-ci="${ci}" aria-haspopup="dialog" aria-expanded="false" title="${esc(dj.n)}: ${djStats(dj)}${d.s ? '' : ' · Standby'}"><span class="dot"></span>${esc(dj.n)}</button>`;
-        }).join('');
-        const add = full ? '' : `<button type="button" class="djadd" data-add="${e}" data-ci="${ci}" aria-haspopup="dialog" aria-expanded="false" aria-label="Add a ${EL[e]} djinni to ${esc(D.chars[ci].name)}">+</button>`;
-        return `<td${resCls(pos)}><div class="djcell">${chipsHtml}${add}</div></td>`;
+          cell = `<button type="button" class="djc e${dj.e} ${d.s ? '' : 'stby'} ${miss ? 'missing' : ''}" data-dj="${d.i}" data-ci="${ci}" aria-haspopup="dialog" aria-expanded="false" title="${esc(dj.n)}: ${djStats(dj)}${d.s ? '' : ' · Standby'}"><span class="dot"></span>${esc(dj.n)}</button>`;
+        } else if (k === lists[ci].length) {
+          cell = `<button type="button" class="djadd" data-ci="${ci}" aria-haspopup="dialog" aria-expanded="false" aria-label="Add a djinni to ${esc(D.chars[ci].name)}">+</button>`;
+        }
+        return `<td${resCls(pos)}><div class="djcell">${cell}</div></td>`;
       }).join('') + '</tr>';
     }
     h += `<tr><th scope="row">Djinn</th>` + cols.map((ci, pos) => { const o = owned(ci); return `<td${resCls(pos)}><span class="cnt"><b>${o.length}</b>/${GM().djCap} · ${o.filter(d => d.s).length} Set</span></td>`; }).join('') + '</tr>';
@@ -1524,9 +1530,8 @@ __SAVEPARSE__
   function openDjinnPicker(btn) {
     const ci = +btn.dataset.ci, ch = D.chars[ci];
     const cur = btn.dataset.dj !== undefined ? +btn.dataset.dj : null;   // replacing this djinni, or adding (null)
-    const addEl = btn.dataset.add !== undefined ? +btn.dataset.add : null;
-    pickerFor = { kind: 'djinn', ci, cur, anchorSel: cur != null ? `.djc[data-dj="${cur}"]` : `.djadd[data-ci="${ci}"][data-add="${addEl}"]` };
-    const firstEl = cur != null ? D.djinn[cur].e : addEl;
+    pickerFor = { kind: 'djinn', ci, cur, anchorSel: cur != null ? `.djc[data-dj="${cur}"]` : `.djadd[data-ci="${ci}"]` };
+    const firstEl = cur != null ? D.djinn[cur].e : ch.el;   // replacing: that element first; adding: the Adept's own
     const order = [firstEl, ...[0, 1, 2, 3].filter(e => e !== firstEl)];
     let acts = '';
     if (cur != null) {
