@@ -55,9 +55,9 @@ Rebuild Dark Dawn data with `cd dd && python3 parse.py && python3 build_dd.py . 
 
 ## Classes tab (reference)
 
-- Pick an Adept; every class line they can reach is listed (one, two, three elements, class items) with each tier's fewest Set djinn, as element orbs with counts; ties list each mix (up to three, then "+n more"). The Adept's current class is marked.
-- Worked out by brute force with the planner's own rules: every mix of up to `djCap` Set djinn (and each class item in The Lost Age) through `determineClass` / `determineClassDD`; only certain results count. So it always agrees with the rest of the page, and for Dark Dawn it carries the same caveat (requirements from the Golden Sun Syndicate tables, rule unverified).
-- "Not reachable" tiers are ones another line or tier always takes first (e.g. Seer for Isaac), or that need more than `djCap` djinn. GBA two-element lines with the same names (the Seer line led by Mercury or by Jupiter) are labelled with their lead element.
+- One table per class series, grouped single element / two elements / three elements / class items, laid out like the wiki class tables: tiers as rows, a Djinn column per group of Adepts with the same needs ("Venus Adepts" when it's all of them, else names), then the class multipliers (HP PP ATK DEF AGI LCK). Cells give the fewest Set djinn as count + orb, "/" between mixes that tie, "unavailable" where that group can't get the tier.
+- Worked out by brute force with the planner's own rules: for every Adept, every mix of up to `djCap` Set djinn (and each class item in The Lost Age) through `determineClass` / `determineClassDD`; only certain results count. Cached per game (about a third of a second the first time). Checked against the Ninja series table on the wiki. Dark Dawn carries the usual caveat (Golden Sun Syndicate requirements, rule unverified).
+- GBA two-element series that share names (the Seer series led by Mercury or by Jupiter) get the lead element in their title.
 
 ## Options: window colour (Options button, top right)
 
@@ -159,7 +159,7 @@ The Playwright tests take an optional playwright root as their argument:
 - `tests/drag.js` — column drag and keyboard reorder in the Djinn, Gear and Modifiers tabs; djinn drops (onto a djinni swaps, onto an empty slot adds, anywhere else does nothing).
 - `tests/gs1ui.js` — Broken Seal mode, game switching, GS1 and TLA import auto-switch.
 - `tests/ddui.js` — Dark Dawn mode, class picks, base-stat solver. Writes screenshots to `out/`.
-- `tests/monsters.js` — Classes tab (groups, current class, a known requirement) and the Monsters tab: card counts per game, the version dropdown, search, sort, the copies filter, every card has a sprite, Kobold differs per game, hidden in Dark Dawn, 400px width (page and each card).
+- `tests/monsters.js` — Classes tab (groups, the Ninja series against the wiki table) and the Monsters tab: card counts per game, the version dropdown, search, sort, the copies filter, every card has a sprite, Kobold differs per game, hidden in Dark Dawn, 400px width (page and each card).
 - `tests/ddgear.js` — Dark Dawn gear: slots, who can equip, unconfirmed flags, unleashes, 400px width, GBA slots unchanged.
 - `tests/userimp.js` — imports the owner's saves. Expect 5 "match the game" lines (23/23 Adepts' HP/PP).
 

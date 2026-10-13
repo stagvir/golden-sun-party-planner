@@ -573,23 +573,19 @@ body.djdragging, body.djdragging * { cursor: grabbing !important; }
 .mon .mon-mv i { font-style: normal; color: var(--gs-dim); }
 .mon .mon-rw { display: flex; flex-wrap: wrap; gap: .2em 1em; }
 .mon .mon-rw b { font-weight: 400; color: var(--gs-gold); }
-/* ---------- Classes reference ---------- */
-.cls-who { display: flex; flex-wrap: wrap; gap: 6px; }
-.cls-who button { display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px 2px 4px; }
-.cls-who img { width: 32px; height: 32px; image-rendering: pixelated; }
+/* ---------- Classes reference: one table per class series ---------- */
 .cls-list { display: grid; gap: 10px; }
 .cls-grp { color: var(--accent); margin-top: 4px; }
-.cls-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 20em), 1fr)); gap: 6px; align-items: start; }
-.cls-card { padding: 4px 8px; display: grid; gap: 2px; min-width: 0; }
-.cls-card h3 { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: var(--fs); font-weight: 400; margin: 0 0 2px; }
-.cls-card h3 .els { display: inline-flex; gap: 3px; }
-.cls-tier { display: grid; grid-template-columns: minmax(0, 8em) minmax(0, 1fr); gap: 2px 10px; padding: 2px 0; border-top: 1px solid rgba(255, 255, 255, .18); }
-.cls-tier.now .tn { color: var(--accent); }
-.cls-tier .tn { overflow-wrap: anywhere; }
-.cls-tier .need { display: flex; flex-wrap: wrap; gap: 2px 8px; align-items: center; }
-.cls-tier .need .or { color: var(--muted); }
-.cls-tier .combo { display: inline-flex; gap: 6px; white-space: nowrap; }
-.cls-tier.none .need { color: var(--muted); }
+.cls-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 36em), 1fr)); gap: 10px; align-items: start; }
+.cls-wrap { min-width: 0; }
+.cls-tab { border-collapse: collapse; width: 100%; }
+.cls-tab caption { text-align: left; color: #fff; padding: 0 0 4px; }
+.cls-tab th, .cls-tab td { border: 1px solid rgba(255, 255, 255, .18); padding: 2px 6px; text-align: left; vertical-align: middle; white-space: nowrap; }
+.cls-tab thead th { color: var(--accent); }
+.cls-tab tbody th { color: #fff; }
+.cls-tab .m { text-align: right; }
+.cls-tab .cmb { display: inline-flex; align-items: center; gap: 3px; }
+.cls-tab .na { color: var(--muted); font-style: normal; }
 
 /* ---------- Options: window colour and brightness, laid out like the game's options window ----------
    Sprites are the game's at exactly 2x: menu icon 24px, hand cursor 16px, slider gem 10px, slider bars 60x4. */
@@ -769,7 +765,6 @@ details.sec .sec-body { gap: 6px; margin-top: 4px; }
 
   <section id="viewClasses" role="tabpanel" aria-labelledby="tabClasses" class="view panel" hidden>
     <div class="sheet-head"><h2>Classes</h2></div>
-    <div class="cls-who" id="clsWho" role="group" aria-label="Adept"></div>
     <p class="muted gv-note" id="clsNote"></p>
     <div class="cls-list" id="clsList"></div>
   </section>
@@ -2205,12 +2200,12 @@ __SAVEPARSE__
   }
 
 
-  // ---------- Classes reference: the fewest Set djinn that give each class, per Adept ----------
-  // Worked out by running every mix of up to djCap Set djinn (and each class item) through the same class rules the
-  // planner uses, so it always agrees with the rest of the page. Only certain results count (no fallbacks).
+  // ---------- Classes reference: every class series, with the fewest Set djinn each Adept group needs per tier ----------
+  // Worked out by running every mix of up to djCap Set djinn (and each class item in The Lost Age) through the same
+  // class rules the planner uses, for every Adept, so it always agrees with the rest of the page. Adepts whose needs
+  // match share a column ("Venus Adepts" when it's all of them). Only certain results count (no fallbacks).
   const clsCache = {};
   function classReach(ci) {
-    const key = state.game + ':' + ci; if (clsCache[key]) return clsCache[key];
     const ch = D.chars[ci], cap = GM().djCap, items = !D.dd && GM().classItems ? [null, 'card', 'whip', 'tome'] : [null];
     const best = new Map();
     for (let a = 0; a <= cap; a++) for (let b = 0; a + b <= cap; b++) for (let c = 0; a + b + c <= cap; c++) for (let d = 0; a + b + c + d <= cap; d++) {
@@ -2220,48 +2215,58 @@ __SAVEPARSE__
         if (!r.certain) continue;
         const k = r.sid + '|' + r.ti, cur = best.get(k);
         if (!cur || n < cur.n) best.set(k, { sid: r.sid, ti: r.ti, kind: r.kind, item, n, combos: [cnt] });
-        else if (n === cur.n && cur.item === item && !cur.combos.some(x => x.join() === cnt.join())) cur.combos.push(cnt);
+        else if (n === cur.n && !cur.combos.some(x => x.join() === cnt.join())) cur.combos.push(cnt);
       }
     }
-    return (clsCache[key] = best);
+    return best;
+  }
+  function classTable() {
+    if (clsCache[state.game]) return clsCache[state.game];
+    const chars = GM().chars, reach = Object.fromEntries(chars.map(ci => [ci, classReach(ci)]));
+    const series = new Map();   // sid -> { sid, kind, item }
+    for (const ci of chars) for (const r of reach[ci].values()) if (!series.has(r.sid)) series.set(r.sid, { sid: r.sid, kind: r.kind, item: r.item });
+    return (clsCache[state.game] = { chars, reach, series });
   }
   const ITEM_NAME = { card: 'Mysterious Card', whip: "Trainer's Whip", tome: 'Tomegathericon' };
   function renderClasses() {
     if ($('viewClasses').hidden) return;
-    const chars = GM().chars;
-    if (state.clsCi == null || !chars.includes(state.clsCi)) state.clsCi = chars[0];
-    const ci = state.clsCi, ch = D.chars[ci], now = compute(ci);
-    $('clsWho').innerHTML = chars.map(i => { const c = D.chars[i], por = GSUI.portrait[c.name];
-      return `<button type="button" class="btn" data-ci="${i}" aria-pressed="${i === ci}">${por ? `<img src="${por}" alt="">` : ''}<span class="dot e${c.el}"></span>${esc(c.name)}</button>`; }).join('');
-    $('clsNote').textContent = `The fewest Set djinn that make ${ch.name} each class (Standby djinn don't count). ${ch.name} is a ${EL[ch.el]} Adept. ` +
-      `Worked out by trying every mix of up to ${GM().djCap} djinn with the planner's class rules; where several mixes need the same number, each is listed.` +
+    const { chars, reach, series } = classTable();
+    $('clsNote').textContent = `The fewest Set djinn each Adept needs for every class (Standby djinn don't count; an Adept's own element counts 5 levels on its own). ` +
+      `Worked out by trying every mix of up to ${GM().djCap} djinn with the planner's class rules; "/" separates mixes that need the same number. Stat columns are the class multipliers.` +
       (D.dd ? " Dark Dawn's class rule isn't published: requirements are from the Golden Sun Syndicate tables (unverified)." : '');
-    const reach = classReach(ci), lines = new Map();
-    for (const r of reach.values()) { const g = lines.get(r.sid) || { sid: r.sid, kind: r.kind, item: r.item, tiers: {} }; g.tiers[r.ti] = r; if (r.kind !== 'item' && g.kind === 'item') g.kind = r.kind; lines.set(r.sid, g); }
-    const orb = (e, v) => `<span class="etag e${e}"><span class="dot" role="img" aria-label="${EL[e]}"></span>${v}</span>`;
-    const comboHtml = cnt => cnt.some(v => v) ? `<span class="combo">${cnt.map((v, e) => v ? orb(e, v) : '').join('')}</span>` : '<span class="combo">No djinn</span>';
-    const GROUPS = [['mono', 'One element'], ['dual', 'Two elements'], ['tri', 'Three elements'], ['item', 'Class items']];
+    const orb = e => `<span class="dot e${e}" role="img" aria-label="${EL[e]}" title="${EL[e]}"></span>`;
+    const combo = cnt => cnt.some(v => v) ? cnt.map((v, e) => v ? `<span class="cmb">${v}${orb(e)}</span>` : '').filter(Boolean).join(', ') : 'No djinn';
+    const cell = r => !r ? '<i class="na">unavailable</i>' : r.combos.slice(0, 3).map(combo).join(' / ') + (r.combos.length > 3 ? ` / +${r.combos.length - 3}` : '');
+    const GROUPS = [['mono', 'Single element'], ['dual', 'Two elements'], ['tri', 'Three elements'], ['item', 'Class items']];
     let h = '';
     for (const [kind, title] of GROUPS) {
-      const gs = [...lines.values()].filter(g => g.kind === kind).sort((x, y) => Math.min(...Object.values(x.tiers).map(t => t.n)) - Math.min(...Object.values(y.tiers).map(t => t.n)) || String(x.sid).localeCompare(String(y.sid)));
-      if (!gs.length) continue;
-      h += `<h3 class="cls-grp">${title}</h3><div class="cls-grid">` + gs.map(g => {
-        const tiers = seriesOf(g.sid).tiers;
-        const els = [...new Set(Object.values(g.tiers).flatMap(t => t.combos.flatMap(c => c.map((v, e) => v ? e : -1))).concat([ch.el]))].filter(e => e >= 0).sort();
-        const rows = tiers.map((t, ti) => {
-          const r = g.tiers[ti], cur = now.cls.sid === g.sid && now.cls.ti === ti;
-          if (!r) return `<div class="cls-tier none"><span class="tn">${esc(t.name)}</span><span class="need">Not reachable for ${esc(ch.name)}</span></div>`;
-          const shown = r.combos.slice(0, 3), more = r.combos.length - shown.length;
-          return `<div class="cls-tier${cur ? ' now' : ''}"${cur ? ' aria-current="true" title="Current class"' : ''}><span class="tn">${esc(t.name)}${cur ? ' ◀' : ''}</span><span class="need">${shown.map(comboHtml).join('<span class="or">or</span>')}${more > 0 ? `<span class="or">+${more} more</span>` : ''}</span></div>`;
-        }).join('');
-        // GBA two-element lines come in pairs with the same names (Seer led by Mercury or by Jupiter): name the lead
-        const r0 = tiers[0].req, top = Math.max(...r0), lead = !D.dd && g.kind === 'dual' && r0.filter(v => v === top).length === 1 ? r0.indexOf(top) : -1;
-        return `<article class="gs gs-card cls-card"><h3><span>${esc(tiers[0].name)} → ${esc(tiers[tiers.length - 1].name)}</span><span class="els">${els.map(e => `<span class="dot e${e}" role="img" aria-label="${EL[e]}" title="${EL[e]}"></span>`).join('')}</span>${lead >= 0 ? `<span class="muted">${EL[lead]} lead</span>` : ''}${g.item ? `<span class="muted">with the ${ITEM_NAME[g.item]}</span>` : ''}</h3>${rows}</article>`;
-      }).join('') + '</div>';
+      const list = [...series.values()].filter(x => x.kind === kind).sort((x, y) => String(x.sid).localeCompare(String(y.sid), undefined, { numeric: true }));
+      if (!list.length) continue;
+      h += `<h3 class="cls-grp">${title}</h3><div class="cls-grid">`;
+      for (const se of list) {
+        const tiers = seriesOf(se.sid).tiers;
+        // one column per group of Adepts with the same needs for this series (Adepts who can't get it are left out)
+        const cols = [];
+        for (const ci of chars) {
+          const vals = tiers.map((_, ti) => cell(reach[ci].get(se.sid + '|' + ti)));
+          if (vals.every(v => v.includes('unavailable'))) continue;
+          const key = vals.join('\u0001'), same = cols.find(c => c.key === key && D.chars[c.cis[0]].el === D.chars[ci].el);
+          if (same) same.cis.push(ci); else cols.push({ key, vals, cis: [ci] });
+        }
+        const label = c => { const el = D.chars[c.cis[0]].el, all = chars.filter(i => D.chars[i].el === el);
+          return all.length > 1 && all.every(i => c.cis.includes(i)) ? `${EL[el]} Adepts` : c.cis.map(i => D.chars[i].name).join(', '); };
+        const r0 = tiers[0].req, top = Math.max(...r0), lead = !D.dd && kind === 'dual' && r0.filter(v => v === top).length === 1 ? r0.indexOf(top) : -1;
+        const name = `${esc(tiers[0].name)} class series${lead >= 0 ? ` (${EL[lead]} lead)` : ''}${se.item ? ` (${ITEM_NAME[se.item]})` : ''}`;
+        h += `<div class="tscroll cls-wrap"><table class="cls-tab"><caption>${name}</caption>
+          <thead><tr><th rowspan="2" scope="col">Class</th><th colspan="${cols.length}" scope="colgroup">Djinn</th>${['HP', 'PP', 'ATK', 'DEF', 'AGI', 'LCK'].map(x => `<th rowspan="2" scope="col" class="m">${x}</th>`).join('')}</tr>
+          <tr>${cols.map(c => `<th scope="col">${esc(label(c))}</th>`).join('')}</tr></thead><tbody>` +
+          tiers.map((t, ti) => `<tr><th scope="row">${esc(t.name)}</th>${cols.map(c => `<td>${c.vals[ti]}</td>`).join('')}${t.mult.map(m => `<td class="m">${m}%</td>`).join('')}</tr>`).join('') +
+          '</tbody></table></div>';
+      }
+      h += '</div>';
     }
     $('clsList').innerHTML = h;
   }
-  $('clsWho').addEventListener('click', e => { const b = e.target.closest('button[data-ci]'); if (!b) return; state.clsCi = +b.dataset.ci; renderClasses(); save(); });
 
   // ---------- Options: window colour and brightness, as the game's options window does it ----------
   // The game's own maths (PaletteGlow_Update, found via the Alchemy decompilation, wave table read from the US ROM
