@@ -13,7 +13,10 @@
 /* One fixed look taken from the GBA game's default window colour (sampled from a screenshot):
    flat #006b8c fill, 4px grey/white/grey/black frame, 3px inner bevel, white text with a black shadow, black screen. */
 :root {
-  --bg: #000000; --surface: #006b8c; --sunk: #00526b; --line: #4fa3c2; --fg: #ffffff; --muted: #c9e3ec; --accent: #ffe27a;
+  --bg: #000000; --surface: #006b8c; --fg: #ffffff; --accent: #ffe27a;
+  /* these follow the window colour (Options): darker and lighter mixes of the fill */
+  --sunk: color-mix(in srgb, var(--surface) 78%, #000); --deep: color-mix(in srgb, var(--surface) 51%, #000);
+  --line: color-mix(in srgb, var(--surface) 62%, #fff); --muted: color-mix(in srgb, var(--surface) 20%, #fff);
   --venus: #ffc23a; --mercury: #8ae4ff; --mars: #ff8a6a; --jupiter: #e2a8ff;
   --venus-bg: rgba(255, 194, 58, .22); --mercury-bg: rgba(138, 228, 255, .2); --mars-bg: rgba(255, 138, 106, .24); --jupiter-bg: rgba(226, 168, 255, .24);
   --good: #9cffa8; --warn: #ffd45e; --bad: #ffa898; --good-bg: rgba(60, 200, 90, .32); --bad-bg: rgba(255, 90, 70, .32);
@@ -356,7 +359,7 @@ details.sec .sec-body { display: grid; gap: 10px; margin-top: 8px; }
 .tip .foot { color: var(--muted); font-size: var(--fs); border-top: 1px solid var(--line); padding-top: 6px; }
 /* ---------- game-style showcase: status-screen cards (the window frame comes from the GBA menu skin below) ---------- */
 :root {
-  --gs-text: #ffffff; --gs-shadow: #000000; --gs-dim: #c9e3ec; --gs-gold: #ffe27a;
+  --gs-text: #ffffff; --gs-shadow: #000000; --gs-dim: var(--muted); --gs-gold: #ffe27a;
   --gs-font: "GS Menu", "Courier New", ui-monospace, monospace;
 }
 .showcase { display: grid; gap: 10px; }
@@ -400,7 +403,7 @@ details.sec .sec-body { display: grid; gap: 10px; margin-top: 8px; }
    lighter fill. Text is the pixel font with a black shadow. Element dots are glossy orbs. */
 body { background: var(--bg); font-size: var(--fs); line-height: 1.35; text-shadow: .1em .1em 0 #000; -webkit-font-smoothing: none; }
 /* windows: the frame at 2x (8px frame + 6px bevel), filled with the window colour */
-.panel, .pc, .picker, .tip, .slotbtn, .classbox, .toast-fixed, .importbox, .gs-card {
+.panel, .pc, .picker, .tip, .slotbtn, .classbox, .toast-fixed, .importbox, .gs-card, .optwin {
   background: none; border: 8px solid transparent; border-radius: 0; box-shadow: none;
   border-image: var(--frame) 7 fill / 14px stretch; image-rendering: pixelated; }
 /* tall windows: the light top of the gradient stays short so text below it keeps its contrast */
@@ -418,9 +421,9 @@ header.top p { color: var(--muted); }
   border-image: var(--frame) 7 fill / 7px stretch; image-rendering: pixelated; }
 .btn:hover, .toggle:hover, .toggle:has(input:checked), .pc .mv button:hover:not(:disabled), .djadd:hover, .djadd[aria-expanded="true"],
 .tabs button:hover, .tabs button[aria-selected="true"] { border-image-source: var(--frame-sel); color: #fff; }
-input[type=number], select, textarea { background: #003447; border: 2px solid; border-color: #000 #a5a5a5 #a5a5a5 #000; border-radius: 0; color: #fff;
+input[type=number], select, textarea { background: var(--deep); border: 2px solid; border-color: #000 #a5a5a5 #a5a5a5 #000; border-radius: 0; color: #fff;
 }
-select option { background: #00526b; color: #fff; }
+select option { background: var(--sunk); color: #fff; }
 .lvl input[type=range], .toggle input { accent-color: #6fb4f4; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .linkbtn { color: var(--accent); }
@@ -570,6 +573,27 @@ body.djdragging, body.djdragging * { cursor: grabbing !important; }
 .mon .mon-mv i { font-style: normal; color: var(--gs-dim); }
 .mon .mon-rw { display: flex; flex-wrap: wrap; gap: .2em 1em; }
 .mon .mon-rw b { font-weight: 400; color: var(--gs-gold); }
+/* ---------- Options: window colour and brightness, laid out like the game's options window ----------
+   Sprites are the game's at exactly 2x: menu icon 24px, hand cursor 16px, slider gem 10px, slider bars 60x4. */
+.optbtn { background: none; border: 0; padding: 0; width: 48px; height: 48px; cursor: pointer; position: relative; }
+.optbtn img { width: 48px; height: 48px; image-rendering: pixelated; display: block; }
+.optbtn:hover::after, .optbtn:focus-visible::after, .optbtn[aria-expanded="true"]::after {   /* the game's yellow selection box */
+  content: ""; position: absolute; inset: -4px; border: 4px solid #ffff00; border-right-color: #730000; border-bottom-color: #730000; }
+.optbtn:focus-visible { outline: none; }
+.optback { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; background: rgba(0, 0, 0, .45); padding: 16px; }
+.optback[hidden] { display: none; }
+.optbox { display: grid; gap: 0; width: min(100%, 24em); }
+.optwin { padding: 6px 12px; }
+.opthelp { min-height: 1.4em; }
+.optrow { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 1em; padding: 6px 0 6px 20px; cursor: pointer; }
+.opthand { position: absolute; left: -26px; top: 50%; margin-top: -10px; width: 32px; height: 32px; image-rendering: pixelated; pointer-events: none; visibility: hidden; }
+.optrow.sel .opthand { visibility: visible; }
+.optbar { position: relative; width: 120px; height: 8px; flex: none; margin: 6px 6px 6px 0; touch-action: none; }
+.optbar:focus-visible { outline: 2px solid var(--accent); outline-offset: 8px; }
+.optbar .strip { display: block; width: 120px; height: 8px; image-rendering: pixelated; }
+.optbar .gem { position: absolute; top: -6px; width: 20px; height: 20px; image-rendering: pixelated; pointer-events: none; }
+.optdiv { height: 8px; margin: 0 -12px; background: linear-gradient(var(--sh1) 0 25%, var(--sh3) 25% 50%, var(--sh6) 50% 75%, var(--sh4) 75%); }
+
 /* ---------- compact spacing: tighter lines, gaps and padding; text size is unchanged (it can only be 20px or 30px crisp) ---------- */
 body { line-height: 1.2; }
 .wrap { gap: 12px; padding-block: 12px 28px; }
@@ -618,8 +642,21 @@ details.sec .sec-body { gap: 6px; margin-top: 4px; }
       <label class="gamepick toggle" id="ownedToggle" hidden><input type="checkbox" id="ownedOnly"><span>Only gear I own</span></label>
       <label class="gamepick gearonly"><span class="lbl">Sort gear</span><select id="gearSort"></select></label>
       <button class="btn" id="btnReset" type="button">Reset example</button>
+      <button class="optbtn" id="btnOptions" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="optBack" title="Options: window color and brightness"><img id="optIcon" alt="Options"></button>
     </div>
   </header>
+  <div class="optback" id="optBack" hidden>
+    <div class="optbox gs" role="dialog" aria-modal="true" aria-label="Options">
+      <div class="optwin opthelp" id="optHelp" aria-live="polite"></div>
+      <div class="optwin">
+        <div class="optrow sel" data-row="0"><img class="opthand" alt=""><span>Window color</span>
+          <div class="optbar" data-row="0" role="slider" tabindex="0" aria-label="Window color" aria-valuemin="1" aria-valuemax="24"><img class="strip" alt=""><img class="gem" alt=""></div></div>
+        <div class="optdiv"></div>
+        <div class="optrow" data-row="1"><img class="opthand" alt=""><span>Window brightness</span>
+          <div class="optbar" data-row="1" role="slider" tabindex="0" aria-label="Window brightness" aria-valuemin="1" aria-valuemax="15"><img class="strip" alt=""><img class="gem" alt=""></div></div>
+      </div>
+    </div>
+  </div>
 
   <details class="panel importbox" id="importBox">
     <summary><span class="imp-title">Import from a save file</span> <span class="lbl" id="importStatus"></span></summary>
@@ -2142,6 +2179,113 @@ __SAVEPARSE__
     if (opts.keepFocus) { const el = $(opts.keepFocus); if (el) { el.focus(); if (el.type === 'number') { try { el.select(); } catch (e) {} } } }
   }
 
+
+  // ---------- Options: window colour and brightness, as the game's options window does it ----------
+  // The game's own maths (PaletteGlow_Update, found via the Alchemy decompilation, wave table read from the US ROM
+  // at 0x5EA1C): hue h of 24 and brightness b of 15 give a base RGB from a 96-step wave, then seven window shades
+  // by fixed Q16 factors. Shade 0 is the fill; the bevel is shades 3,2,1 (top/left) and 6,5,4 (bottom/right).
+  // Checked: hue 1, brightness 9 is the default #006b8c window; hue 1, brightness 12 is the #187ba5 in the owner's
+  // screenshot (the game shows these 1-based).
+  const WAVE = Array.from({ length: 96 }, (_, i) => i < 32 ? 31 - i : i < 65 ? 0 : i - 64);
+  const GLOW_Q16 = [[0xeeee, 0xcccc, 0x11110], [0xd555, 0xbbbb, 0xeeee], [0xbbbb, 0xaaaa, 0xcccc], [0xa221, 0x9999, 0xaaaa],
+    [0x10888, 0xdddd, 0x13333], [0x12221, 0xeeee, 0x15555], [0x13bbb, 0x10000, 0x17777]];
+  const c5 = v => Math.max(0, Math.min(31, v));
+  function windowShades(h, b) {
+    const step = ((h + 12) % 24) * 4, off = b - 7;
+    const rgb = [c5(WAVE[step % 96] + off), c5(WAVE[(step + 32) % 96] + off), c5(WAVE[(step + 64) % 96] + off)];
+    return GLOW_Q16.map(f => rgb.map((c, k) => c5(Math.floor(c * f[k] / 65536))));
+  }
+  const hex8 = v => ((v << 3) | (v >> 2)).toString(16).padStart(2, '0');     // the GBA's 5-bit to 8-bit expansion
+  const hex5 = c => '#' + c.map(hex8).join('');
+  const bgr = w => hex5([w & 31, w >> 5 & 31, w >> 10 & 31]);
+  // The window's 15x15 9-slice frame, as ui/misc/make_window.py draws it, in the given shades
+  function frameUri(sh) {
+    const cv = document.createElement('canvas'); cv.width = cv.height = 15; const g = cv.getContext('2d');
+    const outTL = ['#525252', '#ffffff', '#a5a5a5', '#000000'], outBR = ['#000000', '#a5a5a5', '#ffffff', '#525252'];
+    const inTL = [3, 2, 1].map(k => hex5(sh[k])), inBR = [6, 5, 4].map(k => hex5(sh[k]));
+    for (let y = 0; y < 15; y++) for (let x = 0; x < 15; x++) {
+      const dt = y, dl = x, db = 14 - y, dr = 14 - x, m = Math.min(dt, dl, db, dr), tl = Math.min(dt, dl) <= Math.min(db, dr);
+      if ((dt === 0 || db === 0) && (dl === 0 || dr === 0)) continue;
+      g.fillStyle = m < 4 ? (tl ? outTL : outBR)[m] : m < 7 ? (tl ? inTL : inBR)[m - 4] : hex5(sh[0]);
+      g.fillRect(x, y, 1, 1);
+    }
+    return `url("${cv.toDataURL()}")`;
+  }
+  // Pixel sprites (from the owner's screenshots) as crisp SVGs: rows of palette letters, '.' is transparent
+  function spriteUri(rows, pal) {
+    let r = '';
+    rows.forEach((row, y) => [...row].forEach((ch, x) => { if (ch !== '.') r += `<rect x="${x}" y="${y}" width="1" height="1" fill="${pal[ch]}"/>`; }));
+    return 'data:image/svg+xml,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${rows[0].length} ${rows.length}" shape-rendering="crispEdges">${r}</svg>`);
+  }
+  const OPT_ICON = spriteUri(['.aaaaaabcdddddddddddddd.', 'aaaaaaabcddddddddddddddd', 'aaaaaaabcddddddddddddddd', 'aaaaaaabcddddddddddddddd',
+    'eeeeeeeeeeeeeebddddddddd', 'ccccccccccccccecffffdddd', 'gggggggggggghhecffffdddd', 'ggggggggggghhgecbbbbbbbb', 'ggggggggghhhgheccccccccc',
+    'gggggggghhhghheciiijjkkk', 'gggggggghhhghheciiijjkkk', 'ggggggghhgghhheciiijjkkk', 'gggggghhghhhhheciiijjkkk', 'ggggghhghhhhhheciiijjkkk',
+    'gggghhghhhhhhheciiijjkkk', 'gghhhghhhhhhhheciiijjkkk', 'ghhhghhhhhhhhheciiijjkkk', 'eeeeeeeeeeeeeeeciiijjkkk', 'eeeeeeeeeeeeeeeciiijjkkk',
+    'cccccccccccccccliiijjkkk', 'aaaaaaaaabbciiiiiiijjkkk', 'aaaaaaaaaccbbbbbbbbbbbbb', 'aaaaaaaaallccccccccccccc', '.aaaaaaaaaaaaaaaaaaaaaaa'],
+    { a: '#000000', b: '#cecece', c: '#848484', d: '#ff00e7', e: '#ffffff', f: '#b50039', g: '#3973e7', h: '#3939b5', i: '#007300', j: '#00b539', k: '#00ff00', l: '#636363' });
+  const OPT_HAND = spriteUri(['.............KK.', '....KKKKK..KKGGK', '....GGKGGKKGDDGK', '..KGDDDGKKDDDDK.', '..KDDDDKGDDDDK..', '.KGDDDDDDDDGK...',
+    '.KDDDDDDDDGKK...', '.KDDDDDDDGKKK...', 'KKDDDDDDGKKBK...', 'KGDDDDDGKKGGK...', 'KGDDDDDBKGGGK...', 'KDDDDDDDDDDGK...', 'KGDDDDDDDDGK....',
+    'KGDDGGKKKKK.....', '.KGDDDGKK.......', '..KKKKK.........'], { K: '#000000', G: '#9c9c9c', D: '#ffffff', B: '#393939' });
+  const OPT_GEM = spriteUri(['....C.....', '...DEFC...', '..DEEFFC..', '.DEEEFFFC.', 'DEEEEFFFFC', 'KLLLMCCCCN', '..KLLDDDL.', '..OKLDDL..', '...OLDL...', '....OL....'],
+    { C: '#b5b573', D: '#9c9c9c', E: '#e7e7b5', F: '#ffffe7', K: '#393939', L: '#525252', M: '#737339', N: '#636363', O: '#292929' });
+  // The slider bars' own palettes (US ROM 0xAA0EA and 0xAA10A): 15 hue blocks and 15 greys, 4 pixels each
+  const BAR_HUE = [0x3f00, 0x1fe0, 0x03e0, 0x03e7, 0x030f, 0x01f8, 0x00ff, 0x001f, 0x1c1f, 0x3c18, 0x600f, 0x7c07, 0x7c00, 0x7ce0, 0x61e0].map(bgr);
+  const BAR_GREY = [0x0842, 0x14a5, 0x1ce7, 0x2529, 0x318c, 0x39ce, 0x4210, 0x4631, 0x4e73, 0x56b5, 0x5ef7, 0x6739, 0x6b5a, 0x739c, 0x7bde].map(bgr);
+  const barUri = cols => spriteUri([cols.map((_, i) => 'abcdefghijklmno'[i].repeat(4)).join('')].concat(Array(3).fill(cols.map((_, i) => 'abcdefghijklmno'[i].repeat(4)).join(''))),
+    Object.fromEntries(cols.map((c, i) => ['abcdefghijklmno'[i], c])));
+  const OPT_COUNT = [24, 15], OPT_HELP = ["Change the window's color.", "Change the window's brightness."];
+  const WIN_KEY = 'gspp-window', WIN_DEFAULT = { h: 0, b: 8 };
+  let win = { ...WIN_DEFAULT }, optRow = 0;
+  try { const w = JSON.parse(localStorage.getItem(WIN_KEY)); if (w && w.h >= 0 && w.h < 24 && w.b >= 0 && w.b < 15) win = { h: w.h | 0, b: w.b | 0 }; } catch (e) {}
+  function applyWindow() {
+    const root = document.documentElement.style, sh = windowShades(win.h, win.b);
+    sh.forEach((c, k) => root.setProperty('--sh' + k, hex5(c)));
+    if (win.h === WIN_DEFAULT.h && win.b === WIN_DEFAULT.b) {   // the default is the built-in skin
+      ['--surface', '--frame', '--frame-sel', '--cursor'].forEach(v => root.removeProperty(v));
+    } else {
+      const sel = windowShades(win.h, win.b + 5);                // the lighter 'selected' frame (not from the game)
+      root.setProperty('--surface', hex5(sh[0])); root.setProperty('--frame', frameUri(sh));
+      root.setProperty('--frame-sel', frameUri(sel)); root.setProperty('--cursor', hex5(sel[0]));
+    }
+  }
+  function renderOptions() {
+    $('optHelp').textContent = OPT_HELP[optRow];
+    document.querySelectorAll('.optrow').forEach(r => r.classList.toggle('sel', +r.dataset.row === optRow));
+    document.querySelectorAll('.optbar').forEach(bar => {
+      const row = +bar.dataset.row, v = row ? win.b : win.h;
+      bar.querySelector('.gem').style.left = 2 * (Math.floor(v * 60 / OPT_COUNT[row]) - 3) + 'px';
+      bar.setAttribute('aria-valuenow', v + 1);
+    });
+  }
+  function setOpt(row, v) {
+    const n = OPT_COUNT[row]; v = ((v % n) + n) % n;               // both settings wrap around, as in the game
+    if (row) win.b = v; else win.h = v;
+    applyWindow(); renderOptions();
+    try { localStorage.setItem(WIN_KEY, JSON.stringify(win)); } catch (e) {}
+  }
+  function openOptions() { $('optBack').hidden = false; $('btnOptions').setAttribute('aria-expanded', 'true'); renderOptions(); document.querySelector(`.optbar[data-row="${optRow}"]`).focus(); }
+  function closeOptions() { $('optBack').hidden = true; $('btnOptions').setAttribute('aria-expanded', 'false'); $('btnOptions').focus(); }
+  $('optIcon').src = OPT_ICON;
+  document.querySelectorAll('.opthand').forEach(i => { i.src = OPT_HAND; });
+  document.querySelectorAll('.optbar').forEach(bar => { bar.querySelector('.gem').src = OPT_GEM; bar.querySelector('.strip').src = barUri(+bar.dataset.row ? BAR_GREY : BAR_HUE); });
+  $('btnOptions').addEventListener('click', openOptions);
+  $('optBack').addEventListener('click', e => { if (e.target === $('optBack')) closeOptions(); });
+  document.querySelectorAll('.optrow').forEach(r => r.addEventListener('click', () => { optRow = +r.dataset.row; renderOptions(); }));
+  // click or drag along a bar: the value under the pointer (the bar is 60 game pixels at 2x)
+  document.querySelectorAll('.optbar').forEach(bar => {
+    const pick = e => { const row = +bar.dataset.row, x = (e.clientX - bar.getBoundingClientRect().left) / 2;
+      optRow = row; setOpt(row, Math.max(0, Math.min(OPT_COUNT[row] - 1, Math.round(x * OPT_COUNT[row] / 60)))); };
+    bar.addEventListener('pointerdown', e => { bar.setPointerCapture(e.pointerId); bar.focus(); pick(e); });
+    bar.addEventListener('pointermove', e => { if (bar.hasPointerCapture(e.pointerId)) pick(e); });
+  });
+  $('optBack').addEventListener('keydown', e => {
+    const k = e.key;
+    if (k === 'Escape' || k === 'Enter') { e.preventDefault(); closeOptions(); return; }
+    if (k === 'ArrowUp' || k === 'ArrowDown') { e.preventDefault(); optRow = (optRow + 1) % 2; renderOptions(); document.querySelector(`.optbar[data-row="${optRow}"]`).focus(); return; }
+    if (k === 'ArrowLeft' || k === 'ArrowRight') { e.preventDefault(); setOpt(optRow, (optRow ? win.b : win.h) + (k === 'ArrowRight' ? 1 : -1)); }
+    if (k === 'Tab') { e.preventDefault(); optRow = (optRow + 1) % 2; renderOptions(); document.querySelector(`.optbar[data-row="${optRow}"]`).focus(); }
+  });
+  applyWindow();
   if (document.fonts) document.fonts.ready.then(() => { fitColumns(); equalizeNotes(); });
   addEventListener('resize', () => { fitColumns(); equalizeNotes(); });
   applyView();

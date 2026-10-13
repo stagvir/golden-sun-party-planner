@@ -55,6 +55,17 @@ const { chromium } = require(process.argv[2] ? process.argv[2] + '/playwright' :
   const psyCounts = sel => p.evaluate(s => [...document.querySelectorAll(s + ' tr.psyrow td')].map(td => td.querySelectorAll('.psyl li').length).join(','), sel);
   console.log('known Psynergy, Djinn tab:', await psyCounts('#djTable'), '| Mods tab has none:', !(await p.$('#modTable tr.psyrow')));
   await p.click('#tabGear'); console.log('known Psynergy, Gear tab:', await psyCounts('#gearTable')); await p.click('#tabDjinn');
+  // Options: window colour (game maths), wraps, survives a reload, default restores the built-in skin
+  { const surf = () => p.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--surface').trim());
+    await p.click('#btnOptions'); const s0 = await surf();
+    for (let i = 0; i < 3; i++) await p.keyboard.press('ArrowRight');
+    const s1 = await surf(); await p.keyboard.press('ArrowDown'); await p.keyboard.press('ArrowLeft');
+    console.log('options: default', s0, '-> hue 4', s1, '| brightness row help:', await p.innerText('#optHelp'));
+    await p.keyboard.press('Escape'); console.log('options closed:', await p.evaluate(() => document.getElementById('optBack').hidden));
+    await p.reload(); console.log('window colour kept after reload:', (await surf()) !== s0);
+    await p.click('#btnOptions'); for (let i = 0; i < 3; i++) await p.keyboard.press('ArrowLeft');
+    await p.keyboard.press('ArrowDown'); await p.keyboard.press('ArrowRight'); await p.keyboard.press('Escape');
+    console.log('back to default:', (await surf()) === s0); await p.evaluate(() => localStorage.removeItem('gspp-window')); await p.reload(); await p.click('#tabDjinn'); }
   await p.setViewportSize({ width: 400, height: 900 }); console.log('scrollWidth @400:', await p.evaluate(() => document.documentElement.scrollWidth));
   console.log('errors', errs);
   await b.close();
