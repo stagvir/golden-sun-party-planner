@@ -6,7 +6,7 @@ const { chromium } = require(process.argv[2] ? process.argv[2] + '/playwright' :
   await p.goto('file://' + process.cwd() + '/planner.html');
   const cnt = () => p.evaluate(() => document.querySelectorAll('#monList .mon').length);
   await p.selectOption('#gameSel', 'tla'); await p.click('#tabMonsters'); await p.waitForTimeout(200);
-  console.log('TLA monsters:', await cnt());
+  console.log('TLA monsters:', await cnt(), '| without a sprite:', await p.evaluate(() => [...document.querySelectorAll('#monList .mon')].filter(c => !c.querySelector('.mon-spr img')).map(c => c.getAttribute('aria-label')).join(', ')));
   await p.check('#monCarry'); console.log('without Broken Seal copies:', await cnt()); await p.uncheck('#monCarry');
   await p.fill('#monQ', 'mercury djinni'); await p.waitForTimeout(100);
   const lv = () => p.innerText('#monList .mon .gs-l1').then(t => t.replace(/\s+/g, ' '));
@@ -18,7 +18,11 @@ const { chromium } = require(process.argv[2] ? process.argv[2] + '/playwright' :
   await p.fill('#monQ', ''); await p.selectOption('#monSort', 'hp'); await p.waitForTimeout(100);
   console.log('highest HP:', (await p.innerText('#monList .mon .gs-l1')).replace(/\s+/g, ' '));
   await p.selectOption('#gameSel', 'gs1'); await p.waitForTimeout(150); await p.click('#tabMonsters'); await p.waitForTimeout(150);
-  console.log('GS1 monsters:', await cnt(), '| copies toggle shown:', await p.isVisible('#monCarryBox'));
+  console.log('GS1 monsters:', await cnt(), '| copies toggle shown:', await p.isVisible('#monCarryBox'), '| without a sprite:', await p.evaluate(() => document.querySelectorAll('#monList .mon:not(:has(.mon-spr img))').length));
+  await p.fill('#monQ', 'kobold'); await p.waitForTimeout(100);
+  const koboldSrc = await p.getAttribute('#monList .mon .mon-spr img', 'src'); await p.fill('#monQ', '');
+  await p.selectOption('#gameSel', 'tla'); await p.waitForTimeout(150); await p.click('#tabMonsters'); await p.fill('#monQ', 'kobold'); await p.waitForTimeout(100);
+  console.log('Kobold picture differs between the games:', koboldSrc !== await p.getAttribute('#monList .mon .mon-spr img', 'src')); await p.fill('#monQ', '');
   await p.selectOption('#gameSel', 'dd'); await p.waitForTimeout(150);
   console.log('DD: Monsters tab hidden:', !(await p.isVisible('#tabMonsters')));
   await p.selectOption('#gameSel', 'tla'); await p.click('#tabMonsters'); await p.setViewportSize({ width: 400, height: 900 }); await p.waitForTimeout(150);

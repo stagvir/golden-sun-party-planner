@@ -2016,7 +2016,7 @@ __SAVEPARSE__
     const counts = new Map(); m.moves.forEach(n => counts.set(n, (counts.get(n) || 0) + 1));
     const moves = [...counts].map(([n, c]) => `<span class="mv">${esc(n)}${c > 1 ? ` <i>×${c}</i>` : ''}</span>`).join('');
     const regen = [m.hpRegen ? `HP +${m.hpRegen}` : '', m.ppRegen ? `PP +${m.ppRegen}` : ''].filter(Boolean).join(' · ');
-    const spr = MONSPR[m.n];
+    const spr = MONSPR[GM().monsters + ':' + m.n] || MONSPR[m.n];   // a game-specific picture first (tla:Kobold)
     return `<article class="gs gs-card mon" aria-label="${esc(m.n)}">
       ${spr ? `<div class="mon-spr"><img src="${spr[0]}" alt="" width="${spr[1] * 2}" height="${spr[2] * 2}" loading="lazy"></div>` : ''}
       <div class="gs-l1"><span>${esc(m.n)}</span><span class="lv">Lv ${m.lv}</span></div>

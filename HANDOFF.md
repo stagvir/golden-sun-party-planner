@@ -50,7 +50,8 @@ Rebuild Dark Dawn data with `cd dd && python3 parse.py && python3 build_dd.py . 
 - Drop code *n* = 1/2^(n-1) (code 9 = 1/256, the wiki's figure for the Tisiphone Edge).
 - 100 TLA records are identical to GS1 ones (likely carried over and unused); the tab marks them and can hide them. The encounter/formation tables aren't found yet; they would settle this and give real enemy parties for the damage simulator.
 - The tab shows one card per name (TLA 235, GS1 128). Records with the same name that differ in any field (the 12 Mercury Djinni, Saturos's two fights, ...) are versions in a dropdown on the card, ordered by level then HP; exact duplicates are dropped. Narrow cards (under 340px, via a container query) put stats and elements in two columns.
-- Sprites: `ui/monsters/` (the owner's battle sprites, mostly animated GIFs), matched by name in `ui/monsters/sprites.json`; `build.py` inlines them at 2x. 193 of 236 names have one. Saturos/Menardi/Agatio/Karst use their `_Front` pose, Mystery Man/Woman use Saturos/Menardi, "Grisly" uses Grizzly.gif. The 43 without are mostly palette-swapped variants (Fire Bird, the coloured Balls, ...) whose recoloured sprites weren't in the zip.
+- Sprites: `ui/monsters/`, matched by name in `ui/monsters/sprites.json`; `build.py` inlines them (it reads GIF sizes itself: the Pages runner has no Pillow). 191 are the owner's battle sprites (mostly animated GIFs). Saturos/Menardi/Agatio/Karst use their `_Front` pose, Mystery Man/Woman use Saturos/Menardi, "Grisly" uses Grizzly.gif. A `tla:`/`gs1:` key gives one game its own picture where both games share a name: `tla:Kobold` and `tla:Lich` are the zip's `_2` files, which match the Lost Age ROM.
+- The other 45 (colour swaps like Sea Hedgehog and Gillman Lord, bosses like Dullahan and Valukar, and Wyvern/Sky Dragon, whose zip GIFs were a back view) are made from the owner's Lost Age ROM by `monsters/extract_sprites.py <TLA.gba>`. Its docstring has every table: battle unit table 0x130D0C (enemy n = unit n + 7: sprite id, colour variant), sprite records 0x300000, sprite → sheet 0x2E91C, resource directory 0x680000, the packer's LZ, zero-skip frames, colour remap tables 0x203A8, system palette 0x17B10. Found by reading the battle code (0x081280BC/0x081280D8 → loader 0x080227E0); the formats follow the descriptions in the Alchemy decompilation (github.com/PascalPixel/alchemy). Check: for 270 of the 272 Lost Age entries that already had a GIF, the tables pick the same sheet and colours (the two misses were the Kobold/Lich mix-up). Animation is front frames 0, 2, 4, 2 at 350 ms, as the existing GIFs play; the game's own animation scripts aren't read. Every monster in both games now has a picture.
 
 ## Model and formulas (GBA, verified)
 
@@ -146,7 +147,7 @@ The Playwright tests take an optional playwright root as their argument:
 - `tests/drag.js` — column drag and keyboard reorder in the Djinn, Gear and Modifiers tabs.
 - `tests/gs1ui.js` — Broken Seal mode, game switching, GS1 and TLA import auto-switch.
 - `tests/ddui.js` — Dark Dawn mode, class picks, base-stat solver. Writes screenshots to `out/`.
-- `tests/monsters.js` — Monsters tab: card counts per game, the version dropdown, search, sort, the copies filter, hidden in Dark Dawn, 400px width (page and each card).
+- `tests/monsters.js` — Monsters tab: card counts per game, the version dropdown, search, sort, the copies filter, every card has a sprite, Kobold differs per game, hidden in Dark Dawn, 400px width (page and each card).
 - `tests/ddgear.js` — Dark Dawn gear: slots, who can equip, unconfirmed flags, unleashes, 400px width, GBA slots unchanged.
 - `tests/userimp.js` — imports the owner's saves. Expect 5 "match the game" lines (23/23 Adepts' HP/PP).
 
