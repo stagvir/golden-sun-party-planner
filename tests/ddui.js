@@ -43,5 +43,6 @@ const { chromium } = require(process.argv[2] ? process.argv[2] + '/playwright' :
   for (const w of [400]) { await p.setViewportSize({ width: w, height: 900 }); for (const t of ['#tabPlanner', '#tabDjinn', '#tabMods']) { await p.click(t); const sw = await p.evaluate(() => document.documentElement.scrollWidth); if (sw > w) console.log('overflow', w, t, sw); } }
   await p.setViewportSize({ width: 1320, height: 1000 }); await p.click('#tabPlanner'); await p.screenshot({ path: 'out/dd_party.png' });
   await p.click('#tabMods'); await p.screenshot({ path: 'out/dd_mods.png' });
+  await p.click('#tabDjinn'); console.log('DD known Psynergy (Djinn tab):', await p.evaluate(() => [...document.querySelectorAll('#djTable tr.psyrow td')].map(td => td.querySelectorAll('.psyl li').length).join(',')));
   console.log('errors', errs); await b.close();
 })();

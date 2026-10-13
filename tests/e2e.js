@@ -52,6 +52,9 @@ const { chromium } = require(process.argv[2] ? process.argv[2] + '/playwright' :
   await p.click('#tabMods'); console.log('Jenna lv after import:', await p.inputValue('#mlv-5'), '| Jenna HP corr:', await p.inputValue('#mmod-5-0'));
   await p.screenshot({ path: 'out/tab_mods.png' });
   await p.click('#tabDjinn'); await p.screenshot({ path: 'out/tab_djinn.png' });
+  const psyCounts = sel => p.evaluate(s => [...document.querySelectorAll(s + ' tr.psyrow td')].map(td => td.querySelectorAll('.psyl li').length).join(','), sel);
+  console.log('known Psynergy, Djinn tab:', await psyCounts('#djTable'), '| Mods tab has none:', !(await p.$('#modTable tr.psyrow')));
+  await p.click('#tabGear'); console.log('known Psynergy, Gear tab:', await psyCounts('#gearTable')); await p.click('#tabDjinn');
   await p.setViewportSize({ width: 400, height: 900 }); console.log('scrollWidth @400:', await p.evaluate(() => document.documentElement.scrollWidth));
   console.log('errors', errs);
   await b.close();

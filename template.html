@@ -265,6 +265,14 @@ details.sec .sec-body { display: grid; gap: 10px; margin-top: 8px; }
 .gtab tfoot .v { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
 .gtab tfoot .els { display: flex; gap: 6px; flex-wrap: wrap; font-size: var(--fs); }
 .dlt { font-size: var(--fs); font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.gtab tfoot tr.psyrow td, .gtab tfoot tr.psyrow th { vertical-align: top; }
+.psyl { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.psyl li { display: flex; align-items: center; gap: 4px; white-space: nowrap; }
+.psyl .pi { flex: none; width: 16px; height: 16px; image-rendering: pixelated; }
+.psyl.dd img.pi.dd { width: 24px; height: 24px; }
+.psyl .new { color: var(--good); }
+.psyl .lost { color: var(--bad); text-decoration: line-through; }
+.psyl .lost .pi { opacity: .5; }
 .dlt.up { color: var(--good); } .dlt.dn { color: var(--bad); }
 
 /* ---------- djinn + modifier tables ---------- */
@@ -495,6 +503,7 @@ details.sec .peek b { color: #fff; }
   .ico.sm:not(.dd) img { width: 32px; height: 32px; }
   .gtab .who img { width: 32px; height: 32px; }
   .psy:not(.dd) .pi { width: 32px; height: 32px; }
+  .psyl .pi:not(.dd) { width: 32px; height: 32px; }
 }
 /* The game font has one size (20px+), so dense layouts are sized in em: party strip goes 8-wide only on very
    wide screens, showcase cards are never narrower than their text, and the wide tables scroll inside their window. */
@@ -1395,7 +1404,8 @@ __SAVEPARSE__
     });
     if (parts.includes('djinn')) state.dj = s.dj.map(d => ({ o: d.o, s: d.s }));
   }
-  function statsVector(r) { return { fin: r.fin.slice(), unl: unleashOf(r), pow: r.el.pow.slice(), res: r.el.res.slice(), cls: r.tier.name }; }
+  const knownPsy = r => r.tier.psy.filter(p => p[1] <= r.cs.lv).sort((a, b) => a[1] - b[1]).map(p => p[0]);
+  function statsVector(r) { return { fin: r.fin.slice(), unl: unleashOf(r), pow: r.el.pow.slice(), res: r.el.res.slice(), cls: r.tier.name, psy: knownPsy(r) }; }
 
   // Changes to Adept ci's numbers if `apply` were run (also reports any swap)
   function previewChange(ci, apply) {
@@ -1443,7 +1453,19 @@ __SAVEPARSE__
       return `<th${resCls(pos)} data-pos="${pos}"><div class="who"><button type="button" class="grip" data-pos="${pos}" aria-label="Move ${esc(r.ch.name)} (party slot ${pos + 1}). Drag, or use the left and right arrow keys." title="Drag to reorder"><svg viewBox="0 0 8 14" aria-hidden="true"><circle cx="2" cy="2" r="1.1"/><circle cx="6" cy="2" r="1.1"/><circle cx="2" cy="7" r="1.1"/><circle cx="6" cy="7" r="1.1"/><circle cx="2" cy="12" r="1.1"/><circle cx="6" cy="12" r="1.1"/></svg></button>${por ? `<img src="${por}" alt="">` : ''}<div title="${esc(r.ch.name)}, level ${r.cs.lv}, ${esc(r.tier.name)}"><span class="nm">${esc(r.ch.name)}</span><span class="lv" aria-label="level ${r.cs.lv}">${r.cs.lv}</span><small>${esc(r.tier.name)}${r.cls.certain ? '' : ' ?'}</small></div></div></th>`;
     }).join('') + '</tr></thead>';
   }
-  function footRows({ cols, base, cur }) {
+  // Known Psynergy, one per line in learn order; green = gained and struck red = lost since the baseline
+  function psyRow({ cols, base, cur }) {
+    return `<tr class="psyrow"><th scope="row">Psynergy</th>` + cols.map((ci, pos) => {
+      const now = cur[ci].v.psy, was = new Set(base[ci].psy), has = new Set(now);
+      const line = (id, cls, what) => { const a = D.abil[id];
+        return `<li class="${cls}"${what ? ` title="${esc(a.n)}: ${what}"` : ''}>${psyIcon(a, 'pi') || '<span class="pi"></span>'}<span>${esc(a.n)}</span></li>`; };
+      const items = now.map(id => line(id, was.has(id) ? '' : 'new', was.has(id) ? '' : 'gained'))
+        .concat(base[ci].psy.filter(id => !has.has(id)).map(id => line(id, 'lost', 'lost')));
+      return `<td${resCls(pos)}>${items.length ? `<ul class="psyl${D.dd ? ' dd' : ''}">${items.join('')}</ul>` : '<span class="muted">None</span>'}</td>`;
+    }).join('') + '</tr>';
+  }
+  function footRows(tp, opts = {}) { return statRows(tp) + (opts.psy ? psyRow(tp) : ''); }
+  function statRows({ cols, base, cur }) {
     const dl = (d, unit = '') => d ? `<span class="dlt ${d > 0 ? 'up' : 'dn'}">${d > 0 ? '+' : ''}${d}${unit}</span>` : '';
     let h = '';
     STATS_S.forEach((s, k) => {
@@ -1472,7 +1494,7 @@ __SAVEPARSE__
         return `<td${resCls(pos)}><button type="button" class="gcell ${it ? '' : 'empty'} ${it && it.c ? 'cursed' : ''}" data-ci="${ci}" data-sl="${sl}" aria-haspopup="dialog" aria-expanded="false">${iconHtml(it, sl, true)}<span class="nm">${it ? esc(it.n) : '—'}</span></button></td>`;
       }).join('') + '</tr>';
     }
-    $('gearTable').innerHTML = h + '</tbody><tfoot>' + footRows(tp) + '</tfoot>';
+    $('gearTable').innerHTML = h + '</tbody><tfoot>' + footRows(tp, { psy: true }) + '</tfoot>';
   }
 
   // ---------- djinn view ----------
@@ -1503,7 +1525,7 @@ __SAVEPARSE__
     }
     h += `<tr><th scope="row">Djinn</th>` + cols.map((ci, pos) => { const o = owned(ci); return `<td${resCls(pos)}><span class="cnt"><b>${o.length}</b>/${GM().djCap} · ${o.filter(d => d.s).length} Set</span></td>`; }).join('') + '</tr>';
     h += `<tr><th scope="row">Elem Lv</th>` + cols.map((ci, pos) => `<td${resCls(pos)}><span class="els">${[0, 1, 2, 3].map(e => `<span class="etag e${e}">${cur[ci].r.cls.L[e]}</span>`).join('')}</span></td>`).join('') + '</tr>';
-    $('djTable').innerHTML = h + '</tbody><tfoot>' + footRows(tp) + '</tfoot>';
+    $('djTable').innerHTML = h + '</tbody><tfoot>' + footRows(tp, { psy: true }) + '</tfoot>';
   }
   // Give djinni i to Adept ci. If `replace` is a djinni ci holds, it is swapped out (to the previous holder, or back to the pool).
   function moveDjinn(ci, i, replace) {
@@ -2077,6 +2099,7 @@ __SAVEPARSE__
     measureCtx.font = `${fs}px ${getComputedStyle(document.body).fontFamily}`;
     const names = Object.entries(D.items).filter(([id]) => inGameItem(id)).map(([, it]) => it.n);
     if (GM().classItems) names.push(...Object.values(CLASS_ITEM_LABEL));
+    for (const ser of Object.values(SERIES[state.game])) for (const t of ser.tiers) for (const [id] of t.psy) names.push(D.abil[id].n);
     const text = Math.max(0, ...names.map(n => measureCtx.measureText(n).width));
     const icon = GM().iconSet !== 'dd' && matchMedia('(min-width: 1900px)').matches ? 34 : 24;
     root.style.setProperty('--colw', Math.ceil(text + icon + 4 + 10 + 8 + 2) + 'px');   // + gap, cell button padding/border, td padding, slack
