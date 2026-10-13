@@ -53,6 +53,16 @@ Rebuild Dark Dawn data with `cd dd && python3 parse.py && python3 build_dd.py . 
 - Sprites: `ui/monsters/`, matched by name in `ui/monsters/sprites.json`; `build.py` inlines them (it reads GIF sizes itself: the Pages runner has no Pillow). 191 are the owner's battle sprites (mostly animated GIFs). Saturos/Menardi/Agatio/Karst use their `_Front` pose, Mystery Man/Woman use Saturos/Menardi, "Grisly" uses Grizzly.gif. A `tla:`/`gs1:` key gives one game its own picture where both games share a name: `tla:Kobold` and `tla:Lich` are the zip's `_2` files, which match the Lost Age ROM.
 - The other 45 (colour swaps like Sea Hedgehog and Gillman Lord, bosses like Dullahan and Valukar, and Wyvern/Sky Dragon, whose zip GIFs were a back view) are made from the owner's Lost Age ROM by `monsters/extract_sprites.py <TLA.gba>`. Its docstring has every table: battle unit table 0x130D0C (enemy n = unit n + 7: sprite id, colour variant), sprite records 0x300000, sprite → sheet 0x2E91C, resource directory 0x680000, the packer's LZ, zero-skip frames, colour remap tables 0x203A8, system palette 0x17B10. Found by reading the battle code (0x081280BC/0x081280D8 → loader 0x080227E0); the formats follow the descriptions in the Alchemy decompilation (github.com/PascalPixel/alchemy). Check: for 270 of the 272 Lost Age entries that already had a GIF, the tables pick the same sheet and colours (the two misses were the Kobold/Lich mix-up). Animation is front frames 0, 2, 4, 2 at 350 ms, as the existing GIFs play; the game's own animation scripts aren't read. Every monster in both games now has a picture.
 
+## Battle tab (damage calculator, GBA)
+
+- Pick an attacker; build an enemy line-up (search, up to 6, the battle's slot count) shown as sprites in order on a battle strip. Click an enemy to aim at it (hand cursor), drag or ◀ ▶ to reorder, × or right-click to remove. The table: one row per attack (Attack, the weapon's unleash, every damaging Psynergy the Adept knows), one column per enemy in line-up order, min–max damage; green = always a KO, yellow = a KO on a high roll, — = out of reach.
+- Maths (`GSLogic.damage` in logic.js), transcribed from The Broken Seal's battle code in the Alchemy decompilation (Battle_ResolveTargetAction; Owner_ScaleAdjustedAmount = Battle_CalcAttack; Owner_ScaleValueByCurve = Battle_CalcPower; Curve_LookupScaledValue disassembled from the ROM at 0x08079B24):
+  - bonus = attacker's Power − target's Resistance in the action's element (0 for no element), clamped to ±200; curve(bonus) = 256 + 1.28 × bonus (table 0x08089258: (200,256) … (−200,−256)), halved part for physical (mode 1).
+  - Weapon kinds 3/4 (Attack, unleashes, "Attack +n"): (max(0, ATK − DEF) + 2 × power) × curve₁ ÷ 512 (kind 4: × power ÷ 10), at least 1; effect 35 halves DEF, effect 34 leaves the target at 1 HP. No spread falloff.
+  - Psynergy kinds 5/8/6: power × curve₀ ÷ 256, × falloff[distance from the aimed target] (5: 100/80/60/40/20/10, 8: 100/70/40/30/20/10, 6: 100/50/30/10/10/10; The Lost Age 0x1288E8…). Range r reaches r−1 either side; 255 hits all at full.
+  - Every hit + 0–3 at random. A party member's plain Attack takes the equipped weapon's element (item +0x14; `el` in gsdata items, written by `monsters/extract_battle.py <TLA.gba>`), none without a weapon.
+  - The Lost Age has the identical curve and falloff tables, so the same code is assumed; its battle code isn't decompiled. Not modelled: criticals (×5/4 or ×3/2 + level/5 + 6), hit/miss, guard, buffs/debuffs, summons and djinn.
+
 ## Classes tab (reference)
 
 - One table per class series, grouped single element / two elements / three elements / class items, laid out like the wiki class tables: tiers as rows, a Djinn column per group of Adepts with the same needs ("Venus Adepts" when it's all of them, else names), then the class multipliers (HP PP ATK DEF AGI LCK). Cells give the fewest Set djinn as count + orb, "/" between mixes that tie, "unavailable" where that group can't get the tier.
@@ -159,7 +169,7 @@ The Playwright tests take an optional playwright root as their argument:
 - `tests/drag.js` — column drag and keyboard reorder in the Djinn, Gear and Modifiers tabs; djinn drops (onto a djinni swaps, onto an empty slot adds, anywhere else does nothing).
 - `tests/gs1ui.js` — Broken Seal mode, game switching, GS1 and TLA import auto-switch.
 - `tests/ddui.js` — Dark Dawn mode, class picks, base-stat solver. Writes screenshots to `out/`.
-- `tests/monsters.js` — Classes tab (groups, the Ninja series against the wiki table) and the Monsters tab: card counts per game, the version dropdown, search, sort, the copies filter, every card has a sprite, Kobold differs per game, hidden in Dark Dawn, 400px width (page and each card).
+- `tests/monsters.js` — Battle tab (line-up order, aim, Quake's 80% spread, drag, right-click), Classes tab (groups, the Ninja series against the wiki table) and the Monsters tab: card counts per game, the version dropdown, search, sort, the copies filter, every card has a sprite, Kobold differs per game, hidden in Dark Dawn, 400px width (page and each card).
 - `tests/ddgear.js` — Dark Dawn gear: slots, who can equip, unconfirmed flags, unleashes, 400px width, GBA slots unchanged.
 - `tests/userimp.js` — imports the owner's saves. Expect 5 "match the game" lines (23/23 Adepts' HP/PP).
 
@@ -187,7 +197,7 @@ Node checks:
    - Gear Power/Resist bonuses wait on item 2.
 2. **Dark Dawn elemental Power/Resistance and growth curves.**
    - Unpublished. Options: decode DD `.sav` files (would also give an importer and curve fitting) or extract from the user's own ROM.
-3. **Phase 3: damage estimates** (the original goal).
+3. **Phase 3: damage estimates** (the original goal). First version done (Battle tab): party attacks on a chosen enemy line-up. Still to do: djinn and summons, criticals, enemy attacks on the party, real enemy groups (encounter tables not found yet).
    - Generic target sliders first, then an enemy picker (`enemies.json` in the Archipelago data).
    - Psynergy: base × (1 + (Pow − Res)/200).
    - Physical and unleash: ATK-vs-DEF with the /400 elemental factor.

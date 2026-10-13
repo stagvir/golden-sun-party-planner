@@ -573,6 +573,37 @@ body.djdragging, body.djdragging * { cursor: grabbing !important; }
 .mon .mon-mv i { font-style: normal; color: var(--gs-dim); }
 .mon .mon-rw { display: flex; flex-wrap: wrap; gap: .2em 1em; }
 .mon .mon-rw b { font-weight: 400; color: var(--gs-gold); }
+/* ---------- Battle: enemy line-up and damage table ---------- */
+.bat-who { display: flex; flex-wrap: wrap; gap: 6px; }
+.bat-who button { display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px 2px 4px; }
+.bat-who img { width: 32px; height: 32px; image-rendering: pixelated; }
+.bat-stage { display: flex; align-items: flex-end; justify-content: center; gap: 1.2em; min-height: 180px; padding: 36px 8px 8px; overflow-x: auto;
+  background: linear-gradient(#000 0 55%, color-mix(in srgb, var(--surface) 35%, #000) 55%); border: 2px solid #000; }
+.bat-stage .empty { align-self: center; color: var(--muted); }
+.foe { position: relative; display: grid; justify-items: center; gap: 0; flex: none; cursor: pointer; touch-action: none; user-select: none; padding: 0 2px; }
+.foe img.spr { image-rendering: pixelated; display: block; -webkit-user-drag: none; pointer-events: none; }
+.foe .hand { position: absolute; top: -34px; left: 50%; margin-left: -30px; width: 32px; height: 32px; image-rendering: pixelated; transform: rotate(270deg); visibility: hidden; pointer-events: none; }
+.foe.centre .hand { visibility: visible; }
+.foe .nm { white-space: nowrap; }
+.foe .ctl { display: flex; gap: 2px; }
+.foe .ctl button { background: rgba(0, 0, 0, .5); border: 1px solid rgba(255, 255, 255, .3); color: #fff; padding: 0 6px; font-size: var(--fs); line-height: 1.2; }
+.foe.lift { opacity: .4; }
+.foe.drop { outline: 2px solid #fff; outline-offset: 2px; }
+.bat-add { display: flex; flex-wrap: wrap; align-items: end; gap: 8px; position: relative; }
+.bat-hits { position: absolute; top: 100%; left: 0; z-index: 30; width: min(100%, 26em); max-height: 22em; overflow-y: auto; display: grid; }
+.bat-hits button { display: flex; align-items: center; gap: 8px; text-align: left; padding: 2px 8px; background: var(--sunk); border: 0; border-bottom: 1px solid rgba(255, 255, 255, .18); color: #fff; }
+.bat-hits button:hover, .bat-hits button:focus-visible { background: var(--cursor); outline: none; }
+.bat-hits img { width: 32px; height: 32px; object-fit: contain; image-rendering: pixelated; flex: none; }
+.bat-hits .lv { color: var(--muted); margin-left: auto; white-space: nowrap; }
+.bat-tab { border-collapse: collapse; }
+.bat-tab th, .bat-tab td { border: 1px solid rgba(255, 255, 255, .18); padding: 2px 6px; white-space: nowrap; text-align: right; vertical-align: middle; }
+.bat-tab th:first-child, .bat-tab td.act { text-align: left; }
+.bat-tab thead th { color: var(--accent); }
+.bat-tab td.ko { color: var(--good); }
+.bat-tab td.maybe { color: var(--warn); }
+.bat-tab td.miss { color: var(--muted); }
+.bat-tab .act .dot { margin-left: 4px; }
+
 /* ---------- Classes reference: one table per class series ---------- */
 .cls-list { display: grid; gap: 10px; }
 .cls-grp { color: var(--accent); margin-top: 4px; }
@@ -692,6 +723,7 @@ details.sec .sec-body { gap: 6px; margin-top: 4px; }
     <button type="button" role="tab" id="tabDjinn" data-view="djinn" aria-controls="viewDjinn" aria-selected="false">Djinn</button>
     <button type="button" role="tab" id="tabGear" data-view="gear" aria-controls="viewGear" aria-selected="false">Gear</button>
     <button type="button" role="tab" id="tabMods" data-view="mods" aria-controls="viewMods" aria-selected="false">Modifiers</button>
+    <button type="button" role="tab" id="tabBattle" data-view="battle" aria-controls="viewBattle" aria-selected="false">Battle</button>
     <button type="button" role="tab" id="tabMonsters" data-view="monsters" aria-controls="viewMonsters" aria-selected="false">Monsters</button>
     <button type="button" role="tab" id="tabClasses" data-view="classes" aria-controls="viewClasses" aria-selected="false">Classes</button>
   </nav>
@@ -764,6 +796,18 @@ details.sec .sec-body { gap: 6px; margin-top: 4px; }
     <div class="tscroll"><table class="gtab modtab" id="modTable"></table></div>
   </section>
 
+  <section id="viewBattle" role="tabpanel" aria-labelledby="tabBattle" class="view panel" hidden>
+    <div class="sheet-head"><h2>Battle</h2></div>
+    <div class="bat-who" id="batWho" role="group" aria-label="Attacker"></div>
+    <div class="bat-stage" id="batStage" aria-label="Enemy line-up"></div>
+    <div class="bat-add">
+      <label class="field"><span class="lbl">Add an enemy</span><input type="search" id="batQ" placeholder="Name" autocomplete="off" aria-controls="batHits"></label>
+      <div class="bat-hits" id="batHits" role="listbox" aria-label="Enemies" hidden></div>
+      <button class="btn sm" type="button" id="batClear">Clear line-up</button>
+    </div>
+    <p class="muted gv-note" id="batNote"></p>
+    <div class="tscroll"><table class="bat-tab" id="batTable"></table></div>
+  </section>
   <section id="viewClasses" role="tabpanel" aria-labelledby="tabClasses" class="view panel" hidden>
     <div class="sheet-head"><h2>Classes</h2></div>
     <p class="muted gv-note" id="clsNote"></p>
@@ -807,6 +851,7 @@ details.sec .sec-body { gap: 6px; margin-top: 4px; }
         <li>Final stat = (base + Set djinn bonuses + stat items + flat gear bonuses + your modifiers) × class percentage, then × any gear multiplier (Elven Shirt, Adept's Helm and the like). The wiki confirms weapon and armor Attack/Defense are added before the class percentage; djinn and other flat bonuses are assumed to work the same way.</li>
         <li>Stat items use the amount stored in the game's item table: Power Bread +8 HP, Cookie +6 PP, Apple +5 Attack, Hard Nut +3 Defense, Mint +5 Agility, Lucky Pepper +2 Luck. If the game rolls a random amount, these may be the most you can get rather than a fixed gain.</li>
         <li>Elemental Power = 75 + the Adept's affinity for that element (4 own, 3 neutral, 2 opposed, 1 symbiotic, from the character table) + 5 per elemental level + gear, capped at 200. That gives 104 in the Adept's own element with no djinn, matching the wiki. Resistance works the same way from a base 10 higher. Without gear, both formulas match the values stored in real saves from both games (every Adept checked). The game stores these without equipment bonuses, so gear Power/Resistance bonuses are added on top here, as the item descriptions say, but that part can't be checked against a save.</li>
+        <li>Battle damage follows the game's own code (The Broken Seal's battle routines in the Alchemy decompilation, with the tables read from the ROMs). Elemental difference = the attacker's Power minus the target's Resistance in the attack's element, capped at ±200. Attack, unleashes and "Attack +n" Psynergy: (Attack − Defense + 2 × power) ÷ 2 × (1 + difference ÷ 400). Psynergy: power × (1 + difference ÷ 200), then 100/80/60/40/20% (or 100/70/40/30/20%, or 100/50/30/10%) for each step away from the target aimed at. Every hit adds 0 to 3 at random. A plain Attack takes the element of the equipped weapon (12 weapons have one), none without it. The Lost Age is assumed to work the same way: it has the same curve and spread tables, but its battle code isn't decompiled yet. Criticals, misses and buffs aren't included.</li>
         <li>Unleash chance comes from the weapon (35%, or 40% for a few) plus gear such as Hyper Boots. The game describes those as boosting "Criticals"; the wiki lists them as unleash-rate bonuses.</li>
         <li>Class items (Mysterious Card, Trainer's Whip, Tomegathericon) get their own slot here. I couldn't confirm whether the game makes them share a slot with rings.</li>
         <li>"Endgame gear only" uses a hand-picked list per slot, chosen from each item's full stats and effects rather than Defense or Attack alone (so Hyper Boots and Ninja Sandals make it for their unleash bonus, and rings are judged by what they do in battle). An item you already have equipped stays in the list, marked "not endgame".</li>
@@ -984,7 +1029,7 @@ __SAVEPARSE__
     if (!g.chars.includes(s.sel)) s.sel = s.order[0];
     s.endgame = s.endgame === true && !g.noEndgame;
     s.closed = (s.closed && typeof s.closed === 'object') ? s.closed : {};
-    s.view = ['planner', 'djinn', 'gear', 'mods', 'monsters', 'classes'].includes(s.view) ? s.view : 'planner';
+    s.view = ['planner', 'djinn', 'gear', 'mods', 'monsters', 'classes', 'battle'].includes(s.view) ? s.view : 'planner';
     s.mon = s.mon && typeof s.mon === 'object' ? { q: String(s.mon.q || ''), sort: String(s.mon.sort || 'id'), hideCarry: !!s.mon.hideCarry } : { q: '', sort: 'id', hideCarry: false };
     delete s.gearBase;
     if (!(s.base && Array.isArray(s.base.chars) && s.base.chars.length === 8 && s.base.chars.every(g => g && g.eq && Array.isArray(g.mods) && Array.isArray(g.boosts)) && Array.isArray(s.base.dj) && s.base.dj.length === 72)) s.base = null;
@@ -1898,12 +1943,12 @@ __SAVEPARSE__
   });
 
   // ---------- tabs ----------
-  const VIEWS = { planner: 'viewPlanner', djinn: 'viewDjinn', gear: 'viewGear', mods: 'viewMods', monsters: 'viewMonsters', classes: 'viewClasses' };
-  const TABS = { planner: 'tabPlanner', djinn: 'tabDjinn', gear: 'tabGear', mods: 'tabMods', monsters: 'tabMonsters', classes: 'tabClasses' };
+  const VIEWS = { planner: 'viewPlanner', djinn: 'viewDjinn', gear: 'viewGear', mods: 'viewMods', monsters: 'viewMonsters', classes: 'viewClasses', battle: 'viewBattle' };
+  const TABS = { planner: 'tabPlanner', djinn: 'tabDjinn', gear: 'tabGear', mods: 'tabMods', monsters: 'tabMonsters', classes: 'tabClasses', battle: 'tabBattle' };
   function applyView() {
-    if (!VIEWS[state.view] || (state.view === 'gear' && GM().noGear) || (state.view === 'monsters' && !GM().monsters)) state.view = 'planner';
+    if (!VIEWS[state.view] || (state.view === 'gear' && GM().noGear) || ((state.view === 'monsters' || state.view === 'battle') && !GM().monsters)) state.view = 'planner';
     $('tabGear').hidden = !!GM().noGear;
-    $('tabMonsters').hidden = !GM().monsters;
+    $('tabMonsters').hidden = !GM().monsters; $('tabBattle').hidden = !GM().monsters;
     document.querySelectorAll('.gearonly').forEach(x => { x.hidden = !!GM().noGear; });
     $('endgameOnly').closest('label').hidden = !!GM().noGear || !!GM().noEndgame;
     for (const k in VIEWS) {
@@ -2192,7 +2237,7 @@ __SAVEPARSE__
   }
   function renderAll(opts = {}) {
     fitColumns();
-    renderStrip(); renderSheet(); renderOverview(); renderShowcase(); renderGear(); renderDjinnTab(); renderModsTab(!!opts.modsFootOnly); renderMonsters(); renderClasses();
+    renderStrip(); renderSheet(); renderOverview(); renderShowcase(); renderGear(); renderDjinnTab(); renderModsTab(!!opts.modsFootOnly); renderMonsters(); renderClasses(); renderBattle();
     if (typeof syncImportUi === 'function') syncImportUi();
     $('ioText').value = JSON.stringify(state);
     save();
@@ -2200,6 +2245,101 @@ __SAVEPARSE__
     if (opts.keepFocus) { const el = $(opts.keepFocus); if (el) { el.focus(); if (el.type === 'number') { try { el.select(); } catch (e) {} } } }
   }
 
+
+  // ---------- Battle: an enemy line-up in the order chosen, and what each attack does to each enemy ----------
+  const batState = () => state.bat || (state.bat = { ci: null, foes: [], centre: 0 });
+  const MAX_FOES = 6;   // the battle keeps six enemy slots (BattleSession.enemy_units)
+  const monById = () => { const g = GM().monsters, k = 'byId_' + g; return monById[k] || (monById[k] = new Map(MONSTERS[g].map(m => [m.id, m]))); };
+  const monSprite = m => MONSPR[GM().monsters + ':' + m.n] || MONSPR[m.n];
+  function battleActions(r) {
+    const acts = [];
+    const w = r.weapon, wEl = w && w.el != null ? w.el : 4;
+    acts.push({ n: 'Attack', d: 3, p: 0, e: wEl, x: 0, r: 1, note: w ? `${w.n}${wEl < 4 ? ', ' + EL[wEl] : ''}` : 'No weapon' });
+    if (w && w.u) acts.push({ ...w.u, r: 1, n: w.u.n, note: `Unleash, ${unleashOf(r)}%`, unleash: true });
+    for (const id of knownPsy(r)) { const a = D.abil[id]; if ([3, 4, 5, 6, 8].includes(a.d) && (a.p || a.d === 3 || a.d === 4)) acts.push({ ...a, note: `${a.c} PP` }); }
+    return acts;
+  }
+  function renderBattle() {
+    if ($('viewBattle').hidden || !GM().monsters) return;
+    const bs = batState(), chars = ORDER();
+    if (bs.ci == null || !GM().chars.includes(bs.ci)) bs.ci = chars[0];
+    const byId = monById(); bs.foes = bs.foes.filter(id => byId.has(id)).slice(0, MAX_FOES);
+    bs.centre = Math.max(0, Math.min(bs.centre, bs.foes.length - 1));
+    $('batWho').innerHTML = chars.map(i => { const c = D.chars[i], por = GSUI.portrait[c.name];
+      return `<button type="button" class="btn" data-ci="${i}" aria-pressed="${i === bs.ci}">${por ? `<img src="${por}" alt="">` : ''}${esc(c.name)}</button>`; }).join('');
+    const scale = innerWidth < 700 ? 1 : 2;   // sprites at a whole multiple
+    $('batStage').innerHTML = bs.foes.length ? bs.foes.map((id, k) => { const m = byId.get(id), spr = monSprite(m);
+      return `<div class="foe${k === bs.centre ? ' centre' : ''}" data-k="${k}" title="${esc(m.n)}: click to aim at it, drag to move, right-click to remove">
+        <img class="hand" src="${OPT_HAND}" alt="" draggable="false">${spr ? `<img class="spr" draggable="false" src="${spr[0]}" width="${spr[1] * scale}" height="${spr[2] * scale}" alt="${esc(m.n)}">` : `<div class="spr" style="width:${32 * scale}px;height:${32 * scale}px"></div>`}
+        <span class="nm">${esc(m.n)}</span><span class="muted">Lv ${m.lv}</span><span class="muted">HP ${m.hp}</span>
+        <span class="ctl"><button type="button" data-mv="-1" aria-label="Move ${esc(m.n)} left">◀</button><button type="button" data-rm aria-label="Remove ${esc(m.n)}">×</button><button type="button" data-mv="1" aria-label="Move ${esc(m.n)} right">▶</button></span></div>`; }).join('')
+      : '<p class="empty">No enemies yet: add some below, in the order they stand in battle.</p>';
+    const r = compute(bs.ci), att = { atk: r.fin[2], pow: r.el.pow };
+    $('batNote').textContent = `${D.chars[bs.ci].name}'s damage to each enemy with the current build (ATK ${att.atk}). The hand marks the enemy aimed at: Psynergy that hits several targets loses strength further from it, as in the game. ` +
+      'Green: always a KO; yellow: a KO on a high roll. Each hit adds 0 to 3 at random. Not included: critical hits, misses, and buffs or debuffs.';
+    if (!bs.foes.length) { $('batTable').innerHTML = ''; return; }
+    const foes = bs.foes.map(id => byId.get(id));
+    let h = `<thead><tr><th scope="col">Attack</th>${foes.map((m, k) => `<th scope="col">${k === bs.centre ? '▼ ' : ''}${esc(m.n)}</th>`).join('')}</tr></thead><tbody>`;
+    for (const a of battleActions(r)) {
+      h += `<tr><td class="act">${esc(a.n)}${a.e < 4 ? `<span class="dot e${a.e}" role="img" aria-label="${EL[a.e]}"></span>` : ''} <span class="muted">· ${esc(a.note)}</span></td>` + foes.map((m, k) => {
+        const dmg = G.damage(a, att, { def: m.def, res: m.res, hp: m.hp }, Math.abs(k - bs.centre));
+        if (!dmg) return '<td class="miss">—</td>';
+        const cls = dmg.min >= m.hp ? 'ko' : dmg.max >= m.hp ? 'maybe' : '';
+        return `<td class="${cls}" title="${esc(m.n)}: ${dmg.min}–${dmg.max} of ${m.hp} HP">${dmg.min}–${dmg.max}</td>`;
+      }).join('') + '</tr>';
+    }
+    $('batTable').innerHTML = h + '</tbody>';
+  }
+  function batHits() {
+    const q = $('batQ').value.trim().toLowerCase(), box = $('batHits');
+    if (!q) { box.hidden = true; box.innerHTML = ''; return; }
+    const seen = new Set(), list = MONSTERS[GM().monsters].filter(m => m.n.toLowerCase().includes(q) && !seen.has(monKey(m)) && seen.add(monKey(m)))
+      .sort((a, b) => a.n.localeCompare(b.n) || a.lv - b.lv).slice(0, 40);
+    box.innerHTML = list.map(m => { const spr = monSprite(m);
+      return `<button type="button" role="option" data-id="${m.id}">${spr ? `<img src="${spr[0]}" alt="">` : '<img alt="">'}<span>${esc(m.n)}</span><span class="lv">Lv ${m.lv} · HP ${m.hp}</span></button>`; }).join('') || '<p class="muted">No match.</p>';
+    box.hidden = false;
+  }
+  $('batQ').addEventListener('input', batHits);
+  $('batQ').addEventListener('keydown', e => { if (e.key === 'ArrowDown') { const b = $('batHits').querySelector('button'); if (b) { e.preventDefault(); b.focus(); } } if (e.key === 'Escape') { $('batQ').value = ''; batHits(); } });
+  $('batHits').addEventListener('keydown', e => { const b = e.target.closest('button'); if (!b) return;
+    if (e.key === 'ArrowDown' && b.nextElementSibling) { e.preventDefault(); b.nextElementSibling.focus(); }
+    if (e.key === 'ArrowUp') { e.preventDefault(); (b.previousElementSibling || $('batQ')).focus(); }
+    if (e.key === 'Escape') { $('batQ').focus(); $('batQ').value = ''; batHits(); } });
+  $('batHits').addEventListener('click', e => { const b = e.target.closest('button[data-id]'); if (!b) return; const bs = batState();
+    if (bs.foes.length >= MAX_FOES) { toast(`A battle has at most ${MAX_FOES} enemies.`); return; }
+    bs.foes.push(+b.dataset.id); renderBattle(); save(); $('batQ').focus(); });
+  document.addEventListener('click', e => { if (!e.target.closest('.bat-add')) $('batHits').hidden = true; });
+  $('batClear').addEventListener('click', () => { const bs = batState(); bs.foes = []; bs.centre = 0; renderBattle(); save(); });
+  $('batWho').addEventListener('click', e => { const b = e.target.closest('button[data-ci]'); if (!b) return; batState().ci = +b.dataset.ci; renderBattle(); save(); });
+  function moveFoe(from, to) {
+    const bs = batState(); if (to < 0 || to >= bs.foes.length || from === to) return;
+    const c = bs.foes[bs.centre]; const [id] = bs.foes.splice(from, 1); bs.foes.splice(to, 0, id);
+    bs.centre = from === bs.centre ? to : bs.foes.indexOf(c); renderBattle(); save();
+  }
+  function removeFoe(k) { const bs = batState(); bs.foes.splice(k, 1); if (bs.centre >= k && bs.centre > 0) bs.centre--; renderBattle(); save(); }
+  $('batStage').addEventListener('click', e => {
+    const f = e.target.closest('.foe'); if (!f || foeDragDone) return; const k = +f.dataset.k;
+    if (e.target.closest('[data-rm]')) return removeFoe(k);
+    const mv = e.target.closest('[data-mv]'); if (mv) return moveFoe(k, k + +mv.dataset.mv);
+    batState().centre = k; renderBattle(); save();
+  });
+  $('batStage').addEventListener('contextmenu', e => { const f = e.target.closest('.foe'); if (!f) return; e.preventDefault(); removeFoe(+f.dataset.k); });
+  // drag an enemy along the line-up to move it
+  let foeDrag = null, foeDragDone = false;
+  $('batStage').addEventListener('pointerdown', e => { const f = e.target.closest('.foe'); if (!f || e.button !== 0 || e.target.closest('button')) return; foeDrag = { k: +f.dataset.k, x: e.clientX, el: f, on: false, id: e.pointerId }; });
+  document.addEventListener('pointermove', e => {
+    if (!foeDrag || e.pointerId !== foeDrag.id) return;
+    if (!foeDrag.on) { if (Math.abs(e.clientX - foeDrag.x) < 8) return; foeDrag.on = true; foeDrag.el.classList.add('lift'); }
+    document.querySelectorAll('.foe.drop').forEach(x => x.classList.remove('drop'));
+    const t = document.elementFromPoint(e.clientX, e.clientY), f = t && t.closest('#batStage .foe'); if (f && f !== foeDrag.el) f.classList.add('drop');
+  });
+  document.addEventListener('pointerup', e => {
+    if (!foeDrag || e.pointerId !== foeDrag.id) return;
+    const d = foeDrag; foeDrag = null; document.querySelectorAll('.foe.drop').forEach(x => x.classList.remove('drop')); d.el.classList.remove('lift');
+    if (!d.on) return;
+    foeDragDone = true; setTimeout(() => { foeDragDone = false; }, 0);
+    const t = document.elementFromPoint(e.clientX, e.clientY), f = t && t.closest('#batStage .foe'); if (f) moveFoe(d.k, +f.dataset.k);
+  });
 
   // ---------- Classes reference: every class series, with the fewest Set djinn each Adept group needs per tier ----------
   // Worked out by running every mix of up to djCap Set djinn (and each class item in The Lost Age) through the same

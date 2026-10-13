@@ -150,6 +150,48 @@ const GSLogic = (function () {
     return pre.map((p, k) => Math.max(0, Math.floor(Math.floor(p * classMult[k] / 100) * (gear ? gear.mult[k] : 1))));
   }
 
-  return { determineClass, determineClassDD, baseStat, levels, gearEffects, elemental, finalStats, ITEM_SERIES };
+
+  // ---------- Damage (GBA), transcribed from The Broken Seal's battle code ----------
+  // Source: the Alchemy decompilation (Battle_ResolveTargetAction, Owner_ScaleAdjustedAmount = Battle_CalcAttack,
+  // Owner_ScaleValueByCurve = Battle_CalcPower); the curve (0x08089258) and falloff tables read from the owner's
+  // ROMs. The Lost Age has the identical curve (0xC6B04) and falloff tables (0x1288E8...), so the same maths is
+  // assumed there. bonus = attacker's elemental Power - target's Resistance in the action's element (0 if none).
+  const CURVE = [[200, 256], [100, 128], [0, 0], [-100, -128], [-200, -256]];
+  const trunc = Math.trunc;
+  function curve(sel, mode) {            // Curve_LookupScaledValue: 256 + piecewise-linear f(sel); halved in mode 1
+    sel = Math.max(CURVE[4][0], Math.min(CURVE[0][0], sel));
+    let i = 1; while (i < 5 && sel <= CURVE[i][0]) i++;
+    const f = i === 5 ? CURVE[4][1] : CURVE[i][1] + trunc((sel - CURVE[i][0]) * (CURVE[i - 1][1] - CURVE[i][1]) / (CURVE[i - 1][0] - CURVE[i][0]));
+    return 256 + (mode === 1 ? trunc(f / 2) : f);
+  }
+  function calcAttack(atk, def, power, bonus) {   // (max(0, ATK - DEF) + 2 power) x curve / 512
+    const p = curve(bonus, 1) * (Math.max(0, atk - def) + power * 2);
+    return Math.max(0, trunc(p / 512));
+  }
+  const calcPower = (power, bonus) => Math.floor(curve(bonus, 0) * power / 256);   // power x curve / 256
+  const FALLOFF = { 5: [100, 80, 60, 40, 20, 10], 8: [100, 70, 40, 30, 20, 10], 6: [100, 50, 30, 10, 10, 10] };
+  const DAMAGE_KINDS = new Set([3, 4, 5, 6, 8]);
+  // Targets an action reaches from the centre: range r hits r-1 either side; 255 hits everyone at full strength
+  const reach = (r, offset) => r === 255 ? true : offset <= Math.max(0, r - 1);
+  // One hit of action a ({ d: damage kind, p: power, e: element 0-4, x: effect, r: range }) by attacker
+  // ({ atk, pow[4] }) on target ({ def, res[4], hp }) at `offset` from the centre target.
+  // Returns { min, max } (the game adds 0-3 at random) or null when the action does no HP damage there.
+  function damage(a, att, tgt, offset) {
+    if (!DAMAGE_KINDS.has(a.d) || !reach(a.r, offset)) return null;
+    const off = a.r === 255 ? 0 : offset;
+    const bonus = a.e >= 0 && a.e <= 3 ? att.pow[a.e] - tgt.res[a.e] : 0;
+    let dmg;
+    if (a.d === 3 || a.d === 4) {           // weapon attack: Attack, unleashes, "Attack +n" / "x n" Psynergy
+      const def = a.x === 35 ? tgt.def >> 1 : tgt.def;   // effect 35 halves the target's Defense
+      dmg = a.d === 4 ? trunc(calcAttack(att.atk, def, 0, bonus) * a.p / 10) : calcAttack(att.atk, def, a.p, bonus);
+      let lo = Math.max(1, dmg), hi = Math.max(1, dmg + 3);
+      if (a.x === 34 && tgt.hp > 1) { lo = Math.max(lo, tgt.hp - 1); hi = Math.max(hi, tgt.hp - 1); }   // leaves 1 HP at most
+      return { min: lo, max: hi };
+    }
+    if (!a.p) return null;
+    dmg = trunc(FALLOFF[a.d][Math.min(off, 5)] * calcPower(a.p, bonus) / 100);
+    return { min: dmg, max: dmg + 3 };
+  }
+  return { determineClass, determineClassDD, baseStat, levels, gearEffects, elemental, finalStats, ITEM_SERIES, damage, curve, calcAttack, calcPower };
 })();
 if (typeof module !== 'undefined') module.exports = GSLogic;

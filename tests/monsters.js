@@ -23,6 +23,17 @@ const { chromium } = require(process.argv[2] ? process.argv[2] + '/playwright' :
   const koboldSrc = await p.getAttribute('#monList .mon .mon-spr img', 'src'); await p.fill('#monQ', '');
   await p.selectOption('#gameSel', 'tla'); await p.waitForTimeout(150); await p.click('#tabMonsters'); await p.fill('#monQ', 'kobold'); await p.waitForTimeout(100);
   console.log('Kobold picture differs between the games:', koboldSrc !== await p.getAttribute('#monList .mon .mon-spr img', 'src')); await p.fill('#monQ', '');
+  // Battle: line-up in order, aim, spread falloff (Quake: neighbours at 80%), drag to reorder, right-click to remove
+  await p.click('#tabBattle'); await p.waitForTimeout(100);
+  for (const q of ['Gillman', 'Merman', 'Sea Dragon']) { await p.fill('#batQ', q); await p.locator('#batHits button').first().click(); }
+  await p.locator('.foe').nth(1).click();
+  const row = n => p.evaluate(n => { const r = [...document.querySelectorAll('#batTable tbody tr')].find(r => r.cells[0].textContent.startsWith(n)); return r && [...r.cells].slice(1).map(c => c.textContent).join(' ; '); }, n);
+  console.log('Battle line-up:', await p.evaluate(() => [...document.querySelectorAll('.foe')].map(f => (f.classList.contains('centre') ? '>' : '') + f.querySelector('.nm').textContent).join(' | ')), '| Attack:', await row('Attack'), '| Quake:', await row('Quake'));
+  { const a = await p.locator('.foe').nth(0).boundingBox(), c = await p.locator('.foe').nth(2).boundingBox();
+    await p.mouse.move(a.x + a.width / 2, a.y + 40); await p.mouse.down(); await p.mouse.move(a.x + a.width / 2 + 30, a.y + 40, { steps: 3 }); await p.mouse.move(c.x + c.width / 2, c.y + 40, { steps: 6 }); await p.mouse.up(); }
+  await p.locator('.foe').nth(0).click({ button: 'right' });
+  console.log('after drag and right-click:', await p.evaluate(() => [...document.querySelectorAll('.foe')].map(f => f.querySelector('.nm').textContent).join(' | ')));
+  await p.click('#batClear');
   // Classes reference: one table per series by group; Ninja matches the published table (Venus Adepts 3+3, 4+4, 4+5; Jupiter Adepts only Ninja)
   await p.click('#tabClasses'); await p.waitForSelector('.cls-tab');
   console.log('Classes (TLA):', await p.evaluate(() => [...document.querySelectorAll('.cls-grp')].map(g => g.textContent + ' ' + g.nextElementSibling.children.length).join(' | ')));
