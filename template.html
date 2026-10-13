@@ -266,10 +266,10 @@ details.sec .sec-body { display: grid; gap: 10px; margin-top: 8px; }
 .gtab tfoot .els { display: flex; gap: 6px; flex-wrap: wrap; font-size: var(--fs); }
 .dlt { font-size: var(--fs); font-family: var(--mono); font-variant-numeric: tabular-nums; }
 .gtab tfoot tr.psyrow td, .gtab tfoot tr.psyrow th { vertical-align: top; }
-.psyl { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.psyl { list-style: none; margin: 0; padding: 0 .5em 0 0; display: grid; gap: 2px; }
 .psyl li { display: flex; align-items: center; gap: 4px; white-space: nowrap; }
 .psyl .pi { flex: none; width: 16px; height: 16px; image-rendering: pixelated; }
-.psyl .dot { flex: none; width: .6em; height: .6em; }
+.psyl .dot { flex: none; width: .6em; height: .6em; margin-left: auto; }   /* pushed to the right edge of the column */
 .psyl .dot.none { background: none; }
 .psyl .lost .dot { opacity: .5; }
 .psyl.dd img.pi.dd { width: 24px; height: 24px; }
