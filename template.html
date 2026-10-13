@@ -724,7 +724,7 @@ details.sec .sec-body { gap: 6px; margin-top: 4px; }
       </div>
     </div>
     <div class="vnotes">
-    <p class="muted gv-note">Click any slot to change it. Changes show against the Adept's current gear (green better, red worse). Taking a one-of-a-kind item from another Adept gives them your old one if they can use it. The totals compare against your baseline.</p>
+    <p class="muted gv-note">Click any slot to change it; right-click to take the item off. Changes show against the Adept's current gear (green better, red worse). Taking a one-of-a-kind item from another Adept gives them your old one if they can use it. The totals compare against your baseline.</p>
     </div>
     <div class="tscroll"><table class="gtab" id="gearTable"></table></div>
   </section>
@@ -735,13 +735,14 @@ details.sec .sec-body { gap: 6px; margin-top: 4px; }
       <div class="tools">
         <button class="btn sm" type="button" id="btnVanilla">All own-element djinn</button>
         <button class="btn sm" type="button" id="btnSetAll">Set all (no Standby)</button>
+        <button class="btn sm" type="button" id="btnStandbyAll">Standby all</button>
         <button class="btn sm" type="button" id="btnClear">Unset all djinn</button>
         <button class="btn sm" type="button" data-baseline>Set baseline</button>
         <button class="btn sm" type="button" data-revert="djinn">Revert djinn to baseline</button>
       </div>
     </div>
     <div class="vnotes">
-    <p class="muted gv-note">Click a djinni to put it on Standby, swap it or remove it; click + to add one (up to 9 each). Each option shows the class it leads to and the change in stats. Taking a djinni from another Adept gives them the one you swapped out. Red name = Standby (ready to summon: no class or stat effect), dotted = not collected in your imported save. <span id="djPool"></span></p>
+    <p class="muted gv-note">Click a djinni to put it on Standby, swap it or remove it (right-click removes it at once); click + to add one (up to 9 each). Each option shows the class it leads to and the change in stats. Taking a djinni from another Adept gives them the one you swapped out. Red name = Standby (ready to summon: no class or stat effect), dotted = not collected in your imported save. <span id="djPool"></span></p>
     </div>
     <div class="tscroll"><table class="gtab djtab" id="djTable"></table></div>
   </section>
@@ -2475,6 +2476,26 @@ __SAVEPARSE__
   $('btnVanilla').addEventListener('click', () => { giveOwnElement(state); renderAll(); });
   $('btnClear').addEventListener('click', () => { state.dj.forEach(d => d.o = null); renderAll(); });
   $('btnSetAll').addEventListener('click', () => { state.dj.forEach(d => { if (d.o !== null) d.s = true; }); renderAll(); });
+  $('btnStandbyAll').addEventListener('click', () => { state.dj.forEach(d => { if (d.o !== null) d.s = false; }); renderAll(); toast('Every djinni is on Standby.'); });
+  // Right-click removes: a djinni from its Adept (Djinn tab, party sheet chips, djinn board), or a piece of gear (Gear tab)
+  document.addEventListener('contextmenu', e => {
+    const dj = e.target.closest('#djTable .djc, .chip[data-dj], .chip.mine [data-tog]');
+    if (dj) {
+      const i = +(dj.dataset.dj ?? dj.dataset.tog), d = state.dj[i]; if (!d || d.o == null) return;
+      e.preventDefault(); closePicker(false);
+      const who = D.chars[d.o].name; d.o = null; d.s = true;
+      renderAll(); toast(`Removed ${D.djinn[i].n} from ${who}.`); return;
+    }
+    const g = e.target.closest('.gcell[data-ci][data-sl]');
+    if (g) {
+      const ci = +g.dataset.ci, sl = g.dataset.sl, cs = state.chars[ci];
+      const name = sl === 'c' ? (cs.item ? CLASS_ITEM_LABEL[cs.item] : null) : (ITEM(cs.eq[sl]) ? ITEM(cs.eq[sl]).n : null);
+      if (!name) return;
+      e.preventDefault(); closePicker(false);
+      if (sl === 'c') equipClassItem(ci, null); else equipItem(ci, sl, null);
+      renderAll(); toast(`Took ${name} off ${D.chars[ci].name}.`);
+    }
+  });
   $('btnReset').addEventListener('click', () => { const v = state.view; state = exampleState(state.game); state.view = v; applyView(); syncGameUi(); renderAll(); });
   $('btnCopy').addEventListener('click', () => {
     const t = $('ioText');

@@ -55,6 +55,16 @@ const { chromium } = require(process.argv[2] ? process.argv[2] + '/playwright' :
   const psyCounts = sel => p.evaluate(s => [...document.querySelectorAll(s + ' tr.psyrow td')].map(td => td.querySelectorAll('.psyl li').length).join(','), sel);
   console.log('known Psynergy, Djinn tab:', await psyCounts('#djTable'), '| Mods tab has none:', !(await p.$('#modTable tr.psyrow')));
   await p.click('#tabGear'); console.log('known Psynergy, Gear tab:', await psyCounts('#gearTable')); await p.click('#tabDjinn');
+  // Standby all; right-click removes a djinni (Djinn tab) or takes gear off (Gear tab)
+  { await p.click('#tabDjinn'); await p.click('#btnStandbyAll');
+    console.log('standby all leaves no Set djinn:', await p.evaluate(() => document.querySelectorAll('#djTable .djc:not(.stby)').length === 0));
+    await p.click('#btnSetAll'); const n0 = await p.evaluate(() => document.querySelectorAll('#djTable .djc').length);
+    await p.locator('#djTable .djc').first().click({ button: 'right' });
+    console.log('right-click removes a djinni:', n0 - 1 === await p.evaluate(() => document.querySelectorAll('#djTable .djc').length));
+    await p.click('#tabGear'); await p.click('.gcell[data-ci="0"][data-sl="w"]'); await p.locator('#picker .pk-opt').nth(1).click();
+    await p.locator('.gcell[data-ci="0"][data-sl="w"]').click({ button: 'right' });
+    console.log('right-click takes gear off:', (await p.innerText('.gcell[data-ci="0"][data-sl="w"]')).trim() === '—');
+    await p.click('#btnReset'); await p.click('#tabDjinn'); }
   // Options: window colour (game maths), wraps, survives a reload, default restores the built-in skin
   { const surf = () => p.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--surface').trim());
     await p.click('#btnOptions'); const s0 = await surf();
