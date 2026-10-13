@@ -269,6 +269,9 @@ details.sec .sec-body { display: grid; gap: 10px; margin-top: 8px; }
 .psyl { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
 .psyl li { display: flex; align-items: center; gap: 4px; white-space: nowrap; }
 .psyl .pi { flex: none; width: 16px; height: 16px; image-rendering: pixelated; }
+.psyl .dot { flex: none; width: .6em; height: .6em; }
+.psyl .dot.none { background: none; }
+.psyl .lost .dot { opacity: .5; }
 .psyl.dd img.pi.dd { width: 24px; height: 24px; }
 .psyl .new { color: var(--good); }
 .psyl .lost { color: var(--bad); text-decoration: line-through; }
@@ -1459,7 +1462,8 @@ __SAVEPARSE__
     return `<tr class="psyrow"><th scope="row">Psynergy</th>` + cols.map((ci, pos) => {
       const now = cur[ci].v.psy, was = new Set(base[ci].psy), has = new Set(now);
       const line = (id, cls, what) => { const a = D.abil[id];
-        return `<li class="${cls}"${what ? ` title="${esc(a.n)}: ${what}"` : ''}>${psyIcon(a, 'pi') || '<span class="pi"></span>'}<span>${esc(a.n)}</span></li>`; };
+        const dot = a.e < 4 ? `<span class="dot e${a.e}" role="img" aria-label="${EL[a.e]}" title="${EL[a.e]}"></span>` : '<span class="dot none"></span>';
+        return `<li class="${cls}"${what ? ` title="${esc(a.n)}: ${what}"` : ''}>${psyIcon(a, 'pi') || '<span class="pi"></span>'}<span>${esc(a.n)}</span>${dot}</li>`; };
       const items = now.map(id => line(id, was.has(id) ? '' : 'new', was.has(id) ? '' : 'gained'))
         .concat(base[ci].psy.filter(id => !has.has(id)).map(id => line(id, 'lost', 'lost')));
       return `<td${resCls(pos)}>${items.length ? `<ul class="psyl${D.dd ? ' dd' : ''}">${items.join('')}</ul>` : '<span class="muted">None</span>'}</td>`;
@@ -2100,7 +2104,7 @@ __SAVEPARSE__
     measureCtx.font = `${fs}px ${getComputedStyle(document.body).fontFamily}`;
     const names = Object.entries(D.items).filter(([id]) => inGameItem(id)).map(([, it]) => it.n);
     if (GM().classItems) names.push(...Object.values(CLASS_ITEM_LABEL));
-    for (const ser of Object.values(SERIES[state.game])) for (const t of ser.tiers) for (const [id] of t.psy) names.push(D.abil[id].n);
+    for (const ser of Object.values(SERIES[state.game])) for (const t of ser.tiers) for (const [id] of t.psy) names.push(D.abil[id].n + ' ');   // the space stands in for the element dot
     const text = Math.max(0, ...names.map(n => measureCtx.measureText(n).width));
     const icon = GM().iconSet !== 'dd' && matchMedia('(min-width: 1900px)').matches ? 34 : 24;
     root.style.setProperty('--colw', Math.ceil(text + icon + 4 + 10 + 8 + 2) + 'px');   // + gap, cell button padding/border, td padding, slack
