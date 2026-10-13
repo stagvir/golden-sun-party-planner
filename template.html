@@ -463,9 +463,10 @@ th, td { border-bottom: 1px solid rgba(255, 255, 255, .18); }
 .ico { background: rgba(0, 0, 0, .35); border-color: rgba(255, 255, 255, .3); }
 .ico.glyph { color: var(--muted); }
 
-/* djinn chips: names in their element colour, like the Djinn menu */
+/* djinn chips: white name, element-coloured border and dot; Standby names in red, as in the Djinn menu */
 .chip, .djc { background: rgba(0, 0, 0, .35); border: 1px solid rgba(255, 255, 255, .3); color: var(--ec); }
 .chip.mine, .djc { border-color: var(--ec); }
+.djc { color: #fff; }
 .chip.mine .ini { background: var(--ec); color: var(--win-out); text-shadow: none; }
 .chip .ini { background: rgba(0, 0, 0, .5); color: var(--muted); }
 .chip:hover, .djc:hover, .djc[aria-expanded="true"] { border-color: #fff; }
