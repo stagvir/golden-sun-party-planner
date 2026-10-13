@@ -19,7 +19,7 @@ const { chromium } = require(process.argv[2] ? process.argv[2] + '/playwright' :
   // keyboard
   await p.focus('#modTable .grip[data-pos="2"]'); await p.keyboard.press('ArrowLeft');
   console.log('keyboard ArrowLeft on slot 3 =>', await order(), '| focus stays on grip:', await p.evaluate(() => document.activeElement.classList.contains('grip') && document.activeElement.dataset.pos));
-  // djinn: drag one Adept's djinni onto another's to swap; dropping into a full column is refused; a click still opens the picker
+  // djinn: drag onto another Adept's djinni to swap, onto an empty slot to add; anywhere else does nothing; a click still opens the picker
   await p.click('#tabDjinn'); await p.setViewportSize({ width: 1600, height: 2000 }); await p.waitForTimeout(100);
   const djOwner = () => p.evaluate(() => Object.fromEntries([...document.querySelectorAll('#djTable .djc')].map(x => [x.textContent.trim(), +x.dataset.ci])));
   const dragTo = async (a, c, dx = 0) => { await p.mouse.move(a.x + a.width / 2, a.y + a.height / 2); await p.mouse.down(); await p.mouse.move(a.x + a.width / 2 + 20, a.y + a.height / 2, { steps: 4 }); await p.mouse.move(c.x + (dx ? c.width - dx : c.width / 2), c.y + c.height / 2, { steps: 8 }); await p.mouse.up(); await p.waitForTimeout(150); };
@@ -32,7 +32,15 @@ const { chromium } = require(process.argv[2] ? process.argv[2] + '/playwright' :
   const full = p.locator('#djTable tbody tr').nth(2).locator('td').nth(1);
   const C = p.locator('#djTable tbody tr').nth(3).locator('td').nth(0).locator('.djc'); const cn = (await C.innerText()).trim();
   await dragTo(await C.boundingBox(), await full.boundingBox(), 10);
-  console.log('drop into a full column refused:', (await djOwner())[cn] === before[cn], '| toast:', await p.innerText('#toast'));
+  console.log('drop beside a djinni in a full column does nothing:', (await djOwner())[cn] === before[cn]);
+  // make room in column 1, then: beside a djinni on its row = nothing; on the empty slot at the bottom = added
+  await p.locator('#djTable tbody tr').first().locator('td').nth(1).locator('.djc').click(); await p.waitForTimeout(100);
+  await p.locator('#picker .pk-opt').filter({ hasText: /^Remove from/ }).first().click(); await p.waitForTimeout(150);
+  const ci1 = await p.locator('#djTable tbody tr').first().locator('td').nth(1).getAttribute('data-ci');
+  await dragTo(await C.boundingBox(), await p.locator('#djTable tbody tr').first().locator('td').nth(1).boundingBox(), 10);
+  console.log('drop beside a djinni with room does nothing:', (await djOwner())[cn] === before[cn]);
+  await dragTo(await C.boundingBox(), await p.locator(`#djTable .djadd[data-ci="${ci1}"]`).boundingBox());
+  console.log('drop on the empty slot adds it:', (await djOwner())[cn] === +ci1, '| toast:', await p.innerText('#toast'));
   await C.click(); await p.waitForTimeout(100);
   console.log('click opens djinn picker:', await p.evaluate(() => !document.getElementById('picker').hidden));
   // the toggle action names the state you'd move to: a Set djinni offers "Put on Standby", a Standby one "Set it again"

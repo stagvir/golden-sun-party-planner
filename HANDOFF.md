@@ -144,7 +144,7 @@ Rebuild Dark Dawn data with `cd dd && python3 parse.py && python3 build_dd.py . 
 
 The Playwright tests take an optional playwright root as their argument:
 - `tests/e2e.js` — main TLA flows: djinn picker, swaps, standby, Modifiers typing, baseline revert, gear, import, the known-Psynergy row in the Gear and Djinn tables, 400px width.
-- `tests/drag.js` — column drag and keyboard reorder in the Djinn, Gear and Modifiers tabs.
+- `tests/drag.js` — column drag and keyboard reorder in the Djinn, Gear and Modifiers tabs; djinn drops (onto a djinni swaps, onto an empty slot adds, anywhere else does nothing).
 - `tests/gs1ui.js` — Broken Seal mode, game switching, GS1 and TLA import auto-switch.
 - `tests/ddui.js` — Dark Dawn mode, class picks, base-stat solver. Writes screenshots to `out/`.
 - `tests/monsters.js` — Monsters tab: card counts per game, the version dropdown, search, sort, the copies filter, every card has a sprite, Kobold differs per game, hidden in Dark Dawn, 400px width (page and each card).

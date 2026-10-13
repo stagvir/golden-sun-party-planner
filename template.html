@@ -1696,12 +1696,14 @@ __SAVEPARSE__
     placePicker(btn);
     const first = pk.querySelector('.pk-opt'); if (first) first.focus();
   }
-  // ---------- drag a djinni onto another Adept's djinni (swap) or into their column (move) ----------
+  // ---------- drag a djinni onto another Adept's djinni (swap) or onto an empty slot in their column (add) ----------
   let djDrag = null, djDragDone = false;
   function djTarget(e) {
     const el = document.elementFromPoint(e.clientX, e.clientY); if (!el) return null;
     const chip = el.closest('#djTable .djc'); if (chip) return { el: chip, ci: +chip.dataset.ci, j: +chip.dataset.dj };
-    const td = el.closest('#djTable td[data-ci]'); return td ? { el: td, ci: +td.dataset.ci, j: null } : null;
+    // only an empty slot adds: the space beside a djinni on its row is not a target
+    const td = el.closest('#djTable tr.djrow td[data-ci]');
+    return td && !td.querySelector('.djc') ? { el: td, ci: +td.dataset.ci, j: null } : null;
   }
   function endDjDrag() {
     if (!djDrag) return;
@@ -1739,7 +1741,7 @@ __SAVEPARSE__
     let note;
     if (t.j != null) note = moveDjinn(t.ci, d.i, t.j);            // onto their djinni: swap the two
     else if (owned(t.ci).length >= GM().djCap) { toast(`${D.chars[t.ci].name} already has ${GM().djCap} djinn. Drop it on one of theirs to swap.`); return; }
-    else note = moveDjinn(t.ci, d.i, null);                       // into their column: move it there
+    else note = moveDjinn(t.ci, d.i, null);                       // onto an empty slot: add it to them
     renderAll(); toast(note);
   });
   document.addEventListener('pointercancel', e => { if (djDrag && e.pointerId === djDrag.id) endDjDrag(); });
