@@ -53,6 +53,12 @@ Rebuild Dark Dawn data with `cd dd && python3 parse.py && python3 build_dd.py . 
 - Sprites: `ui/monsters/`, matched by name in `ui/monsters/sprites.json`; `build.py` inlines them (it reads GIF sizes itself: the Pages runner has no Pillow). 191 are the owner's battle sprites (mostly animated GIFs). Saturos/Menardi/Agatio/Karst use their `_Front` pose, Mystery Man/Woman use Saturos/Menardi, "Grisly" uses Grizzly.gif. A `tla:`/`gs1:` key gives one game its own picture where both games share a name: `tla:Kobold` and `tla:Lich` are the zip's `_2` files, which match the Lost Age ROM.
 - The other 45 (colour swaps like Sea Hedgehog and Gillman Lord, bosses like Dullahan and Valukar, and Wyvern/Sky Dragon, whose zip GIFs were a back view) are made from the owner's Lost Age ROM by `monsters/extract_sprites.py <TLA.gba>`. Its docstring has every table: battle unit table 0x130D0C (enemy n = unit n + 7: sprite id, colour variant), sprite records 0x300000, sprite → sheet 0x2E91C, resource directory 0x680000, the packer's LZ, zero-skip frames, colour remap tables 0x203A8, system palette 0x17B10. Found by reading the battle code (0x081280BC/0x081280D8 → loader 0x080227E0); the formats follow the descriptions in the Alchemy decompilation (github.com/PascalPixel/alchemy). Check: for 270 of the 272 Lost Age entries that already had a GIF, the tables pick the same sheet and colours (the two misses were the Kobold/Lich mix-up). Animation is front frames 0, 2, 4, 2 at 350 ms, as the existing GIFs play; the game's own animation scripts aren't read. Every monster in both games now has a picture.
 
+## Classes tab (reference)
+
+- Pick an Adept; every class line they can reach is listed (one, two, three elements, class items) with each tier's fewest Set djinn, as element orbs with counts; ties list each mix (up to three, then "+n more"). The Adept's current class is marked.
+- Worked out by brute force with the planner's own rules: every mix of up to `djCap` Set djinn (and each class item in The Lost Age) through `determineClass` / `determineClassDD`; only certain results count. So it always agrees with the rest of the page, and for Dark Dawn it carries the same caveat (requirements from the Golden Sun Syndicate tables, rule unverified).
+- "Not reachable" tiers are ones another line or tier always takes first (e.g. Seer for Isaac), or that need more than `djCap` djinn. GBA two-element lines with the same names (the Seer line led by Mercury or by Jupiter) are labelled with their lead element.
+
 ## Options: window colour (Options button, top right)
 
 - Copies the game's options window: help line ("Change the window's color." / "...brightness."), Window color (24 hues) and Window brightness (15 levels) sliders with the game's bar palettes (US ROM 0xAA0EA hues, 0xAA10A greys), gem cursor and hand cursor (sprites cut from the owner's screenshots). Keys: up/down pick the row, left/right change it (wrapping, as in the game), Esc/Enter close. Saved in localStorage `gspp-window` (all games).
@@ -153,7 +159,7 @@ The Playwright tests take an optional playwright root as their argument:
 - `tests/drag.js` — column drag and keyboard reorder in the Djinn, Gear and Modifiers tabs; djinn drops (onto a djinni swaps, onto an empty slot adds, anywhere else does nothing).
 - `tests/gs1ui.js` — Broken Seal mode, game switching, GS1 and TLA import auto-switch.
 - `tests/ddui.js` — Dark Dawn mode, class picks, base-stat solver. Writes screenshots to `out/`.
-- `tests/monsters.js` — Monsters tab: card counts per game, the version dropdown, search, sort, the copies filter, every card has a sprite, Kobold differs per game, hidden in Dark Dawn, 400px width (page and each card).
+- `tests/monsters.js` — Classes tab (groups, current class, a known requirement) and the Monsters tab: card counts per game, the version dropdown, search, sort, the copies filter, every card has a sprite, Kobold differs per game, hidden in Dark Dawn, 400px width (page and each card).
 - `tests/ddgear.js` — Dark Dawn gear: slots, who can equip, unconfirmed flags, unleashes, 400px width, GBA slots unchanged.
 - `tests/userimp.js` — imports the owner's saves. Expect 5 "match the game" lines (23/23 Adepts' HP/PP).
 

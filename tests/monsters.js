@@ -23,6 +23,11 @@ const { chromium } = require(process.argv[2] ? process.argv[2] + '/playwright' :
   const koboldSrc = await p.getAttribute('#monList .mon .mon-spr img', 'src'); await p.fill('#monQ', '');
   await p.selectOption('#gameSel', 'tla'); await p.waitForTimeout(150); await p.click('#tabMonsters'); await p.fill('#monQ', 'kobold'); await p.waitForTimeout(100);
   console.log('Kobold picture differs between the games:', koboldSrc !== await p.getAttribute('#monList .mon .mon-spr img', 'src')); await p.fill('#monQ', '');
+  // Classes reference: cards per group for the first Adept, current class marked, a known requirement (TLA Knight = 2 Venus for Isaac)
+  await p.click('#tabClasses'); await p.waitForTimeout(200);
+  console.log('Classes (TLA, first Adept):', await p.evaluate(() => [...document.querySelectorAll('.cls-grp')].map(g => g.textContent + ' ' + g.nextElementSibling.children.length).join(' | ')),
+    '| current marked:', await p.evaluate(() => document.querySelectorAll('.cls-tier.now').length),
+    '| Knight needs:', await p.evaluate(() => { const t = [...document.querySelectorAll('.cls-tier')].find(x => x.querySelector('.tn').textContent.trim() === 'Knight'); return t && t.querySelector('.need').textContent.trim(); }));
   await p.selectOption('#gameSel', 'dd'); await p.waitForTimeout(150);
   console.log('DD: Monsters tab hidden:', !(await p.isVisible('#tabMonsters')));
   await p.selectOption('#gameSel', 'tla'); await p.click('#tabMonsters'); await p.setViewportSize({ width: 400, height: 900 }); await p.waitForTimeout(150);
