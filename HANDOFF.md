@@ -53,6 +53,12 @@ Rebuild Dark Dawn data with `cd dd && python3 parse.py && python3 build_dd.py . 
 - Sprites: `ui/monsters/`, matched by name in `ui/monsters/sprites.json`; `build.py` inlines them (it reads GIF sizes itself: the Pages runner has no Pillow). 191 are the owner's battle sprites (mostly animated GIFs). Saturos/Menardi/Agatio/Karst use their `_Front` pose, Mystery Man/Woman use Saturos/Menardi, "Grisly" uses Grizzly.gif. A `tla:`/`gs1:` key gives one game its own picture where both games share a name: `tla:Kobold` and `tla:Lich` are the zip's `_2` files, which match the Lost Age ROM.
 - The other 45 (colour swaps like Sea Hedgehog and Gillman Lord, bosses like Dullahan and Valukar, and Wyvern/Sky Dragon, whose zip GIFs were a back view) are made from the owner's Lost Age ROM by `monsters/extract_sprites.py <TLA.gba>`. Its docstring has every table: battle unit table 0x130D0C (enemy n = unit n + 7: sprite id, colour variant), sprite records 0x300000, sprite → sheet 0x2E91C, resource directory 0x680000, the packer's LZ, zero-skip frames, colour remap tables 0x203A8, system palette 0x17B10. Found by reading the battle code (0x081280BC/0x081280D8 → loader 0x080227E0); the formats follow the descriptions in the Alchemy decompilation (github.com/PascalPixel/alchemy). Check: for 270 of the 272 Lost Age entries that already had a GIF, the tables pick the same sheet and colours (the two misses were the Kobold/Lich mix-up). Animation is front frames 0, 2, 4, 2 at 350 ms, as the existing GIFs play; the game's own animation scripts aren't read. Every monster in both games now has a picture.
 
+## Compose tab (party composition guide)
+
+- Pick an Adept, then a class; the next Adept's choices narrow to what the djinn left allow (18 per element in The Lost Age, 7 in The Broken Seal; each class item once). Only fully levelled classes are offered: the highest tier of a line that Adept can reach within the game's djinn limit (so Lord is Isaac's top single-element class in The Broken Seal, and Druid his top Seer class). Each option uses that tier's fewest-djinn mixes from the Classes tab's brute force.
+- An option shows only if every Adept not yet picked can still get a fully levelled class afterwards: `canFinish`, a depth-first search over the remaining Adepts (fewest options first, mixes beaten on every element dropped), memoised on who's left, the pool and the class items used. About 0.1 s a step. When nothing passes, the options that merely fit are shown with a warning; when nothing fully levelled fits, the best tier of each line that fits is offered, marked "not fully levelled".
+- "Change" on a pick undoes it; Apply to planner gives each picked Adept those djinn (Set) and class items and leaves the rest unassigned.
+
 ## Battle tab (damage calculator, GBA)
 
 - Pick an attacker; build an enemy line-up (search, up to 6, the battle's slot count) shown as sprites in order on a battle strip. Click an enemy to aim at it (hand cursor), drag or ◀ ▶ to reorder, × or right-click to remove. The table: one row per attack (Attack, the weapon's unleash, every damaging Psynergy the Adept knows), one column per enemy in line-up order, min–max damage; green = always a KO, yellow = a KO on a high roll, — = out of reach.
@@ -165,7 +171,7 @@ Rebuild Dark Dawn data with `cd dd && python3 parse.py && python3 build_dd.py . 
 ## Tests
 
 The Playwright tests take an optional playwright root as their argument:
-- `tests/e2e.js` — main TLA flows: djinn picker, swaps, standby, Standby all, right-click removal (djinn and gear), Modifiers typing, baseline revert, gear, import, the known-Psynergy row in the Gear and Djinn tables, 400px width.
+- `tests/e2e.js` — main TLA flows: Compose (a full party, apply), djinn picker, swaps, standby, Standby all, right-click removal (djinn and gear), Modifiers typing, baseline revert, gear, import, the known-Psynergy row in the Gear and Djinn tables, 400px width.
 - `tests/drag.js` — column drag and keyboard reorder in the Djinn, Gear and Modifiers tabs; djinn drops (onto a djinni swaps, onto an empty slot adds, anywhere else does nothing).
 - `tests/gs1ui.js` — Broken Seal mode, game switching, GS1 and TLA import auto-switch.
 - `tests/ddui.js` — Dark Dawn mode, class picks, base-stat solver. Writes screenshots to `out/`.

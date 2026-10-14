@@ -403,7 +403,7 @@ details.sec .sec-body { display: grid; gap: 10px; margin-top: 8px; }
    lighter fill. Text is the pixel font with a black shadow. Element dots are glossy orbs. */
 body { background: var(--bg); font-size: var(--fs); line-height: 1.35; text-shadow: .1em .1em 0 #000; -webkit-font-smoothing: none; }
 /* windows: the frame at 2x (8px frame + 6px bevel), filled with the window colour */
-.panel, .pc, .picker, .tip, .slotbtn, .classbox, .toast-fixed, .importbox, .gs-card, .optwin {
+.panel, .pc, .picker, .tip, .slotbtn, .classbox, .toast-fixed, .importbox, .gs-card, .optwin, .cmp-opt {
   background: none; border: 8px solid transparent; border-radius: 0; box-shadow: none;
   border-image: var(--frame) 7 fill / 14px stretch; image-rendering: pixelated; }
 /* tall windows: the light top of the gradient stays short so text below it keeps its contrast */
@@ -604,6 +604,25 @@ body.djdragging, body.djdragging * { cursor: grabbing !important; }
 .bat-tab td.miss { color: var(--muted); }
 .bat-tab .act .dot { margin-left: 4px; }
 
+/* ---------- Compose: a party's classes, one Adept at a time ---------- */
+.cmp-pool { display: flex; flex-wrap: wrap; gap: 4px 16px; }
+.cmp-pool .etag { gap: 6px; }
+.cmp-picks { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.cmp-picks li { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; padding: 2px 0; border-bottom: 1px solid rgba(255, 255, 255, .18); }
+.cmp-picks img, .cmp-who img { width: 32px; height: 32px; image-rendering: pixelated; }
+.cmp-picks .cls { color: var(--accent); }
+.cmp-picks .part { color: var(--warn); }
+.cmp-picks .x { margin-left: auto; }
+.cmp-who { display: flex; flex-wrap: wrap; gap: 6px; }
+.cmp-who button { display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px 2px 4px; }
+.cmp-opts { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19em), 1fr)); gap: 6px; }
+.cmp-opt { display: grid; gap: 2px; text-align: left; padding: 4px 8px; cursor: pointer; color: #fff; }
+.cmp-opt:hover, .cmp-opt:focus-visible { border-image-source: var(--frame-sel); outline: none; }
+.cmp-opt .nm { color: var(--accent); }
+.cmp-opt .need { display: flex; flex-wrap: wrap; gap: 2px 10px; }
+.cmp-opt .warn { color: var(--warn); }
+.cmp-grp { color: var(--accent); margin: 6px 0 2px; }
+
 /* ---------- Classes reference: one table per class series ---------- */
 .cls-list { display: grid; gap: 10px; }
 .cls-grp { color: var(--accent); margin-top: 4px; }
@@ -725,6 +744,7 @@ details.sec .sec-body { gap: 6px; margin-top: 4px; }
     <button type="button" role="tab" id="tabMods" data-view="mods" aria-controls="viewMods" aria-selected="false">Modifiers</button>
     <button type="button" role="tab" id="tabBattle" data-view="battle" aria-controls="viewBattle" aria-selected="false">Battle</button>
     <button type="button" role="tab" id="tabMonsters" data-view="monsters" aria-controls="viewMonsters" aria-selected="false">Monsters</button>
+    <button type="button" role="tab" id="tabCompose" data-view="compose" aria-controls="viewCompose" aria-selected="false">Compose</button>
     <button type="button" role="tab" id="tabClasses" data-view="classes" aria-controls="viewClasses" aria-selected="false">Classes</button>
   </nav>
 
@@ -807,6 +827,14 @@ details.sec .sec-body { gap: 6px; margin-top: 4px; }
     </div>
     <p class="muted gv-note" id="batNote"></p>
     <div class="tscroll"><table class="bat-tab" id="batTable"></table></div>
+  </section>
+  <section id="viewCompose" role="tabpanel" aria-labelledby="tabCompose" class="view panel" hidden>
+    <div class="sheet-head"><h2>Compose a party</h2>
+      <div class="tools"><button class="btn sm" type="button" id="cmpApply">Apply to planner</button><button class="btn sm" type="button" id="cmpReset">Start over</button></div></div>
+    <p class="muted gv-note" id="cmpNote"></p>
+    <div class="cmp-pool" id="cmpPool" aria-label="Djinn left"></div>
+    <ol class="cmp-picks" id="cmpPicks"></ol>
+    <div id="cmpNext"></div>
   </section>
   <section id="viewClasses" role="tabpanel" aria-labelledby="tabClasses" class="view panel" hidden>
     <div class="sheet-head"><h2>Classes</h2></div>
@@ -1029,7 +1057,7 @@ __SAVEPARSE__
     if (!g.chars.includes(s.sel)) s.sel = s.order[0];
     s.endgame = s.endgame === true && !g.noEndgame;
     s.closed = (s.closed && typeof s.closed === 'object') ? s.closed : {};
-    s.view = ['planner', 'djinn', 'gear', 'mods', 'monsters', 'classes', 'battle'].includes(s.view) ? s.view : 'planner';
+    s.view = ['planner', 'djinn', 'gear', 'mods', 'monsters', 'classes', 'battle', 'compose'].includes(s.view) ? s.view : 'planner';
     s.mon = s.mon && typeof s.mon === 'object' ? { q: String(s.mon.q || ''), sort: String(s.mon.sort || 'id'), hideCarry: !!s.mon.hideCarry } : { q: '', sort: 'id', hideCarry: false };
     delete s.gearBase;
     if (!(s.base && Array.isArray(s.base.chars) && s.base.chars.length === 8 && s.base.chars.every(g => g && g.eq && Array.isArray(g.mods) && Array.isArray(g.boosts)) && Array.isArray(s.base.dj) && s.base.dj.length === 72)) s.base = null;
@@ -1943,8 +1971,8 @@ __SAVEPARSE__
   });
 
   // ---------- tabs ----------
-  const VIEWS = { planner: 'viewPlanner', djinn: 'viewDjinn', gear: 'viewGear', mods: 'viewMods', monsters: 'viewMonsters', classes: 'viewClasses', battle: 'viewBattle' };
-  const TABS = { planner: 'tabPlanner', djinn: 'tabDjinn', gear: 'tabGear', mods: 'tabMods', monsters: 'tabMonsters', classes: 'tabClasses', battle: 'tabBattle' };
+  const VIEWS = { planner: 'viewPlanner', djinn: 'viewDjinn', gear: 'viewGear', mods: 'viewMods', monsters: 'viewMonsters', classes: 'viewClasses', battle: 'viewBattle', compose: 'viewCompose' };
+  const TABS = { planner: 'tabPlanner', djinn: 'tabDjinn', gear: 'tabGear', mods: 'tabMods', monsters: 'tabMonsters', classes: 'tabClasses', battle: 'tabBattle', compose: 'tabCompose' };
   function applyView() {
     if (!VIEWS[state.view] || (state.view === 'gear' && GM().noGear) || ((state.view === 'monsters' || state.view === 'battle') && !GM().monsters)) state.view = 'planner';
     $('tabGear').hidden = !!GM().noGear;
@@ -2237,7 +2265,7 @@ __SAVEPARSE__
   }
   function renderAll(opts = {}) {
     fitColumns();
-    renderStrip(); renderSheet(); renderOverview(); renderShowcase(); renderGear(); renderDjinnTab(); renderModsTab(!!opts.modsFootOnly); renderMonsters(); renderClasses(); renderBattle();
+    renderStrip(); renderSheet(); renderOverview(); renderShowcase(); renderGear(); renderDjinnTab(); renderModsTab(!!opts.modsFootOnly); renderMonsters(); renderClasses(); renderBattle(); renderCompose();
     if (typeof syncImportUi === 'function') syncImportUi();
     $('ioText').value = JSON.stringify(state);
     save();
@@ -2245,6 +2273,110 @@ __SAVEPARSE__
     if (opts.keepFocus) { const el = $(opts.keepFocus); if (el) { el.focus(); if (el.type === 'number') { try { el.select(); } catch (e) {} } } }
   }
 
+
+  // ---------- Compose: pick each Adept's class in turn from what the djinn left still allow ----------
+  // Options are top-tier classes only (from the same brute force as the Classes tab: the fewest Set djinn per mix).
+  // An option shows only if, after it, every Adept not yet picked can still reach a top-tier class with the djinn
+  // (and class items) left: a depth-first search over the remaining Adepts, memoised on who's left and the pool.
+  const cmpState = () => state.comp || (state.comp = { picks: [], sel: null });
+  const djPool = () => { const p = [0, 0, 0, 0]; djInGame().forEach(i => p[D.djinn[i].e]++); return p; };
+  // "Fully levelled" = the highest tier of a line this Adept can reach at all within the game's djinn limit (in The
+  // Broken Seal, 7 djinn stop Isaac at Lord; the Seer line stops him at Druid)
+  function topTiers(ci) { const top = new Map(); for (const r of classTable().reach[ci].values()) top.set(r.sid, Math.max(top.get(r.sid) ?? -1, r.ti)); return top; }
+  function fullOptions(ci) {   // [{ sid, ti, kind, item, cnt }] for each line's top reachable tier and each fewest-djinn mix
+    const reach = classTable().reach[ci], top = topTiers(ci), out = [];
+    for (const r of reach.values()) { if (r.ti !== top.get(r.sid)) continue;
+      for (const cnt of r.combos) out.push({ sid: r.sid, ti: r.ti, kind: r.kind, item: r.item, cnt }); }
+    return out;
+  }
+  const leadOf = sid => { const r0 = seriesOf(sid).tiers[0].req, top = Math.max(...r0); return !D.dd && r0.filter(v => v === top).length === 1 ? r0.indexOf(top) : -1; };
+  const fits = (o, pool, items) => o.cnt.every((v, e) => v <= pool[e]) && (!o.item || !items.has(o.item));
+  function canFinish(rest, pool, items, memo = new Map()) {
+    if (!rest.length) return true;
+    const key = rest.join(',') + '|' + pool.join(',') + '|' + [...items].sort().join(',');
+    if (memo.has(key)) return memo.get(key);
+    // the Adept with the fewest fitting options first; per Adept only mixes not beaten by another (fewer of every element)
+    let best = null;
+    for (const ci of rest) {
+      const o = fullOptions(ci).filter(x => fits(x, pool, items));
+      const lean = o.filter(x => !o.some(y => y !== x && y.item === x.item && y.cnt.every((v, e) => v <= x.cnt[e]) && y.cnt.some((v, e) => v < x.cnt[e])));
+      if (!best || lean.length < best.o.length) best = { ci, o: lean };
+      if (!lean.length) break;
+    }
+    let ok = false;
+    const others = rest.filter(c => c !== best.ci);
+    for (const x of best.o) {
+      const p2 = pool.map((v, e) => v - x.cnt[e]), it2 = new Set(items); if (x.item) it2.add(x.item);
+      if (canFinish(others, p2, it2, memo)) { ok = true; break; }
+    }
+    memo.set(key, ok); return ok;
+  }
+  function cmpLeft() {
+    const cs = cmpState(), pool = djPool(), items = new Set();
+    for (const p of cs.picks) { p.cnt.forEach((v, e) => { pool[e] -= v; }); if (p.item) items.add(p.item); }
+    return { pool, items, rest: GM().chars.filter(ci => !cs.picks.some(p => p.ci === ci)) };
+  }
+  const orbCount = (cnt) => cnt.some(v => v) ? cnt.map((v, e) => v ? `<span class="etag e${e}">${v}<span class="dot" role="img" aria-label="${EL[e]}"></span></span>` : '').join('') : 'No djinn';
+  function renderCompose() {
+    if ($('viewCompose').hidden) return;
+    const cs = cmpState(), { pool, items, rest } = cmpLeft(), total = djPool();
+    cs.picks = cs.picks.filter(p => GM().chars.includes(p.ci));
+    $('cmpNote').textContent = `Pick an Adept, then a class for them; each class takes the fewest Set djinn it needs from the ${total.reduce((a, b) => a + b, 0)} djinn in the game. ` +
+      `Only fully levelled classes are offered (the highest tier of a line the Adept can reach with ${GM().djCap} djinn), and only ones that still leave every other Adept a fully levelled class. When that's no longer possible, the best tier each Adept can still reach is shown instead, marked as not fully levelled.` +
+      (D.dd ? " Dark Dawn's class rule isn't published (Golden Sun Syndicate requirements, unverified)." : '');
+    $('cmpPool').innerHTML = '<span class="lbl">Djinn left</span>' + [0, 1, 2, 3].map(e => `<span class="etag e${e}"><span class="dot" role="img" aria-label="${EL[e]}"></span>${pool[e]} of ${total[e]}</span>`).join('') +
+      (GM().classItems ? `<span class="muted">Class items left: ${['card', 'whip', 'tome'].filter(i => !items.has(i)).map(i => ITEM_NAME[i]).join(', ') || 'none'}</span>` : '');
+    $('cmpPicks').innerHTML = cs.picks.map((p, k) => { const c = D.chars[p.ci], por = GSUI.portrait[c.name], t = seriesOf(p.sid).tiers, top = topTiers(p.ci).get(p.sid);
+      return `<li>${por ? `<img src="${por}" alt="">` : ''}<span>${esc(c.name)}</span><span class="${p.ti === top ? 'cls' : 'part'}">${esc(t[p.ti].name)}${p.ti === top ? '' : ` (not fully levelled: ${esc(t[top].name)} needs more djinn)`}</span>${p.item ? `<span class="muted">${ITEM_NAME[p.item]}</span>` : ''}<span>${orbCount(p.cnt)}</span><button type="button" class="linkbtn x" data-undo="${k}">Change</button></li>`; }).join('');
+    if (!rest.length) { $('cmpNext').innerHTML = '<p>Every Adept has a class. <b>Apply to planner</b> sets these djinn (Set) and class items on your build; the djinn left over stay unassigned.</p>'; return; }
+    if (cs.sel == null || !rest.includes(cs.sel)) cs.sel = null;
+    let h = `<h3 class="cmp-grp">${cs.picks.length ? 'Next Adept' : 'Choose an Adept'}</h3><div class="cmp-who">` + rest.map(ci => { const c = D.chars[ci], por = GSUI.portrait[c.name];
+      return `<button type="button" class="btn" data-ci="${ci}" aria-pressed="${ci === cs.sel}">${por ? `<img src="${por}" alt="">` : ''}<span class="dot e${c.el}"></span>${esc(c.name)}</button>`; }).join('') + '</div>';
+    if (cs.sel != null) {
+      const ci = cs.sel, others = rest.filter(c => c !== ci), memo = new Map();
+      const opts = fullOptions(ci).filter(o => fits(o, pool, items)).map(o => {
+        const p2 = pool.map((v, e) => v - o.cnt[e]), it2 = new Set(items); if (o.item) it2.add(o.item);
+        return { ...o, ok: canFinish(others, p2, it2, memo) };
+      });
+      let show = opts.filter(o => o.ok), note = '';
+      if (!show.length && opts.length) { show = opts; note = `No fully levelled class for ${D.chars[ci].name} leaves every other Adept one any more. These still fit the djinn left:`; }
+      let partial = false;
+      if (!show.length) {   // nothing top-tier fits: the highest tier of each line that still does
+        partial = true; note = `${D.chars[ci].name} can't be fully levelled in any class with the djinn left. The best tier of each line that still fits:`;
+        const best = new Map();
+        for (const r of classTable().reach[ci].values()) for (const cnt of r.combos) { const o = { sid: r.sid, ti: r.ti, kind: r.kind, item: r.item, cnt };
+          if (!fits(o, pool, items)) continue; const b = best.get(r.sid); if (!b || o.ti > b.ti) best.set(r.sid, o); }
+        show = [...best.values()];
+      }
+      h += `<h3 class="cmp-grp">${esc(D.chars[ci].name)}'s class</h3>${note ? `<p class="warn">${note}</p>` : ''}`;
+      const GROUPS = [['mono', 'Single element'], ['dual', 'Two elements'], ['tri', 'Three elements'], ['item', 'Class items']];
+      for (const [kind, title] of GROUPS) {
+        const g = show.filter(o => o.kind === kind).sort((a, b) => a.cnt.reduce((x, y) => x + y, 0) - b.cnt.reduce((x, y) => x + y, 0)); if (!g.length) continue;
+        h += `<h4 class="cmp-grp">${title}</h4><div class="cmp-opts">` + g.map(o => { const t = seriesOf(o.sid).tiers, idx = opts.indexOf(o) >= 0 ? show.indexOf(o) : show.indexOf(o);
+          return `<button type="button" class="cmp-opt" data-opt="${show.indexOf(o)}"><span class="nm">${esc(t[o.ti].name)}${partial ? ` <span class="warn">(not fully levelled)</span>` : ''}</span><span class="muted">${esc(t[0].name)} line${leadOf(o.sid) >= 0 && o.kind === 'dual' ? `, ${EL[leadOf(o.sid)]} lead` : ''}${o.item ? ', with the ' + ITEM_NAME[o.item] : ''}</span><span class="need">${orbCount(o.cnt)}</span>${o.ok === false && !partial ? '<span class="warn">Leaves someone short</span>' : ''}</button>`; }).join('') + '</div>';
+      }
+      cmpShown = show;
+    }
+    $('cmpNext').innerHTML = h;
+  }
+  let cmpShown = [];
+  $('cmpNext').addEventListener('click', e => {
+    const cs = cmpState(), who = e.target.closest('.cmp-who button[data-ci]');
+    if (who) { cs.sel = +who.dataset.ci; renderCompose(); save(); return; }
+    const b = e.target.closest('.cmp-opt'); if (!b || cs.sel == null) return;
+    const o = cmpShown[+b.dataset.opt]; cs.picks.push({ ci: cs.sel, sid: o.sid, ti: o.ti, item: o.item, cnt: o.cnt.slice() }); cs.sel = null;
+    renderCompose(); save();
+  });
+  $('cmpPicks').addEventListener('click', e => { const b = e.target.closest('[data-undo]'); if (!b) return; const cs = cmpState(), p = cs.picks.splice(+b.dataset.undo, 1)[0]; cs.sel = p.ci; renderCompose(); save(); });
+  $('cmpReset').addEventListener('click', () => { const cs = cmpState(); cs.picks = []; cs.sel = null; renderCompose(); save(); });
+  $('cmpApply').addEventListener('click', () => {
+    const cs = cmpState(); if (!cs.picks.length) { toast('Pick at least one class first.'); return; }
+    const free = [0, 1, 2, 3].map(e => djInGame().filter(i => D.djinn[i].e === e));
+    state.dj.forEach(d => { d.o = null; d.s = true; });
+    GM().chars.forEach(ci => { if (GM().classItems) state.chars[ci].item = ''; });
+    for (const p of cs.picks) { p.cnt.forEach((v, e) => { for (let k = 0; k < v; k++) { const i = free[e].shift(); state.dj[i].o = p.ci; state.dj[i].s = true; } }); if (p.item) state.chars[p.ci].item = p.item; }
+    renderAll(); toast(`Applied: ${cs.picks.length} Adept${cs.picks.length > 1 ? 's' : ''} set up; the other djinn are unassigned.`);
+  });
 
   // ---------- Battle: an enemy line-up in the order chosen, and what each attack does to each enemy ----------
   const batState = () => state.bat || (state.bat = { ci: null, foes: [], centre: 0 });

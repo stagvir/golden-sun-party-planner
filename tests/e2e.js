@@ -65,6 +65,15 @@ const { chromium } = require(process.argv[2] ? process.argv[2] + '/playwright' :
     await p.locator('.gcell[data-ci="0"][data-sl="w"]').click({ button: 'right' });
     console.log('right-click takes gear off:', (await p.innerText('.gcell[data-ci="0"][data-sl="w"]')).trim() === '—');
     await p.click('#btnReset'); await p.click('#tabDjinn'); }
+  // Compose: pick every Adept's class in turn (the last option each time), each step keeps the rest completable; apply sets the djinn
+  { await p.click('#tabCompose'); const steps = [];
+    for (let k = 0; k < 8; k++) { const who = p.locator('#cmpNext .cmp-who button'); if (!(await who.count())) break;
+      await who.first().click(); steps.push(await p.locator('.cmp-opt').count() + (await p.locator('#cmpNext p.warn').count() ? '!' : ''));
+      await p.locator('.cmp-opt').last().click(); }
+    const full = await p.evaluate(() => document.querySelectorAll('#cmpPicks .cls').length);
+    await p.click('#cmpApply'); await p.click('#tabDjinn');
+    console.log('compose: options per step', steps.join(','), '| fully levelled', full, '| djinn assigned after apply', await p.evaluate(() => document.querySelectorAll('#djTable .djc').length));
+    await p.click('#btnReset'); }
   // Options: window colour (game maths), wraps, survives a reload, default restores the built-in skin
   { const surf = () => p.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--surface').trim());
     await p.click('#btnOptions'); const s0 = await surf();
