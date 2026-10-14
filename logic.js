@@ -176,16 +176,18 @@ const GSLogic = (function () {
   // One hit of action a ({ d: damage kind, p: power, e: element 0-4, x: effect, r: range }) by attacker
   // ({ atk, pow[4] }) on target ({ def, res[4], hp }) at `offset` from the centre target.
   // Returns { min, max } (the game adds 0-3 at random) or null when the action does no HP damage there.
-  function damage(a, att, tgt, offset) {
+  function damage(a, att, tgt, offset, opts = {}) {
     if (!DAMAGE_KINDS.has(a.d) || !reach(a.r, offset)) return null;
     const off = a.r === 255 ? 0 : offset;
     const bonus = a.e >= 0 && a.e <= 3 ? att.pow[a.e] - tgt.res[a.e] : 0;
     let dmg;
     if (a.d === 3 || a.d === 4) {           // weapon attack: Attack, unleashes, "Attack +n" / "x n" Psynergy
-      const def = a.x === 35 ? tgt.def >> 1 : tgt.def;   // effect 35 halves the target's Defense
+      // Effects 35 (halve Defense) and 34 (cut HP to 1) only apply when the effect roll succeeds (Battle_HitCheck),
+      // which many enemies resist, so the damage here is without them; `opts.effect` gives the result when it lands.
+      const def = opts.effect && a.x === 35 ? tgt.def >> 1 : tgt.def;
       dmg = a.d === 4 ? trunc(calcAttack(att.atk, def, 0, bonus) * a.p / 10) : calcAttack(att.atk, def, a.p, bonus);
       let lo = Math.max(1, dmg), hi = Math.max(1, dmg + 3);
-      if (a.x === 34 && tgt.hp > 1) { lo = Math.max(lo, tgt.hp - 1); hi = Math.max(hi, tgt.hp - 1); }   // leaves 1 HP at most
+      if (opts.effect && a.x === 34 && tgt.hp > 1) { lo = Math.max(lo, tgt.hp - 1); hi = Math.max(hi, tgt.hp - 1); }
       return { min: lo, max: hi };
     }
     if (!a.p) return null;

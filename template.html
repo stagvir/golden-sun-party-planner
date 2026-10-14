@@ -2411,11 +2411,13 @@ __SAVEPARSE__
     const foes = bs.foes.map(id => byId.get(id));
     let h = `<thead><tr><th scope="col">Attack</th>${foes.map((m, k) => `<th scope="col">${k === bs.centre ? '▼ ' : ''}${esc(m.n)}</th>`).join('')}</tr></thead><tbody>`;
     for (const a of battleActions(r)) {
-      h += `<tr><td class="act">${esc(a.n)}${a.e < 4 ? `<span class="dot e${a.e}" role="img" aria-label="${EL[a.e]}"></span>` : ''} <span class="muted">· ${esc(a.note)}</span></td>` + foes.map((m, k) => {
-        const dmg = G.damage(a, att, { def: m.def, res: m.res, hp: m.hp }, Math.abs(k - bs.centre));
+      h += `<tr><td class="act">${esc(a.n)}${a.e < 4 ? `<span class="dot e${a.e}" role="img" aria-label="${EL[a.e]}"></span>` : ''} <span class="muted">· ${esc(a.note)}${a.x === 34 ? ' · may cut HP to 1' : a.x === 35 ? ' · may halve Defense' : ''}</span></td>` + foes.map((m, k) => {
+        const tgt = { def: m.def, res: m.res, hp: m.hp }, off = Math.abs(k - bs.centre), dmg = G.damage(a, att, tgt, off);
         if (!dmg) return '<td class="miss">—</td>';
         const cls = dmg.min >= m.hp ? 'ko' : dmg.max >= m.hp ? 'maybe' : '';
-        return `<td class="${cls}" title="${esc(m.n)}: ${dmg.min}–${dmg.max} of ${m.hp} HP">${dmg.min}–${dmg.max}</td>`;
+        // a chance effect (halve Defense) shows what the hit does when it lands
+        const fx = a.x === 35 ? G.damage(a, att, tgt, off, { effect: true }) : null;
+        return `<td class="${cls}" title="${esc(m.n)}: ${dmg.min}–${dmg.max} of ${m.hp} HP${fx ? `; ${fx.min}–${fx.max} if Defense is halved` : ''}">${dmg.min}–${dmg.max}${fx ? ` <span class="muted">(${fx.min}–${fx.max})</span>` : ''}</td>`;
       }).join('') + '</tr>';
     }
     $('batTable').innerHTML = h + '</tbody>';
