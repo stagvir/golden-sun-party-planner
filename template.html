@@ -794,7 +794,7 @@ details.sec .sec-body { gap: 6px; margin-top: 4px; }
       </div>
     </div>
     <div class="vnotes">
-    <p class="muted gv-note">Click a djinni to put it on Standby, swap it or remove it (right-click removes it at once); click + to add one (up to 9 each). Each option shows the class it leads to and the change in stats. Taking a djinni from another Adept gives them the one you swapped out. Red name = Standby (ready to summon: no class or stat effect), dotted = not collected in your imported save. <span id="djPool"></span></p>
+    <p class="muted gv-note">Click a djinni to put it on Standby, swap it or remove it (right-click removes it at once); click + to add one (up to 9 each). Each option shows the class it leads to and the change in stats. The list shows unassigned djinn; to take one from another Adept, drag it onto one of yours (they get yours in exchange). Red name = Standby (ready to summon: no class or stat effect), dotted = not collected in your imported save. <span id="djPool"></span></p>
     </div>
     <div class="tscroll"><table class="gtab djtab" id="djTable"></table></div>
   </section>
@@ -1806,8 +1806,7 @@ __SAVEPARSE__
     }
     let list = '';
     for (const e of order) {
-      const ids = djInGame().filter(i => D.djinn[i].e === e && state.dj[i].o !== ci);
-      ids.sort((a, b) => ((state.dj[a].o === null ? 0 : 1) - (state.dj[b].o === null ? 0 : 1)) || a - b);
+      const ids = djInGame().filter(i => D.djinn[i].e === e && state.dj[i].o === null);   // only unassigned djinn; drag to take one from another Adept
       if (!ids.length) continue;
       list += `<div class="pk-grp">${EL[e]}</div>` + ids.map(i => {
         const dj = D.djinn[i], d = { ...state.dj[i] };   // copy: the preview below moves the real one temporarily
@@ -1815,14 +1814,13 @@ __SAVEPARSE__
         const ch2 = chips(p.before, p.after);
         if (p.note) ch2.push(...(p.swap ? swapChips(p) : [`<span class="chg sw">${esc(p.note.replace(/^Took /, 'Takes '))}</span>`]));
         if (!ch2.length) ch2.push('<span class="chg nt">No change</span>');
-        const where = d.o === null ? 'Unassigned' : `On ${D.chars[d.o].name}${d.s ? '' : ' (Standby)'}`;
-        const miss = state.djHave && !state.djHave[i] ? ' · not collected' : '';
+        const miss = state.djHave && !state.djHave[i] ? '<small>Not collected</small>' : '';
         return `<button type="button" role="option" class="pk-opt" data-dj="${i}" aria-selected="false">
-          <span class="etag e${e}" style="justify-content:center"><span class="dot"></span></span><span class="t"><b>${esc(dj.n)}</b><small>${where}${miss}</small><small class="bon">${djStats(dj)}</small></span>
+          <span class="etag e${e}" style="justify-content:center"><span class="dot"></span></span><span class="t"><b>${esc(dj.n)}</b>${miss}<small class="bon">${djStats(dj)}</small></span>
           <span class="ch">${ch2.join('')}</span></button>`;
       }).join('');
     }
-    $('picker').innerHTML = `<div class="pk-head"><b>${esc(ch.name)} · ${cur != null ? 'Swap ' + esc(D.djinn[cur].n) : 'Add a djinni'}</b><span>${cur != null ? 'Standby, remove, or pick a djinni to swap in.' : `${owned(ci).length}/${GM().djCap} djinn. Changes are to ${esc(ch.name)}'s class and final stats.`}</span></div>${acts}<div class="pk-list" role="listbox" aria-label="Choose a djinni">${list}</div>`;
+    $('picker').innerHTML = `<div class="pk-head"><b>${esc(ch.name)} · ${cur != null ? 'Swap ' + esc(D.djinn[cur].n) : 'Add a djinni'}</b><span>${cur != null ? 'Standby, remove, or pick an unassigned djinni to swap in.' : `${owned(ci).length}/${GM().djCap} djinn. Changes are to ${esc(ch.name)}'s class and final stats.`}</span></div>${acts}<div class="pk-list" role="listbox" aria-label="Choose a djinni">${list || '<p class="muted pk-none">No unassigned djinn. Drag one of another Adept\'s djinn onto this Adept to swap.</p>'}</div>`;
     const pk = $('picker'); pk.hidden = false; btn.setAttribute('aria-expanded', 'true');
     placePicker(btn);
     const first = pk.querySelector('.pk-opt'); if (first) first.focus();

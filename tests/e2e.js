@@ -18,12 +18,17 @@ const { chromium } = require(process.argv[2] ? process.argv[2] + '/playwright' :
   for (const n of ['Forge', 'Fever', 'Corona', 'Scorch']) { await p.click(felixAdd(2)); await pickDj(n); }
   console.log('Felix after 5J4Ma:', await txt('#djTable thead th:nth-child(2)'), '| count row:', await p.locator('#djTable tbody tr').nth(9).locator('td').first().innerText());
   console.log('Felix + buttons left (full):', await p.locator('.djadd[data-ci="4"]').count());
-  // Isaac (reserve col) takes Gust from Felix
-  await p.click('.djadd[data-ci="0"]'); await pickDj('Gust');
+  // the picker lists only unassigned djinn; taking one from another Adept is a drag
+  await p.click('.djadd[data-ci="0"]'); console.log('picker lists only unassigned djinn:', await p.evaluate(() => [...document.querySelectorAll('#picker .pk-opt[data-dj]')].every(o => !document.querySelector(`#djTable .djc[data-dj="${o.dataset.dj}"]`))));
+  await p.keyboard.press('Escape');
+  const dragTo = async (from, to) => { const a = await p.locator(from).boundingBox(), c = await p.locator(to).boundingBox();
+    await p.mouse.move(a.x + a.width / 2, a.y + a.height / 2); await p.mouse.down(); await p.mouse.move(a.x + a.width / 2 + 20, a.y + a.height / 2, { steps: 4 });
+    await p.mouse.move(c.x + c.width / 2, c.y + c.height / 2, { steps: 8 }); await p.mouse.up(); await p.waitForTimeout(100); };
+  // Isaac (reserve col) takes Gust from Felix: drag it onto Isaac's empty slot
+  await dragTo('.djc[data-dj="54"]', '.djadd[data-ci="0"]');
   console.log('toast:', await txt('#toast'), '| Felix class now:', await txt('#djTable thead th:nth-child(2)'));
-  // replace: click Isaac's Gust chip -> swap with Breeze (on Felix) -> Felix gets Gust back
-  await p.click('.djc[data-dj="54"]'); console.log('chip picker head:', await txt('#picker .pk-head'));
-  await pickDj('Breeze'); console.log('swap toast:', await txt('#toast'));
+  // swap: drag Felix's Breeze onto Isaac's Gust -> Felix gets Gust back
+  await dragTo('.djc[data-dj="55"]', '.djc[data-dj="54"]'); console.log('swap toast:', await txt('#toast'));
   // standby toggle
   await p.click('.djc[data-dj="55"]'); await p.click('#picker [data-act="toggle"]');
   console.log('Breeze standby class:', await p.getAttribute('.djc[data-dj="55"]', 'class'));
