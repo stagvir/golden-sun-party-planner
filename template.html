@@ -788,6 +788,7 @@ details.sec .sec-body { gap: 6px; margin-top: 4px; }
         <button class="btn sm" type="button" id="btnVanilla">All own-element djinn</button>
         <button class="btn sm" type="button" id="btnSetAll">Set all (no Standby)</button>
         <button class="btn sm" type="button" id="btnStandbyAll">Standby all</button>
+        <label class="toggle" id="djModBox" title="The 76-djinn mod: Flint II, Fizz II, Forge II and Gust II join the pool; still only 72 can be in use"><input type="checkbox" id="djMod"><span>76 djinn mod</span></label>
         <button class="btn sm" type="button" id="btnClear">Unset all djinn</button>
         <button class="btn sm" type="button" data-baseline>Set baseline</button>
         <button class="btn sm" type="button" data-revert="djinn">Revert djinn to baseline</button>
@@ -879,6 +880,7 @@ details.sec .sec-body { gap: 6px; margin-top: 4px; }
         <li>Final stat = (base + Set djinn bonuses + stat items + flat gear bonuses + your modifiers) × class percentage, then × any gear multiplier (Elven Shirt, Adept's Helm and the like). The wiki confirms weapon and armor Attack/Defense are added before the class percentage; djinn and other flat bonuses are assumed to work the same way.</li>
         <li>Stat items use the amount stored in the game's item table: Power Bread +8 HP, Cookie +6 PP, Apple +5 Attack, Hard Nut +3 Defense, Mint +5 Agility, Lucky Pepper +2 Luck. If the game rolls a random amount, these may be the most you can get rather than a fixed gain.</li>
         <li>Elemental Power = 75 + the Adept's affinity for that element (4 own, 3 neutral, 2 opposed, 1 symbiotic, from the character table) + 5 per elemental level + gear, capped at 200. That gives 104 in the Adept's own element with no djinn, matching the wiki. Resistance works the same way from a base 10 higher. Without gear, both formulas match the values stored in real saves from both games (every Adept checked). The game stores these without equipment bonuses, so gear Power/Resistance bonuses are added on top here, as the item descriptions say, but that part can't be checked against a save.</li>
+        <li>76 djinn mod (The Lost Age, a checkbox on the Djinn and Compose tabs): adds Flint II, Fizz II, Forge II and Gust II (working names), so 19 djinn of each element can be chosen from while at most 72 are in use. Their stat bonuses aren't published, so they copy Flint, Fizz, Forge and Gust (unverified).</li>
         <li>Battle damage follows the game's own code (The Broken Seal's battle routines in the Alchemy decompilation, with the tables read from the ROMs). Elemental difference = the attacker's Power minus the target's Resistance in the attack's element, capped at ±200. Attack, unleashes and "Attack +n" Psynergy: (Attack − Defense + 2 × power) ÷ 2 × (1 + difference ÷ 400). Psynergy: power × (1 + difference ÷ 200), then 100/80/60/40/20% (or 100/70/40/30/20%, or 100/50/30/10%) for each step away from the target aimed at. Every hit adds 0 to 3 at random. A plain Attack takes the element of the equipped weapon (12 weapons have one), none without it. The Lost Age is assumed to work the same way: it has the same curve and spread tables, but its battle code isn't decompiled yet. Criticals, misses and buffs aren't included.</li>
         <li>Unleash chance comes from the weapon (35%, or 40% for a few) plus gear such as Hyper Boots. The game describes those as boosting "Criticals"; the wiki lists them as unleash-rate bonuses.</li>
         <li>Class items (Mysterious Card, Trainer's Whip, Tomegathericon) get their own slot here. I couldn't confirm whether the game makes them share a slot with rings.</li>
@@ -923,6 +925,11 @@ __SAVEPARSE__
 </script>
 <script>
 (function () {
+  // The 76-djinn mod for The Lost Age adds one djinni per element (working names Flint II, Fizz II, Forge II, Gust II).
+  // Their stat bonuses aren't published: they copy Flint, Fizz, Forge and Gust (unverified). Indices 72-75, in play
+  // only in The Lost Age with the mod on (state.mod76).
+  ['Flint', 'Fizz', 'Forge', 'Gust'].forEach((n, e) => { const o = GSDATA.djinn.find(d => d.n === n); GSDATA.djinn.push({ n: n + ' II', e, s: o.s.slice(), mod: true }); });
+  let mod76 = false;   // mirrors state.mod76 for the current game (read by inGameDj before state exists)
   let D = GSDATA; const G = GSLogic;
   const dataFor = g => g === 'dd' ? DDDATA : GSDATA;
   const isDD = () => state && state.game === 'dd';
@@ -956,7 +963,7 @@ __SAVEPARSE__
   const GM = () => GAMES[state.game];
   const NCH = () => GM().chars.length;
   const ORDER = () => state.order.slice(0, NCH());
-  const inGameDj = (i, g = GM()) => (i % 18) < g.djPer;
+  const inGameDj = (i, g = GM()) => D.djinn[i] && D.djinn[i].mod ? mod76 && g === GAMES.tla : (i % 18) < g.djPer;
   const djInGame = () => D.djinn.map((d, i) => i).filter(i => inGameDj(i));
   const inGameItem = (id, g = GM()) => !g.items || g.items.has(+id);
   const CHARS = () => GM().chars.map(i => D.chars[i]);
@@ -1006,6 +1013,7 @@ __SAVEPARSE__
 
   // djinn ids: index in D.djinn (0..71)
   function exampleState(game = 'tla') {
+    mod76 = false;   // a fresh example starts without the 76 djinn mod
     // Example: the usual "everyone keeps their own element" setup with each game's own party up front
     const g = GAMES[game], ex = g.example;
     D = dataFor(game);
@@ -1036,9 +1044,12 @@ __SAVEPARSE__
     return loadGame(game);
   }
   function validate(s) {
-    if (!s || !Array.isArray(s.order) || s.order.length !== 8 || !Array.isArray(s.chars) || s.chars.length !== 8 || !Array.isArray(s.dj) || s.dj.length !== 72) throw new Error('bad');
+    if (!s || !Array.isArray(s.order) || s.order.length !== 8 || !Array.isArray(s.chars) || s.chars.length !== 8 || !Array.isArray(s.dj) || s.dj.length < 72) throw new Error('bad');
     if (!GAMES[s.game] || !GAMES[s.game].ready) s.game = 'tla';
     const g = GAMES[s.game];
+    s.mod76 = s.game === 'tla' && !!s.mod76; mod76 = s.mod76;
+    const padDj = a => { a = a.slice(0, D.djinn.length); while (a.length < D.djinn.length) a.push({ o: null, s: true }); return a; };   // saves from before the mod djinn have 72
+    s.dj = padDj(s.dj);
     if ([...s.order].sort().join() !== '0,1,2,3,4,5,6,7') throw new Error('bad');
     s.order = [...s.order.filter(k => g.chars.includes(k)), ...s.order.filter(k => !g.chars.includes(k))];
     s.chars.forEach((c, ci) => {
@@ -1060,10 +1071,10 @@ __SAVEPARSE__
     s.view = ['planner', 'djinn', 'gear', 'mods', 'monsters', 'classes', 'battle', 'compose'].includes(s.view) ? s.view : 'planner';
     s.mon = s.mon && typeof s.mon === 'object' ? { q: String(s.mon.q || ''), sort: String(s.mon.sort || 'id'), hideCarry: !!s.mon.hideCarry } : { q: '', sort: 'id', hideCarry: false };
     delete s.gearBase;
-    if (!(s.base && Array.isArray(s.base.chars) && s.base.chars.length === 8 && s.base.chars.every(g => g && g.eq && Array.isArray(g.mods) && Array.isArray(g.boosts)) && Array.isArray(s.base.dj) && s.base.dj.length === 72)) s.base = null;
+    if (!(s.base && Array.isArray(s.base.chars) && s.base.chars.length === 8 && s.base.chars.every(g => g && g.eq && Array.isArray(g.mods) && Array.isArray(g.boosts)) && Array.isArray(s.base.dj) && s.base.dj.length >= 72)) s.base = null; else s.base.dj = padDj(s.base.dj);
     s.owned = (s.owned && typeof s.owned === 'object') ? s.owned : null;
     s.ownedOnly = !!(s.owned && s.ownedOnly);
-    s.djHave = Array.isArray(s.djHave) && s.djHave.length === 72 ? s.djHave.map(Boolean) : null;
+    s.djHave = Array.isArray(s.djHave) && s.djHave.length >= 72 ? D.djinn.map((d, i) => d.mod || !!s.djHave[i]) : null;
     s.imported = s.imported && typeof s.imported === 'object' ? s.imported : null;
     if (typeof s.sort !== 'string') s.sort = 'name';
     return s;
@@ -1642,6 +1653,7 @@ __SAVEPARSE__
   function renderDjinnTab() {
     // the unassigned list is kept current even while the tab is hidden: the tabs' explanation heights are matched to it
     const free = djInGame().filter(i => state.dj[i].o === null);
+    $('djModBox').hidden = state.game !== 'tla'; $('djMod').checked = !!state.mod76;
     $('djPool').textContent = !free.length ? `All ${djInGame().length} djinn are assigned.` : free.length <= 10 ? `Unassigned: ${free.map(i => D.djinn[i].n).join(', ')}.` : `${free.length} djinn are unassigned.`;
     if ($('viewDjinn').hidden) return;
     const tp = tableParts(), { cols, cur } = tp;
@@ -2279,8 +2291,8 @@ __SAVEPARSE__
   const cmpState = () => state.comp || (state.comp = { picks: [], sel: null });
   const djPool = () => { const p = [0, 0, 0, 0]; djInGame().forEach(i => p[D.djinn[i].e]++); return p; };
   // The 76-djinn mod (The Lost Age): 19 of each element to choose from, but the party still uses at most the game's 72
-  const cmpMod = () => state.game === 'tla' && !!cmpState().mod76;
-  const cmpPool = () => { const p = djPool(), total = p.reduce((a, b) => a + b, 0); return { pool: cmpMod() ? p.map(v => v + 1) : p, total }; };
+  const cmpMod = () => state.game === 'tla' && !!state.mod76;
+  const cmpPool = () => ({ pool: djPool(), total: djInGame().filter(i => !D.djinn[i].mod).length });
   const djSum = c => c.reduce((a, b) => a + b, 0);
   // "Fully levelled" = the highest tier of a line this Adept can reach at all within the game's djinn limit (in The
   // Broken Seal, 7 djinn stop Isaac at Lord; the Seer line stops him at Druid)
@@ -2373,14 +2385,20 @@ __SAVEPARSE__
     renderCompose(); save();
   });
   $('cmpPicks').addEventListener('click', e => { const b = e.target.closest('[data-undo]'); if (!b) return; const cs = cmpState(), p = cs.picks.splice(+b.dataset.undo, 1)[0]; cs.sel = p.ci; renderCompose(); save(); });
-  $('cmpMod').addEventListener('change', e => { cmpState().mod76 = e.target.checked; renderCompose(); save(); });
+  $('cmpMod').addEventListener('change', e => setMod76(e.target.checked));
+  $('djMod').addEventListener('change', e => setMod76(e.target.checked));
+  function setMod76(on) {
+    state.mod76 = state.game === 'tla' && on; mod76 = state.mod76;
+    if (!on) D.djinn.forEach((d, i) => { if (d.mod) state.dj[i] = { o: null, s: true }; });   // the mod djinn leave play
+    renderAll(); toast(on ? '76 djinn mod on: Flint II, Fizz II, Forge II and Gust II are in play (still 72 at most in use).' : '76 djinn mod off.');
+  }
   $('cmpReset').addEventListener('click', () => { const cs = cmpState(); cs.picks = []; cs.sel = null; renderCompose(); save(); });
   $('cmpApply').addEventListener('click', () => {
     const cs = cmpState(); if (!cs.picks.length) { toast('Pick at least one class first.'); return; }
     const free = [0, 1, 2, 3].map(e => djInGame().filter(i => D.djinn[i].e === e));
     state.dj.forEach(d => { d.o = null; d.s = true; });
     GM().chars.forEach(ci => { if (GM().classItems) state.chars[ci].item = ''; });
-    let short = 0;   // with the 76 djinn mod a pick can need a 19th djinni of an element, which the planner doesn't have
+    let short = 0;   // a pick can't get a djinni the planner has no copy of (shouldn't happen: the mod djinn are real ones)
     for (const p of cs.picks) { p.cnt.forEach((v, e) => { for (let k = 0; k < v; k++) { const i = free[e].shift(); if (i === undefined) { short++; continue; } state.dj[i].o = p.ci; state.dj[i].s = true; } }); if (p.item) state.chars[p.ci].item = p.item; }
     renderAll(); toast(`Applied: ${cs.picks.length} Adept${cs.picks.length > 1 ? 's' : ''} set up; the other djinn are unassigned.` + (short ? ` ${short} mod djinn ${short > 1 ? "aren't" : "isn't"} in the planner, so ${short > 1 ? 'they were' : 'it was'} left out.` : ''));
   });
@@ -2719,7 +2737,7 @@ __SAVEPARSE__
       for (const id of c.equipped) { const it = D.items[id]; if (it && (it.m >> k) & 1 && inGameItem(id)) cs.eq[it.sl] = id; }
     });
     state.dj = D.djinn.map(() => ({ o: null, s: true }));
-    state.djHave = D.djinn.map((d, i) => !inGameDj(i));
+    state.djHave = D.djinn.map((d, i) => d.mod || !inGameDj(i));   // a save can't hold the mod djinn: never 'not collected'
     r.chars.forEach((c, k) => c.djinn.forEach(([e, i, set]) => { const idx = e * 18 + i; if (!inGameDj(idx)) return; state.dj[idx] = { o: k, s: set }; state.djHave[idx] = true; }));
     const gc = GM().chars;
     state.order = [...r.order, ...gc.filter(k => !r.order.includes(k)), ...[0, 1, 2, 3, 4, 5, 6, 7].filter(k => !gc.includes(k))];

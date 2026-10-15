@@ -70,6 +70,9 @@ const { chromium } = require(process.argv[2] ? process.argv[2] + '/playwright' :
     await p.locator('.gcell[data-ci="0"][data-sl="w"]').click({ button: 'right' });
     console.log('right-click takes gear off:', (await p.innerText('.gcell[data-ci="0"][data-sl="w"]')).trim() === '—');
     await p.click('#btnReset'); await p.click('#tabDjinn'); }
+  // 76 djinn mod: four extra djinn join the pool (unassigned) and leave it again
+  { await p.click('#tabDjinn'); await p.check('#djMod'); const on = await p.innerText('#djPool'); await p.uncheck('#djMod');
+    console.log('76 djinn mod:', on, '| off again:', await p.innerText('#djPool')); }
   // Compose: pick every Adept's class in turn (the last option each time), each step keeps the rest completable; apply sets the djinn
   { await p.click('#tabCompose'); const steps = [];
     for (let k = 0; k < 8; k++) { const who = p.locator('#cmpNext .cmp-who button'); if (!(await who.count())) break;
