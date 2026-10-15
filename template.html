@@ -885,7 +885,7 @@ details.sec .sec-body { gap: 6px; margin-top: 4px; }
         <li>Unleash chance comes from the weapon (35%, or 40% for a few) plus gear such as Hyper Boots. The game describes those as boosting "Criticals"; the wiki lists them as unleash-rate bonuses.</li>
         <li>Class items (Mysterious Card, Trainer's Whip, Tomegathericon) get their own slot here. I couldn't confirm whether the game makes them share a slot with rings.</li>
         <li>"Endgame gear only" uses a hand-picked list per slot, chosen from each item's full stats and effects rather than Defense or Attack alone (so Hyper Boots and Ninja Sandals make it for their unleash bonus, and rings are judged by what they do in battle). An item you already have equipped stays in the list, marked "not endgame".</li>
-        <li>Equipping an item another Adept is wearing takes it from them when only one copy exists, and gives them your old item if they can equip it. Items sold in shops are treated as unlimited; with a save imported, your actual number of copies is used.</li>
+        <li>Equipping an item another Adept is wearing takes it from them when only one copy exists, and gives them your old item if they can equip it. Gear sold in shops, dropped by a monster, or forged by Sunshine from a material a monster drops (Excalibur from Orihalcon, which the Sky Dragon drops) is treated as unlimited; anything else as one copy, or as many as The Lost Age hides in chests and events (Fire Brand: 2). Drops and the forge table are read from the ROMs; the chest and event counts come from the Archipelago randomizer's location list and aren't checked against the game. With a save imported, owning more copies than that (carried over from The Broken Seal) counts too.</li>
         <li>Dark Dawn: class lines, djinn requirements, class percentages, Psynergy by level and djinn bonuses come from the Golden Sun Syndicate's Dark Dawn class and djinn guides, read per Adept. How the game picks between lines isn't published; the planner uses the same rule as the GBA games, which agrees with the GBA class choice in 98% of djinn mixes. Base stats are entered by hand (growth curves aren't published). Psynergy figures (PP, power, range) are borrowed from The Lost Age where the names match; 21 Dark Dawn-only Psynergy show no figures. Elemental Power/Resistance isn't modelled yet, so gear Power/Resist bonuses are listed but not added to anything.</li>
         <li>Monsters (The Broken Seal and The Lost Age): read straight from the game ROMs (stats, elemental tables, moves, EXP, coins, drops; names from the game text). The Lost Age figures match the Archipelago randomizer's export field for field and the Golden Sun wiki on every enemy checked. Drop chance is 1/2 to the power (code − 1), checked against the wiki's 1/256 for the Cruel Dragon's Tisiphone Edge; defeating an enemy with a Djinn attack can raise it. The Lost Age's table also holds copies of Broken Seal enemies; ones identical to a Broken Seal record are marked as likely unused there, since the encounter tables aren't read yet.</li>
         <li>Dark Dawn gear: the 188 weapons and armor (stats, effects, unleash names, prices, locations) come from Golden Sun Realm's Dark Dawn weapon and armor guides; not checked against the game. Unleash rates and power aren't published, and effects given only as words ("More critical hits", "Boosts Earth Power") aren't counted. Who can equip what follows the Golden Sun wiki's character pages by item type; items marked "may not be equippable" are where the wiki says a type is limited without naming items (Karis's staffs, Sveta's robes and headgear, Amiti's crowns) and goggles, which no page lists. Boots and rings are assumed to fit everyone.</li>
@@ -1250,7 +1250,7 @@ __SAVEPARSE__
         const parts = effParts(it).map(esc);
         if (it.c) parts.unshift('<span class="bad">Cursed</span>');
         const dup = holders(cur, ci);
-        if (dup.length && !it.b) parts.push(`<span class="bad">Also on ${dup.map(i => esc(D.chars[i].name)).join(', ')}; not sold in shops</span>`);
+        if (dup.length >= copiesAvailable(cur)) parts.push(`<span class="bad">Also on ${dup.map(i => esc(D.chars[i].name)).join(', ')}; ${itemSource(cur).txt.toLowerCase()}</span>`);
         fx = parts.join(' · ') || '<span class="muted">No extra effects</span>';
       }
       return `<div class="slot ${it ? 'set' : ''}"><label class="lbl" for="eq-${ci}-${sl}">${label}</label>
@@ -1495,12 +1495,27 @@ __SAVEPARSE__
   // ---------- equipping with smart swaps (shared by both views) ----------
   const CLASS_ITEM_LABEL = { card: 'Mysterious Card', whip: "Trainer's Whip", tome: 'Tomegathericon' };
   const SLOT_NAME = Object.fromEntries(ALL_SLOTS.map(([s, n]) => [s, n]));
-  // How many copies of an item exist for this party: shop items are unlimited, an imported save gives exact counts, anything else is one-of-a-kind.
+  // Where a piece of gear comes from in this game and how many copies the party can have: shop items, monster drops and
+  // gear forged from a dropped material are unlimited; anything else is as many as the game hides (chests, events), or 1.
+  const dropsOf = (name, g = GM()) => g.monsters ? MONSTERS[g.monsters].filter(m => m.drop === name).map(m => m.n) : [];
+  function itemSource(id, g = GM()) {
+    const it = D.items[id]; if (!it) return { n: 1, txt: '' };
+    if (it.b) return { n: Infinity, txt: 'Sold in shops' };
+    const bit = g === GAMES.gs1 ? 1 : g === GAMES.tla ? 2 : 0;
+    if (!bit) return { n: 1, txt: 'Not sold in shops' };   // Dark Dawn: no drop or chest data
+    const by = list => [...new Set(list)].slice(0, 2).join(', ') + (new Set(list).size > 2 ? ' and others' : '');
+    if (bit && it.dr & bit) return { n: Infinity, txt: 'Dropped by ' + by(dropsOf(it.n, g)) };
+    if (bit === 2 && it.fg) {
+      const mat = GSDATA.forge[it.fg], from = dropsOf(mat, g);
+      return { n: Infinity, txt: `Forged from ${mat}` + (from.length ? ` (dropped by ${by(from)})` : '') };
+    }
+    const n = bit === 2 && it.ch > 1 ? it.ch : 1;
+    return { n, txt: n > 1 ? `${n} in the game` : 'Only one in the game' };
+  }
+  // How many copies the party can have; an imported save can only add to that (gear carried over from The Broken Seal)
   function copiesAvailable(id) {
-    const it = D.items[id]; if (!it) return 1;
-    if (it.b) return Infinity;
-    if (state.owned && state.owned[id]) return state.owned[id];
-    return 1;
+    const n = itemSource(id).n;
+    return state.owned && state.owned[id] > n ? state.owned[id] : n;
   }
   // Who the last equip/djinn move took from (and whether they got the old one back); the pickers show it as portraits
   let lastSwap = null;
@@ -2045,7 +2060,7 @@ __SAVEPARSE__
     }
     const users = GM().chars.filter(i => (it.m >> i) & 1).map(i => D.chars[i].name + ((it.mq >> i) & 1 ? '?' : ''));
     const holders = state.chars.map((c, i) => i).filter(i => state.chars[i].eq[it.sl] === itemId(it)).map(i => D.chars[i].name);
-    const copies = it.b ? 'Sold in shops' : (state.owned && state.owned[itemId(it)] ? `You own ${state.owned[itemId(it)]}` : 'Not sold in shops');
+    const copies = esc(itemSource(itemId(it)).txt) + (state.owned && state.owned[itemId(it)] ? ` · You own ${state.owned[itemId(it)]}` : '');
     return `<div class="th">${iconHtml(it, it.sl)}<div><b>${esc(it.n)}</b><small>${esc(it.k)}</small></div></div>
       <div class="big">${it.sl === 'w' ? `Attack ${it.a}` : `Defense ${it.d}`}</div>
       ${lines.length ? `<ul>${lines.map(l => `<li>${l}</li>`).join('')}</ul>` : ''}

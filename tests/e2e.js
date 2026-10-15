@@ -47,6 +47,12 @@ const { chromium } = require(process.argv[2] ? process.argv[2] + '/playwright' :
   await p.click('#tabGear'); await p.click('.gcell[data-ci="4"][data-sl="w"]');
   await p.locator('#picker .pk-opt', { has: p.locator('b', { hasText: /^Sol Blade$/ }) }).first().click();
   console.log('gear Felix weapon:', await txt('.gcell[data-ci="4"][data-sl="w"]'));
+  // one-of-a-kind gear moves between Adepts; forged gear (Excalibur: Orihalcon, a Sky Dragon drop) can be on both
+  { const give = async (ci, n) => { await p.click(`.gcell[data-ci="${ci}"][data-sl="w"]`); await p.locator('#picker .pk-opt', { has: p.locator('b', { hasText: new RegExp('^' + n + '$') }) }).first().click(); };
+    const w = ci => txt(`.gcell[data-ci="${ci}"][data-sl="w"]`);
+    await give(0, 'Sol Blade'); console.log('Sol Blade taken from Felix:', (await w(0)).includes('Sol Blade') && !(await w(4)).includes('Sol Blade'));
+    await give(4, 'Excalibur'); await give(0, 'Excalibur'); console.log('two Excaliburs:', (await w(0)).includes('Excalibur') && (await w(4)).includes('Excalibur'));
+    await p.hover('.gcell[data-ci="0"][data-sl="w"]'); await p.waitForTimeout(400); console.log('Excalibur tooltip:', (await p.evaluate(() => [...document.querySelectorAll('.foot')].map(e => e.innerText).filter(Boolean).join(' | ')))); }
   // Party tab shows build line
   await p.click('#tabPlanner'); console.log('sheet build line:', (await txt('#sheet details.sec[data-sec="build"]')).slice(0, 120));
   // import still works

@@ -190,6 +190,11 @@ Node checks:
 - **GBA tables:** github.com/cjmang/Archipelago `worlds/gstla/data` (commit c83307716a88).
   - Run `python3 -I extract.py <that dir> gsdata.json`.
   - For the older checks, copy `items.json` to `./archipelago-data/`.
+  - `extract.py` rewrites gsdata.json, so re-run `monsters/extract_battle.py <TLA.gba>` (weapon `el`) and `monsters/extract_sources.py <TLA.gba> <that dir>/item_locations.json` (`dr`, `fg`, `ch`, `forge`) after it.
+- **How many copies of a piece of gear** (`itemSource` / `copiesAvailable` in template.html; equipping takes an item from another Adept only when all copies are worn):
+  - Unlimited: sold in shops (`b`), dropped by a monster in this game (`dr` bit 1 gs1, 2 tla, from monsters.json), or forged by Sunshine from a material a monster drops (`fg` = material id, The Lost Age; forge table read from the ROM at 0x10CC34).
+  - Otherwise `ch` copies (The Lost Age chests/events from the randomizer's `item_locations.json`; unverified), else 1. Rusty weapons forge one result each (their chest count is added to the result's `ch`).
+  - An imported save's count wins if it's higher (gear carried over from The Broken Seal). The Broken Seal has no chest counts (1); Dark Dawn uses shop-or-one as before.
 - **Save layouts and test saves:** github.com/RyudoSynbios/game-tools-collection (MIT, commit 6f5d8064050e).
   - Files: `src/lib/templates/golden-sun*/saveEditor/template.ts`.
 - **Wiki:** goldensunwiki.net, for icons, mechanics and spot checks. Raw wikitext (`?action=raw`) is robots-blocked for fetchers.
