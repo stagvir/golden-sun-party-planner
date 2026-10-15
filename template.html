@@ -830,7 +830,7 @@ details.sec .sec-body { gap: 6px; margin-top: 4px; }
   </section>
   <section id="viewCompose" role="tabpanel" aria-labelledby="tabCompose" class="view panel" hidden>
     <div class="sheet-head"><h2>Compose a party</h2>
-      <div class="tools"><button class="btn sm" type="button" id="cmpApply">Apply to planner</button><button class="btn sm" type="button" id="cmpReset">Start over</button></div></div>
+      <div class="tools"><label class="toggle" id="cmpModBox" title="The 76-djinn mod: 19 djinn of each element to choose from, but still only 72 can be used"><input type="checkbox" id="cmpMod"><span>76 djinn mod</span></label><button class="btn sm" type="button" id="cmpApply">Apply to planner</button><button class="btn sm" type="button" id="cmpReset">Start over</button></div></div>
     <p class="muted gv-note" id="cmpNote"></p>
     <div class="cmp-pool" id="cmpPool" aria-label="Djinn left"></div>
     <ol class="cmp-picks" id="cmpPicks"></ol>
@@ -2278,6 +2278,10 @@ __SAVEPARSE__
   // (and class items) left: a depth-first search over the remaining Adepts, memoised on who's left and the pool.
   const cmpState = () => state.comp || (state.comp = { picks: [], sel: null });
   const djPool = () => { const p = [0, 0, 0, 0]; djInGame().forEach(i => p[D.djinn[i].e]++); return p; };
+  // The 76-djinn mod (The Lost Age): 19 of each element to choose from, but the party still uses at most the game's 72
+  const cmpMod = () => state.game === 'tla' && !!cmpState().mod76;
+  const cmpPool = () => { const p = djPool(), total = p.reduce((a, b) => a + b, 0); return { pool: cmpMod() ? p.map(v => v + 1) : p, total }; };
+  const djSum = c => c.reduce((a, b) => a + b, 0);
   // "Fully levelled" = the highest tier of a line this Adept can reach at all within the game's djinn limit (in The
   // Broken Seal, 7 djinn stop Isaac at Lord; the Seer line stops him at Druid)
   function topTiers(ci) { const top = new Map(); for (const r of classTable().reach[ci].values()) top.set(r.sid, Math.max(top.get(r.sid) ?? -1, r.ti)); return top; }
@@ -2288,15 +2292,15 @@ __SAVEPARSE__
     return out;
   }
   const leadOf = sid => { const r0 = seriesOf(sid).tiers[0].req, top = Math.max(...r0); return !D.dd && r0.filter(v => v === top).length === 1 ? r0.indexOf(top) : -1; };
-  const fits = (o, pool, items) => o.cnt.every((v, e) => v <= pool[e]) && (!o.item || !items.has(o.item));
-  function canFinish(rest, pool, items, memo = new Map()) {
+  const fits = (o, pool, items, left) => o.cnt.every((v, e) => v <= pool[e]) && djSum(o.cnt) <= left && (!o.item || !items.has(o.item));
+  function canFinish(rest, pool, items, left, memo = new Map()) {
     if (!rest.length) return true;
-    const key = rest.join(',') + '|' + pool.join(',') + '|' + [...items].sort().join(',');
+    const key = rest.join(',') + '|' + pool.join(',') + '|' + left + '|' + [...items].sort().join(',');
     if (memo.has(key)) return memo.get(key);
     // the Adept with the fewest fitting options first; per Adept only mixes not beaten by another (fewer of every element)
     let best = null;
     for (const ci of rest) {
-      const o = fullOptions(ci).filter(x => fits(x, pool, items));
+      const o = fullOptions(ci).filter(x => fits(x, pool, items, left));
       const lean = o.filter(x => !o.some(y => y !== x && y.item === x.item && y.cnt.every((v, e) => v <= x.cnt[e]) && y.cnt.some((v, e) => v < x.cnt[e])));
       if (!best || lean.length < best.o.length) best = { ci, o: lean };
       if (!lean.length) break;
@@ -2305,24 +2309,27 @@ __SAVEPARSE__
     const others = rest.filter(c => c !== best.ci);
     for (const x of best.o) {
       const p2 = pool.map((v, e) => v - x.cnt[e]), it2 = new Set(items); if (x.item) it2.add(x.item);
-      if (canFinish(others, p2, it2, memo)) { ok = true; break; }
+      if (canFinish(others, p2, it2, left - djSum(x.cnt), memo)) { ok = true; break; }
     }
     memo.set(key, ok); return ok;
   }
   function cmpLeft() {
-    const cs = cmpState(), pool = djPool(), items = new Set();
-    for (const p of cs.picks) { p.cnt.forEach((v, e) => { pool[e] -= v; }); if (p.item) items.add(p.item); }
-    return { pool, items, rest: GM().chars.filter(ci => !cs.picks.some(p => p.ci === ci)) };
+    const cs = cmpState(), { pool, total } = cmpPool(), items = new Set();
+    let left = total;
+    for (const p of cs.picks) { p.cnt.forEach((v, e) => { pool[e] -= v; }); left -= djSum(p.cnt); if (p.item) items.add(p.item); }
+    return { pool, items, left, rest: GM().chars.filter(ci => !cs.picks.some(p => p.ci === ci)) };
   }
   const orbCount = (cnt) => cnt.some(v => v) ? cnt.map((v, e) => v ? `<span class="etag e${e}">${v}<span class="dot" role="img" aria-label="${EL[e]}"></span></span>` : '').join('') : 'No djinn';
   function renderCompose() {
     if ($('viewCompose').hidden) return;
-    const cs = cmpState(), { pool, items, rest } = cmpLeft(), total = djPool();
+    const cs = cmpState(), { pool, items, left, rest } = cmpLeft(), total = cmpPool().pool, cap = cmpPool().total;
+    $('cmpModBox').hidden = state.game !== 'tla'; $('cmpMod').checked = cmpMod();
     cs.picks = cs.picks.filter(p => GM().chars.includes(p.ci));
-    $('cmpNote').textContent = `Pick an Adept, then a class for them; each class takes the fewest Set djinn it needs from the ${total.reduce((a, b) => a + b, 0)} djinn in the game. ` +
+    $('cmpNote').textContent = `Pick an Adept, then a class for them; each class takes the fewest Set djinn it needs from the ${cap} djinn in the game${cmpMod() ? ' (76 djinn mod: 19 of each element to choose from, still 72 at most in use)' : ''}. ` +
       `Only fully levelled classes are offered (the highest tier of a line the Adept can reach with ${GM().djCap} djinn), and only ones that still leave every other Adept a fully levelled class. When that's no longer possible, the best tier each Adept can still reach is shown instead, marked as not fully levelled.` +
       (D.dd ? " Dark Dawn's class rule isn't published (Golden Sun Syndicate requirements, unverified)." : '');
     $('cmpPool').innerHTML = '<span class="lbl">Djinn left</span>' + [0, 1, 2, 3].map(e => `<span class="etag e${e}"><span class="dot" role="img" aria-label="${EL[e]}"></span>${pool[e]} of ${total[e]}</span>`).join('') +
+      (cmpMod() ? `<span>Total ${left} of ${cap}</span>` : '') +
       (GM().classItems ? `<span class="muted">Class items left: ${['card', 'whip', 'tome'].filter(i => !items.has(i)).map(i => ITEM_NAME[i]).join(', ') || 'none'}</span>` : '');
     $('cmpPicks').innerHTML = cs.picks.map((p, k) => { const c = D.chars[p.ci], por = GSUI.portrait[c.name], t = seriesOf(p.sid).tiers, top = topTiers(p.ci).get(p.sid);
       return `<li>${por ? `<img src="${por}" alt="">` : ''}<span>${esc(c.name)}</span><span class="${p.ti === top ? 'cls' : 'part'}">${esc(t[p.ti].name)}${p.ti === top ? '' : ` (not fully levelled: ${esc(t[top].name)} needs more djinn)`}</span>${p.item ? `<span class="muted">${ITEM_NAME[p.item]}</span>` : ''}<span>${orbCount(p.cnt)}</span><button type="button" class="linkbtn x" data-undo="${k}">Change</button></li>`; }).join('');
@@ -2332,9 +2339,9 @@ __SAVEPARSE__
       return `<button type="button" class="btn" data-ci="${ci}" aria-pressed="${ci === cs.sel}">${por ? `<img src="${por}" alt="">` : ''}<span class="dot e${c.el}"></span>${esc(c.name)}</button>`; }).join('') + '</div>';
     if (cs.sel != null) {
       const ci = cs.sel, others = rest.filter(c => c !== ci), memo = new Map();
-      const opts = fullOptions(ci).filter(o => fits(o, pool, items)).map(o => {
+      const opts = fullOptions(ci).filter(o => fits(o, pool, items, left)).map(o => {
         const p2 = pool.map((v, e) => v - o.cnt[e]), it2 = new Set(items); if (o.item) it2.add(o.item);
-        return { ...o, ok: canFinish(others, p2, it2, memo) };
+        return { ...o, ok: canFinish(others, p2, it2, left - djSum(o.cnt), memo) };
       });
       let show = opts.filter(o => o.ok), note = '';
       if (!show.length && opts.length) { show = opts; note = `No fully levelled class for ${D.chars[ci].name} leaves every other Adept one any more. These still fit the djinn left:`; }
@@ -2343,7 +2350,7 @@ __SAVEPARSE__
         partial = true; note = `${D.chars[ci].name} can't be fully levelled in any class with the djinn left. The best tier of each line that still fits:`;
         const best = new Map();
         for (const r of classTable().reach[ci].values()) for (const cnt of r.combos) { const o = { sid: r.sid, ti: r.ti, kind: r.kind, item: r.item, cnt };
-          if (!fits(o, pool, items)) continue; const b = best.get(r.sid); if (!b || o.ti > b.ti) best.set(r.sid, o); }
+          if (!fits(o, pool, items, left)) continue; const b = best.get(r.sid); if (!b || o.ti > b.ti) best.set(r.sid, o); }
         show = [...best.values()];
       }
       h += `<h3 class="cmp-grp">${esc(D.chars[ci].name)}'s class</h3>${note ? `<p class="warn">${note}</p>` : ''}`;
@@ -2366,14 +2373,16 @@ __SAVEPARSE__
     renderCompose(); save();
   });
   $('cmpPicks').addEventListener('click', e => { const b = e.target.closest('[data-undo]'); if (!b) return; const cs = cmpState(), p = cs.picks.splice(+b.dataset.undo, 1)[0]; cs.sel = p.ci; renderCompose(); save(); });
+  $('cmpMod').addEventListener('change', e => { cmpState().mod76 = e.target.checked; renderCompose(); save(); });
   $('cmpReset').addEventListener('click', () => { const cs = cmpState(); cs.picks = []; cs.sel = null; renderCompose(); save(); });
   $('cmpApply').addEventListener('click', () => {
     const cs = cmpState(); if (!cs.picks.length) { toast('Pick at least one class first.'); return; }
     const free = [0, 1, 2, 3].map(e => djInGame().filter(i => D.djinn[i].e === e));
     state.dj.forEach(d => { d.o = null; d.s = true; });
     GM().chars.forEach(ci => { if (GM().classItems) state.chars[ci].item = ''; });
-    for (const p of cs.picks) { p.cnt.forEach((v, e) => { for (let k = 0; k < v; k++) { const i = free[e].shift(); state.dj[i].o = p.ci; state.dj[i].s = true; } }); if (p.item) state.chars[p.ci].item = p.item; }
-    renderAll(); toast(`Applied: ${cs.picks.length} Adept${cs.picks.length > 1 ? 's' : ''} set up; the other djinn are unassigned.`);
+    let short = 0;   // with the 76 djinn mod a pick can need a 19th djinni of an element, which the planner doesn't have
+    for (const p of cs.picks) { p.cnt.forEach((v, e) => { for (let k = 0; k < v; k++) { const i = free[e].shift(); if (i === undefined) { short++; continue; } state.dj[i].o = p.ci; state.dj[i].s = true; } }); if (p.item) state.chars[p.ci].item = p.item; }
+    renderAll(); toast(`Applied: ${cs.picks.length} Adept${cs.picks.length > 1 ? 's' : ''} set up; the other djinn are unassigned.` + (short ? ` ${short} mod djinn ${short > 1 ? "aren't" : "isn't"} in the planner, so ${short > 1 ? 'they were' : 'it was'} left out.` : ''));
   });
 
   // ---------- Battle: an enemy line-up in the order chosen, and what each attack does to each enemy ----------

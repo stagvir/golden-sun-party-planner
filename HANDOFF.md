@@ -57,6 +57,7 @@ Rebuild Dark Dawn data with `cd dd && python3 parse.py && python3 build_dd.py . 
 
 - Pick an Adept, then a class; the next Adept's choices narrow to what the djinn left allow (18 per element in The Lost Age, 7 in The Broken Seal; each class item once). Only fully levelled classes are offered: the highest tier of a line that Adept can reach within the game's djinn limit (so Lord is Isaac's top single-element class in The Broken Seal, and Druid his top Seer class). Each option uses that tier's fewest-djinn mixes from the Classes tab's brute force.
 - An option shows only if every Adept not yet picked can still get a fully levelled class afterwards: `canFinish`, a depth-first search over the remaining Adepts (fewest options first, mixes beaten on every element dropped), memoised on who's left, the pool and the class items used. About 0.1 s a step. When nothing passes, the options that merely fit are shown with a warning; when nothing fully levelled fits, the best tier of each line that fits is offered, marked "not fully levelled".
+- "76 djinn mod" checkbox (The Lost Age only, saved per game): 19 of each element to choose from, but at most the game's 72 in use; the search tracks the per-element pool and the total. Apply can't place a 19th djinni of an element (the planner has 18) and says how many were left out.
 - "Change" on a pick undoes it; Apply to planner gives each picked Adept those djinn (Set) and class items and leaves the rest unassigned.
 
 ## Battle tab (damage calculator, GBA)
