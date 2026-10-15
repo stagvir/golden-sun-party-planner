@@ -262,6 +262,7 @@ details.sec .sec-body { display: grid; gap: 10px; margin-top: 8px; }
 .gcell .nm { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
 .gcell.empty .nm { color: var(--muted); }
 .gcell.cursed .nm { color: var(--warn); }
+body.bare .gcell:not(.empty) .nm, body.bare .gcell:not(.empty) img { opacity: .45; }
 .gcell .ico.sm { margin-right: 0; }
 .gtab tfoot td { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: var(--fs); }
 .gtab tfoot tr:first-child th, .gtab tfoot tr:first-child td { border-top: 2px solid var(--line); }
@@ -771,6 +772,7 @@ details.sec .sec-body { gap: 6px; margin-top: 4px; }
     <div class="sheet-head">
       <h2>Gear</h2>
       <div class="tools">
+        <button class="btn sm" type="button" id="btnBare" aria-pressed="false" title="Work out every Adept's stats as if they wore nothing; the gear stays in place">Unequip all</button>
         <button class="btn sm" type="button" data-baseline>Set baseline</button>
         <button class="btn sm" type="button" data-revert="gear">Revert gear to baseline</button>
       </div>
@@ -1091,6 +1093,8 @@ __SAVEPARSE__
     owned(ci).forEach(d => { if (!onlySet || d.s) c[D.djinn[d.i].e]++; });
     return c;
   }
+  // "Unequip all": stats as if nobody wore anything, gear left where it is (class items still count: they set the class)
+  let bare = false;
   function compute(ci) {
     const ch = D.chars[ci], cs = state.chars[ci];
     const cnt = counts(ci);
@@ -1099,7 +1103,7 @@ __SAVEPARSE__
     const base = ch.curve.map(cv => G.baseStat(cv, cs.lv));
     const dj = [0, 0, 0, 0, 0, 0];
     owned(ci).forEach(d => { if (d.s) D.djinn[d.i].s.forEach((v, k) => dj[k] += v); });
-    const items = SLOTS().map(([sl]) => ITEM(cs.eq[sl]));
+    const items = bare ? [] : SLOTS().map(([sl]) => ITEM(cs.eq[sl]));
     const gear = G.gearEffects(items);
     const boost = [0, 0, 0, 0, 0, 0];
     D.boost.forEach((b, i) => { boost[b.s] += b.v * cs.boosts[i]; });
@@ -1107,7 +1111,7 @@ __SAVEPARSE__
     const fin = G.finalStats(pre, tier.mult, gear);
     // Dark Dawn's elemental Power/Resistance formula isn't published, so it isn't shown there
     const el = D.dd ? { pow: [0, 0, 0, 0], res: [0, 0, 0, 0], unknown: true } : G.elemental(ch.aff, cls.L, gear);
-    const weapon = ITEM(cs.eq.w);
+    const weapon = bare ? null : ITEM(cs.eq.w);
     return { ch, cs, cnt, cls, series, tier, base, dj, boost, gear, pre, fin, el, weapon };
   }
   const className = r => seriesOf(r.sid).tiers[r.ti].name;
@@ -2790,6 +2794,11 @@ __SAVEPARSE__
   $('btnVanilla').addEventListener('click', () => { giveOwnElement(state); renderAll(); });
   $('btnClear').addEventListener('click', () => { state.dj.forEach(d => d.o = null); renderAll(); });
   $('btnSetAll').addEventListener('click', () => { state.dj.forEach(d => { if (d.o !== null) d.s = true; }); renderAll(); });
+  $('btnBare').addEventListener('click', () => {
+    bare = !bare; $('btnBare').setAttribute('aria-pressed', bare); $('btnBare').textContent = bare ? 'Equip all' : 'Unequip all';
+    document.body.classList.toggle('bare', bare); renderAll();
+    toast(bare ? 'Stats now show every Adept wearing nothing. The gear is still there; click Equip all to count it again.' : 'Gear counts again.');
+  });
   $('btnStandbyAll').addEventListener('click', () => { state.dj.forEach(d => { if (d.o !== null) d.s = false; }); renderAll(); toast('Every djinni is on Standby.'); });
   // Right-click removes: a djinni from its Adept (Djinn tab, party sheet chips, djinn board), or a piece of gear (Gear tab)
   document.addEventListener('contextmenu', e => {

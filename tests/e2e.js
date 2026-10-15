@@ -53,6 +53,11 @@ const { chromium } = require(process.argv[2] ? process.argv[2] + '/playwright' :
     await give(0, 'Sol Blade'); console.log('Sol Blade taken from Felix:', (await w(0)).includes('Sol Blade') && !(await w(4)).includes('Sol Blade'));
     await give(4, 'Excalibur'); await give(0, 'Excalibur'); console.log('two Excaliburs:', (await w(0)).includes('Excalibur') && (await w(4)).includes('Excalibur'));
     await p.hover('.gcell[data-ci="0"][data-sl="w"]'); await p.waitForTimeout(400); console.log('Excalibur tooltip:', (await p.evaluate(() => [...document.querySelectorAll('.foot')].map(e => e.innerText).filter(Boolean).join(' | ')))); }
+  // Unequip all: stats drop, gear stays, Equip all puts the numbers back
+  { const tab = () => txt('#gearTable'); const before = await tab();
+    await p.click('#btnBare'); const off = await tab();
+    console.log('unequip all: stats change', off !== before, '| gear kept', off.includes('Excalibur'), '| button', await txt('#btnBare'));
+    await p.click('#btnBare'); console.log('equip all restores:', (await tab()) === before); }
   // Party tab shows build line
   await p.click('#tabPlanner'); console.log('sheet build line:', (await txt('#sheet details.sec[data-sec="build"]')).slice(0, 120));
   // import still works
